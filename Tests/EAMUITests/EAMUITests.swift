@@ -1,11 +1,11 @@
 import XCTest
-@testable import EAMUIKit
+@testable import EAMUI
 
-final class EAMUIKitTests: XCTestCase {
+final class EAMUITests: XCTestCase {
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(EAMUIKit().text, "Hello, World!")
+        XCTAssertEqual(EAMUI().text, "Hello, World!")
     }
 }

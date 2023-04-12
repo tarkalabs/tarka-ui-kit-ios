@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D403A38229E6B0AE00BD067C /* EAMUI in Frameworks */ = {isa = PBXBuildFile; productRef = D403A38129E6B0AE00BD067C /* EAMUI */; };
 		D43CDD9B29DFE34900F8081E /* UI_ShowcaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDD9A29DFE34900F8081E /* UI_ShowcaseApp.swift */; };
 		D43CDD9D29DFE34900F8081E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDD9C29DFE34900F8081E /* ContentView.swift */; };
 		D43CDD9F29DFE34A00F8081E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D43CDD9E29DFE34A00F8081E /* Assets.xcassets */; };
@@ -14,7 +15,6 @@
 		D43CDDAC29DFE34A00F8081E /* UI_ShowcaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDDAB29DFE34A00F8081E /* UI_ShowcaseTests.swift */; };
 		D43CDDB629DFE34A00F8081E /* UI_ShowcaseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDDB529DFE34A00F8081E /* UI_ShowcaseUITests.swift */; };
 		D43CDDB829DFE34A00F8081E /* UI_ShowcaseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDDB729DFE34A00F8081E /* UI_ShowcaseUITestsLaunchTests.swift */; };
-		D43CDDCC29DFE4A200F8081E /* EAMUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = D43CDDCB29DFE4A200F8081E /* EAMUIKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D43CDDCC29DFE4A200F8081E /* EAMUIKit in Frameworks */,
+				D403A38229E6B0AE00BD067C /* EAMUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,7 +164,7 @@
 			);
 			name = "UI Showcase";
 			packageProductDependencies = (
-				D43CDDCB29DFE4A200F8081E /* EAMUIKit */,
+				D403A38129E6B0AE00BD067C /* EAMUI */,
 			);
 			productName = "UI Showcase";
 			productReference = D43CDD9729DFE34900F8081E /* UI Showcase.app */;
@@ -608,9 +608,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D43CDDCB29DFE4A200F8081E /* EAMUIKit */ = {
+		D403A38129E6B0AE00BD067C /* EAMUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = EAMUIKit;
+			productName = EAMUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
