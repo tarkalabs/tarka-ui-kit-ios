@@ -84,7 +84,9 @@
 				D43CDD9829DFE34900F8081E /* Products */,
 				D43CDDCA29DFE4A200F8081E /* Frameworks */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		D43CDD9829DFE34900F8081E /* Products */ = {
 			isa = PBXGroup;
