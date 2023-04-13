@@ -9,9 +9,9 @@ import SwiftUI
 
 @main
 struct UI_ShowcaseApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  var body: some Scene {
+    WindowGroup {
+      ContentView()
     }
+  }
 }
