@@ -35,6 +35,9 @@ public enum EAMFont {
   case heading2
   case heading3
   case heading4
+  case heading5
+  case heading6
+  case heading7
     
   case body5
   case body6
@@ -51,20 +54,31 @@ public enum EAMFont {
     case .heading2: return 24
     case .heading3: return 22
     case .heading4: return 20
-    case .body5: return 18
-    case .body6, .button6: return 16
-    case .body7, .button7: return 14
+    case .heading5, .body5: return 18
+    case .heading6, .body6, .button6: return 16
+    case .heading7, .body7, .button7: return 14
     case .body8, .button8: return 12
     }
   }
     
   var fontVariant: FontVariant {
     switch self {
-    case .heading1, .heading2:
+    case .heading1,
+        .heading2:
       return .semiBold
-    case .heading3, .heading4, .button6, .button7, .button8:
+    case .heading3,
+        .heading4,
+        .heading5,
+        .heading6,
+        .heading7,
+        .button6,
+        .button7,
+        .button8:
       return .medium
-    case .body5, .body6, .body7, .body8:
+    case .body5,
+        .body6,
+        .body7,
+        .body8:
       return .regular
     }
   }
@@ -75,6 +89,9 @@ public extension Font {
   static let heading2 = Font.using(.heading2)
   static let heading3 = Font.using(.heading3)
   static let heading4 = Font.using(.heading4)
+  static let heading5 = Font.using(.heading5)
+  static let heading6 = Font.using(.heading6)
+  static let heading7 = Font.using(.heading7)
     
   static let body5 = Font.using(.body5)
   static let body6 = Font.using(.body6)
