@@ -82,6 +82,20 @@ public enum EAMFont {
       return .regular
     }
   }
+  
+  var textStyle: Font.TextStyle {
+    switch self {
+    case .heading1: return .largeTitle
+    case .heading2: return .title
+    case .heading3: return .title2
+    case .heading4: return .title3
+    case .heading5: return .headline
+    case .body5: return .body
+    case .heading6, .body6, .button6: return .subheadline
+    case .heading7, .body7, .button7: return .caption
+    case .body8, .button8: return .caption2
+    }
+  }
 }
 
 public extension Font {
@@ -103,6 +117,6 @@ public extension Font {
   static let button8 = Font.using(.button8)
     
   static func using(_ font: EAMFont) -> Font {
-    Font.custom(font.fontVariant.name, size: font.size)
+    Font.custom(font.fontVariant.name, size: font.size, relativeTo: font.textStyle)
   }
 }
