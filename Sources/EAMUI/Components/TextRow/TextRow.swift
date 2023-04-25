@@ -19,7 +19,7 @@ public struct TextRow: View {
   public var body: some View {
     VStack(
       alignment: .leading,
-      spacing: Spacing.base
+      spacing: Spacing.baseVertical
     ) {
         titleView
         detailView(forStyle: style)

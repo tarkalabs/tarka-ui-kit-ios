@@ -8,15 +8,25 @@
 import Foundation
 
 public enum Spacing {
-  public static let base: CGFloat = 4
-  public static let double: CGFloat = Spacing.base * 2
-  public static let half: CGFloat = Spacing.base / 2
+  public static let none: CGFloat = 0
+  
+  public static let baseVertical: CGFloat = 4
+  public static let doubleVertical: CGFloat = Spacing.baseVertical * 2
+  public static let halfVertical: CGFloat = Spacing.baseVertical / 2
+  
+  public static let baseHorizontal: CGFloat = 16
+  public static let halfHorizontal: CGFloat = Spacing.baseHorizontal / 2
   
   public static func custom(_ spacing: CGFloat) -> CGFloat {
     spacing
   }
   
-  public static func multiple(_ multiplier: CGFloat) -> CGFloat {
-    Spacing.base * multiplier
+  public static func verticalMultiple(_ multiplier: CGFloat) -> CGFloat {
+    Spacing.baseVertical * multiplier
   }
+  
+  public static func horizontalMultiple(_ multiplier: CGFloat) -> CGFloat {
+    Spacing.baseHorizontal * multiplier
+  }
+
 }
