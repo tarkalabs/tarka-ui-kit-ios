@@ -240,6 +240,8 @@
 				Base,
 			);
 			mainGroup = D43CDD8E29DFE34900F8081E;
+			packageReferences = (
+			);
 			productRefGroup = D43CDD9829DFE34900F8081E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
