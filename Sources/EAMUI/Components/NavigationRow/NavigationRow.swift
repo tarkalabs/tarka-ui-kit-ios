@@ -22,9 +22,10 @@ public struct NavigationRow: View {
     HStack(alignment: .center, spacing: 0) {
       if let symbol = symbol {
         imageView(symbol)
-        
+          .padding(.horizontal, Spacing.halfHorizontal)
+
         Spacer()
-          .frame(width: Spacing.baseHorizontal)
+          .frame(width: Spacing.halfHorizontal)
       }
       
       Text(title)
@@ -50,6 +51,6 @@ public struct NavigationRow: View {
 
 struct NavigationRow_Previews: PreviewProvider {
   static var previews: some View {
-    NavigationRow(title: "Label", symbol: .copy, badgeCount: 100)
+    NavigationRow(title: "Label", symbol: .export, badgeCount: 100)
   }
 }
