@@ -30,6 +30,7 @@ public struct NavigationRow: View {
       
       Text(title)
         .font(.heading7)
+        .foregroundColor(.onSurface)
       
       Spacer()
       
