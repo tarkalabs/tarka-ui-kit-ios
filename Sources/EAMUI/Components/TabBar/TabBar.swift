@@ -109,3 +109,9 @@ private struct TabWidthPreferenceKey: PreferenceKey {
     value.append(contentsOf: nextValue())
   }
 }
+
+struct TabBar_Previews: PreviewProvider {
+  static var previews: some View {
+    TabBar(titles: ["ABC", "DEF"], selectedTab: .constant("ABC"))
+  }
+}
