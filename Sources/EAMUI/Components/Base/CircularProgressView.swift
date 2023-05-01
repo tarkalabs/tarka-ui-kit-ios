@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct CircularProgressView<Label: View>: View {
-  @State public var progress: Double = 0.0
+  public var progress: Double = 0.0
   public let label: () -> Label
   
   private let lineWidth: CGFloat = 4
