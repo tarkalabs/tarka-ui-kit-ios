@@ -8,10 +8,15 @@
 import SwiftUI
 
 public struct CircularProgressView<Label: View>: View {
+  @ObservedObject private var viewModel = ViewModel()
+
   public var progress: Double = 0.0
+  @State private var rotation = 0.0
+
   public let label: () -> Label
   
   private let lineWidth: CGFloat = 4
+  
   
   public init(progress: Double, @ViewBuilder labelView: @escaping () -> Label) {
     self.progress = progress
@@ -39,16 +44,35 @@ public struct CircularProgressView<Label: View>: View {
   
   @ViewBuilder
   private var progressCircleView: some View {
-    Circle()
-      .trim(from: 0, to: progress)
-      .stroke(
-        Color.primaryEAM,
-        style: StrokeStyle(
-          lineWidth: lineWidth
+    switch viewModel.style {
+    case .determinate:
+      Circle()
+        .trim(from: 0, to: progress)
+        .stroke(
+          Color.primaryEAM,
+          style: StrokeStyle(
+            lineWidth: lineWidth
+          )
         )
-      )
-      .rotationEffect(.degrees(-90)) // Rotate by 90 degrees, otherwise the progress starts at the right side instead of at the top of the circle
-      .animation(.easeOut, value: progress)
+        .rotationEffect(.degrees(-90)) // Rotate by 90 degrees, otherwise the progress starts at the right side instead of at the top of the circle
+        .animation(.easeOut, value: progress)
+    case .indeterminate:
+      Circle()
+        .trim(from: 0, to: 0.25)
+        .stroke(
+          Color.primaryEAM,
+          style: StrokeStyle(
+            lineWidth: lineWidth
+          )
+        )
+        .rotationEffect(.degrees(rotation))
+        .onAppear {
+          withAnimation(.linear(duration: 1)
+            .speed(0.5).repeatForever(autoreverses: false)) {
+              rotation = 360.0
+            }
+        }
+    }
   }
   
   @ViewBuilder
@@ -59,6 +83,21 @@ public struct CircularProgressView<Label: View>: View {
   }
 }
 
+public extension CircularProgressView {
+  enum Style {
+    case determinate, indeterminate
+  }
+  
+  class ViewModel: ObservableObject {
+    @Published var style: Style = .indeterminate
+  }
+  
+  func progressViewStyle(_ style: Style) -> some View {
+    self.viewModel.style = style
+    return self
+  }
+}
+
 struct CircularProgressView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
@@ -66,16 +105,16 @@ struct CircularProgressView_Previews: PreviewProvider {
         Image(.checkmarkStarburst)
           .resizable()
           .scaledToFit()
-
       }
+      .progressViewStyle(.determinate)
       .frame(width: 40, height: 40)
       
       CircularProgressView(progress: 0.4) {
         Image(.checkmarkStarburst)
           .resizable()
           .scaledToFit()
-
       }
+      .progressViewStyle(.indeterminate)
       .frame(width: 100, height: 100)
     }
   }
