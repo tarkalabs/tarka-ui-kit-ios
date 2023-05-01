@@ -9,18 +9,27 @@ import SwiftUI
 
 public struct MenuItemView: View {
   public var item: MenuItem
-
-  public init(item: MenuItem) {
+  public var action: () -> Void
+  
+  public init(item: MenuItem, action: @escaping () -> Void) {
     self.item = item
+    self.action = action
   }
 
   public var body: some View {
-    HStack(spacing: 0) {
-      leftContentView
-      contentView
-      rightContentView
+    Button {
+      action()
+    } label: {
+      HStack(spacing: 0) {
+        leftContentView
+        contentView
+        rightContentView
+      }
+      .padding(.vertical, Spacing.doubleVertical)
+      .frame(maxWidth: .infinity, alignment: .leading)
+      .contentShape(Rectangle())
     }
-    .frame(maxWidth: .infinity, alignment: .leading)
+    .buttonStyle(MenuItemStyle())
   }
   
   @ViewBuilder
@@ -65,6 +74,14 @@ public struct MenuItemView: View {
   }
 }
 
+struct MenuItemStyle: ButtonStyle {
+  public func makeBody(configuration: Configuration) -> some View {
+    configuration.label
+      .background(configuration.isPressed ? Color.surfaceHover : Color.clear)
+      .clipShape(RoundedRectangle(cornerRadius: 8))
+  }
+}
+
 struct MenuItemView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
@@ -72,21 +89,24 @@ struct MenuItemView_Previews: PreviewProvider {
         item: MenuItem(
           title: "Label",
           configuration: .withSymbol(.map)
-        )
+        ),
+        action: {}
       )
     
       MenuItemView(
         item: MenuItem(
           title: "Label",
           configuration: .onlyLabel
-        )
+        ),
+        action: {}
       )
       
       MenuItemView(
         item: MenuItem(
           title: "Label",
           configuration: .withDescription("Description")
-        )
+        ),
+        action: {}
       )
     }
     .previewLayout(.sizeThatFits)
