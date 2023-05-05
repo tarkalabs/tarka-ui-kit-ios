@@ -16,12 +16,15 @@ public enum IconButtonSize {
 }
 
 public struct IconButton: View {
-  @ObservedObject private var viewModel: IconButtonViewModel = IconButtonViewModel()
   public var icon: EAMSymbol
+  public var style: IconButtonStyle = .ghost
+  public var size: IconButtonSize = .s
   public var action: () -> Void
   
-  public init(icon: EAMSymbol, action: @escaping () -> Void) {
+  public init(icon: EAMSymbol, style: IconButtonStyle, size: IconButtonSize, action: @escaping () -> Void) {
     self.icon = icon
+    self.style = style
+    self.size = size
     self.action = action
   }
   
@@ -32,12 +35,12 @@ public struct IconButton: View {
       iconView
     }
     .frame(
-      width: viewModel.buttonSize.width,
-      height: viewModel.buttonSize.height
+      width: buttonSize.width,
+      height: buttonSize.height
     )
+    .background(backgroundView)
     .contentShape(Circle()) // So that only the circular portion is tappable
     .clipShape(Circle())
-    .background(backgroundView)
     .overlay(content: borderView)
   }
   
@@ -47,10 +50,10 @@ public struct IconButton: View {
       .resizable()
       .scaledToFit()
       .frame(
-        width: viewModel.iconSize.width,
-        height: viewModel.iconSize.height
+        width: iconSize.width,
+        height: iconSize.height
       )
-      .foregroundColor(viewModel.iconColor)
+      .foregroundColor(iconColor)
       .frame(
         maxWidth: .infinity,
         maxHeight: .infinity
@@ -59,35 +62,22 @@ public struct IconButton: View {
   
   @ViewBuilder
   private var backgroundView: some View {
-    viewModel.backgroundColor
+    backgroundColor
   }
   
   @ViewBuilder
   private func borderView() -> some View {
     Circle()
       .stroke(
-        viewModel.borderColor,
+        borderColor,
         style: StrokeStyle(
           lineWidth: 1.5
         )
       )
   }
-  
-  public func iconButtonStyle(_ style: IconButtonStyle) -> Self {
-    viewModel.style = style
-    return self
-  }
-  
-  public func iconButtonSize(_ size: IconButtonSize) -> Self {
-    viewModel.size = size
-    return self
-  }
 }
 
-private class IconButtonViewModel: ObservableObject {
-  @Published var style: IconButtonStyle = .ghost
-  @Published var size: IconButtonSize = .s
-  
+extension IconButton {
   var iconColor: Color {
     switch style {
     case .outline, .ghost:
@@ -147,11 +137,13 @@ private class IconButtonViewModel: ObservableObject {
 struct IconButtonView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      IconButton(icon: .chevronDown, action: {
+      IconButton(
+        icon: .chevronDown,
+        style: .primary,
+        size: .l,
+        action: {
         
       })
-      .iconButtonStyle(.primary)
-      .iconButtonSize(.l)
     }
   }
 }
