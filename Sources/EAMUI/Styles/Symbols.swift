@@ -11,6 +11,7 @@ import FluentIcons
 public enum EAMSymbol: String {
   case chevronDown
   case chevronRight
+  case chevronLeft
   case checkmarkStarburst
   case copy
   case delete
@@ -34,6 +35,8 @@ public enum EAMSymbol: String {
       return .chevronDown48Regular
     case .chevronRight:
       return .chevronRight48Regular
+    case .chevronLeft:
+      return .chevronLeft48Regular
     case .checkmarkStarburst:
       return .checkmarkStarburst24Regular
     case .copy:
