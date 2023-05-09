@@ -7,12 +7,18 @@
 
 import SwiftUI
 
-public struct CircularProgressView<Label: View>: View {
-  @ObservedObject private var viewModel = ViewModel()
+public enum CircularProgressViewStyle: EnvironmentKey {
+  case determinate, indeterminate
+  
+  public static var defaultValue: CircularProgressViewStyle = .indeterminate
+}
 
+public struct CircularProgressView<Label: View>: View {
   public var progress: Double = 0.0
   @State private var rotation = 0.0
 
+  @Environment(\.circularProgressViewStyle) var style
+  
   public let label: () -> Label
   
   private let lineWidth: CGFloat = 4
@@ -44,7 +50,7 @@ public struct CircularProgressView<Label: View>: View {
   
   @ViewBuilder
   private var progressCircleView: some View {
-    switch viewModel.style {
+    switch style {
     case .determinate:
       Circle()
         .trim(from: 0, to: progress)
@@ -83,21 +89,6 @@ public struct CircularProgressView<Label: View>: View {
   }
 }
 
-public extension CircularProgressView {
-  enum Style {
-    case determinate, indeterminate
-  }
-  
-  class ViewModel: ObservableObject {
-    @Published var style: Style = .indeterminate
-  }
-  
-  func progressViewStyle(_ style: Style) -> some View {
-    self.viewModel.style = style
-    return self
-  }
-}
-
 struct CircularProgressView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
@@ -106,7 +97,7 @@ struct CircularProgressView_Previews: PreviewProvider {
           .resizable()
           .scaledToFit()
       }
-      .progressViewStyle(.determinate)
+      .circularProgressViewStyle(.determinate)
       .frame(width: 40, height: 40)
       
       CircularProgressView(progress: 0.4) {
@@ -114,7 +105,7 @@ struct CircularProgressView_Previews: PreviewProvider {
           .resizable()
           .scaledToFit()
       }
-      .progressViewStyle(.indeterminate)
+      .circularProgressViewStyle(.indeterminate)
       .frame(width: 100, height: 100)
     }
   }

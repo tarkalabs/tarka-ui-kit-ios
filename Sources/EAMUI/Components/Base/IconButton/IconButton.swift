@@ -21,8 +21,8 @@ public struct IconButton: View {
   public var icon: EAMSymbol
   public var action: () -> Void
 
-  @Environment(\.iconButtonStyle) var style: IconButtonStyle
-  @Environment(\.iconButtonSize) var size: IconButtonSize
+  @Environment(\.iconButtonStyle) var style
+  @Environment(\.iconButtonSize) var size
   
   public init(icon: EAMSymbol, action: @escaping () -> Void) {
     self.icon = icon
