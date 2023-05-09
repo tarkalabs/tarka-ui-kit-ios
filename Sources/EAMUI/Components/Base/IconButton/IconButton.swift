@@ -1,30 +1,31 @@
 //
 //  IconButton.swift
-//  
+//
 //
 //  Created by Arvindh Sukumar on 02/05/23.
 //
 
 import SwiftUI
 
-public enum IconButtonStyle {
+public enum IconButtonStyle: EnvironmentKey {
   case outline, ghost, secondary, primary
+  public static let defaultValue: IconButtonStyle = .ghost
 }
 
-public enum IconButtonSize {
+public enum IconButtonSize: EnvironmentKey {
   case xs, s, m, l, xl
+  public static let defaultValue: IconButtonSize = .l
 }
 
 public struct IconButton: View {
   public var icon: EAMSymbol
-  public var style: IconButtonStyle = .ghost
-  public var size: IconButtonSize = .s
   public var action: () -> Void
+
+  @Environment(\.iconButtonStyle) var style: IconButtonStyle
+  @Environment(\.iconButtonSize) var size: IconButtonSize
   
-  public init(icon: EAMSymbol, style: IconButtonStyle, size: IconButtonSize, action: @escaping () -> Void) {
+  public init(icon: EAMSymbol, action: @escaping () -> Void) {
     self.icon = icon
-    self.style = style
-    self.size = size
     self.action = action
   }
   
@@ -139,11 +140,11 @@ struct IconButtonView_Previews: PreviewProvider {
     Group {
       IconButton(
         icon: .chevronDown,
-        style: .primary,
-        size: .l,
         action: {
         
       })
+      .iconButtonStyle(.secondary)
+      .iconButtonSize(.m)
     }
   }
 }
