@@ -33,7 +33,7 @@ public struct OverlayFooter: View {
   
   @ViewBuilder
   private func view(forAction action: OverlayFooterAction) -> some View {
-    IconButton(icon: action.icon, style: .ghost, size: .l, action: action.handler)
+    IconButton(icon: action.icon, action: action.handler)
   }
 }
 
