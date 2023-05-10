@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct Badge: View {
   public var count: Int?
-  public var size: BadgeSize
+  @Environment(\.badgeSize) var size
 
   public var body: some View {
     ZStack {
@@ -53,7 +53,7 @@ public struct Badge: View {
   }
 }
 
-public enum BadgeSize {
+public enum BadgeSize: EnvironmentKey {
   case s, m, l
 
   private var size: CGSize {
@@ -74,30 +74,33 @@ public enum BadgeSize {
   var height: CGFloat {
     size.height
   }
+  
+  public static var defaultValue: BadgeSize = .l
 }
 
 struct Badge_Previews: PreviewProvider {
   static var previews: some View {
     Group {
       HStack {
-        Badge(size: .s)
-        Badge(size: .m)
-        Badge(size: .l)
+        Badge()
       }
+      .badgeSize(.m)
       .previewDisplayName("Plain")
 
       HStack {
-        Badge(count: 1, size: .m)
-        Badge(count: 10, size: .m)
-        Badge(count: 100, size: .m)
+        Badge(count: 1)
+        Badge(count: 10)
+        Badge(count: 100)
       }
+      .badgeSize(.m)
       .previewDisplayName("Count Medium")
 
       HStack {
-        Badge(count: 1, size: .l)
-        Badge(count: 10, size: .l)
-        Badge(count: 100, size: .l)
+        Badge(count: 1)
+        Badge(count: 10)
+        Badge(count: 100)
       }
+      .badgeSize(.l)
       .previewDisplayName("Count Large")
     }
   }
