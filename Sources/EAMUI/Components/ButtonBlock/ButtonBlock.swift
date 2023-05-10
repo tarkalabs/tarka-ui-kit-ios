@@ -8,9 +8,28 @@
 import Foundation
 import SwiftUI
 
+/// A view that displays a horizontal row of buttons.
+///
+/// Use a `ButtonBlock` to display a horizontal row of buttons. You can customize the buttons by passing in an array of `ButtonBlockAction` objects.
+///
+/// Example usage:
+///
+///     ButtonBlock {
+///         actions...
+///     }
+///
+/// - Note: The `ButtonBlock` view takes up the full width of its parent view.
+///
+///
+/// - SeeAlso: `ButtonBlockAction`
 public struct ButtonBlock: View {
   private var actions: [ButtonBlockAction] = []
   
+  /// Creates a button block with the specified actions.
+  ///
+  /// - Parameters:
+  ///   - actions: The actions to display in the button block.
+  ///
   public init(@ButtonBlockActionBuilder actions: @escaping () -> [ButtonBlockAction]) {
     self.actions = actions()
   }

@@ -7,9 +7,34 @@
 
 import SwiftUI
 
+/// A view that represents a draggable card with an icon button and content.
+///
+/// The `DraggableCard` view is a container view that displays an icon button and content. The icon button can be used to trigger a drag gesture to move the card around. The content can be any SwiftUI view.
+///
+/// Example usage:
+///
+///     DraggableCard {
+///       HStack {
+///         Text("Description")
+///           .font(.heading6)
+///           .foregroundColor(Color.inputText)
+///
+///         Spacer()
+///       }
+///     }
+///
+/// - Parameters:
+///   - content: A closure that returns the content to display in the card.
+///
+/// - Returns: A view that represents a draggable card with an icon button and content.
 public struct DraggableCard<Content>: View where Content: View {
   var content: () -> Content
   
+  /// Creates a draggable card with an icon button and content.
+  ///
+  /// - Parameters:
+  ///   - content: A closure that returns the content to display in the card.
+  ///
   public init(@ViewBuilder content: @escaping () -> Content) {
     self.content = content
   }

@@ -7,9 +7,32 @@
 
 import SwiftUI
 
+/// A view that displays a horizontal list of actions at the bottom of an overlay.
+///
+/// Use `OverlayFooter` to display a list of actions at the bottom of an overlay. You can add any number of actions to the footer using the `OverlayFooterActionBuilder` closure. Each action is represented by an `OverlayFooterAction` object, which contains an icon and a closure to be executed when the action is tapped.
+///
+/// Example usage:
+///
+///     OverlayFooter {
+///       OverlayFooterAction(icon: .chevronLeft) {
+///         // Handle action
+///       }
+///       OverlayFooterAction(icon: .chevronDown) {
+///         // Handle action
+///       }
+///       OverlayFooterAction(icon: .chevronRight) {
+///         // Handle action
+///       }
+///     }
+///
 public struct OverlayFooter: View {
   private var actions: [OverlayFooterAction]
   
+  /// Creates a footer with the specified actions.
+  ///
+  /// - Parameters:
+  ///   - actions: The actions to display in the footer.
+  ///
   public init(@OverlayFooterActionBuilder actions: @escaping () -> [OverlayFooterAction]) {
     self.actions = actions()
   }

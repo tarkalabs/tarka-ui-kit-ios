@@ -13,17 +13,46 @@ public enum CircularProgressViewStyle: EnvironmentKey {
   public static var defaultValue: CircularProgressViewStyle = .indeterminate
 }
 
+/// A view that displays a circular progress indicator.
+///
+/// Use a `CircularProgressView` to show the progress of a task, such as a download or upload operation.
+///
+/// You can customize the appearance of the progress view by specifying a style. The `determinate` style shows a progress bar that fills up as the task progresses, while the `indeterminate` style shows a spinning wheel that indicates that the task is in progress but does not show the progress itself.
+///
+/// You can also provide a label to display alongside the progress view. The label can be any SwiftUI view, such as an image or a text view.
+///
+/// Example usage:
+///
+///     CircularProgressView(progress: 0.4) {
+///         Image(systemName: "checkmark.circle.fill")
+///             .resizable()
+///             .scaledToFit()
+///     }
+///
+/// - Parameters:
+///   - progress: The progress of the task, represented as a value between 0 and 1. Ignored if the style is `indeterminate`.
+///   - label: A view to display alongside the progress view.
+///
 public struct CircularProgressView<Label: View>: View {
+  /// The progress of the task, represented as a value between 0 and 1. Ignored if the style is `indeterminate`.
   public var progress: Double = 0.0
-  @State private var rotation = 0.0
+  
+  /// A view to display alongside the progress view.
+  public let label: () -> Label
 
+  /// The style of the progress view. The default style is `indeterminate`. 
+  /// If the style is `determinate`, the progress view shows a progress bar that fills up as the task progresses. If the style is `indeterminate`, the progress view shows a spinning wheel that indicates that the task is in progress but does not show the progress itself.
   @Environment(\.circularProgressViewStyle) var style
   
-  public let label: () -> Label
-  
   private let lineWidth: CGFloat = 4
+  @State private var rotation = 0.0
   
-  
+  /// Creates a circular progress view with the specified progress and label.
+  ///
+  /// - Parameters:
+  ///   - progress: The progress of the task, represented as a value between 0 and 1. Ignored if the style is `indeterminate`.
+  ///   - label: A view to display alongside the progress view.
+  ///
   public init(progress: Double, @ViewBuilder labelView: @escaping () -> Label) {
     self.progress = progress
     self.label = labelView

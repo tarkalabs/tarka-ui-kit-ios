@@ -7,10 +7,18 @@
 
 import SwiftUI
 
+/// `TextRow` is a SwiftUI view that displays a title and an optional description in a vertical stack.
+/// The view can be customized with different styles, such as displaying only the title or displaying both the title and description.
 public struct TextRow: View {
   public var title: any StringProtocol
   public var style: Style
   
+  /// Creates a text row with the specified title and style.
+  ///
+  /// - Parameters:
+  ///   - title: The title to display in the text row.
+  ///   - style: The style to use to display the text row. The default value is `.onlyTitle`.
+  ///
   public init(_ title: any StringProtocol, style: TextRow.Style) {
     self.title = title
     self.style = style
@@ -62,7 +70,10 @@ public struct TextRow: View {
 
 public extension TextRow {
   enum Style {
+    /// Displays only the title.
     case onlyTitle
+
+    /// Displays the title and description.
     case textDescription(String)
   }
 }

@@ -11,6 +11,12 @@ public struct MenuItemView: View {
   public var item: MenuItem
   public var action: () -> Void
   
+  /// Creates a menu item view.
+  ///
+  /// - Parameters:
+  ///   - item: The `MenuItem` to display.
+  ///   - action: The action to perform when the menu item is tapped.
+  ///
   public init(item: MenuItem, action: @escaping () -> Void) {
     self.item = item
     self.action = action
