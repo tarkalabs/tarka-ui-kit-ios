@@ -28,10 +28,8 @@ public struct Badge: View {
 
   public var body: some View {
     ZStack {
-      RoundedRectangle(
-        cornerRadius: 100
-      )
-      .foregroundColor(Color.error)
+      Capsule()
+        .foregroundColor(Color.error)
 
       if let count = count {
         Text("\(count)")
