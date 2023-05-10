@@ -7,8 +7,23 @@
 
 import SwiftUI
 
+/// A view that displays a badge with an optional count.
+///
+/// The badge is a pill shape with a background color of error and a text color of onError.
+/// The count is displayed in the center of the badge and is optional.
+///
+/// Example usage:
+///
+///     Badge(count: 10)
+///       .badgeSize(.m)
+///
+/// - Parameters:
+///   - count: The count to be displayed in the center of the badge.
+///
 public struct Badge: View {
+  /// The count to be displayed in the center of the badge.
   public var count: Int?
+
   @Environment(\.badgeSize) var size
 
   public var body: some View {

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 public enum IconButtonStyle: EnvironmentKey {
   case outline, ghost, secondary, primary
   public static let defaultValue: IconButtonStyle = .ghost
@@ -17,13 +18,42 @@ public enum IconButtonSize: EnvironmentKey {
   public static let defaultValue: IconButtonSize = .l
 }
 
+/// A button that displays an icon.
+///
+/// Use an `IconButton` to display an icon that performs an action when tapped.
+///
+/// You can customize the appearance of the button by specifying a style. The `outline` style shows a transparent button with an outline around the icon, while the `ghost` style shows a transparent button with no outline. The `secondary` and `primary` styles show a button with a background color that matches the secondary and primary colors of the app, respectively.
+///
+/// You can also customize the size of the button by specifying a size. The `xs`, `s`, `m`, `l`, and `xl` sizes correspond to 20, 24, 32, 40, and 48 points, respectively.
+///
+/// Example usage:
+///
+///     IconButton(icon: .plus) {
+///         doSomething()
+///     }
+///     .iconButtonStyle(.primary)
+///     .iconButtonSize(.xl)
+///
+/// - Parameters:
+///   - icon: The icon to display in the button.
+///   - action: The action to perform when the user taps the button.
+///
 public struct IconButton: View {
+  /// The icon to display in the button.
   public var icon: EAMSymbol
+
+  /// The action to perform when the user taps the button.
   public var action: () -> Void
 
   @Environment(\.iconButtonStyle) var style
   @Environment(\.iconButtonSize) var size
   
+  /// Creates a button that displays an icon.
+  ///
+  /// - Parameters:
+  ///   - icon: The icon to display in the button.
+  ///   - action: The action to perform when the user taps the button.
+  ///
   public init(icon: EAMSymbol, action: @escaping () -> Void) {
     self.icon = icon
     self.action = action
