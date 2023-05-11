@@ -5,7 +5,7 @@
 //  Created by Arvindh Sukumar on 07/04/23.
 //
 
-import EAMUI
+import TarkaUI
 import SwiftUI
 
 struct ContentView: View {

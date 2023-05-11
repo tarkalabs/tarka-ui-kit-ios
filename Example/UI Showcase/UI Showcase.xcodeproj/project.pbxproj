@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D403A38229E6B0AE00BD067C /* EAMUI in Frameworks */ = {isa = PBXBuildFile; productRef = D403A38129E6B0AE00BD067C /* EAMUI */; };
+		D41499262A0CCE0C00929EAB /* TarkaUI in Frameworks */ = {isa = PBXBuildFile; productRef = D41499252A0CCE0C00929EAB /* TarkaUI */; };
 		D43CDD9B29DFE34900F8081E /* UI_ShowcaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDD9A29DFE34900F8081E /* UI_ShowcaseApp.swift */; };
 		D43CDD9D29DFE34900F8081E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDD9C29DFE34900F8081E /* ContentView.swift */; };
 		D43CDD9F29DFE34A00F8081E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D43CDD9E29DFE34A00F8081E /* Assets.xcassets */; };
@@ -53,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D403A38229E6B0AE00BD067C /* EAMUI in Frameworks */,
+				D41499262A0CCE0C00929EAB /* TarkaUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,7 +166,7 @@
 			);
 			name = "UI Showcase";
 			packageProductDependencies = (
-				D403A38129E6B0AE00BD067C /* EAMUI */,
+				D41499252A0CCE0C00929EAB /* TarkaUI */,
 			);
 			productName = "UI Showcase";
 			productReference = D43CDD9729DFE34900F8081E /* UI Showcase.app */;
@@ -612,9 +612,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D403A38129E6B0AE00BD067C /* EAMUI */ = {
+		D41499252A0CCE0C00929EAB /* TarkaUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = EAMUI;
+			productName = TarkaUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
