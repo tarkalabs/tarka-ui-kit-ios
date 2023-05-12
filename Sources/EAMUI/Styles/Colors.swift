@@ -56,6 +56,7 @@ public enum EAMColor: String {
   case surface
   case surface50
   case surfaceVariant
+  case surfaceHover
 
   // Constants
   case constantDark
@@ -115,6 +116,7 @@ public extension Color {
   static let surface = Color(.surface)
   static let surface50 = Color(.surface50)
   static let surfaceVariant = Color(.surfaceVariant)
+  static let surfaceHover = Color(.surfaceHover)
 
   // Constants
   static let constantDark = Color(.constantDark)
