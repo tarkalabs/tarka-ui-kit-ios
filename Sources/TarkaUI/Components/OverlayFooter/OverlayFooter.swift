@@ -66,7 +66,7 @@ struct OverlayFooter_Previews: PreviewProvider {
       icon.rawValue
     }
     
-    var icon: EAMSymbol {
+    var icon: TUISymbol {
       switch self {
       case .one: return .chevronLeft
       case .two: return .chevronDown

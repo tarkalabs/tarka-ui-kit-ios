@@ -26,7 +26,7 @@ import SwiftUI
 ///
 public struct NavigationRow: View {
   var title: any StringProtocol
-  var symbol: EAMSymbol?
+  var symbol: TUISymbol?
   var badgeCount: Int?
   
   /// Creates a navigation row with the specified title, symbol and badge count.
@@ -36,7 +36,7 @@ public struct NavigationRow: View {
   ///   - symbol: The symbol to display in the navigation row. The default value is `nil`.
   ///   - badgeCount: The badge count to display in the navigation row. The default value is `nil`.
   ///
-  public init(title: any StringProtocol, symbol: EAMSymbol? = nil, badgeCount: Int? = nil) {
+  public init(title: any StringProtocol, symbol: TUISymbol? = nil, badgeCount: Int? = nil) {
     self.title = title
     self.symbol = symbol
     self.badgeCount = badgeCount
@@ -66,7 +66,7 @@ public struct NavigationRow: View {
   }
   
   @ViewBuilder
-  private func imageView(_ symbol: EAMSymbol) -> some View {
+  private func imageView(_ symbol: TUISymbol) -> some View {
     Image(symbol)
       .resizable()
       .foregroundColor(.secondaryTUI)

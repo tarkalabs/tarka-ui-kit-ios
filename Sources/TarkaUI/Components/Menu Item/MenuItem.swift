@@ -32,7 +32,7 @@ public struct MenuItem {
     /// Displays the title and description.
     case withDescription(String)
     /// Displays the title and symbol.
-    case withSymbol(EAMSymbol)
+    case withSymbol(TUISymbol)
   }
   
   public init(title: any StringProtocol, configuration: MenuItem.Configuration) {
