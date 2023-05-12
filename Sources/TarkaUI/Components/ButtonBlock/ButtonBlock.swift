@@ -53,7 +53,7 @@ public struct ButtonBlock: View {
         .frame(maxWidth: .infinity)
     }
     .contentShape(Rectangle())
-    .tint(.primaryEAM)
+    .tint(.primaryTUI)
     .buttonStyle(.borderedProminent)
     .buttonBorderShape(.capsule)
   }

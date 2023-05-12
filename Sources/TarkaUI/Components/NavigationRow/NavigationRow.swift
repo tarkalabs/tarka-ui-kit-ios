@@ -69,7 +69,7 @@ public struct NavigationRow: View {
   private func imageView(_ symbol: EAMSymbol) -> some View {
     Image(symbol)
       .resizable()
-      .foregroundColor(.secondaryEAM)
+      .foregroundColor(.secondaryTUI)
       .frame(width: 24, height: 24)
   }
 }

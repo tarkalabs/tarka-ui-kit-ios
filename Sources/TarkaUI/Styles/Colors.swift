@@ -1,5 +1,5 @@
 //
-//  EAMColor.swift
+//  TUIColor.swift
 //
 //
 //  Created by Arvindh Sukumar on 13/04/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum EAMColor: String {
+public enum TUIColor: String {
   // Base
   case primary
   case secondary
@@ -69,8 +69,8 @@ public enum EAMColor: String {
 
 public extension Color {
   // Base
-  static let primaryEAM = Color(.primary)
-  static let secondaryEAM = Color(.secondary)
+  static let primaryTUI = Color(.primary)
+  static let secondaryTUI = Color(.secondary)
   static let tertiary = Color(.tertiary)
   static let error = Color(.error)
   static let success = Color(.success)
@@ -122,7 +122,7 @@ public extension Color {
   static let constantDark = Color(.constantDark)
   static let constantLight = Color(.constantLight)
 
-  init(_ color: EAMColor) {
+  init(_ color: TUIColor) {
     self.init(color.name, bundle: Bundle.module)
   }
 }

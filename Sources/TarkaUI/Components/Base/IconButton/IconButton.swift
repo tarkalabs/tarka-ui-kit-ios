@@ -125,9 +125,9 @@ extension IconButton {
     case .outline, .ghost:
       return .clear
     case .secondary:
-      return .secondaryEAM
+      return .secondaryTUI
     case .primary:
-      return .primaryEAM
+      return .primaryTUI
     }
   }
   
