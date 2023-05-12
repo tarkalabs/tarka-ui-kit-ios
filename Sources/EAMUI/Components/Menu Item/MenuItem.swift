@@ -5,7 +5,6 @@
 //  Created by Arvindh Sukumar on 27/04/23.
 //
 
-import Foundation
 import SwiftUI
 
 /// A struct that represents a menu item.
