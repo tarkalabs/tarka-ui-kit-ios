@@ -122,7 +122,7 @@ struct CircularProgressView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
       CircularProgressView(progress: 0.4) {
-        Image(.checkmarkStarburst)
+        Image(Symbol.reorderDots)
           .resizable()
           .scaledToFit()
       }
@@ -130,7 +130,7 @@ struct CircularProgressView_Previews: PreviewProvider {
       .frame(width: 40, height: 40)
       
       CircularProgressView(progress: 0.4) {
-        Image(.checkmarkStarburst)
+        Image(Symbol.reorderDots)
           .resizable()
           .scaledToFit()
       }

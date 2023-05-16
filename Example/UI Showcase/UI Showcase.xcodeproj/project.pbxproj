@@ -15,6 +15,7 @@
 		D43CDDAC29DFE34A00F8081E /* UI_ShowcaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDDAB29DFE34A00F8081E /* UI_ShowcaseTests.swift */; };
 		D43CDDB629DFE34A00F8081E /* UI_ShowcaseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDDB529DFE34A00F8081E /* UI_ShowcaseUITests.swift */; };
 		D43CDDB829DFE34A00F8081E /* UI_ShowcaseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDDB729DFE34A00F8081E /* UI_ShowcaseUITestsLaunchTests.swift */; };
+		D4F4ED5D2A1367C6003B9805 /* Symbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F4ED5C2A1367C6003B9805 /* Symbol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		D43CDDB529DFE34A00F8081E /* UI_ShowcaseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI_ShowcaseUITests.swift; sourceTree = "<group>"; };
 		D43CDDB729DFE34A00F8081E /* UI_ShowcaseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI_ShowcaseUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D43CDDC929DFE49200F8081E /* eam360-ui-ios */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "eam360-ui-ios"; path = ../..; sourceTree = "<group>"; };
+		D4F4ED5C2A1367C6003B9805 /* Symbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Symbol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 		D43CDD9929DFE34900F8081E /* UI Showcase */ = {
 			isa = PBXGroup;
 			children = (
+				D4F4ED5B2A1367AA003B9805 /* Styles */,
 				D43CDD9A29DFE34900F8081E /* UI_ShowcaseApp.swift */,
 				D43CDD9C29DFE34900F8081E /* ContentView.swift */,
 				D43CDD9E29DFE34A00F8081E /* Assets.xcassets */,
@@ -147,6 +150,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D4F4ED5B2A1367AA003B9805 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				D4F4ED5C2A1367C6003B9805 /* Symbol.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,6 +297,7 @@
 			files = (
 				D43CDD9D29DFE34900F8081E /* ContentView.swift in Sources */,
 				D43CDD9B29DFE34900F8081E /* UI_ShowcaseApp.swift in Sources */,
+				D4F4ED5D2A1367C6003B9805 /* Symbol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

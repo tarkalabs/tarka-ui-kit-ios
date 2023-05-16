@@ -42,7 +42,7 @@ public struct DraggableCard<Content>: View where Content: View {
   public var body: some View {
       HStack {
         IconButton(
-          icon: .reorderDots
+          icon: Symbol.reorderDots
         ) {
           
         }
