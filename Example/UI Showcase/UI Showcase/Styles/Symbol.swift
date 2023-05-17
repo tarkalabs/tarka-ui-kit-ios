@@ -9,11 +9,7 @@ import Foundation
 import TarkaUI
 import FluentIcons
 
-<<<<<<<< HEAD:Example/UI Showcase/UI Showcase/Styles/Symbol.swift
 public enum Symbol: String, Icon {
-========
-public enum TUISymbol: String {
->>>>>>>> origin/main:Sources/TarkaUI/Styles/Symbols.swift
   case chevronDown
   case chevronRight
   case chevronLeft
@@ -81,13 +77,3 @@ public enum TUISymbol: String {
     }
   }
 }
-<<<<<<<< HEAD:Example/UI Showcase/UI Showcase/Styles/Symbol.swift
-========
-
-
-public extension Image {
-  init(_ symbol: TUISymbol) {
-    self.init(uiImage: UIImage(fluent: symbol.icon))
-  }
-}
->>>>>>>> origin/main:Sources/TarkaUI/Styles/Symbols.swift
