@@ -46,10 +46,9 @@ public struct NavigationRow: View {
     HStack(alignment: .center, spacing: 0) {
       if let symbol = symbol {
         imageView(symbol)
-          .padding(.horizontal, Spacing.halfHorizontal)
 
         Spacer()
-          .frame(width: Spacing.halfHorizontal)
+          .frame(width: Spacing.baseHorizontal)
       }
       
       Text(title)
