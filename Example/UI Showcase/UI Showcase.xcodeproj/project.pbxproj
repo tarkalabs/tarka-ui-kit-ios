@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D403A38229E6B0AE00BD067C /* EAMUI in Frameworks */ = {isa = PBXBuildFile; productRef = D403A38129E6B0AE00BD067C /* EAMUI */; };
+		D41499262A0CCE0C00929EAB /* TarkaUI in Frameworks */ = {isa = PBXBuildFile; productRef = D41499252A0CCE0C00929EAB /* TarkaUI */; };
 		D43CDD9B29DFE34900F8081E /* UI_ShowcaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDD9A29DFE34900F8081E /* UI_ShowcaseApp.swift */; };
 		D43CDD9D29DFE34900F8081E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDD9C29DFE34900F8081E /* ContentView.swift */; };
 		D43CDD9F29DFE34A00F8081E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D43CDD9E29DFE34A00F8081E /* Assets.xcassets */; };
@@ -53,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D403A38229E6B0AE00BD067C /* EAMUI in Frameworks */,
+				D41499262A0CCE0C00929EAB /* TarkaUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,7 +166,7 @@
 			);
 			name = "UI Showcase";
 			packageProductDependencies = (
-				D403A38129E6B0AE00BD067C /* EAMUI */,
+				D41499252A0CCE0C00929EAB /* TarkaUI */,
 			);
 			productName = "UI Showcase";
 			productReference = D43CDD9729DFE34900F8081E /* UI Showcase.app */;
@@ -444,7 +444,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"UI Showcase/Preview Content\"";
-				DEVELOPMENT_TEAM = 546C62BX57;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -457,7 +457,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eam360.UI-Showcase";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tarkalabs.TarkaUI-Showcase";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -473,7 +473,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"UI Showcase/Preview Content\"";
-				DEVELOPMENT_TEAM = 546C62BX57;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -486,7 +486,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eam360.UI-Showcase";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tarkalabs.TarkaUI-Showcase";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -501,11 +501,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 546C62BX57;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eam360.UI-ShowcaseTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tarkalabs.TarkaUI-ShowcaseTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -521,11 +521,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 546C62BX57;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eam360.UI-ShowcaseTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tarkalabs.TarkaUI-ShowcaseTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -540,10 +540,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 546C62BX57;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eam360.UI-ShowcaseUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tarkalabs.TarkaUI-ShowcaseUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -558,10 +558,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 546C62BX57;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.eam360.UI-ShowcaseUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tarkalabs.TarkaUI-ShowcaseUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -612,9 +612,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D403A38129E6B0AE00BD067C /* EAMUI */ = {
+		D41499252A0CCE0C00929EAB /* TarkaUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = EAMUI;
+			productName = TarkaUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

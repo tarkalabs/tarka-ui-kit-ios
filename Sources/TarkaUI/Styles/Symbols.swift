@@ -8,7 +8,7 @@
 import SwiftUI
 import FluentIcons
 
-public enum EAMSymbol: String {
+public enum TUISymbol: String {
   case chevronDown
   case chevronRight
   case chevronLeft
@@ -75,7 +75,7 @@ public enum EAMSymbol: String {
 
 
 public extension Image {
-  init(_ symbol: EAMSymbol) {
+  init(_ symbol: TUISymbol) {
     self.init(uiImage: UIImage(fluent: symbol.icon))
   }
 }
