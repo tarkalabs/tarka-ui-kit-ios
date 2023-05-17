@@ -40,7 +40,7 @@ public enum IconButtonSize: EnvironmentKey {
 ///
 public struct IconButton: View {
   /// The icon to display in the button.
-  public var icon: EAMSymbol
+  public var icon: TUISymbol
 
   /// The action to perform when the user taps the button.
   public var action: () -> Void
@@ -54,7 +54,7 @@ public struct IconButton: View {
   ///   - icon: The icon to display in the button.
   ///   - action: The action to perform when the user taps the button.
   ///
-  public init(icon: EAMSymbol, action: @escaping () -> Void) {
+  public init(icon: TUISymbol, action: @escaping () -> Void) {
     self.icon = icon
     self.action = action
   }
@@ -125,9 +125,9 @@ extension IconButton {
     case .outline, .ghost:
       return .clear
     case .secondary:
-      return .secondaryEAM
+      return .secondaryTUI
     case .primary:
-      return .primaryEAM
+      return .primaryTUI
     }
   }
   

@@ -53,7 +53,7 @@ public struct ButtonBlock: View {
         .frame(maxWidth: .infinity)
     }
     .contentShape(Rectangle())
-    .tint(.primaryEAM)
+    .tint(.primaryTUI)
     .buttonStyle(.borderedProminent)
     .buttonBorderShape(.capsule)
   }
@@ -72,11 +72,11 @@ struct ButtonBlock_Previews: PreviewProvider {
       }
     }
     
-    var leftIcon: EAMSymbol? {
+    var leftIcon: TUISymbol? {
       return nil
     }
     
-    var rightIcon: EAMSymbol? {
+    var rightIcon: TUISymbol? {
       return nil
     }
     

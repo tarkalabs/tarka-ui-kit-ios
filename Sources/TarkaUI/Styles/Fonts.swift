@@ -30,7 +30,7 @@ struct FontVariant {
   }
 }
 
-public enum EAMFont {
+public enum TUIFont {
   case heading1
   case heading2
   case heading3
@@ -116,7 +116,7 @@ public extension Font {
   static let button7 = Font.using(.button7)
   static let button8 = Font.using(.button8)
     
-  static func using(_ font: EAMFont) -> Font {
+  static func using(_ font: TUIFont) -> Font {
     Font.custom(font.fontVariant.name, size: font.size, relativeTo: font.textStyle)
   }
 }

@@ -97,7 +97,7 @@ public struct TabBar: View {
   private var selectionIndicatorView: some View {
     Capsule()
       .frame(width: selectedTabWidth)
-      .foregroundColor(.secondaryEAM)
+      .foregroundColor(.secondaryTUI)
       .offset(x: getOffset(), y: 0)
   }
   

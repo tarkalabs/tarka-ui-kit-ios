@@ -16,7 +16,7 @@ import Foundation
 ///
 public protocol OverlayFooterAction {
   var id: String { get }
-  var icon: EAMSymbol { get }
+  var icon: TUISymbol { get }
   var handler: () -> Void { get }
 }
 

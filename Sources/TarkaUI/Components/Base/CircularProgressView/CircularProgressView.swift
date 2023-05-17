@@ -84,7 +84,7 @@ public struct CircularProgressView<Label: View>: View {
       Circle()
         .trim(from: 0, to: progress)
         .stroke(
-          Color.primaryEAM,
+          Color.primaryTUI,
           style: StrokeStyle(
             lineWidth: lineWidth
           )
@@ -95,7 +95,7 @@ public struct CircularProgressView<Label: View>: View {
       Circle()
         .trim(from: 0, to: 0.25)
         .stroke(
-          Color.primaryEAM,
+          Color.primaryTUI,
           style: StrokeStyle(
             lineWidth: lineWidth
           )
