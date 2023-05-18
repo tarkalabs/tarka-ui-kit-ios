@@ -32,11 +32,11 @@ internal enum Symbol: String, Icon {
   public var fluentIcon: FluentIcon {
     switch self {
     case .chevronDown:
-      return .chevronDown48Regular
+      return .chevronDown48Filled
     case .chevronRight:
-      return .chevronRight48Regular
+      return .iosChevronRight20Filled
     case .chevronLeft:
-      return .chevronLeft48Regular
+      return .chevronLeft48Filled
     case .reorderDots:
       return .reOrderDotsVertical24Regular
     }
