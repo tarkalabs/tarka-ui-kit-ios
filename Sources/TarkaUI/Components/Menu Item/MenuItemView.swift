@@ -94,7 +94,7 @@ struct MenuItemView_Previews: PreviewProvider {
       MenuItemView(
         item: MenuItem(
           title: "Label",
-          configuration: .withSymbol(.map)
+          configuration: .withSymbol(Symbol.reorderDots)
         ),
         action: {}
       )

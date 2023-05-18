@@ -26,7 +26,7 @@ import SwiftUI
 ///
 public struct NavigationRow: View {
   var title: any StringProtocol
-  var symbol: TUISymbol?
+  var symbol: Icon?
   var badgeCount: Int?
   
   /// Creates a navigation row with the specified title, symbol and badge count.
@@ -36,7 +36,7 @@ public struct NavigationRow: View {
   ///   - symbol: The symbol to display in the navigation row. The default value is `nil`.
   ///   - badgeCount: The badge count to display in the navigation row. The default value is `nil`.
   ///
-  public init(title: any StringProtocol, symbol: TUISymbol? = nil, badgeCount: Int? = nil) {
+  public init(title: any StringProtocol, symbol: Icon? = nil, badgeCount: Int? = nil) {
     self.title = title
     self.symbol = symbol
     self.badgeCount = badgeCount
@@ -46,10 +46,9 @@ public struct NavigationRow: View {
     HStack(alignment: .center, spacing: 0) {
       if let symbol = symbol {
         imageView(symbol)
-          .padding(.horizontal, Spacing.halfHorizontal)
 
         Spacer()
-          .frame(width: Spacing.halfHorizontal)
+          .frame(width: Spacing.baseHorizontal)
       }
       
       Text(title)
@@ -66,7 +65,7 @@ public struct NavigationRow: View {
   }
   
   @ViewBuilder
-  private func imageView(_ symbol: TUISymbol) -> some View {
+  private func imageView(_ symbol: Icon) -> some View {
     Image(symbol)
       .resizable()
       .foregroundColor(.secondaryTUI)
@@ -76,6 +75,6 @@ public struct NavigationRow: View {
 
 struct NavigationRow_Previews: PreviewProvider {
   static var previews: some View {
-    NavigationRow(title: "Label", symbol: .export, badgeCount: 100)
+    NavigationRow(title: "Label", symbol: Symbol.reorderDots, badgeCount: 100)
   }
 }

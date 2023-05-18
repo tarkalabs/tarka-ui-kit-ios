@@ -72,11 +72,11 @@ struct ButtonBlock_Previews: PreviewProvider {
       }
     }
     
-    var leftIcon: TUISymbol? {
+    var leftIcon: Icon? {
       return nil
     }
     
-    var rightIcon: TUISymbol? {
+    var rightIcon: Icon? {
       return nil
     }
     

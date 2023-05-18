@@ -40,7 +40,7 @@ public enum IconButtonSize: EnvironmentKey {
 ///
 public struct IconButton: View {
   /// The icon to display in the button.
-  public var icon: TUISymbol
+  public var icon: Icon
 
   /// The action to perform when the user taps the button.
   public var action: () -> Void
@@ -54,7 +54,7 @@ public struct IconButton: View {
   ///   - icon: The icon to display in the button.
   ///   - action: The action to perform when the user taps the button.
   ///
-  public init(icon: TUISymbol, action: @escaping () -> Void) {
+  public init(icon: Icon, action: @escaping () -> Void) {
     self.icon = icon
     self.action = action
   }
@@ -169,7 +169,7 @@ struct IconButtonView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
       IconButton(
-        icon: .chevronDown,
+        icon: Symbol.reorderDots,
         action: {
         
       })
