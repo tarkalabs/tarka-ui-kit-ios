@@ -29,6 +29,8 @@ public struct NavigationRow: View {
   var symbol: Icon?
   var badgeCount: Int?
   
+  @Environment(\.detailDisclosure) private var showDetailDisclosure
+  
   /// Creates a navigation row with the specified title, symbol and badge count.
   ///
   /// - Parameters:
@@ -60,6 +62,10 @@ public struct NavigationRow: View {
       if let badgeCount = badgeCount {
         Badge(count: badgeCount) .badgeSize(.m)
       }
+      
+      if showDetailDisclosure {
+        DetailDisclosure()
+      }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
   }
@@ -75,6 +81,10 @@ public struct NavigationRow: View {
 
 struct NavigationRow_Previews: PreviewProvider {
   static var previews: some View {
-    NavigationRow(title: "Label", symbol: Symbol.reorderDots, badgeCount: 100)
+    Group {
+      NavigationRow(title: "Label", symbol: Symbol.reorderDots, badgeCount: 100)
+      NavigationRow(title: "Label", symbol: Symbol.reorderDots, badgeCount: 100)
+        .detailDisclosure()
+    }
   }
 }
