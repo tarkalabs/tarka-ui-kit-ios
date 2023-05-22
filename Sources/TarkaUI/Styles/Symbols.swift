@@ -24,6 +24,10 @@ internal enum Symbol: String, Icon {
   case chevronRight
   case chevronLeft
   case reorderDots
+  case checkmarkCircle
+  case info
+  case warning
+  case error
   
   public var name: String {
     rawValue
@@ -39,6 +43,14 @@ internal enum Symbol: String, Icon {
       return .chevronLeft48Filled
     case .reorderDots:
       return .reOrderDotsVertical24Regular
+    case .checkmarkCircle:
+      return .checkmarkCircle48Filled
+    case .info:
+      return .info48Filled
+    case .warning:
+      return .warning28Filled
+    case .error:
+      return .errorCircle24Filled
     }
   }
 }
