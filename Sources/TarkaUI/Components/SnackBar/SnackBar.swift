@@ -51,6 +51,10 @@ public struct SnackBar: View {
   @Environment(\.snackBarStyle) var style
   var message: any StringProtocol
   
+  public init(message: any StringProtocol) {
+    self.message = message
+  }
+  
   public var body: some View {
     HStack(spacing: 0) {
       iconView
