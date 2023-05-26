@@ -1,5 +1,5 @@
 //
-//  IconButton.swift
+//  TUIIconButton.swift
 //
 //
 //  Created by Arvindh Sukumar on 02/05/23.
@@ -8,14 +8,14 @@
 import SwiftUI
 
 
-public enum IconButtonStyle: EnvironmentKey {
+public enum TUIIconButtonStyle: EnvironmentKey {
   case outline, ghost, secondary, primary
-  public static let defaultValue: IconButtonStyle = .ghost
+  public static let defaultValue: TUIIconButtonStyle = .ghost
 }
 
-public enum IconButtonSize: EnvironmentKey {
+public enum TUIIconButtonSize: EnvironmentKey {
   case xs, s, m, l, xl
-  public static let defaultValue: IconButtonSize = .l
+  public static let defaultValue: TUIIconButtonSize = .l
 }
 
 /// A button that displays an icon.
@@ -28,7 +28,7 @@ public enum IconButtonSize: EnvironmentKey {
 ///
 /// Example usage:
 ///
-///     IconButton(icon: .plus) {
+///     TUIIconButton(icon: .plus) {
 ///         doSomething()
 ///     }
 ///     .iconButtonStyle(.primary)
@@ -38,7 +38,7 @@ public enum IconButtonSize: EnvironmentKey {
 ///   - icon: The icon to display in the button.
 ///   - action: The action to perform when the user taps the button.
 ///
-public struct IconButton: View {
+public struct TUIIconButton: View {
   /// The icon to display in the button.
   public var icon: Icon
 
@@ -108,7 +108,7 @@ public struct IconButton: View {
   }
 }
 
-extension IconButton {
+extension TUIIconButton {
   var iconColor: Color {
     switch style {
     case .outline, .ghost:
@@ -168,7 +168,7 @@ extension IconButton {
 struct IconButtonView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      IconButton(
+      TUIIconButton(
         icon: Symbol.reorderDots,
         action: {
         
