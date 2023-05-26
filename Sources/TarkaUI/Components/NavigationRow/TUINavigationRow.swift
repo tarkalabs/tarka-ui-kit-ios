@@ -1,5 +1,5 @@
 //
-//  NavigationRow.swift
+//  TUINavigationRow.swift
 //
 //
 //  Created by Arvindh Sukumar on 25/04/23.
@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// Example usage:
 ///
-///     NavigationRow(
+///     TUINavigationRow(
 ///       title: "Label",
 ///       symbol: .export,
 ///       accessoryView: {
@@ -26,7 +26,7 @@ import SwiftUI
 ///   - symbol: The symbol to display in the navigation row. The default value is `nil`.
 ///   - accessoryView: Extra content to display in the navigation row
 ///
-public struct NavigationRow<Content>: View where Content: View {
+public struct TUINavigationRow<Content>: View where Content: View {
   var title: any StringProtocol
   var symbol: Icon?
   var accessoryView: () -> Content
@@ -86,10 +86,10 @@ public struct NavigationRow<Content>: View where Content: View {
 struct NavigationRow_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      NavigationRow(title: "Label", symbol: Symbol.reorderDots) {
+      TUINavigationRow(title: "Label", symbol: Symbol.reorderDots) {
         TUIBadge(count: 100)
       }
-      NavigationRow(title: "Label", symbol: Symbol.reorderDots) {
+      TUINavigationRow(title: "Label", symbol: Symbol.reorderDots) {
         TUIBadge(count: 100)
       }
       .detailDisclosure()
