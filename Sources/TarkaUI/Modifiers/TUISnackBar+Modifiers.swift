@@ -8,18 +8,18 @@
 import SwiftUI
 
 extension EnvironmentValues {
-  var snackBarStyle: SnackBarStyle {
-    get { self[SnackBarStyle.self] }
-    set { self[SnackBarStyle.self] = newValue }
+  var snackBarStyle: TUISnackBarStyle {
+    get { self[TUISnackBarStyle.self] }
+    set { self[TUISnackBarStyle.self] = newValue }
   }
 }
 
 public extension View {
   /// Sets the `snackBarStyle` for `SnackBars`
   ///
-  /// - Parameter style: The `SnackBarStyle` to use.
+  /// - Parameter style: The `TUISnackBarStyle` to use.
   /// - Returns: A modified `View` that has the `snackBarStyle` set as an environment value.
-  func snackBarStyle(_ style: SnackBarStyle) -> some View {
+  func snackBarStyle(_ style: TUISnackBarStyle) -> some View {
     self.environment(\.snackBarStyle, style)
   }
 }
