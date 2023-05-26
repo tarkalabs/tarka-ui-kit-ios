@@ -1,5 +1,5 @@
 //
-//  CircularProgressView.swift
+//  TUICircularProgressView.swift
 //
 //
 //  Created by Arvindh Sukumar on 01/05/23.
@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-public enum CircularProgressViewStyle: EnvironmentKey {
+public enum TUICircularProgressViewStyle: EnvironmentKey {
   case determinate, indeterminate
   
-  public static var defaultValue: CircularProgressViewStyle = .indeterminate
+  public static var defaultValue: TUICircularProgressViewStyle = .indeterminate
 }
 
 /// A view that displays a circular progress indicator.
 ///
-/// Use a `CircularProgressView` to show the progress of a task, such as a download or upload operation.
+/// Use a `TUICircularProgressView` to show the progress of a task, such as a download or upload operation.
 ///
 /// You can customize the appearance of the progress view by specifying a style. The `determinate` style shows a progress bar that fills up as the task progresses, while the `indeterminate` style shows a spinning wheel that indicates that the task is in progress but does not show the progress itself.
 ///
@@ -23,7 +23,7 @@ public enum CircularProgressViewStyle: EnvironmentKey {
 ///
 /// Example usage:
 ///
-///     CircularProgressView(progress: 0.4) {
+///     TUICircularProgressView(progress: 0.4) {
 ///         Image(systemName: "checkmark.circle.fill")
 ///             .resizable()
 ///             .scaledToFit()
@@ -33,7 +33,7 @@ public enum CircularProgressViewStyle: EnvironmentKey {
 ///   - progress: The progress of the task, represented as a value between 0 and 1. Ignored if the style is `indeterminate`.
 ///   - label: A view to display alongside the progress view.
 ///
-public struct CircularProgressView<Label: View>: View {
+public struct TUICircularProgressView<Label: View>: View {
   /// The progress of the task, represented as a value between 0 and 1. Ignored if the style is `indeterminate`.
   public var progress: Double = 0.0
   
@@ -121,7 +121,7 @@ public struct CircularProgressView<Label: View>: View {
 struct CircularProgressView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      CircularProgressView(progress: 0.4) {
+      TUICircularProgressView(progress: 0.4) {
         Image(Symbol.reorderDots)
           .resizable()
           .scaledToFit()
@@ -129,7 +129,7 @@ struct CircularProgressView_Previews: PreviewProvider {
       .circularProgressViewStyle(.determinate)
       .frame(width: 40, height: 40)
       
-      CircularProgressView(progress: 0.4) {
+      TUICircularProgressView(progress: 0.4) {
         Image(Symbol.reorderDots)
           .resizable()
           .scaledToFit()
