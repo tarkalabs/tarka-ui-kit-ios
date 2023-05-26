@@ -1,5 +1,5 @@
 //
-//  Badge.swift
+//  TUIBadge.swift
 //
 //
 //  Created by Arvindh Sukumar on 25/04/23.
@@ -14,13 +14,13 @@ import SwiftUI
 ///
 /// Example usage:
 ///
-///     Badge(count: 10)
+///     TUIBadge(count: 10)
 ///       .badgeSize(.m)
 ///
 /// - Parameters:
 ///   - count: The count to be displayed in the center of the badge.
 ///
-public struct Badge: View {
+public struct TUIBadge: View {
   /// The count to be displayed in the center of the badge.
   public var count: Int?
 
@@ -95,23 +95,23 @@ struct Badge_Previews: PreviewProvider {
   static var previews: some View {
     Group {
       HStack {
-        Badge()
+        TUIBadge()
       }
       .badgeSize(.m)
       .previewDisplayName("Plain")
 
       HStack {
-        Badge(count: 1)
-        Badge(count: 10)
-        Badge(count: 100)
+        TUIBadge(count: 1)
+        TUIBadge(count: 10)
+        TUIBadge(count: 100)
       }
       .badgeSize(.m)
       .previewDisplayName("Count Medium")
 
       HStack {
-        Badge(count: 1)
-        Badge(count: 10)
-        Badge(count: 100)
+        TUIBadge(count: 1)
+        TUIBadge(count: 10)
+        TUIBadge(count: 100)
       }
       .badgeSize(.l)
       .previewDisplayName("Count Large")

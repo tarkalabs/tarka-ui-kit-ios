@@ -17,7 +17,7 @@ import SwiftUI
 ///       title: "Label",
 ///       symbol: .export,
 ///       accessoryView: {
-///         Badge()
+///         TUIBadge()
 ///       }
 ///     )
 ///
@@ -86,13 +86,11 @@ public struct NavigationRow<Content>: View where Content: View {
 struct NavigationRow_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      VStack {
-        NavigationRow(title: "Label", symbol: Symbol.reorderDots) {
-          Badge(count: 100)
-        }
-        NavigationRow(title: "Label", symbol: Symbol.reorderDots) {
-          Badge(count: 100)
-        }
+      NavigationRow(title: "Label", symbol: Symbol.reorderDots) {
+        TUIBadge(count: 100)
+      }
+      NavigationRow(title: "Label", symbol: Symbol.reorderDots) {
+        TUIBadge(count: 100)
       }
       .detailDisclosure()
     }
