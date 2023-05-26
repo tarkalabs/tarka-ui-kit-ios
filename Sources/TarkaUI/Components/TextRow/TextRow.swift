@@ -39,7 +39,7 @@ public struct TextRow: View {
       if showDetailDisclosure {
         Spacer()
         
-        DetailDisclosure()
+        TUIDetailDisclosure()
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
