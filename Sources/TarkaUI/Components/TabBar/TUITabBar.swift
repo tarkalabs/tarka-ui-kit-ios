@@ -1,5 +1,5 @@
 //
-//  TabBar.swift
+//  TUITabBar.swift
 //
 //
 //  Created by Arvindh Sukumar on 01/05/23.
@@ -8,23 +8,23 @@ import SwiftUI
 
 /// A custom TabBar view that displays a list of tabs with a selection indicator.
 ///
-/// The TabBar view takes an array of titles and a binding to a selected tab. The selected tab is highlighted with a selection indicator.
+/// The TUITabBar view takes an array of titles and a binding to a selected tab. The selected tab is highlighted with a selection indicator.
 ///
 /// Example usage:
 ///
-///     TabBar(titles: ["Tab 1", "Tab 2", "Tab 3"], selectedTab: $selectedTab)
+///     TUITabBar(titles: ["Tab 1", "Tab 2", "Tab 3"], selectedTab: $selectedTab)
 ///
 /// - Parameters:
 ///   - titles: An array of strings representing the titles of the tabs.
 ///   - selectedTab: A binding to a string representing the currently selected tab.
 ///
-public struct TabBar: View {
+public struct TUITabBar: View {
   let titles: [String]
   @Binding var selectedTab: String
   @State private var tabWidths: [CGFloat] = []
   @State private var selectedTabWidth: CGFloat
     
-  /// Creates a TabBar view with the specified titles and selected tab.
+  /// Creates a TUITabBar view with the specified titles and selected tab.
   ///
   /// - Parameters:
   ///   - titles: An array of strings representing the titles of the tabs.
@@ -130,6 +130,6 @@ private struct TabWidthPreferenceKey: PreferenceKey {
 
 struct TabBar_Previews: PreviewProvider {
   static var previews: some View {
-    TabBar(titles: ["ABC", "DEF"], selectedTab: .constant("ABC"))
+    TUITabBar(titles: ["ABC", "DEF"], selectedTab: .constant("ABC"))
   }
 }
