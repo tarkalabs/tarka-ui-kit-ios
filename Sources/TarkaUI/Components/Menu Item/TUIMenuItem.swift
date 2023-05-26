@@ -1,5 +1,5 @@
 //
-//  MenuItem.swift
+//  TUIMenuItem.swift
 //  
 //
 //  Created by Arvindh Sukumar on 27/04/23.
@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// Example usage:
 ///
-///     MenuItem(
+///     TUIMenuItem(
 ///       title: "Title",
 ///       configuration: .withDescription("Description")
 ///     )
@@ -22,7 +22,7 @@ import SwiftUI
 ///   - title: The title to display in the menu item.
 ///   - configuration: The configuration to use to display the menu item. The default value is `.onlyLabel`.
 ///
-public struct MenuItem {
+public struct TUIMenuItem {
   public var title: any StringProtocol
   public var configuration: Configuration
   
@@ -35,7 +35,7 @@ public struct MenuItem {
     case withSymbol(Icon)
   }
   
-  public init(title: any StringProtocol, configuration: MenuItem.Configuration) {
+  public init(title: any StringProtocol, configuration: TUIMenuItem.Configuration) {
     self.title = title
     self.configuration = configuration
   }
