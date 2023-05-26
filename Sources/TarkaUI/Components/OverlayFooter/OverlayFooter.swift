@@ -56,7 +56,7 @@ public struct OverlayFooter: View {
   
   @ViewBuilder
   private func view(forAction action: OverlayFooterAction) -> some View {
-    IconButton(icon: action.icon, action: action.handler)
+    TUIIconButton(icon: action.icon, action: action.handler)
   }
 }
 
