@@ -68,7 +68,7 @@ public struct NavigationRow<Content>: View where Content: View {
       accessoryView()
       
       if showDetailDisclosure {
-        DetailDisclosure()
+        TUIDetailDisclosure()
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
