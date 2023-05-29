@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-enum ActiveStatus {
+public enum ActiveStatus {
   case on, off
   
-  var color: Color {
+  public var color: Color {
     switch self {
     case .on: return Color.success
     case .off: return Color.error
     }
   }
   
-  var text: String {
+  public var text: String {
     switch self {
     case .on: return "Connected"
     case .off: return "Disconnected"
@@ -25,14 +25,14 @@ enum ActiveStatus {
   }
 }
 
-struct StatusCircle: View {
+public struct StatusCircle: View {
   
   @State private var status: ActiveStatus
   
-  init(_ status: ActiveStatus) {
+  public init(_ status: ActiveStatus) {
     self.status = status
   }
-  var body: some View {
+  public var body: some View {
     
     ZStack {
       let viewSize = Spacing.custom(20)

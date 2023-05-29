@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct StatusIndicator: View {
+public struct StatusIndicator: View {
     
   @State private var status: ActiveStatus
   
-  init(_ status: ActiveStatus) {
+  public init(_ status: ActiveStatus) {
     self.status = status
   }
-  var body: some View {
+  public var body: some View {
     HStack(spacing: Spacing.halfHorizontal) {
       Text(status.text)
         .font(.button8)
@@ -22,7 +22,6 @@ struct StatusIndicator: View {
       
       StatusCircle(.on)
     }
-    
   }
 }
 
