@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct StatusIndicator: View {
   
-  @State private var status: ActiveStatus
+  private var status: ActiveStatus
   
   public init(_ status: ActiveStatus) {
     self.status = status
@@ -20,7 +20,7 @@ public struct StatusIndicator: View {
         .font(.button8)
         .foregroundColor(.disabledContent)
       
-      StatusCircle(.on)
+      StatusCircle(status)
     }
   }
 }

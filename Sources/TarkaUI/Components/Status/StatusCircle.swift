@@ -27,24 +27,18 @@ public enum ActiveStatus {
 
 public struct StatusCircle: View {
   
-  @State private var status: ActiveStatus
+  private var status: ActiveStatus
   
   public init(_ status: ActiveStatus) {
     self.status = status
   }
   public var body: some View {
     
-    ZStack {
-      let viewSize = Spacing.custom(20)
-      Rectangle()
-        .fill(.background)
-        .frame(width: viewSize, height: viewSize)
-      
-      let circleSize = Spacing.halfHorizontal
-      Circle()
-        .fill(status.color)
-        .frame(width: circleSize, height: circleSize)
-    }
+    let circleSize = Spacing.halfHorizontal
+    Circle()
+      .fill(status.color)
+      .frame(width: circleSize, height: circleSize)
+      .padding(.all, 6.0)
   }
 }
 
