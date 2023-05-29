@@ -7,18 +7,15 @@
 
 import SwiftUI
 
-struct StatusCircle: View {
+public struct StatusCircle: View {
   
-  private var status: ActiveStatus
+  public var color: Color
   
-  init(_ status: ActiveStatus) {
-    self.status = status
-  }
-  var body: some View {
+  public var body: some View {
     
     let circleSize = Spacing.halfHorizontal
     Circle()
-      .fill(status.color)
+      .fill(color)
       .frame(width: circleSize, height: circleSize)
       .padding(.all, 6.0)
   }
@@ -26,6 +23,6 @@ struct StatusCircle: View {
 
 struct StatusCircle_Previews: PreviewProvider {
   static var previews: some View {
-    StatusCircle(.on)
+    StatusCircle(color: Color.success)
   }
 }

@@ -34,7 +34,7 @@ public struct StatusIndicator: View {
           .font(.button8)
           .foregroundColor(.disabledContent)
       }
-      StatusCircle(status)
+      StatusCircle(color: status.color)
     }
   }
 }
