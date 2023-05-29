@@ -7,32 +7,14 @@
 
 import SwiftUI
 
-public enum ActiveStatus {
-  case on, off
-  
-  public var color: Color {
-    switch self {
-    case .on: return Color.success
-    case .off: return Color.error
-    }
-  }
-  
-  public var text: String {
-    switch self {
-    case .on: return "Connected"
-    case .off: return "Disconnected"
-    }
-  }
-}
-
-public struct StatusCircle: View {
+struct StatusCircle: View {
   
   private var status: ActiveStatus
   
-  public init(_ status: ActiveStatus) {
+  init(_ status: ActiveStatus) {
     self.status = status
   }
-  public var body: some View {
+  var body: some View {
     
     let circleSize = Spacing.halfHorizontal
     Circle()
