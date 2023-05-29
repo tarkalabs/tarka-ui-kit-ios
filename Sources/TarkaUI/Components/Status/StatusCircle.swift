@@ -49,7 +49,7 @@ public struct StatusCircle: View {
 }
 
 struct StatusCircle_Previews: PreviewProvider {
-    static var previews: some View {
-      StatusCircle(.on)
-    }
+  static var previews: some View {
+    StatusCircle(.on)
+  }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct StatusIndicator: View {
-    
+  
   @State private var status: ActiveStatus
   
   public init(_ status: ActiveStatus) {
@@ -26,9 +26,7 @@ public struct StatusIndicator: View {
 }
 
 struct StatusIndicator_Previews: PreviewProvider {
-    static var previews: some View {
-      StatusIndicator(.on)
-    }
+  static var previews: some View {
+    StatusIndicator(.on)
+  }
 }
-
-
