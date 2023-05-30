@@ -38,7 +38,7 @@ internal enum Symbol: String, Icon {
     case .chevronDown:
       return .chevronDown48Filled
     case .chevronRight:
-      return .iosChevronRight20Filled
+      return .chevronRight48Filled
     case .chevronLeft:
       return .chevronLeft48Filled
     case .reorderDots:

@@ -11,9 +11,10 @@ public struct TUIDetailDisclosure: View {
   public var body: some View {
     Image(Symbol.chevronRight)
       .resizable()
-      .scaledToFill()
-      .frame(width: 20, height: 22)
-      .foregroundColor(Color.disabledContent)
+      .scaledToFit()
+      .frame(width: 18, height: 18)
+      .foregroundColor(Color.outline)
+      .padding(.all, 2.0)
   }
 }
 
