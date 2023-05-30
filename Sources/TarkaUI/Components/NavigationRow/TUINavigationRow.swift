@@ -86,11 +86,13 @@ public struct TUINavigationRow<Content>: View where Content: View {
 struct NavigationRow_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      TUINavigationRow(title: "Label", symbol: Symbol.reorderDots) {
-        TUIBadge(count: 100)
-      }
-      TUINavigationRow(title: "Label", symbol: Symbol.reorderDots) {
-        TUIBadge(count: 100)
+      VStack {
+        TUINavigationRow(title: "Label", symbol: Symbol.reorderDots) {
+          TUIBadge(count: 100)
+        }
+        TUINavigationRow(title: "Label", symbol: Symbol.reorderDots) {
+          TUIBadge(count: 100)
+        }
       }
       .detailDisclosure()
     }

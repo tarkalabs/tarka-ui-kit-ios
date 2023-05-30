@@ -1,5 +1,5 @@
 //
-//  StatusIndicator.swift
+//  TUIStatusIndicator.swift
 //  
 //
 //  Created by Gopinath on 29/05/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public enum ActiveStatus {
+public enum TUIActiveStatus {
   case on, off
   
   public var color: Color {
@@ -18,12 +18,12 @@ public enum ActiveStatus {
   }
 }
 
-public struct StatusIndicator: View {
+public struct TUIStatusIndicator: View {
   
-  private var status: ActiveStatus
+  private var status: TUIActiveStatus
   private var text: String?
 
-  public init(_ status: ActiveStatus, text: String? = nil) {
+  public init(_ status: TUIActiveStatus, text: String? = nil) {
     self.status = status
     self.text = text
   }
@@ -34,16 +34,16 @@ public struct StatusIndicator: View {
           .font(.button8)
           .foregroundColor(.disabledContent)
       }
-      StatusCircle(color: status.color)
+      TUIStatusCircle(color: status.color)
     }
   }
 }
 
-struct StatusIndicator_Previews: PreviewProvider {
+struct TUIStatusIndicator_Previews: PreviewProvider {
   static var previews: some View {
     VStack {
-      StatusIndicator(.on)
-      StatusIndicator(.off, text: "Disconnected")
+      TUIStatusIndicator(.on)
+      TUIStatusIndicator(.off, text: "Disconnected")
     }
   }
 }
