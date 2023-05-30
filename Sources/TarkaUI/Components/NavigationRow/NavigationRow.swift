@@ -86,11 +86,13 @@ public struct NavigationRow<Content>: View where Content: View {
 struct NavigationRow_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      NavigationRow(title: "Label", symbol: Symbol.reorderDots) {
-        Badge(count: 100)
-      }
-      NavigationRow(title: "Label", symbol: Symbol.reorderDots) {
-        Badge(count: 100)
+      VStack {
+        NavigationRow(title: "Label", symbol: Symbol.reorderDots) {
+          Badge(count: 100)
+        }
+        NavigationRow(title: "Label", symbol: Symbol.reorderDots) {
+          Badge(count: 100)
+        }
       }
       .detailDisclosure()
     }
