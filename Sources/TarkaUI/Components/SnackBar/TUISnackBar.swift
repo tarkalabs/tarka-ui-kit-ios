@@ -1,5 +1,5 @@
 //
-//  SnackBar.swift
+//  TUISnackBar.swift
 //
 //
 //  Created by Arvindh Sukumar on 22/05/23.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-public enum SnackBarStyle: EnvironmentKey {
+public enum TUISnackBarStyle: EnvironmentKey {
   case success, info, warning, error
-  public static var defaultValue: SnackBarStyle = .success
+  public static var defaultValue: TUISnackBarStyle = .success
   
   var icon: Symbol {
     switch self {
@@ -56,12 +56,12 @@ public enum SnackBarStyle: EnvironmentKey {
 ///
 /// Example:
 /// ```
-/// SnackBar(message: "This is a snackbar")
+/// TUISnackBar(message: "This is a snackbar")
 ///  .snackBarStyle(.success)
 /// ```
 ///
 
-public struct SnackBar: View {
+public struct TUISnackBar: View {
   @Environment(\.snackBarStyle) var style
   var message: any StringProtocol
   
@@ -105,7 +105,7 @@ public struct SnackBar: View {
 
 struct SnackBar_Previews: PreviewProvider {
   static var previews: some View {
-    SnackBar(message: "Test")
+    TUISnackBar(message: "Test")
       .snackBarStyle(.success)
   }
 }

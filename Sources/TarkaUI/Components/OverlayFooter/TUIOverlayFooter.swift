@@ -1,5 +1,5 @@
 //
-//  OverlayFooter.swift
+//  TUIOverlayFooter.swift
 //
 //
 //  Created by Arvindh Sukumar on 05/05/23.
@@ -9,31 +9,31 @@ import SwiftUI
 
 /// A view that displays a horizontal list of actions at the bottom of an overlay.
 ///
-/// Use `OverlayFooter` to display a list of actions at the bottom of an overlay. You can add any number of actions to the footer using the `OverlayFooterActionBuilder` closure. Each action is represented by an `OverlayFooterAction` object, which contains an icon and a closure to be executed when the action is tapped.
+/// Use `TUIOverlayFooter` to display a list of actions at the bottom of an overlay. You can add any number of actions to the footer using the `OverlayFooterActionBuilder` closure. Each action is represented by an `TUIOverlayFooterAction` object, which contains an icon and a closure to be executed when the action is tapped.
 ///
 /// Example usage:
 ///
-///     OverlayFooter {
-///       OverlayFooterAction(icon: .chevronLeft) {
+///     TUIOverlayFooter {
+///       TUIOverlayFooterAction(icon: .chevronLeft) {
 ///         // Handle action
 ///       }
-///       OverlayFooterAction(icon: .chevronDown) {
+///       TUIOverlayFooterAction(icon: .chevronDown) {
 ///         // Handle action
 ///       }
-///       OverlayFooterAction(icon: .chevronRight) {
+///       TUIOverlayFooterAction(icon: .chevronRight) {
 ///         // Handle action
 ///       }
 ///     }
 ///
-public struct OverlayFooter: View {
-  private var actions: [OverlayFooterAction]
+public struct TUIOverlayFooter: View {
+  private var actions: [TUIOverlayFooterAction]
   
   /// Creates a footer with the specified actions.
   ///
   /// - Parameters:
   ///   - actions: The actions to display in the footer.
   ///
-  public init(@OverlayFooterActionBuilder actions: @escaping () -> [OverlayFooterAction]) {
+  public init(@OverlayFooterActionBuilder actions: @escaping () -> [TUIOverlayFooterAction]) {
     self.actions = actions()
   }
 
@@ -55,13 +55,13 @@ public struct OverlayFooter: View {
   }
   
   @ViewBuilder
-  private func view(forAction action: OverlayFooterAction) -> some View {
-    IconButton(icon: action.icon, action: action.handler)
+  private func view(forAction action: TUIOverlayFooterAction) -> some View {
+    TUIIconButton(icon: action.icon, action: action.handler)
   }
 }
 
 struct OverlayFooter_Previews: PreviewProvider {
-  private enum TestAction: OverlayFooterAction {
+  private enum TestAction: TUIOverlayFooterAction {
     var id: String {
       icon.name
     }
@@ -88,7 +88,7 @@ struct OverlayFooter_Previews: PreviewProvider {
   
   static var previews: some View {
     Group {
-      OverlayFooter {
+      TUIOverlayFooter {
         TestAction.one {
           
         }
@@ -102,7 +102,7 @@ struct OverlayFooter_Previews: PreviewProvider {
         }
       }
       
-      OverlayFooter {
+      TUIOverlayFooter {
         TestAction.one {
           
         }
@@ -113,7 +113,7 @@ struct OverlayFooter_Previews: PreviewProvider {
         
       }
       
-      OverlayFooter {
+      TUIOverlayFooter {
         TestAction.two {
           
         }

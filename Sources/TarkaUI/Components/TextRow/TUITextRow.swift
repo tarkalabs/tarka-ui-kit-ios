@@ -1,5 +1,5 @@
 //
-//  TextRow.swift
+//  TUITextRow.swift
 //
 //
 //  Created by Arvindh Sukumar on 25/04/23.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-/// `TextRow` is a SwiftUI view that displays a title and an optional description in a vertical stack.
+/// `TUITextRow` is a SwiftUI view that displays a title and an optional description in a vertical stack.
 /// The view can be customized with different styles, such as displaying only the title or displaying both the title and description.
-public struct TextRow: View {
+public struct TUITextRow: View {
   public var title: any StringProtocol
   public var style: Style
   
@@ -21,7 +21,7 @@ public struct TextRow: View {
   ///   - title: The title to display in the text row.
   ///   - style: The style to use to display the text row. The default value is `.onlyTitle`.
   ///
-  public init(_ title: any StringProtocol, style: TextRow.Style) {
+  public init(_ title: any StringProtocol, style: TUITextRow.Style) {
     self.title = title
     self.style = style
   }
@@ -39,7 +39,7 @@ public struct TextRow: View {
       if showDetailDisclosure {
         Spacer()
         
-        DetailDisclosure()
+        TUIDetailDisclosure()
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
@@ -78,7 +78,7 @@ public struct TextRow: View {
   }
 }
 
-public extension TextRow {
+public extension TUITextRow {
   enum Style {
     /// Displays only the title.
     case onlyTitle
@@ -91,9 +91,9 @@ public extension TextRow {
 struct TextRow_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      TextRow("Title", style: .onlyTitle)
+      TUITextRow("Title", style: .onlyTitle)
         .previewDisplayName("Only Title")
-      TextRow("Title", style: .textDescription("Description"))
+      TUITextRow("Title", style: .textDescription("Description"))
         .previewDisplayName("With Text Description")
     }
     .detailDisclosure()
