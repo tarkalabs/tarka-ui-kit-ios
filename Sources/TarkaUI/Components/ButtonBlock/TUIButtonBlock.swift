@@ -1,5 +1,5 @@
 //
-//  ButtonBlock.swift
+//  TUIButtonBlock.swift
 //
 //
 //  Created by Arvindh Sukumar on 02/05/23.
@@ -9,27 +9,27 @@ import SwiftUI
 
 /// A view that displays a horizontal row of buttons.
 ///
-/// Use a `ButtonBlock` to display a horizontal row of buttons. You can customize the buttons by passing in an array of `ButtonBlockAction` objects.
+/// Use a `TUIButtonBlock` to display a horizontal row of buttons. You can customize the buttons by passing in an array of `TUIButtonBlockAction` objects.
 ///
 /// Example usage:
 ///
-///     ButtonBlock {
+///     TUIButtonBlock {
 ///         actions...
 ///     }
 ///
-/// - Note: The `ButtonBlock` view takes up the full width of its parent view.
+/// - Note: The `TUIButtonBlock` view takes up the full width of its parent view.
 ///
 ///
-/// - SeeAlso: `ButtonBlockAction`
-public struct ButtonBlock: View {
-  private var actions: [ButtonBlockAction] = []
+/// - SeeAlso: `TUIButtonBlockAction`
+public struct TUIButtonBlock: View {
+  private var actions: [TUIButtonBlockAction] = []
   
   /// Creates a button block with the specified actions.
   ///
   /// - Parameters:
   ///   - actions: The actions to display in the button block.
   ///
-  public init(@ButtonBlockActionBuilder actions: @escaping () -> [ButtonBlockAction]) {
+  public init(@ButtonBlockActionBuilder actions: @escaping () -> [TUIButtonBlockAction]) {
     self.actions = actions()
   }
     
@@ -44,7 +44,7 @@ public struct ButtonBlock: View {
   }
   
   @ViewBuilder
-  private func button(action: ButtonBlockAction) -> some View {
+  private func button(action: TUIButtonBlockAction) -> some View {
     Button(action: action.handler) {
       Text(action.title)
         .font(.button6)
@@ -60,7 +60,7 @@ public struct ButtonBlock: View {
 }
 
 struct ButtonBlock_Previews: PreviewProvider {
-  private enum TestAction: ButtonBlockAction {
+  private enum TestAction: TUIButtonBlockAction {
     var id: String {
       title
     }
@@ -92,7 +92,7 @@ struct ButtonBlock_Previews: PreviewProvider {
   }
 
   static var previews: some View {
-    ButtonBlock {
+    TUIButtonBlock {
       TestAction.test {
         print("test")
       }

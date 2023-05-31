@@ -1,5 +1,5 @@
 //
-//  StatusCircle.swift
+//  TUIStatusCircle.swift
 //  
 //
 //  Created by Gopinath on 29/05/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct StatusCircle: View {
+public struct TUIStatusCircle: View {
   
   public var color: Color
   
@@ -21,8 +21,8 @@ public struct StatusCircle: View {
   }
 }
 
-struct StatusCircle_Previews: PreviewProvider {
+struct TUIStatusCircle_Previews: PreviewProvider {
   static var previews: some View {
-    StatusCircle(color: Color.success)
+    TUIStatusCircle(color: Color.success)
   }
 }

@@ -1,5 +1,5 @@
 //
-//  Badge+Modifiers.swift
+//  TUIBadge+Modifiers.swift
 //  
 //
 //  Created by Arvindh Sukumar on 10/05/23.

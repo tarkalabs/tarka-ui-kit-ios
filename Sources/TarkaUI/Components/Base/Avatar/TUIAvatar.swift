@@ -1,5 +1,5 @@
 //
-//  Avatar.swift
+//  TUIAvatar.swift
 //
 //
 //  Created by Arvindh Sukumar on 17/05/23.
@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-public enum AvatarType {
+public enum TUIAvatarType {
   case initials(fromString: String)
   case image(Image)
   case icon(Icon)
   // TODO: add URL case
 }
 
-public struct Avatar: View {
-  public var avatarType: AvatarType
+public struct TUIAvatar: View {
+  public var avatarType: TUIAvatarType
   
-  public init(avatarType: AvatarType) {
+  public init(avatarType: TUIAvatarType) {
     self.avatarType = avatarType
   }
   
@@ -49,8 +49,8 @@ public struct Avatar: View {
 struct Avatar_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      Avatar(avatarType: .initials(fromString: "John Smith"))
-      Avatar(avatarType: .icon(Symbol.reorderDots))
+      TUIAvatar(avatarType: .initials(fromString: "John Smith"))
+      TUIAvatar(avatarType: .icon(Symbol.reorderDots))
     }
   }
 }

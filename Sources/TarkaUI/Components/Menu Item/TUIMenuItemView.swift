@@ -1,5 +1,5 @@
 //
-//  MenuItemView.swift
+//  TUIMenuItemView.swift
 //
 //
 //  Created by Arvindh Sukumar on 27/04/23.
@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-public struct MenuItemView: View {
-  public var item: MenuItem
+public struct TUIMenuItemView: View {
+  public var item: TUIMenuItem
   public var action: () -> Void
   
   /// Creates a menu item view.
   ///
   /// - Parameters:
-  ///   - item: The `MenuItem` to display.
+  ///   - item: The `TUIMenuItem` to display.
   ///   - action: The action to perform when the menu item is tapped.
   ///
-  public init(item: MenuItem, action: @escaping () -> Void) {
+  public init(item: TUIMenuItem, action: @escaping () -> Void) {
     self.item = item
     self.action = action
   }
@@ -91,24 +91,24 @@ struct MenuItemStyle: ButtonStyle {
 struct MenuItemView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      MenuItemView(
-        item: MenuItem(
+      TUIMenuItemView(
+        item: TUIMenuItem(
           title: "Label",
           configuration: .withSymbol(Symbol.reorderDots)
         ),
         action: {}
       )
     
-      MenuItemView(
-        item: MenuItem(
+      TUIMenuItemView(
+        item: TUIMenuItem(
           title: "Label",
           configuration: .onlyLabel
         ),
         action: {}
       )
       
-      MenuItemView(
-        item: MenuItem(
+      TUIMenuItemView(
+        item: TUIMenuItem(
           title: "Label",
           configuration: .withDescription("Description")
         ),

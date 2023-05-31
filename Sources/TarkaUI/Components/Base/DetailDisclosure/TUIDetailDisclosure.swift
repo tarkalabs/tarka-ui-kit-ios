@@ -1,5 +1,5 @@
 //
-//  DetailDisclosure.swift
+//  TUIDetailDisclosure.swift
 //
 //
 //  Created by Arvindh Sukumar on 18/05/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct DetailDisclosure: View {
+public struct TUIDetailDisclosure: View {
   public var body: some View {
     Image(Symbol.chevronRight)
       .resizable()
@@ -20,6 +20,6 @@ public struct DetailDisclosure: View {
 
 struct DetailDisclosure_Previews: PreviewProvider {
   static var previews: some View {
-    DetailDisclosure()
+    TUIDetailDisclosure()
   }
 }
