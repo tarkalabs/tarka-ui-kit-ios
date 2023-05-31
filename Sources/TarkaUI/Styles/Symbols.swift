@@ -24,6 +24,10 @@ internal enum Symbol: String, Icon {
   case chevronRight
   case chevronLeft
   case reorderDots
+  case checkmarkCircle
+  case info
+  case warning
+  case error
   
   public var name: String {
     rawValue
@@ -32,13 +36,21 @@ internal enum Symbol: String, Icon {
   public var fluentIcon: FluentIcon {
     switch self {
     case .chevronDown:
-      return .chevronDown48Regular
+      return .chevronDown48Filled
     case .chevronRight:
-      return .chevronRight48Regular
+      return .chevronRight48Filled
     case .chevronLeft:
-      return .chevronLeft48Regular
+      return .chevronLeft48Filled
     case .reorderDots:
       return .reOrderDotsVertical24Regular
+    case .checkmarkCircle:
+      return .checkmarkCircle48Filled
+    case .info:
+      return .info48Filled
+    case .warning:
+      return .warning28Filled
+    case .error:
+      return .errorCircle24Filled
     }
   }
 }

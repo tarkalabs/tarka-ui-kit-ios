@@ -13,6 +13,8 @@ public struct TextRow: View {
   public var title: any StringProtocol
   public var style: Style
   
+  @Environment(\.detailDisclosure) private var showDetailDisclosure
+  
   /// Creates a text row with the specified title and style.
   ///
   /// - Parameters:
@@ -25,12 +27,20 @@ public struct TextRow: View {
   }
   
   public var body: some View {
-    VStack(
-      alignment: .leading,
-      spacing: Spacing.baseVertical
-    ) {
-        titleView
-        detailView(forStyle: style)
+    HStack {
+      VStack(
+        alignment: .leading,
+        spacing: Spacing.baseVertical
+      ) {
+          titleView
+          detailView(forStyle: style)
+      }
+      
+      if showDetailDisclosure {
+        Spacer()
+        
+        DetailDisclosure()
+      }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
   }
@@ -86,5 +96,6 @@ struct TextRow_Previews: PreviewProvider {
       TextRow("Title", style: .textDescription("Description"))
         .previewDisplayName("With Text Description")
     }
+    .detailDisclosure()
   }
 }
