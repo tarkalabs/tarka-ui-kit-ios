@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-internal struct DefaultTheme: Theme {
+internal struct DefaultTheme: TUITheme {
   var primary: Color {
     color(withName: "primary")
   }
