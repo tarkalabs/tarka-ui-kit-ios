@@ -37,11 +37,25 @@ public struct TUIAvatar: View {
       Text(fromString.initials)
         .font(.heading2)
         .foregroundColor(Color.onTertiary)
+        .accessibilityIdentifier(Accessibility.label)
     case .image(let image):
       image
+        .accessibilityIdentifier(Accessibility.image)
     case .icon(let icon):
       Image(icon)
         .foregroundColor(Color.onTertiary)
+        .accessibilityIdentifier(Accessibility.image)
+    }
+  }
+}
+
+extension TUIAvatar {
+  enum Accessibility: String, TUIAccessibility {
+    case label = "Label"
+    case image = "Image"
+    
+    var identifier: String {
+      rawValue
     }
   }
 }
