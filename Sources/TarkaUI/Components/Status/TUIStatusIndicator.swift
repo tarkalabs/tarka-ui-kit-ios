@@ -33,9 +33,16 @@ public struct TUIStatusIndicator: View {
         Text(text)
           .font(.button8)
           .foregroundColor(.disabledContent)
+          .accessibilityIdentifier(Accessibility.label)
       }
       TUIStatusCircle(color: status.color)
     }
+  }
+}
+
+extension TUIStatusIndicator {
+  enum Accessibility: String, TUIAccessibility {
+    case label = "Label"
   }
 }
 
