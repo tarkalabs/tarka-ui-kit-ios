@@ -56,10 +56,6 @@ extension TUIAvatar {
     case root = "TUIAvatar"
     case label = "Label"
     case image = "Image"
-    
-    var identifier: String {
-      rawValue
-    }
   }
 }
 
