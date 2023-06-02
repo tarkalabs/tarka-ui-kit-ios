@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension View {
+public extension View {
   func accessibilityIdentifier(_ accessibility: TUIAccessibility) -> some View {
     self
       .accessibilityIdentifier(accessibility.identifier)

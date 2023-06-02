@@ -11,7 +11,7 @@ public protocol TUIAccessibility {
   var identifier: String { get }
 }
 
-extension TUIAccessibility where Self: RawRepresentable, Self.RawValue == String {
+public extension TUIAccessibility where Self: RawRepresentable, Self.RawValue == String {
   var identifier: String {
     rawValue
   }
