@@ -28,6 +28,8 @@ public struct TUIAvatar: View {
       
       contentView
     }
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder
@@ -51,6 +53,7 @@ public struct TUIAvatar: View {
 
 extension TUIAvatar {
   enum Accessibility: String, TUIAccessibility {
+    case root = "TUIAvatar"
     case label = "Label"
     case image = "Image"
     
