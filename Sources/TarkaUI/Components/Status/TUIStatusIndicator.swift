@@ -37,11 +37,14 @@ public struct TUIStatusIndicator: View {
       }
       TUIStatusCircle(color: status.color)
     }
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
 }
 
 extension TUIStatusIndicator {
   enum Accessibility: String, TUIAccessibility {
+    case root = "TUIStatusIndicator"
     case label = "Label"
   }
 }
