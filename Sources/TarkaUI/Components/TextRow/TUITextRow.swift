@@ -43,6 +43,8 @@ public struct TUITextRow: View {
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder
@@ -52,10 +54,12 @@ public struct TUITextRow: View {
       Text(title)
         .font(.heading7)
         .foregroundColor(.onSurface)
+        .accessibilityIdentifier(Accessibility.title)
     default:
       Text(title)
         .font(.body8)
         .foregroundColor(.inputTextDim)
+        .accessibilityIdentifier(Accessibility.title)
     }
     
   }
@@ -75,6 +79,7 @@ public struct TUITextRow: View {
     Text(description)
       .font(.body7)
       .foregroundColor(.onSurface)
+      .accessibilityIdentifier(Accessibility.description)
   }
 }
 
@@ -85,6 +90,14 @@ public extension TUITextRow {
 
     /// Displays the title and description.
     case textDescription(String)
+  }
+}
+
+extension TUITextRow {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUITextRow"
+    case title = "Title"
+    case description = "Description"
   }
 }
 

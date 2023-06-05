@@ -62,16 +62,21 @@ public struct TUINavigationRow<Content>: View where Content: View {
       Text(title)
         .font(.heading7)
         .foregroundColor(.onSurface)
+        .accessibilityIdentifier(Accessibility.label)
       
       Spacer()
       
       accessoryView()
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(Accessibility.accessory)
       
       if showDetailDisclosure {
         TUIDetailDisclosure()
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder
@@ -80,6 +85,16 @@ public struct TUINavigationRow<Content>: View where Content: View {
       .resizable()
       .foregroundColor(.secondaryTUI)
       .frame(width: 24, height: 24)
+      .accessibilityIdentifier(Accessibility.icon)
+  }
+}
+
+extension TUINavigationRow {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUINavigationRow"
+    case icon = "Icon"
+    case label = "Label"
+    case accessory = "Accessory"
   }
 }
 
