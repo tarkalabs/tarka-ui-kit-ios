@@ -7,23 +7,42 @@
 
 import SwiftUI
 
-internal struct InfoIcon {
+internal struct IconButton {
   var shouldShow: Bool
-  var action: (() -> Void)? = nil
+  var icon: Icon
+  var action: () -> Void
 }
+
 extension EnvironmentValues {
-  var infoIcon: InfoIcon {
+  
+  var infoIcon: IconButton {
     get { self[InfoIconEnvironmentKey.self] }
     set { self[InfoIconEnvironmentKey.self] = newValue }
+  }
+  
+  var iconButton: IconButton {
+    get { self[IconButtonEnvironmentKey.self] }
+    set { self[IconButtonEnvironmentKey.self] = newValue }
   }
 }
 
 struct InfoIconEnvironmentKey: EnvironmentKey {
-  static var defaultValue: InfoIcon = InfoIcon(shouldShow: false)
+  static var defaultValue: IconButton = IconButton(shouldShow: false, icon: Symbol.info) { }
 }
 
+struct IconButtonEnvironmentKey: EnvironmentKey {
+  static var defaultValue: IconButton = IconButton(shouldShow: false, icon: Symbol.info) { }
+}
+
+
 public extension View {
-  func infoIcon(_ show: Bool = false, action: (() -> Void)? = nil) -> some View {
-    environment(\.infoIcon, InfoIcon(shouldShow: true, action: action))
+  
+  func infoIcon(action: @escaping () -> Void) -> some View {
+    environment(\.infoIcon, IconButton(shouldShow: true, icon: Symbol.info, action: action))
+  }
+  
+  func iconButton(icon: Icon,
+                  action: @escaping () -> Void) -> some View {
+    environment(\.iconButton, IconButton(shouldShow: true, icon: icon, action: action))
   }
 }
