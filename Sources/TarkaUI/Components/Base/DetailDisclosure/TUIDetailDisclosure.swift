@@ -15,6 +15,13 @@ public struct TUIDetailDisclosure: View {
       .frame(width: 18, height: 18)
       .foregroundColor(Color.outline)
       .padding(.all, 2.0)
+      .accessibilityIdentifier(Accessibility.root)
+  }
+}
+
+extension TUIDetailDisclosure {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIDetailDisclosure"
   }
 }
 

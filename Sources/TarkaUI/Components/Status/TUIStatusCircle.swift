@@ -18,6 +18,13 @@ public struct TUIStatusCircle: View {
       .fill(color)
       .frame(width: circleSize, height: circleSize)
       .padding(.all, 6.0)
+      .accessibilityIdentifier(Accessibility.status)
+  }
+}
+
+extension TUIStatusCircle {
+  enum Accessibility: String, TUIAccessibility {
+    case status = "Status"
   }
 }
 

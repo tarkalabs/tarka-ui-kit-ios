@@ -68,11 +68,14 @@ public struct TUINavigationRow<Content>: View where Content: View {
       }
       .padding(.vertical, Spacing.baseVertical)
       .padding(.horizontal, Spacing.halfHorizontal)
-      
+      .accessibilityIdentifier(Accessibility.label)
+
       Spacer(minLength: 0)
       
       HStack(spacing: Spacing.quarterHorizontal) {
         accessoryView()
+          .accessibilityElement(children: .contain)
+          .accessibilityIdentifier(Accessibility.accessory)
 
         if showDetailDisclosure {
           TUIDetailDisclosure()
@@ -83,6 +86,8 @@ public struct TUINavigationRow<Content>: View where Content: View {
     .frame(maxWidth: .infinity, alignment: .leading)
     // set minHeight to match with design component
     .frame(minHeight: TarkaUI.Spacing.custom(40))
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder
@@ -91,6 +96,16 @@ public struct TUINavigationRow<Content>: View where Content: View {
       .resizable()
       .foregroundColor(.secondaryTUI)
       .frame(width: 24, height: 24)
+      .accessibilityIdentifier(Accessibility.icon)
+  }
+}
+
+extension TUINavigationRow {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUINavigationRow"
+    case icon = "Icon"
+    case label = "Label"
+    case accessory = "Accessory"
   }
 }
 
