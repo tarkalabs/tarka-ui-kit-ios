@@ -73,6 +73,7 @@ public struct TUIIconButton: View {
     .contentShape(Circle()) // So that only the circular portion is tappable
     .clipShape(Circle())
     .overlay(content: borderView)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder
@@ -162,6 +163,12 @@ extension TUIIconButton {
     case .m, .l, .xl:
       return CGSize(width: 24, height: 24)
     }
+  }
+}
+
+extension TUIIconButton {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIButton"
   }
 }
 
