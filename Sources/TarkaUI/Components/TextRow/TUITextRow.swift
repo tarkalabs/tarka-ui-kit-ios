@@ -9,11 +9,13 @@ import SwiftUI
 
 /// `TUITextRow` is a SwiftUI view that displays a title and an optional description in a vertical stack.
 /// The view can be customized with different styles, such as displaying only the title or displaying both the title and description.
+
 public struct TUITextRow: View {
   public var title: any StringProtocol
   public var style: Style
   
   @Environment(\.detailDisclosure) private var showDetailDisclosure
+  @Environment(\.infoIcon) private var infoIcon
   
   /// Creates a text row with the specified title and style.
   ///
@@ -30,16 +32,21 @@ public struct TUITextRow: View {
     HStack {
       VStack(
         alignment: .leading,
-        spacing: Spacing.baseVertical
+        spacing: Spacing.halfVertical
       ) {
-          titleView
-          detailView(forStyle: style)
+        titleView
+        detailView(forStyle: style)
       }
-      
       if showDetailDisclosure {
         Spacer()
         
         TUIDetailDisclosure()
+      }
+      if infoIcon.shouldShow {
+        Spacer()
+        TUIInfoIcon() {
+          infoIcon.action?()
+        }
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
@@ -52,10 +59,13 @@ public struct TUITextRow: View {
       Text(title)
         .font(.heading7)
         .foregroundColor(.onSurface)
+        .frame(minHeight: TarkaUI.Spacing.custom(18))
+        .padding(.vertical, 11)
     default:
       Text(title)
         .font(.body8)
         .foregroundColor(.inputTextDim)
+        .frame(minHeight: TarkaUI.Spacing.custom(14))
     }
     
   }
@@ -75,6 +85,8 @@ public struct TUITextRow: View {
     Text(description)
       .font(.body7)
       .foregroundColor(.onSurface)
+      .frame(minHeight: TarkaUI.Spacing.custom(18))
+    
   }
 }
 
@@ -82,7 +94,7 @@ public extension TUITextRow {
   enum Style {
     /// Displays only the title.
     case onlyTitle
-
+    
     /// Displays the title and description.
     case textDescription(String)
   }
@@ -90,12 +102,17 @@ public extension TUITextRow {
 
 struct TextRow_Previews: PreviewProvider {
   static var previews: some View {
-    Group {
-      TUITextRow("Title", style: .onlyTitle)
-        .previewDisplayName("Only Title")
-      TUITextRow("Title", style: .textDescription("Description"))
-        .previewDisplayName("With Text Description")
+    VStack(spacing: 10) {
+      Group {
+        TUITextRow("Title", style: .onlyTitle)
+          .previewDisplayName("Only Title")
+        TUITextRow("Title", style: .textDescription("Description"))
+          .previewDisplayName("With Text Description")
+      }
+      .detailDisclosure()
+      TUITextRow("Title", style: .textDescription("Info Icon"))
+        .previewDisplayName("With Info Icon")
+        .infoIcon(true)
     }
-    .detailDisclosure()
   }
 }
