@@ -31,7 +31,7 @@ public struct TUIMenuItemView: View {
         contentView
         rightContentView
       }
-      .padding(.vertical, Spacing.doubleVertical)
+      .padding(.vertical, Spacing.baseVertical)
       .frame(maxWidth: .infinity, alignment: .leading)
       .contentShape(Rectangle())
     }
