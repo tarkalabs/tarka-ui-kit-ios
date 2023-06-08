@@ -145,12 +145,12 @@ struct TextRow_Previews: PreviewProvider {
           .previewDisplayName("Only Title")
         TUITextRow("Title", style: .textDescription("Description"))
           .previewDisplayName("With Text Description")
-          .iconButton(icon: Symbol.warning) { }
+          .iconButton(true, icon: Symbol.warning) { }
       }
       .detailDisclosure()
       TUITextRow("Title", style: .textDescription("InfoIcon"))
         .previewDisplayName("With Info Icon")
-        .infoIcon() { }
+        .infoIcon(true) { }
         .detailDisclosure()
     }
   }
