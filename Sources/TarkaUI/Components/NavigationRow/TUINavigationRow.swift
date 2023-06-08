@@ -64,7 +64,7 @@ public struct TUINavigationRow<Content>: View where Content: View {
           .font(.heading7)
           .foregroundColor(.onSurface)
           .padding(.vertical, Spacing.custom(3))
-          .frame(minHeight: TarkaUI.Spacing.custom(18))
+          .frame(minHeight: Spacing.custom(18))
       }
       .padding(.vertical, Spacing.baseVertical)
       .padding(.horizontal, Spacing.halfHorizontal)
@@ -85,7 +85,7 @@ public struct TUINavigationRow<Content>: View where Content: View {
     }
     .frame(maxWidth: .infinity, alignment: .leading)
     // set minHeight to match with design component
-    .frame(minHeight: TarkaUI.Spacing.custom(40))
+    .frame(minHeight: Spacing.custom(40))
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
   }
