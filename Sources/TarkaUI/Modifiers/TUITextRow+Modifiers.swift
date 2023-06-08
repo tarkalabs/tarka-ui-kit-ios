@@ -37,12 +37,12 @@ struct IconButtonEnvironmentKey: EnvironmentKey {
 
 public extension View {
   
-  func infoIcon(action: @escaping () -> Void) -> some View {
-    environment(\.infoIcon, IconButton(shouldShow: true, icon: Symbol.info, action: action))
+  func infoIcon(_ show: Bool, action: @escaping () -> Void) -> some View {
+    environment(\.infoIcon, IconButton(shouldShow: show, icon: Symbol.info, action: action))
   }
   
-  func iconButton(icon: Icon,
+  func iconButton(_ show: Bool, icon: Icon,
                   action: @escaping () -> Void) -> some View {
-    environment(\.iconButton, IconButton(shouldShow: true, icon: icon, action: action))
+    environment(\.iconButton, IconButton(shouldShow: show, icon: icon, action: action))
   }
 }
