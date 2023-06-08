@@ -33,24 +33,27 @@ public struct TUITextRow: View {
     
     HStack(spacing: Spacing.halfHorizontal) {
       
-      VStack(
-        alignment: .leading,
-        spacing: Spacing.halfVertical
-      ) {
-        Group {
-          titleView
-          detailView(forStyle: style)
-        }
-        .padding(.trailing, Spacing.halfHorizontal)
-      }
-      
+      leftView
       Spacer(minLength: 0)
-      
       rightView
     }
     .frame(maxWidth: .infinity, alignment: .leading)
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
+  }
+  
+  @ViewBuilder
+  private var leftView: some View {
+    VStack(
+      alignment: .leading,
+      spacing: Spacing.halfVertical
+    ) {
+      Group {
+        titleView
+        detailView(forStyle: style)
+      }
+      .padding(.trailing, Spacing.halfHorizontal)
+    }
   }
   
   @ViewBuilder

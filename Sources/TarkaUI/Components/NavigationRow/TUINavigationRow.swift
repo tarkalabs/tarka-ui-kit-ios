@@ -56,31 +56,14 @@ public struct TUINavigationRow<Content>: View where Content: View {
     
     HStack(alignment: .center, spacing: 0) {
       
-      HStack(spacing: Spacing.baseHorizontal) {
-        if let symbol = symbol {
-          imageView(symbol)
-        }
-        Text(title)
-          .font(.heading7)
-          .foregroundColor(.onSurface)
-          .padding(.vertical, Spacing.custom(3))
-          .frame(minHeight: Spacing.custom(18))
-      }
+      leftView
       .padding(.vertical, Spacing.baseVertical)
       .padding(.horizontal, Spacing.halfHorizontal)
       .accessibilityIdentifier(Accessibility.label)
 
       Spacer(minLength: 0)
       
-      HStack(spacing: Spacing.quarterHorizontal) {
-        accessoryView()
-          .accessibilityElement(children: .contain)
-          .accessibilityIdentifier(Accessibility.accessory)
-
-        if showDetailDisclosure {
-          TUIDetailDisclosure()
-        }
-      }
+      rightView
       .padding(.horizontal, Spacing.halfHorizontal)
     }
     .frame(maxWidth: .infinity, alignment: .leading)
@@ -91,12 +74,36 @@ public struct TUINavigationRow<Content>: View where Content: View {
   }
   
   @ViewBuilder
-  private func imageView(_ symbol: Icon) -> some View {
-    Image(symbol)
-      .resizable()
-      .foregroundColor(.secondaryTUI)
-      .frame(width: 24, height: 24)
-      .accessibilityIdentifier(Accessibility.icon)
+  private var leftView: some View {
+    
+    HStack(spacing: Spacing.baseHorizontal) {
+      if let symbol = symbol {
+        Image(symbol)
+          .resizable()
+          .foregroundColor(.secondaryTUI)
+          .frame(width: 24, height: 24)
+          .accessibilityIdentifier(Accessibility.icon)
+      }
+      Text(title)
+        .font(.heading7)
+        .foregroundColor(.onSurface)
+        .padding(.vertical, Spacing.custom(3))
+        .frame(minHeight: Spacing.custom(18))
+    }
+  }
+  
+  @ViewBuilder
+  private var rightView: some View {
+    
+    HStack(spacing: Spacing.quarterHorizontal) {
+      accessoryView()
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(Accessibility.accessory)
+
+      if showDetailDisclosure {
+        TUIDetailDisclosure()
+      }
+    }
   }
 }
 
