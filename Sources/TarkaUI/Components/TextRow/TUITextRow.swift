@@ -60,15 +60,15 @@ public struct TUITextRow: View {
       Text(title)
         .font(.heading7)
         .foregroundColor(.onSurface)
-        .frame(minHeight: TarkaUI.Spacing.custom(18))
-        .padding(.vertical, TarkaUI.Spacing.custom(11))
+        .frame(minHeight: Spacing.custom(18))
+        .padding(.vertical, Spacing.custom(11))
         .accessibilityIdentifier(Accessibility.title)
       
     default:
       Text(title)
         .font(.body8)
         .foregroundColor(.inputTextDim)
-        .frame(minHeight: TarkaUI.Spacing.custom(14))
+        .frame(minHeight: Spacing.custom(14))
         .accessibilityIdentifier(Accessibility.title)
     }
   }
@@ -88,7 +88,7 @@ public struct TUITextRow: View {
     Text(description)
       .font(.body7)
       .foregroundColor(.onSurface)
-      .frame(minHeight: TarkaUI.Spacing.custom(18))
+      .frame(minHeight: Spacing.custom(18))
       .accessibilityIdentifier(Accessibility.description)
   }
   
