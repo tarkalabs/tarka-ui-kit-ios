@@ -54,19 +54,17 @@ public struct TUINavigationRow<Content>: View where Content: View {
   
   public var body: some View {
     
-    HStack(alignment: .center, spacing: 0) {
+    HStack(alignment: .center, spacing: Spacing.baseHorizontal) {
       
       leftView
       .padding(.vertical, Spacing.baseVertical)
       .padding(.horizontal, Spacing.halfHorizontal)
       .accessibilityIdentifier(Accessibility.label)
-
-      Spacer(minLength: 0)
+      .frame(maxWidth: .infinity, alignment: .leading)
       
       rightView
       .padding(.horizontal, Spacing.halfHorizontal)
     }
-    .frame(maxWidth: .infinity, alignment: .leading)
     // set minHeight to match with design component
     .frame(minHeight: Spacing.custom(40))
     .accessibilityElement(children: .contain)
