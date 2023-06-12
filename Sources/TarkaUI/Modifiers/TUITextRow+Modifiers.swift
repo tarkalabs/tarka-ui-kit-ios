@@ -9,15 +9,15 @@ import SwiftUI
 
 internal struct IconButton {
   var shouldShow: Bool
-  var icon: Icon
+  var image: Icon
   var action: () -> Void
 }
 
 extension EnvironmentValues {
   
-  var infoIcon: IconButton {
-    get { self[InfoIconEnvironmentKey.self] }
-    set { self[InfoIconEnvironmentKey.self] = newValue }
+  var wrapperIcon: IconButton {
+    get { self[WrapperIconEnvironmentKey.self] }
+    set { self[WrapperIconEnvironmentKey.self] = newValue }
   }
   
   var iconButton: IconButton {
@@ -26,23 +26,27 @@ extension EnvironmentValues {
   }
 }
 
-struct InfoIconEnvironmentKey: EnvironmentKey {
-  static var defaultValue: IconButton = IconButton(shouldShow: false, icon: Symbol.info) { }
+struct WrapperIconEnvironmentKey: EnvironmentKey {
+  static var defaultValue: IconButton = IconButton(shouldShow: false, image: Symbol.info) { }
 }
 
 struct IconButtonEnvironmentKey: EnvironmentKey {
-  static var defaultValue: IconButton = IconButton(shouldShow: false, icon: Symbol.info) { }
+  static var defaultValue: IconButton = IconButton(shouldShow: false, image: Symbol.info) { }
 }
 
 
 public extension View {
   
-  func infoIcon(_ show: Bool = true, action: @escaping () -> Void) -> some View {
-    environment(\.infoIcon, IconButton(shouldShow: show, icon: Symbol.info, action: action))
-  }
+  func wrapperIcon(_ show: Bool = true, image: Icon,
+                   action: @escaping () -> Void) -> some View {
+    environment(\.wrapperIcon, IconButton(shouldShow: show, image: image, action: action))  }
   
-  func iconButton(_ show: Bool = true, icon: Icon,
+  func infoIcon(_ show: Bool = true,
+                   action: @escaping () -> Void) -> some View {
+    environment(\.wrapperIcon, IconButton(shouldShow: show, image: Symbol.info, action: action))  }
+  
+  func iconButton(_ show: Bool = true, image: Icon,
                   action: @escaping () -> Void) -> some View {
-    environment(\.iconButton, IconButton(shouldShow: show, icon: icon, action: action))
+    environment(\.iconButton, IconButton(shouldShow: show, image: image, action: action))
   }
 }

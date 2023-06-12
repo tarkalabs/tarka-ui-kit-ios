@@ -14,8 +14,7 @@ public struct TUITextRow: View {
   public var title: any StringProtocol
   public var style: Style
   
-  @Environment(\.detailDisclosure) private var showDetailDisclosure
-  @Environment(\.infoIcon) private var infoIcon
+  @Environment(\.wrapperIcon) private var wrapperIcon
   @Environment(\.iconButton) private var iconButton
   
   /// Creates a text row with the specified title and style.
@@ -34,7 +33,8 @@ public struct TUITextRow: View {
     HStack(spacing: Spacing.halfHorizontal) {
       
       leftView
-      Spacer(minLength: 0)
+        .frame(maxWidth: .infinity, alignment: .leading)
+
       rightView
     }
     .frame(maxWidth: .infinity, alignment: .leading)
@@ -63,7 +63,7 @@ public struct TUITextRow: View {
       Text(title)
         .font(.heading7)
         .foregroundColor(.onSurface)
-        .frame(minHeight: Spacing.custom(18))
+        .frame(minHeight: 18)
         .padding(.vertical, Spacing.custom(11))
         .accessibilityIdentifier(Accessibility.title)
       
@@ -71,7 +71,7 @@ public struct TUITextRow: View {
       Text(title)
         .font(.body8)
         .foregroundColor(.inputTextDim)
-        .frame(minHeight: Spacing.custom(14))
+        .frame(minHeight: 14)
         .accessibilityIdentifier(Accessibility.title)
     }
   }
@@ -97,26 +97,22 @@ public struct TUITextRow: View {
   
   @ViewBuilder
   private var rightView: some View {
-    
+
     HStack(spacing: Spacing.quarterHorizontal) {
       
       if iconButton.shouldShow {
-        
+
         TUIIconButton(
-          icon: iconButton.icon,
+          icon: iconButton.image,
           action: iconButton.action)
         .iconButtonStyle(.ghost)
         .iconButtonSize(.l)
       }
-      
-      if infoIcon.shouldShow {
-        TUIInfoIcon() {
-          infoIcon.action()
+
+      if wrapperIcon.shouldShow {
+        TUIWrapperIcon(image: wrapperIcon.image) {
+          wrapperIcon.action()
         }
-      }
-      
-      if showDetailDisclosure {
-        TUIDetailDisclosure()
       }
     }
   }
@@ -144,17 +140,18 @@ struct TextRow_Previews: PreviewProvider {
   static var previews: some View {
     VStack(spacing: 10) {
       Group {
+        
         TUITextRow("Title", style: .onlyTitle)
           .previewDisplayName("Only Title")
-        TUITextRow("Title", style: .textDescription("Description"))
+          .iconButton(image: Symbol.warning) { }
+        
+        TUITextRow("Title", style: .textDescription("Description to test with multiple number of lines to verify its adaptability"))
           .previewDisplayName("With Text Description")
-          .iconButton(true, icon: Symbol.warning) { }
+          .infoIcon(true) { }
       }
-      .detailDisclosure()
-      TUITextRow("Title", style: .textDescription("InfoIcon"))
+      TUITextRow("Title", style: .textDescription("Description"))
         .previewDisplayName("With Info Icon")
-        .infoIcon(true) { }
-        .detailDisclosure()
+        .wrapperIcon(true, image: Symbol.chevronRight) { }
     }
   }
 }
