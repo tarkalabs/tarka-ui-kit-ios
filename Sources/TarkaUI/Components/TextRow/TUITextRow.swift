@@ -110,7 +110,7 @@ public struct TUITextRow: View {
       }
 
       if wrapperIcon.shouldShow {
-        TUIWrapperIcon(image: wrapperIcon.image) {
+        TUIWrapperIcon(image: wrapperIcon.image, color: wrapperIcon.color) {
           wrapperIcon.action()
         }
       }

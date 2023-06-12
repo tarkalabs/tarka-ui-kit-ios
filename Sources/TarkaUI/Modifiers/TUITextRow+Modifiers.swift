@@ -10,6 +10,7 @@ import SwiftUI
 internal struct IconButton {
   var shouldShow: Bool
   var image: Icon
+  var color: Color?
   var action: () -> Void
 }
 
@@ -38,8 +39,11 @@ struct IconButtonEnvironmentKey: EnvironmentKey {
 public extension View {
   
   func wrapperIcon(_ show: Bool = true, image: Icon,
+                   color: Color? = nil,
                    action: @escaping () -> Void) -> some View {
-    environment(\.wrapperIcon, IconButton(shouldShow: show, image: image, action: action))  }
+    environment(\.wrapperIcon, IconButton(shouldShow: show, image: image,
+                                          color: color,
+                                          action: action))  }
   
   func infoIcon(_ show: Bool = true,
                    action: @escaping () -> Void) -> some View {
