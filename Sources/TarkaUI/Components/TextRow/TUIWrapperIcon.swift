@@ -20,8 +20,11 @@ public struct TUIWrapperIcon: View {
     self.action = action
   }
   
-  public static func info(action: @escaping () -> Void) -> TUIWrapperIcon {
-    return self.init(image: Symbol.info, action: action)
+  public static func info(
+    color: Color? = nil,
+    action: @escaping () -> Void) -> TUIWrapperIcon {
+      
+      return self.init(image: Symbol.info, color: color, action: action)
   }
   
   public var body: some View {
