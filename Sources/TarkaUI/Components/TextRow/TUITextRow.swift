@@ -14,9 +14,10 @@ public struct TUITextRow: View {
   public var title: any StringProtocol
   public var style: Style
   
-  @Environment(\.wrapperIcon) private var wrapperIcon
-  @Environment(\.iconButton) private var iconButton
+  @ObservedObject var wrapperIcon: IconButtonItem<TUIWrapperIcon> = IconButtonItem()
   
+  @ObservedObject var iconButton: IconButtonItem<TUIIconButton> = IconButtonItem()
+
   /// Creates a text row with the specified title and style.
   ///
   /// - Parameters:
@@ -102,17 +103,12 @@ public struct TUITextRow: View {
       
       if iconButton.shouldShow {
 
-        TUIIconButton(
-          icon: iconButton.image,
-          action: iconButton.action)
-        .iconButtonStyle(.ghost)
+        iconButton.icon
         .iconButtonSize(.l)
       }
 
       if wrapperIcon.shouldShow {
-        TUIWrapperIcon(image: wrapperIcon.image, color: wrapperIcon.color) {
-          wrapperIcon.action()
-        }
+        wrapperIcon.icon
       }
     }
   }
@@ -137,21 +133,21 @@ extension TUITextRow {
 }
 
 struct TextRow_Previews: PreviewProvider {
+  
   static var previews: some View {
+    
     VStack(spacing: 10) {
-      Group {
-        
-        TUITextRow("Title", style: .onlyTitle)
-          .previewDisplayName("Only Title")
-          .iconButton(image: Symbol.warning) { }
-        
+
         TUITextRow("Title", style: .textDescription("Description to test with multiple number of lines to verify its adaptability"))
+        .wrapperInfoIcon { }
           .previewDisplayName("With Text Description")
-          .infoIcon(true) { }
-      }
+
       TUITextRow("Title", style: .textDescription("Description"))
+        .wrapperIcon {
+          TUIWrapperIcon(image: Symbol.warning) { }
+            .iconColor(.black)
+        }
         .previewDisplayName("With Info Icon")
-        .wrapperIcon(true, image: Symbol.chevronRight) { }
     }
   }
 }
