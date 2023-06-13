@@ -25,10 +25,10 @@ internal enum Symbol: String, Icon {
   case chevronLeft
   case reorderDots
   case checkmarkCircle
-  case info
   case warning
   case error
-  
+  case info
+
   public var name: String {
     rawValue
   }
@@ -46,7 +46,7 @@ internal enum Symbol: String, Icon {
     case .checkmarkCircle:
       return .checkmarkCircle48Filled
     case .info:
-      return .info48Filled
+      return .info48Regular
     case .warning:
       return .warning28Filled
     case .error:

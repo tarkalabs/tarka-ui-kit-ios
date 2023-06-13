@@ -27,6 +27,7 @@ public struct TUIStatusIndicator: View {
     self.status = status
     self.text = text
   }
+  
   public var body: some View {
     HStack(spacing: Spacing.halfHorizontal) {
       if let text, !text.isEmpty {

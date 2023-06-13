@@ -9,11 +9,13 @@ import SwiftUI
 
 /// `TUITextRow` is a SwiftUI view that displays a title and an optional description in a vertical stack.
 /// The view can be customized with different styles, such as displaying only the title or displaying both the title and description.
+
 public struct TUITextRow: View {
   public var title: any StringProtocol
   public var style: Style
   
-  @Environment(\.detailDisclosure) private var showDetailDisclosure
+  @Environment(\.wrapperIcon) private var wrapperIcon
+  @Environment(\.iconButton) private var iconButton
   
   /// Creates a text row with the specified title and style.
   ///
@@ -27,24 +29,31 @@ public struct TUITextRow: View {
   }
   
   public var body: some View {
-    HStack {
-      VStack(
-        alignment: .leading,
-        spacing: Spacing.baseVertical
-      ) {
-          titleView
-          detailView(forStyle: style)
-      }
+    
+    HStack(spacing: Spacing.halfHorizontal) {
       
-      if showDetailDisclosure {
-        Spacer()
-        
-        TUIDetailDisclosure()
-      }
+      leftView
+        .frame(maxWidth: .infinity, alignment: .leading)
+
+      rightView
     }
     .frame(maxWidth: .infinity, alignment: .leading)
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
+  }
+  
+  @ViewBuilder
+  private var leftView: some View {
+    VStack(
+      alignment: .leading,
+      spacing: Spacing.halfVertical
+    ) {
+      Group {
+        titleView
+        detailView(forStyle: style)
+      }
+      .padding(.trailing, Spacing.halfHorizontal)
+    }
   }
   
   @ViewBuilder
@@ -54,14 +63,17 @@ public struct TUITextRow: View {
       Text(title)
         .font(.heading7)
         .foregroundColor(.onSurface)
+        .frame(minHeight: 18)
+        .padding(.vertical, Spacing.custom(11))
         .accessibilityIdentifier(Accessibility.title)
+      
     default:
       Text(title)
         .font(.body8)
         .foregroundColor(.inputTextDim)
+        .frame(minHeight: 14)
         .accessibilityIdentifier(Accessibility.title)
     }
-    
   }
   
   @ViewBuilder
@@ -79,7 +91,30 @@ public struct TUITextRow: View {
     Text(description)
       .font(.body7)
       .foregroundColor(.onSurface)
+      .frame(minHeight: Spacing.custom(18))
       .accessibilityIdentifier(Accessibility.description)
+  }
+  
+  @ViewBuilder
+  private var rightView: some View {
+
+    HStack(spacing: Spacing.quarterHorizontal) {
+      
+      if iconButton.shouldShow {
+
+        TUIIconButton(
+          icon: iconButton.image,
+          action: iconButton.action)
+        .iconButtonStyle(.ghost)
+        .iconButtonSize(.l)
+      }
+
+      if wrapperIcon.shouldShow {
+        TUIWrapperIcon(image: wrapperIcon.image, color: wrapperIcon.color) {
+          wrapperIcon.action()
+        }
+      }
+    }
   }
 }
 
@@ -87,7 +122,7 @@ public extension TUITextRow {
   enum Style {
     /// Displays only the title.
     case onlyTitle
-
+    
     /// Displays the title and description.
     case textDescription(String)
   }
@@ -103,12 +138,20 @@ extension TUITextRow {
 
 struct TextRow_Previews: PreviewProvider {
   static var previews: some View {
-    Group {
-      TUITextRow("Title", style: .onlyTitle)
-        .previewDisplayName("Only Title")
+    VStack(spacing: 10) {
+      Group {
+        
+        TUITextRow("Title", style: .onlyTitle)
+          .previewDisplayName("Only Title")
+          .iconButton(image: Symbol.warning) { }
+        
+        TUITextRow("Title", style: .textDescription("Description to test with multiple number of lines to verify its adaptability"))
+          .previewDisplayName("With Text Description")
+          .infoIcon(true) { }
+      }
       TUITextRow("Title", style: .textDescription("Description"))
-        .previewDisplayName("With Text Description")
+        .previewDisplayName("With Info Icon")
+        .wrapperIcon(true, image: Symbol.chevronRight) { }
     }
-    .detailDisclosure()
   }
 }
