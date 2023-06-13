@@ -7,50 +7,48 @@
 
 import SwiftUI
 
-internal struct IconButton {
-  var shouldShow: Bool
-  var image: Icon
-  var color: Color?
-  var action: () -> Void
-}
-
-extension EnvironmentValues {
+internal class IconButtonItem<Content: View>: ObservableObject {
+  @Published var shouldShow: Bool
+  @Published var icon: Content?
   
-  var wrapperIcon: IconButton {
-    get { self[WrapperIconEnvironmentKey.self] }
-    set { self[WrapperIconEnvironmentKey.self] = newValue }
-  }
-  
-  var iconButton: IconButton {
-    get { self[IconButtonEnvironmentKey.self] }
-    set { self[IconButtonEnvironmentKey.self] = newValue }
+  init(shouldShow: Bool = false, icon: Content? = nil ) {
+    self.shouldShow = shouldShow
+    self.icon = icon
   }
 }
 
-struct WrapperIconEnvironmentKey: EnvironmentKey {
-  static var defaultValue: IconButton = IconButton(shouldShow: false, image: Symbol.info) { }
-}
-
-struct IconButtonEnvironmentKey: EnvironmentKey {
-  static var defaultValue: IconButton = IconButton(shouldShow: false, image: Symbol.info) { }
-}
-
-
-public extension View {
+public extension TUITextRow {
   
-  func wrapperIcon(_ show: Bool = true, image: Icon,
-                   color: Color? = nil,
-                   action: @escaping () -> Void) -> some View {
-    environment(\.wrapperIcon, IconButton(shouldShow: show, image: image,
-                                          color: color,
-                                          action: action))  }
+  func wrapperIcon(_ show: Bool = true,
+                   @ViewBuilder content: @escaping () -> TUIWrapperIcon) -> TUITextRow {
+    
+    let iconButton = IconButtonItem(shouldShow: show, icon: content())
+    
+    var newView = self
+    newView.wrapperIcon = iconButton
+    return newView
+  }
   
-  func infoIcon(_ show: Bool = true,
-                   action: @escaping () -> Void) -> some View {
-    environment(\.wrapperIcon, IconButton(shouldShow: show, image: Symbol.info, action: action))  }
+  func wrapperInfoIcon(_ show: Bool = true, action: @escaping () -> Void) -> some View {
+    
+    let iconButton = IconButtonItem(
+      shouldShow: show,
+      icon: TUIWrapperIcon.info(action: action))
+    
+    var newView = self
+    newView.wrapperIcon = iconButton
+    return newView
+  }
   
-  func iconButton(_ show: Bool = true, image: Icon,
-                  action: @escaping () -> Void) -> some View {
-    environment(\.iconButton, IconButton(shouldShow: show, image: image, action: action))
+  func iconButton(_ show: Bool = true,
+                  @ViewBuilder icon: () -> TUIIconButton) -> some View {
+    
+    let iconButton = IconButtonItem(
+      shouldShow: show,
+      icon: icon())
+    
+    var newView = self
+    newView.iconButton = iconButton
+    return newView
   }
 }
