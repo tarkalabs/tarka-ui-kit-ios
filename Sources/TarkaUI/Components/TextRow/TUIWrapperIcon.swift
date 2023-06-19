@@ -11,16 +11,20 @@ public struct TUIWrapperIcon: View {
   
   public var action: () -> Void
   public var image: Icon
-  var iconColor: Color = .disabledContent
+  public var color: Color
 
-  public init(image: Icon,
+  public init(image: Icon, color: Color? = nil,
               action: @escaping () -> Void) {
     self.image = image
+    self.color = color ?? .disabledContent
     self.action = action
   }
   
-  public static func info(action: @escaping () -> Void) -> TUIWrapperIcon {
-    return self.init(image: Symbol.info, action: action)
+  public static func info(
+    color: Color? = nil,
+    action: @escaping () -> Void) -> TUIWrapperIcon {
+      
+      return self.init(image: Symbol.info, color: color, action: action)
   }
   
   public var body: some View {
@@ -31,7 +35,7 @@ public struct TUIWrapperIcon: View {
         .resizable()
         .scaledToFit()
         .frame(width: 20, height: 20)
-        .foregroundColor(iconColor)
+        .foregroundColor(color)
         .padding(.horizontal, Spacing.custom(2.0))
     }
     .frame(height: 40)
@@ -39,20 +43,10 @@ public struct TUIWrapperIcon: View {
   }
 }
 
-public extension TUIWrapperIcon {
-  
-  func iconColor(_ color: Color) -> TUIWrapperIcon {
-    var newView = self
-    newView.iconColor = color
-    return newView
-  }
-}
-
 struct TUIWrapperIcon_Previews: PreviewProvider {
   
   static var previews: some View {
     TUIWrapperIcon(image: Symbol.info) { }
-      .iconColor(.black)
   }
 }
 

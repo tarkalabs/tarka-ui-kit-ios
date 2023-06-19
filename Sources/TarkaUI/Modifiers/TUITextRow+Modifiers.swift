@@ -7,12 +7,14 @@
 
 import SwiftUI
 
-internal class IconButtonItem<Content: View>: ObservableObject {
-  @Published var shouldShow: Bool
-  @Published var icon: Content?
+public struct IconItem<Content>: Identifiable where Content: View {
+  public var id = UUID().uuidString
+  public var show = true
+  public var icon: () -> Content
   
-  init(shouldShow: Bool = false, icon: Content? = nil ) {
-    self.shouldShow = shouldShow
+  public init(id: String = UUID().uuidString, show: Bool = true, icon: @escaping () -> Content) {
+    self.id = id
+    self.show = show
     self.icon = icon
   }
 }
@@ -20,35 +22,24 @@ internal class IconButtonItem<Content: View>: ObservableObject {
 public extension TUITextRow {
   
   func wrapperIcon(_ show: Bool = true,
-                   @ViewBuilder content: @escaping () -> TUIWrapperIcon) -> TUITextRow {
-    
-    let iconButton = IconButtonItem(shouldShow: show, icon: content())
-    
+                   icon: @escaping () -> TUIWrapperIcon) -> TUITextRow {
     var newView = self
-    newView.wrapperIcon = iconButton
+    let iconItem = IconItem(show: show, icon: icon)
+    newView.wrapperIcon = iconItem
     return newView
   }
   
-  func wrapperInfoIcon(_ show: Bool = true, action: @escaping () -> Void) -> some View {
-    
-    let iconButton = IconButtonItem(
-      shouldShow: show,
-      icon: TUIWrapperIcon.info(action: action))
-    
+  func infoIcon(_ show: Bool = true,
+                action: @escaping () -> Void) -> TUITextRow {
     var newView = self
-    newView.wrapperIcon = iconButton
+    let infoIcon: () -> TUIWrapperIcon = { TUIWrapperIcon.info(action: action) }
+    newView.wrapperIcon =  IconItem(show: show, icon: infoIcon)
     return newView
   }
   
-  func iconButton(_ show: Bool = true,
-                  @ViewBuilder icon: () -> TUIIconButton) -> some View {
-    
-    let iconButton = IconButtonItem(
-      shouldShow: show,
-      icon: icon())
-    
+  func iconButtons(_ icons: @escaping () -> [IconItem<TUIIconButton>]) -> TUITextRow {
     var newView = self
-    newView.iconButton = iconButton
+    newView.iconButtons = icons()
     return newView
   }
 }
