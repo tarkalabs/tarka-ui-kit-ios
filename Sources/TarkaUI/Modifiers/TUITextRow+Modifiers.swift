@@ -8,6 +8,7 @@
 import SwiftUI
 
 public struct IconItem<Content>: Identifiable where Content: View {
+  
   public var id = UUID().uuidString
   public var show = true
   public var icon: () -> Content
@@ -30,9 +31,12 @@ public extension TUITextRow {
   }
   
   func infoIcon(_ show: Bool = true,
+                color: Color? = nil,
                 action: @escaping () -> Void) -> TUITextRow {
     var newView = self
-    let infoIcon: () -> TUIWrapperIcon = { TUIWrapperIcon.info(action: action) }
+    let infoIcon: () -> TUIWrapperIcon = {
+      TUIWrapperIcon.info(color: color, action: action)
+    }
     newView.wrapperIcon =  IconItem(show: show, icon: infoIcon)
     return newView
   }
