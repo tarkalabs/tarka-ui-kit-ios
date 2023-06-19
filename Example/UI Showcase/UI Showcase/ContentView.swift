@@ -38,6 +38,7 @@ struct ContentView: View {
               image: Symbol.chevronRight, action: {
                 showWrapperIcon = false
               })
+            .iconColor(.red)
           })
       
       TUITextRow("Title", style: .onlyTitle)
@@ -52,7 +53,7 @@ struct ContentView: View {
             }
           ]
         })
-        .infoIcon(showInfoIcon) { showInfoIcon = false }
+        .infoIcon(showInfoIcon, color: .blue) { showInfoIcon = false }
     }
   }
 }
