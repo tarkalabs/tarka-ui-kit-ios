@@ -22,16 +22,38 @@ struct ContentView: View {
   }
   
   @State var showWrapperIcon = true
+  @State var showBinIcon = true
+  @State var showDocIcon = true
+  @State var showInfoIcon = true
+
   @ViewBuilder
   func testView() -> some View {
     
-    TUITextRow("Title", style: .textDescription("Description to test with multiple number of lines to verify its adaptability"))
-      .wrapperIcon {
-        TUIWrapperIcon(image: Symbol.refresh) {
-          showWrapperIcon = false
-        }
-        .iconColor(showWrapperIcon ? .black : .blue)
-      }
+    VStack {
+      TUITextRow("Title", style: .textDescription("Description"))
+      
+        .wrapperIcon(showWrapperIcon, icon: {
+
+            TUIWrapperIcon(
+              image: Symbol.chevronRight, action: {
+                showWrapperIcon = false
+              })
+          })
+      
+      TUITextRow("Title", style: .onlyTitle)
+        .iconButtons({
+          [
+            IconItem(show: showBinIcon) {
+              TUIIconButton(icon: Symbol.delete, action: { showBinIcon = false })
+            },
+            
+            IconItem(show: showDocIcon) {
+              TUIIconButton(icon: Symbol.document, action: { showDocIcon = false })
+            }
+          ]
+        })
+        .infoIcon(showInfoIcon) { showInfoIcon = false }
+    }
   }
 }
 

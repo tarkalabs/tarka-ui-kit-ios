@@ -14,10 +14,10 @@ public struct TUITextRow: View {
   public var title: any StringProtocol
   public var style: Style
   
-  @ObservedObject var wrapperIcon: IconButtonItem<TUIWrapperIcon> = IconButtonItem()
+  var wrapperIcon: IconItem<TUIWrapperIcon>?
   
-  @ObservedObject var iconButton: IconButtonItem<TUIIconButton> = IconButtonItem()
-
+  var iconButtons: [IconItem<TUIIconButton>]?
+  
   /// Creates a text row with the specified title and style.
   ///
   /// - Parameters:
@@ -97,18 +97,27 @@ public struct TUITextRow: View {
   }
   
   @ViewBuilder
+  private var iconButtonsView: some View {
+    
+    ForEach(iconButtons ?? []) { iconItem in
+      if iconItem.show {
+        
+        iconItem.icon()
+          .iconButtonStyle(.ghost)
+          .iconButtonSize(.l)
+      }
+    }
+  }
+  
+  @ViewBuilder
   private var rightView: some View {
-
+    
     HStack(spacing: Spacing.quarterHorizontal) {
       
-      if iconButton.shouldShow {
-
-        iconButton.icon
-        .iconButtonSize(.l)
-      }
-
-      if wrapperIcon.shouldShow {
-        wrapperIcon.icon
+      iconButtonsView
+      
+      if let wrapperIcon, wrapperIcon.show {
+        wrapperIcon.icon()
       }
     }
   }
@@ -135,18 +144,34 @@ extension TUITextRow {
 struct TextRow_Previews: PreviewProvider {
   
   static var previews: some View {
-    
     VStack(spacing: 10) {
+      Group {
+        
+        TUITextRow("Title", style: .onlyTitle)
+          .iconButtons({
+            [
+              IconItem {
+                TUIIconButton(icon: Symbol.warning, action: { })
+              },
+              
+              IconItem {
+                TUIIconButton(icon: Symbol.error, action: { })
+              }
+            ]
+          })
+          .infoIcon(true) { }
+          .previewDisplayName("Only Title")
 
         TUITextRow("Title", style: .textDescription("Description to test with multiple number of lines to verify its adaptability"))
-        .wrapperInfoIcon { }
+          .infoIcon(true) { }
           .previewDisplayName("With Text Description")
-
+      }
       TUITextRow("Title", style: .textDescription("Description"))
-        .wrapperIcon {
-          TUIWrapperIcon(image: Symbol.warning) { }
-            .iconColor(.black)
-        }
+        .wrapperIcon(icon: {
+          
+          TUIWrapperIcon(
+            image: Symbol.chevronRight, action: {})
+        })
         .previewDisplayName("With Info Icon")
     }
   }
