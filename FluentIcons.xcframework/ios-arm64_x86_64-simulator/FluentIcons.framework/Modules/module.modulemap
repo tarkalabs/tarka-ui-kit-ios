@@ -1,0 +1,11 @@
+framework module FluentIcons {
+  umbrella header "FluentIcons.h"
+
+  export *
+  module * { export * }
+}
+
+module FluentIcons.Swift {
+  header "FluentIcons-Swift.h"
+  requires objc
+}
