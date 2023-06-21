@@ -50,6 +50,11 @@ public struct TUISelectionRow: View {
       .padding(.vertical, Spacing.baseVertical)
       .background(roundedRectangleView)
       .accessibilityIdentifier(Accessibility.title)
+      .listRowSeparator(.hidden)
+      .listRowInsets(EdgeInsets(top: Spacing.halfVertical,
+                                leading: Spacing.halfHorizontal,
+                                bottom: Spacing.halfVertical,
+                                trailing: Spacing.halfHorizontal))
   }
   
   @ViewBuilder
