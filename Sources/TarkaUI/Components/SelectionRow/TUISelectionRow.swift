@@ -51,10 +51,12 @@ public struct TUISelectionRow: View {
       .background(roundedRectangleView)
       .accessibilityIdentifier(Accessibility.title)
       .listRowSeparator(.hidden)
-      .listRowInsets(EdgeInsets(top: Spacing.halfVertical,
-                                leading: Spacing.halfHorizontal,
-                                bottom: Spacing.halfVertical,
-                                trailing: Spacing.halfHorizontal))
+      .listRowBackground(Color.clear)
+      .listRowInsets(EdgeInsets(
+        top: Spacing.halfVertical,
+        leading: Spacing.halfHorizontal,
+        bottom: Spacing.halfVertical,
+        trailing: Spacing.halfHorizontal))
   }
   
   @ViewBuilder
