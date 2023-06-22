@@ -29,8 +29,6 @@ public enum Symbol: String, Icon {
   case shield
   case sync
   case tabs
-  case checkBoxChecked
-  case checkBoxUnChecked
   
   public var name: String {
     rawValue
@@ -76,10 +74,6 @@ public enum Symbol: String, Icon {
       return .arrowSyncCircle24Regular
     case .tabs:
       return .tabs24Regular
-    case .checkBoxChecked:
-      return .checkboxChecked24Filled
-    case .checkBoxUnChecked:
-      return .checkboxUnchecked24Filled
     }
   }
 }

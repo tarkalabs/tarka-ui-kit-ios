@@ -43,6 +43,7 @@ public struct TUISelectionRow<Content>: View where Content: View {
     HStack {
       content()
     }
+    .frame(maxWidth: .infinity)
     .padding(.leading)
     .padding(.vertical, Spacing.baseVertical)
     .background(selectionColor)
