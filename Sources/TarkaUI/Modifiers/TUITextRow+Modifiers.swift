@@ -7,43 +7,27 @@
 
 import SwiftUI
 
-public struct IconItem<Content>: Identifiable where Content: View {
-  
-  public var id = UUID().uuidString
-  public var show = true
-  public var icon: () -> Content
-  
-  public init(id: String = UUID().uuidString, show: Bool = true, icon: @escaping () -> Content) {
-    self.id = id
-    self.show = show
-    self.icon = icon
-  }
-}
-
 public extension TUITextRow {
   
-  func wrapperIcon(_ show: Bool = true,
-                   icon: @escaping () -> TUIWrapperIcon) -> TUITextRow {
+  func wrapperIcon(@ViewBuilder icon: @escaping () -> TUIWrapperIcon?) -> TUITextRow {
     var newView = self
-    let iconItem = IconItem(show: show, icon: icon)
-    newView.wrapperIcon = iconItem
+    newView.wrapperIcon = icon
     return newView
   }
   
-  func infoIcon(_ show: Bool = true,
-                color: Color? = nil,
+  func infoIcon(color: Color? = nil,
                 action: @escaping () -> Void) -> TUITextRow {
     var newView = self
     let infoIcon: () -> TUIWrapperIcon = {
       TUIWrapperIcon.info(color: color, action: action)
     }
-    newView.wrapperIcon =  IconItem(show: show, icon: infoIcon)
+    newView.wrapperIcon = infoIcon
     return newView
   }
   
-  func iconButtons(_ icons: @escaping () -> [IconItem<TUIIconButton>]) -> TUITextRow {
+  func iconButtons(@TUIIconButtonBuilder icons: @escaping () -> [TUIIconButton]) -> TUITextRow {
     var newView = self
-    newView.iconButtons = icons()
+    newView.iconButtons = icons
     return newView
   }
 }

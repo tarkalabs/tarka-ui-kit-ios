@@ -38,8 +38,11 @@ public enum TUIIconButtonSize: EnvironmentKey {
 ///   - icon: The icon to display in the button.
 ///   - action: The action to perform when the user taps the button.
 ///
-public struct TUIIconButton: View {
+public struct TUIIconButton: View, Identifiable {
+  
+  public let id = UUID()
   /// The icon to display in the button.
+  /// 
   public var icon: Icon
 
   /// The action to perform when the user taps the button.
