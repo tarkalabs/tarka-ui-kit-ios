@@ -107,10 +107,10 @@ public extension Font {
   static let heading6 = Font.using(.heading6)
   static let heading7 = Font.using(.heading7)
     
-  static let body5 = Font.using(.body5)
-  static let body6 = Font.using(.body6)
-  static let body7 = Font.using(.body7)
-  static let body8 = Font.using(.body8)
+  static let body5 = Font.using(.body5).weight(.regular)
+  static let body6 = Font.using(.body6).weight(.regular)
+  static let body7 = Font.using(.body7).weight(.regular)
+  static let body8 = Font.using(.body8).weight(.regular)
     
   static let button6 = Font.using(.button6)
   static let button7 = Font.using(.button7)
@@ -120,3 +120,17 @@ public extension Font {
     Font.custom(font.fontVariant.name, size: font.size, relativeTo: font.textStyle)
   }
 }
+
+/*
+ Value  Common weight name
+ 100  Thin (Hairline)
+ 200  Extra Light (Ultra Light)
+ 300  Light
+ 400  Normal (Regular)
+ 500  Medium
+ 600  Semi Bold (Demi Bold)
+ 700  Bold
+ 800  Extra Bold (Ultra Bold)
+ 900  Black (Heavy)
+ 950  Extra Black (Ultra Black)
+ */

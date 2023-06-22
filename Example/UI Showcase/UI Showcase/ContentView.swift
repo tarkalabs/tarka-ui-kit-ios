@@ -11,13 +11,30 @@ import SwiftUI
 struct ContentView: View {
   var body: some View {
     VStack {
-      Image(systemName: "globe")
-        .imageScale(.large)
-        .foregroundColor(.accentColor)
-      Text("Hello, world!")
-      Image(Symbol.map)
+      TUIBody(style: .hasValue(title: "Label", value: "Input Text"))
+        .startItem(.init(item: .text("Title:")))
+        .endItem(.init(item: .text("$")))
+      
+      TUIBody(style: .hasValue(title: "Label", value: "Input Text"))
+        .startItem(.init(item: .icon(Symbol.sync)))
+        .endItem(.init(item: .icon(Symbol.sync)))
+      
+      TUIBody(style: .hasValue(title: "Label", value: "Input Text"))
+        .startItem(.init(item: .text("Title:")))
+        .endItem(.init(item: .icon(Symbol.sync)))
+      
+      TUIBody(style: .hasValue(title: "Label", value: "Input Text"))
+        .startItem(.init(item: .icon(Symbol.sync)))
+        .endItem(.init(item: .text("$")))
     }
-    .padding()
+//    VStack {
+//      Image(systemName: "globe")
+//        .imageScale(.large)
+//        .foregroundColor(.accentColor)
+//      Text("Hello, world!")
+//      Image(Symbol.map)
+//    }
+//    .padding()
   }
 }
 
