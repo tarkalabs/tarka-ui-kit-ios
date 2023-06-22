@@ -12,7 +12,7 @@ import SwiftUI
 ///
 ///  Example usage:
 ///
-///  `TUISelectionRow("Title", style: .textDescription("Description")) { -> tapAction }
+///  `TUISelectionRow("Title", style: .textDescription("Description")) { tapAction }
 ///
 
 public struct TUISelectionRow: View {
@@ -75,7 +75,7 @@ extension TUISelectionRow {
   }
 }
 
-struct SwiftUIView_Previews: PreviewProvider {
+struct TUISelectionRow_Previews: PreviewProvider {
   static var previews: some View {
     VStack {
       TUISelectionRow("Title", style: .textDescription("Description")) {}
