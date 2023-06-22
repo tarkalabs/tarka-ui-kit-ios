@@ -43,7 +43,8 @@ public struct TUISelectionRow<Content>: View where Content: View {
     HStack {
       content()
     }
-    .padding()
+    .padding(.leading)
+    .padding(.vertical, Spacing.baseVertical)
     .background(selectionColor)
     .clipShape(RoundedRectangle(cornerRadius:Spacing.baseHorizontal))
     .accessibilityIdentifier(Accessibility.root)
