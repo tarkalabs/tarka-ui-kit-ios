@@ -20,15 +20,11 @@ public struct TUIWrapperIcon: View {
   }
   
   public static func info(
-    color: Color? = nil,
     action: @escaping () -> Void) -> TUIWrapperIcon {
       
       let icon = self.init(image: Symbol.info, action: action)
-      if let color {
-        return icon.iconColor(color)
-      }
       return icon
-  }
+    }
   
   public var body: some View {
     Button {

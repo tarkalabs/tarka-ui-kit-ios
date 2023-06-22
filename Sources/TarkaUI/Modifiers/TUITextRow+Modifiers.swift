@@ -19,7 +19,11 @@ public extension TUITextRow {
                 action: @escaping () -> Void) -> TUITextRow {
     var newView = self
     let infoIcon: () -> TUIWrapperIcon = {
-      TUIWrapperIcon.info(color: color, action: action)
+      let infoIcon = TUIWrapperIcon.info(action: action)
+      if let color {
+        return infoIcon.iconColor(color)
+      }
+      return infoIcon
     }
     newView.wrapperIcon = infoIcon
     return newView
