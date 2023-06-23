@@ -11,21 +11,21 @@ import SwiftUI
 struct ContentView: View {
   var body: some View {
     VStack {
-      TUIBody(style: .hasValue(title: "Label", value: "Input Text"))
-        .startItem(.init(item: .text("Title:")))
-        .endItem(.init(item: .text("$")))
+      TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
+        .startItem(.text("Title:"))
+        .endItem(.text("$"))
       
-      TUIBody(style: .hasValue(title: "Label", value: "Input Text"))
-        .startItem(.init(item: .icon(Symbol.sync)))
-        .endItem(.init(item: .icon(Symbol.sync)))
+      TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
+        .startItem(.icon(Symbol.sync))
+        .endItem(.icon(Symbol.sync))
       
-      TUIBody(style: .hasValue(title: "Label", value: "Input Text"))
-        .startItem(.init(item: .text("Title:")))
-        .endItem(.init(item: .icon(Symbol.sync)))
+      TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
+        .startItem(.text("Title:"))
+        .endItem(.icon(Symbol.sync))
       
-      TUIBody(style: .hasValue(title: "Label", value: "Input Text"))
-        .startItem(.init(item: .icon(Symbol.sync)))
-        .endItem(.init(item: .text("$")))
+      TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
+        .startItem(.icon(Symbol.sync))
+        .endItem(.text("$"))
     }
 //    VStack {
 //      Image(systemName: "globe")
