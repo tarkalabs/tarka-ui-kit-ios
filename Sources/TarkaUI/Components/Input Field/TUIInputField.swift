@@ -1,5 +1,5 @@
 //
-//  TUIBody.swift
+//  TUIInputField.swift
 //  
 //
 //  Created by Gopinath on 20/06/23.
@@ -8,39 +8,29 @@
 import SwiftUI
 
 
-public struct TUIBody: View {
+public enum TUIInputFieldConfig {
+  case onlyTitle(String)
+  case titleWithValue(title: String, value: String)
+  case onlyValue(String)
+}
+
+public struct TUIInputField: View {
   
-  public enum Style {
-    case noValue(title: String)
-    case hasValue(title: String, value: String)
-    case compact(value: String)
-  }
-  
-  public enum ItemType {
+  public enum AdditionalItem {
     case text(String)
     case icon(Icon)
   }
-  
-  public struct AdditionalItem {
-    public var show = true
-    public var item: ItemType
-    
-    public init(show: Bool = true, item: ItemType) {
-      self.show = show
-      self.item = item
-    }
-  }
-  
-  private var style: Style
-  @Environment(\.startItem) private var startItem
-  @Environment(\.endItem) private var endItem
-  @Environment(\.highlightBar) private var highlightBar
-  @Environment(\.helpText) private var helpText
 
-  public init(style: Style) {
+  private var style: TUIInputFieldConfig
+  var startItem: TUIInputField.AdditionalItem?
+  var endItem: TUIInputField.AdditionalItem?
+  var highlightBar = false
+  var helpText: String?
+
+  public init(style: TUIInputFieldConfig) {
     self.style = style
     switch style {
-    case .hasValue(_, let value), .compact(let value):
+    case .titleWithValue(_, let value), .onlyValue(let value):
       bodyValue = value
     default: break
     }
@@ -64,29 +54,21 @@ public struct TUIBody: View {
         .frame(height: 2)
     }
   }
-  
-  @ViewBuilder
-  private var helperText: some View {
-    Text("Helper / hint message goes here.")
-      .font(.body8)
-      .foregroundColor(.inputTextDim)
-      .frame(minHeight: 14)
-      .frame(alignment: .leading)
-//        .accessibilityIdentifier(Accessibility.title)
-  }
-  
+
   @ViewBuilder
   private var fieldBodyHeaderHStack: some View {
+    
     HStack(alignment: .top, spacing: 8) {
-      if startItem.show {
-        viewForItem(startItem.item)
+      
+      if let startItem {
+        viewForItem(startItem)
           .padding(.leading, 16)
       }
       inputContent
         .frame(maxWidth: .infinity, alignment: .leading)
 
-      if endItem.show {
-        viewForItem(endItem.item, isEnd: true)
+      if let endItem {
+        viewForItem(endItem, isEnd: true)
           .padding(.trailing, 16)
       }
     }
@@ -110,7 +92,7 @@ public struct TUIBody: View {
   @ViewBuilder
   private var titleView: some View {
     switch style {
-    case .noValue(let title):
+    case .onlyTitle(let title):
       Text(title)
         .font(.body6)
         .foregroundColor(.inputTextDim)
@@ -118,7 +100,7 @@ public struct TUIBody: View {
         .frame(alignment: .leading)
 //        .accessibilityIdentifier(Accessibility.title)
       
-    case .hasValue(let title, _):
+    case .titleWithValue(let title, _):
       Text(title)
         .font(.body8)
         .foregroundColor(.inputTextDim)
@@ -136,7 +118,7 @@ public struct TUIBody: View {
   @ViewBuilder
   private var valueView: some View {
     switch style {
-    case .noValue(_):
+    case .onlyTitle(_):
       EmptyView()
       
     default:
@@ -150,14 +132,9 @@ Input Text
 //        .accessibilityIdentifier(Accessibility.title)
     }
   }
-  
-//  @ViewBuilder
-//  private var helperText: some View {
-//
-//  }
-  
+ 
   @ViewBuilder
-  private func viewForItem(_ item: ItemType, isEnd: Bool = false) -> some View {
+  private func viewForItem(_ item: AdditionalItem, isEnd: Bool = false) -> some View {
     
     switch item {
     case .text(let text):
@@ -182,84 +159,82 @@ Input Text
   }
 }
 
-struct TUIBody_Previews: PreviewProvider {
+struct TUIInputField_Previews: PreviewProvider {
     static var previews: some View {
       VStack {
-        TUIBody(style: .noValue(title: "Label"))
-          .startItem(.init(item: .text("$")))
-          .endItem(.init(item: .text("$")))
+        TUIInputField(style: .onlyTitle("Label"))
+          .startItem(.text("$"))
+          .endItem(.text("$"))
         
-        TUIBody(style: .noValue(title: "Label"))
-          .startItem(.init(item: .icon(Symbol.info)))
-          .endItem(.init(item: .icon(Symbol.info)))
+        TUIInputField(style: .onlyTitle("Label"))
+          .startItem(.icon(Symbol.info))
+          .endItem(.icon(Symbol.info))
         
-        TUIBody(style: .noValue(title: "Label"))
-          .startItem(.init(item: .text("$")))
-          .endItem(.init(item: .icon(Symbol.info)))
+        TUIInputField(style: .onlyTitle("Label"))
+          .startItem(.text("$"))
+          .endItem(.icon(Symbol.info))
         
-        TUIBody(style: .noValue(title: "Label"))
-          .startItem(.init(item: .icon(Symbol.info)))
-          .endItem(.init(item: .text("$")))
+        TUIInputField(style: .onlyTitle("Label"))
+          .startItem(.icon(Symbol.info))
+          .endItem(.text("$"))
+      }
+      
+      VStack {
+        TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
+          .startItem(.text("$"))
+          .endItem(.text("$"))
+        
+        TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
+          .startItem(.icon(Symbol.info))
+          .endItem(.icon(Symbol.info))
+        
+        TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
+          .startItem(.text("$"))
+          .endItem(.icon(Symbol.info))
+        
+        TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
+          .startItem(.icon(Symbol.info))
+          .endItem(.text("$"))
 
       }
       
       VStack {
-        TUIBody(style: .hasValue(title: "Label", value: "Input Text"))
-          .startItem(.init(item: .text("$")))
-          .endItem(.init(item: .text("$")))
+        TUIInputField(style: .onlyValue("Input Text"))
+          .startItem(.text("$"))
+          .endItem(.text("$"))
         
-        TUIBody(style: .hasValue(title: "Label", value: "Input Text"))
-          .startItem(.init(item: .icon(Symbol.info)))
-          .endItem(.init(item: .icon(Symbol.info)))
+        TUIInputField(style: .onlyValue("Input Text"))
+          .startItem(.icon(Symbol.info))
+          .endItem(.icon(Symbol.info))
         
-        TUIBody(style: .hasValue(title: "Label", value: "Input Text"))
-          .startItem(.init(item: .text("$")))
-          .endItem(.init(item: .icon(Symbol.info)))
+        TUIInputField(style: .onlyValue("Input Text"))
+          .startItem(.text("$"))
+          .endItem(.icon(Symbol.info))
         
-        TUIBody(style: .hasValue(title: "Label", value: "Input Text"))
-          .startItem(.init(item: .icon(Symbol.info)))
-          .endItem(.init(item: .text("$")))
-
-      }
-      
-      VStack {
-        TUIBody(style: .compact(value: "Input Text"))
-          .startItem(.init(item: .text("$")))
-          .endItem(.init(item: .text("$")))
-        
-        TUIBody(style: .compact(value: "Input Text"))
-          .startItem(.init(item: .icon(Symbol.info)))
-          .endItem(.init(item: .icon(Symbol.info)))
-        
-        TUIBody(style: .compact(value: "Input Text"))
-          .startItem(.init(item: .text("$")))
-          .endItem(.init(item: .icon(Symbol.info)))
-        
-        TUIBody(style: .compact(value: "Input Text"))
-          .startItem(.init(item: .icon(Symbol.info)))
-          .endItem(.init(item: .text("$")))
-
+        TUIInputField(style: .onlyValue("Input Text"))
+          .startItem(.icon(Symbol.info))
+          .endItem(.text("$"))
       }
     }
 }
 
 
-extension TUIBody {
+extension TUIInputField {
   
   var inputViewProperties: (verticalPadding: CGFloat, height: CGFloat) {
     switch style {
-    case .noValue(_):
+    case .onlyTitle(_):
       return (17, 20)
-    case .hasValue(_,_):
+    case .titleWithValue(_,_):
       return (10, 36)
-    case .compact(_):
+    case .onlyValue(_):
       return (13, 20)
     }
   }
   
   var fieldBodyHeight: CGFloat {
     switch style {
-    case .compact(_):
+    case .onlyValue(_):
       return 48
     default:
       return 56
@@ -268,11 +243,11 @@ extension TUIBody {
   
   var textItemTopPadding: CGFloat {
     switch style {
-    case .noValue(_):
+    case .onlyTitle(_):
       return 17
-    case .hasValue(_,_):
+    case .titleWithValue(_,_):
       return 26
-    case .compact(_):
+    case .onlyValue(_):
       return 13
     }
   }
@@ -280,11 +255,11 @@ extension TUIBody {
   var iconItemTop: CGFloat {
     
     switch style {
-    case .noValue(_):
+    case .onlyTitle(_):
       return 16
-    case .hasValue(_,_):
+    case .titleWithValue(_,_):
       return 18
-    case .compact(_):
+    case .onlyValue(_):
       return 12
     }
   }
