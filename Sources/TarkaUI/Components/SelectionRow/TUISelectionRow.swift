@@ -23,7 +23,7 @@ import SwiftUI
 ///     }
 ///
 /// - Parameters:
-///   - isSelected: This Bool is used to display the selection, The default value is `.surface`
+///   - isSelected: This Bool is used to display the selection, The default selection color is `.surface`
 ///
 /// - Returns: A closure that returns the content
 
