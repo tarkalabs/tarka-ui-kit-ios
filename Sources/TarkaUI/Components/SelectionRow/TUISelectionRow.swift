@@ -23,7 +23,7 @@ import SwiftUI
 ///     }
 ///
 /// - Parameters:
-///   - selectionColor: This color used to display the selection, The default value is `.surface`
+///   - isSelected: This Bool is used to display the selection, The default value is `.surface`
 ///
 /// - Returns: A closure that returns the content
 
@@ -31,11 +31,11 @@ public struct TUISelectionRow<Content>: View where Content: View {
   
   var content: () -> Content
   
-  public var selectionColor: Color
+  public var isSelected: Bool
   
-  public init(selectionColor: Color = .surface,
+  public init(isSelected: Bool = false,
               @ViewBuilder content: @escaping () -> Content) {
-    self.selectionColor = selectionColor
+    self.isSelected = isSelected
     self.content = content
   }
   
@@ -46,7 +46,7 @@ public struct TUISelectionRow<Content>: View where Content: View {
     .frame(maxWidth: .infinity)
     .padding(.leading)
     .padding(.vertical, Spacing.baseVertical)
-    .background(selectionColor)
+    .background(isSelected ? Color.primaryAlt : Color.surface)
     .clipShape(RoundedRectangle(cornerRadius:Spacing.baseHorizontal))
     .accessibilityIdentifier(Accessibility.root)
   }
@@ -64,7 +64,7 @@ struct TUISelectionRow_Previews: PreviewProvider {
       TUISelectionRow {
         TUITextRow("Hello", style: .textDescription("Welcome"))
       }
-      TUISelectionRow(selectionColor: .primaryAlt) {
+      TUISelectionRow(isSelected: true) {
         TUITextRow("Hello", style: .textDescription("Welcome"))
       }
     }
