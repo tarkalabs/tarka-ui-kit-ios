@@ -44,12 +44,14 @@ public struct TUIIconButton: View, Identifiable {
   /// The icon to display in the button.
   /// 
   public var icon: Icon
+  
+  var iconColor: Color?
 
   /// The action to perform when the user taps the button.
   public var action: () -> Void
 
-  @Environment(\.iconButtonStyle) var style
-  @Environment(\.iconButtonSize) var size
+  var style: TUIIconButtonStyle = .ghost
+  var size: TUIIconButtonSize = .l
   
   /// Creates a button that displays an icon.
   ///
@@ -88,7 +90,7 @@ public struct TUIIconButton: View, Identifiable {
         width: iconSize.width,
         height: iconSize.height
       )
-      .foregroundColor(iconColor)
+      .foregroundColor(iconColor ?? defaultIconColor)
       .frame(
         maxWidth: .infinity,
         maxHeight: .infinity
@@ -113,7 +115,8 @@ public struct TUIIconButton: View, Identifiable {
 }
 
 extension TUIIconButton {
-  var iconColor: Color {
+  
+  var defaultIconColor: Color {
     switch style {
     case .outline, .ghost:
       return .onSurface
@@ -179,12 +182,9 @@ struct IconButtonView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
       TUIIconButton(
-        icon: Symbol.reorderDots,
-        action: {
-        
-      })
-      .iconButtonStyle(.secondary)
-      .iconButtonSize(.m)
+        icon: Symbol.chevronRight) { }
+      .style(.secondary)
+      .size(.m)
     }
   }
 }
