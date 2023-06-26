@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// `TUISelectionRow` is a  container view that displays title and description with selection color
-///  The content can be used in any SwiftUI view.
+///  This view can be used in any SwiftUI view.
 ///
 /// Example usage:
 ///
@@ -68,13 +68,12 @@ public struct TUISelectionRow: View {
   }
   
   public var leftView: some View {
-    HStack(alignment: style == .onlyTitle ? .center : .top,
-           spacing: Spacing.baseHorizontal) {
+    HStack(alignment: style == .onlyTitle ? .center : .top, spacing: Spacing.baseHorizontal) {
       leftIconView
       leftDetailView
     }
-           .accessibilityElement(children: .contain)
-           .accessibilityIdentifier(Accessibility.title)
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.title)
   }
   
   @ViewBuilder
