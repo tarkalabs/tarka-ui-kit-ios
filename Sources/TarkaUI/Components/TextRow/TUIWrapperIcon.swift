@@ -19,13 +19,6 @@ public struct TUIWrapperIcon: View {
     self.action = action
   }
   
-  public static func info(
-    action: @escaping () -> Void) -> TUIWrapperIcon {
-      
-      let icon = self.init(image: Symbol.info, action: action)
-      return icon
-    }
-  
   public var body: some View {
     Button {
       action()
