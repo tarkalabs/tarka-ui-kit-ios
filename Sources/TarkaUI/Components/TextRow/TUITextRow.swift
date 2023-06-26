@@ -13,7 +13,6 @@ import SwiftUI
 public struct TUITextRow: View {
   public var title: any StringProtocol
   public var style: Style
-  public var fontStyle: FontStyle = .primary
   
   @Environment(\.wrapperIcon) private var wrapperIcon
   @Environment(\.iconButton) private var iconButton
@@ -24,11 +23,9 @@ public struct TUITextRow: View {
   ///   - title: The title to display in the text row.
   ///   - style: The style to use to display the text row. The default value is `.onlyTitle`.
   ///
-  public init(_ title: any StringProtocol, style: TUITextRow.Style,
-              fontStyle: TUITextRow.FontStyle = .primary) {
+  public init(_ title: any StringProtocol, style: TUITextRow.Style) {
     self.title = title
     self.style = style
-    self.fontStyle = fontStyle
   }
   
   public var body: some View {
@@ -73,7 +70,7 @@ public struct TUITextRow: View {
     default:
       Text(title)
         .font(.body8)
-        .foregroundColor(fontStyle == .primary ? .inputTextDim : .onSurface)
+        .foregroundColor(.inputTextDim)
         .frame(minHeight: 14)
         .accessibilityIdentifier(Accessibility.title)
     }
@@ -93,7 +90,7 @@ public struct TUITextRow: View {
   private func textDescriptionView(_ description: String) -> some View {
     Text(description)
       .font(.body7)
-      .foregroundColor(fontStyle == .primary ? .onSurface : .inputTextDim)
+      .foregroundColor(.onSurface)
       .frame(minHeight: Spacing.custom(18))
       .accessibilityIdentifier(Accessibility.description)
   }
@@ -128,11 +125,6 @@ public extension TUITextRow {
     
     /// Displays the title and description.
     case textDescription(String)
-  }
-  
-  enum FontStyle {
-    case primary
-    case custom
   }
 }
 
