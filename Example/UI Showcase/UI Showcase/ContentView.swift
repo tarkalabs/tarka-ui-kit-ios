@@ -10,12 +10,16 @@ import SwiftUI
 
 struct ContentView: View {
   var body: some View {
-    VStack {
+    VStack(spacing: 10) {
       Image(systemName: "globe")
         .imageScale(.large)
         .foregroundColor(.accentColor)
       Text("Hello, world!")
       Image(Symbol.map)
+      
+      TUIIconButton(
+        icon: Symbol.chevronRight) { }
+        .iconColor(.outline)
     }
     .padding()
   }
