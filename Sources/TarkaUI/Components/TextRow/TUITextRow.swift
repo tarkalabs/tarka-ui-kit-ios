@@ -144,12 +144,14 @@ struct TextRow_Previews: PreviewProvider {
         
         TUITextRow("Title", style: .onlyTitle)
           .wrapperIcon {
-            TUIWrapperIcon(image: Symbol.chevronRight, action: {})
+            TUIWrapperIcon(image: Symbol.chevronRight) { }
           }
           .previewDisplayName("Only Title")
         
         TUITextRow("Title", style: .textDescription("Description to test with multiple number of lines to verify its adaptability"))
-          .infoIcon { }
+          .wrapperIcon {
+            TUIWrapperIcon(image: Symbol.info) { }
+          }
           .previewDisplayName("With Text Description")
         
         TUITextRow("Title",
@@ -158,7 +160,9 @@ struct TextRow_Previews: PreviewProvider {
           TUIIconButton(icon: Symbol.warning, action: { })
           TUIIconButton(icon: Symbol.error, action: { })
         }
-        .infoIcon { }
+        .wrapperIcon {
+          TUIWrapperIcon(image: Symbol.info) { }
+        }
         .previewDisplayName("With Info Icon")
       }
     }
