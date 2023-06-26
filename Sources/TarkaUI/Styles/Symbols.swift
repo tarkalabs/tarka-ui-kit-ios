@@ -27,6 +27,7 @@ internal enum Symbol: String, Icon {
   case checkmarkCircle
   case warning
   case error
+  case person
   case info
 
   public var name: String {
@@ -49,6 +50,8 @@ internal enum Symbol: String, Icon {
       return .info48Regular
     case .warning:
       return .warning28Filled
+    case .person:
+      return .person24Regular
     case .error:
       return .errorCircle24Filled
     }
