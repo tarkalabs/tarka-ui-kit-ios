@@ -33,6 +33,7 @@ public struct TUISelectionRow: View {
   public var style: Style
   public var badgeCount: Int
   public var badgeColor: Color
+  public var isNavigationEnabled: Bool
   public var action: (() -> Void)?
   
   public init(_ title: any StringProtocol,
@@ -41,6 +42,7 @@ public struct TUISelectionRow: View {
               isSelected: Bool = false,
               badgeCount: Int = 0,
               badgeColor: Color = .onTertiaryAlt,
+              isNavigationEnabled: Bool = false,
               action: (() -> Void)? = nil) {
     self.isSelected = isSelected
     self.title = title
@@ -48,6 +50,7 @@ public struct TUISelectionRow: View {
     self.icon = icon
     self.badgeCount = badgeCount
     self.badgeColor = badgeColor
+    self.isNavigationEnabled = isNavigationEnabled
     self.action = action
   }
   
@@ -141,7 +144,7 @@ public struct TUISelectionRow: View {
           .badgeSize(.m)
           .accessibilityIdentifier(Accessibility.badge)
       }
-      if let action {
+      if let action, isNavigationEnabled {
         TUIIconButton(icon: Symbol.chevronRight, action: action)
           .iconButtonStyle(.ghost)
           .accessibilityIdentifier(Accessibility.chevron)
