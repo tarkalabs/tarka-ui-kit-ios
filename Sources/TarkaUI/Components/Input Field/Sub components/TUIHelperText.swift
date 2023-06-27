@@ -62,14 +62,26 @@ public struct TUIHelperText: View {
           .scaledToFit()
           .frame(width: 16, height: 16)
           .foregroundColor(style.iconColor)
+          .accessibilityIdentifier(Accessibility.icon)
       }
       Text(message)
         .font(.body7)
         .foregroundColor(.inputText)
         .frame(minHeight: 18)
         .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityIdentifier(Accessibility.label)
     }
     .padding(.leading, Spacing.custom(16))
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
+  }
+}
+
+extension TUIHelperText {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIHelperText"
+    case icon = "Icon"
+    case label = "Label"
   }
 }
 
