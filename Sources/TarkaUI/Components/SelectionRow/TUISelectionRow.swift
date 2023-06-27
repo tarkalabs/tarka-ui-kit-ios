@@ -12,7 +12,7 @@ import SwiftUI
 ///
 /// Example usage:
 ///
-///      TUISelectionRow("Hello", style: .textDescription("SwiftUI", forTitle: .onSurface),
+///      TUISelectionRow("Hello", style: .textDescription("SwiftUI", fontColor: .onSurface),
 ///      icon: Symbol.person, isSelected: true, badgeCount: 4) { }
 ///
 /// - Parameters:
