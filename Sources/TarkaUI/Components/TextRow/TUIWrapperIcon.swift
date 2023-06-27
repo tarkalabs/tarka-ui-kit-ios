@@ -11,20 +11,12 @@ public struct TUIWrapperIcon: View {
   
   public var action: () -> Void
   public var image: Icon
-  public var color: Color
+  public var color: Color = .disabledContent
 
-  public init(image: Icon, color: Color? = nil,
+  public init(image: Icon,
               action: @escaping () -> Void) {
     self.image = image
-    self.color = color ?? .disabledContent
     self.action = action
-  }
-  
-  public static func info(
-    color: Color? = nil,
-    action: @escaping () -> Void) -> TUIWrapperIcon {
-      
-      return self.init(image: Symbol.info, color: color, action: action)
   }
   
   public var body: some View {
@@ -46,12 +38,22 @@ public struct TUIWrapperIcon: View {
 struct TUIWrapperIcon_Previews: PreviewProvider {
   
   static var previews: some View {
-    TUIWrapperIcon(image: Symbol.info) { }
+    TUIWrapperIcon(image: Symbol.error) { }
+      .iconColor(.red)
   }
 }
 
 extension TUIWrapperIcon {
   enum Accessibility: String, TUIAccessibility {
     case wrapperIcon = "Wrapper Icon"
+  }
+}
+
+extension TUIWrapperIcon {
+  
+  public func iconColor(_ color: Color) -> TUIWrapperIcon {
+    var newView = self
+    newView.color = color
+    return newView
   }
 }
