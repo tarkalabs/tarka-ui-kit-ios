@@ -12,46 +12,33 @@ import SwiftUI
 ///
 /// Example usage:
 ///
-///      TUISelectionRow("Hello", style: .textDescription("SwiftUI", fontColor: .onSurface),
-///      icon: Symbol.person, isSelected: true, badgeCount: 4) { }
+///      TUISelectionRow("Hello", isSelected: true)
+///        .style(.withFooterDescription("welcome", desc: "to", footer: "SwiftUI"))
+///        .badgeCount(24)
+///        .badgeColor(.blue)
+///        .iconImage(Symbol.person)
+///        .action {}
 ///
 /// - Parameters:
 ///   - isSelected: This Bool is used to display the selection, The default selection color is `.surface`
 ///   - title: The title to display in the text row.
-///   - style: The style to use to display the text row and title font Color. The default value is `.onlyTitle`.
-///   - icon: This is used to display the icon.
-///   - badgeCount: This is used to show the badge count.
-///   - badgeColor: This is used to show custom badgeColor, The default value is `.onTertiaryAlt`
 ///
 /// - Returns: A closure that returns the content action
 
 public struct TUISelectionRow: View {
   
-  public var isSelected: Bool
-  public var icon: Icon?
-  public var title: any StringProtocol
-  public var style: Style
-  public var badgeCount: Int
-  public var badgeColor: Color
-  public var isNavigationEnabled: Bool
-  public var action: (() -> Void)?
+  private var isSelected: Bool
+  private var icon: Icon?
+  private var title: any StringProtocol
+  private var style: Style = .onlyTitle
+  private var badgeCount: Int = 0
+  private var badgeColor: Color = .onTertiaryAlt
+  private var showChevron: Bool = false
+  private var action: (() -> Void)?
   
-  public init(_ title: any StringProtocol,
-              style: TUISelectionRow.Style,
-              icon: Icon? = nil,
-              isSelected: Bool = false,
-              badgeCount: Int = 0,
-              badgeColor: Color = .onTertiaryAlt,
-              isNavigationEnabled: Bool = false,
-              action: (() -> Void)? = nil) {
+  public init(_ title: any StringProtocol, isSelected: Bool = false) {
     self.isSelected = isSelected
     self.title = title
-    self.style = style
-    self.icon = icon
-    self.badgeCount = badgeCount
-    self.badgeColor = badgeColor
-    self.isNavigationEnabled = isNavigationEnabled
-    self.action = action
   }
   
   public var body: some View {
@@ -71,7 +58,8 @@ public struct TUISelectionRow: View {
   }
   
   public var leftView: some View {
-    HStack(alignment: style == .onlyTitle ? .center : .top, spacing: Spacing.baseHorizontal) {
+    HStack(alignment: style == .onlyTitle ? .center : .top,
+           spacing: Spacing.baseHorizontal) {
       leftIconView
       leftDetailView
     }
@@ -98,15 +86,16 @@ public struct TUISelectionRow: View {
   }
   
   @ViewBuilder
-  private func titleView(for title: any StringProtocol,
-                         color: Color = .inputTextDim,
-                         accessibilityID: TUISelectionRow.Accessibility = .title) -> some View {
-    Text(title)
-      .font(color == .inputTextDim ? .body7 : .heading6)
-      .foregroundColor(color)
-      .frame(minHeight: Spacing.custom(18))
-      .accessibilityIdentifier(accessibilityID)
-  }
+  private func titleView(
+    for title: any StringProtocol,
+    color: Color = .inputTextDim,
+    accessibilityID: TUISelectionRow.Accessibility = .title) -> some View {
+      Text(title)
+        .font(color == .inputTextDim ? .body7 : .heading6)
+        .foregroundColor(color)
+        .frame(minHeight: Spacing.custom(18))
+        .accessibilityIdentifier(accessibilityID)
+    }
   
   @ViewBuilder
   private func detailView(forStyle style: Style) -> some View {
@@ -127,14 +116,15 @@ public struct TUISelectionRow: View {
   }
   
   @ViewBuilder
-  private func textDescriptionView(_ description: String, color: Color = .onSurface,
-                                   accessibilityID: TUISelectionRow.Accessibility = .description) -> some View {
-    Text(description)
-      .font(color == .onSurface ? .heading6 : .body7)
-      .foregroundColor(color)
-      .frame(minHeight: Spacing.custom(18))
-      .accessibilityIdentifier(accessibilityID)
-  }
+  private func textDescriptionView(
+    _ description: String, color: Color = .onSurface,
+    accessibilityID: TUISelectionRow.Accessibility = .description) -> some View {
+      Text(description)
+        .font(color == .onSurface ? .heading6 : .body7)
+        .foregroundColor(color)
+        .frame(minHeight: Spacing.custom(18))
+        .accessibilityIdentifier(accessibilityID)
+    }
   
   @ViewBuilder
   private var rightView: some View {
@@ -144,9 +134,9 @@ public struct TUISelectionRow: View {
           .badgeSize(.m)
           .accessibilityIdentifier(Accessibility.badge)
       }
-      if let action, isNavigationEnabled {
-        TUIIconButton(icon: Symbol.chevronRight, action: action)
-          .iconButtonStyle(.ghost)
+      if showChevron {
+        Image(systemName: "chevron.right")
+          .foregroundColor(isSelected ? .onSurface : .outline)
           .accessibilityIdentifier(Accessibility.chevron)
       }
     }
@@ -169,23 +159,62 @@ public extension TUISelectionRow {
     /// Displays only the title.
     case onlyTitle
     /// Displays the title and description, with custom title font color, default `onSurface`
-    case textDescription(String, fontColor: Color? = .onSurface)
+    case textDescription(_ desc: String, fontColor: Color? = .onSurface)
     /// Displays  title, subTitle, description, with optional footer
     case withFooterDescription(_ header: String, desc: String, footer: String? = nil)
+  }
+  
+  // MARK: - Modifiers
+  
+  func style(_ style: TUISelectionRow.Style) -> Self {
+    var newView = self
+    newView.style = style
+    return newView
+  }
+  
+  func badgeCount(_ badgeCount: Int) -> Self {
+    var newView = self
+    newView.badgeCount = badgeCount
+    return newView
+  }
+  
+  func badgeColor(_ badgeColor: Color) -> Self {
+    var newView = self
+    newView.badgeColor = badgeColor
+    return newView
+  }
+  
+  func action(_ show: Bool = true, _ action: @escaping () -> Void) -> Self {
+    var newView = self
+    newView.action = action
+    newView.showChevron = show
+    return newView
+  }
+  
+  func iconImage(_ icon: Icon) -> Self {
+    var newView = self
+    newView.icon = icon
+    return newView
   }
 }
 
 struct TUISelectionRow_Previews: PreviewProvider {
   static var previews: some View {
     VStack {
-      TUISelectionRow("Hello", style: .onlyTitle, isSelected: true)
-      TUISelectionRow("Hello", style: .textDescription("SwiftUI", fontColor: .onSurface),
-                      icon: Symbol.person, badgeCount: 4) {}
-      TUISelectionRow("Hello", style: .textDescription("Welcome"), isSelected: true)
-      TUISelectionRow("Hello", style: .textDescription("SwiftUI", fontColor: .inputTextDim))
+      TUISelectionRow("Hello")
+      TUISelectionRow("Hello", isSelected: true)
+        .style(.textDescription("Welcome"))
+        .iconImage(Symbol.person)
       
-      TUISelectionRow("Hello", style: .withFooterDescription("welcome", desc: "to", footer: "SwiftUI"),
-                      icon: Symbol.person, isSelected: true, badgeCount: 4) {}
+      TUISelectionRow("Example")
+        .style(.textDescription("for subHeading", fontColor: .inputTextDim))
+      
+      TUISelectionRow("Hello", isSelected: true)
+        .style(.withFooterDescription("welcome", desc: "to", footer: "SwiftUI"))
+        .badgeCount(24)
+        .badgeColor(.blue)
+        .iconImage(Symbol.person)
+        .action {}
     }
   }
 }
