@@ -183,8 +183,9 @@ struct IconButtonView_Previews: PreviewProvider {
     Group {
       TUIIconButton(
         icon: Symbol.chevronRight) { }
-      .style(.secondary)
-      .size(.m)
+        .iconColor(.white)
+        .style(.secondary)
+        .size(.m)
     }
   }
 }
