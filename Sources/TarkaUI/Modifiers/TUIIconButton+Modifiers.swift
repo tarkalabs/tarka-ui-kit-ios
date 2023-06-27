@@ -7,32 +7,36 @@
 
 import SwiftUI
 
-extension EnvironmentValues {
-  var iconButtonStyle: TUIIconButtonStyle {
-    get { self[TUIIconButtonStyle.self] }
-    set { self[TUIIconButtonStyle.self] = newValue }
-  }
-  
-  var iconButtonSize: TUIIconButtonSize {
-    get { self[TUIIconButtonSize.self] }
-    set { self[TUIIconButtonSize.self] = newValue }
-  }
-}
 
-public extension View {
-  /// Sets the `iconButtonStyle` for an `TUIIconButton`.
+public extension TUIIconButton {
+  
+  /// Sets the `style` for an `TUIIconButton`.
   ///
   /// - Parameter style: The `TUIIconButtonStyle` to use.
-  /// - Returns: A modified `View` that has the `iconButtonStyle` set as an environment value.
-  func iconButtonStyle(_ style: TUIIconButtonStyle) -> some View {
-      self.environment(\.iconButtonStyle, style)
+  /// - Returns: A modified `TUIIconButton` that has the `style` that overrides the default style.
+  func style(_ style: TUIIconButtonStyle) -> TUIIconButton {
+    var newView = self
+    newView.style = style
+    return newView
   }
-
-  /// Sets the `iconButtonSize` for an `TUIIconButton`.
+  
+  /// Sets the `size` for an `TUIIconButton`.
   ///
   /// - Parameter size: The `TUIIconButtonSize` to use.
-  /// - Returns: A modified `View` that has the `iconButtonSize` set as an environment value.
-  func iconButtonSize(_ size: TUIIconButtonSize) -> some View {
-      self.environment(\.iconButtonSize, size)
+  /// - Returns: A modified `TUIIconButton` that has the `size` that overrides the default size.
+  func size(_ size: TUIIconButtonSize) -> TUIIconButton {
+    var newView = self
+    newView.size = size
+    return newView
+  }
+  
+  /// Sets the `icon color` for an `TUIIconButton`.
+  ///
+  /// - Parameter color: The `Icon color` to use.
+  /// - Returns: A modified `TUIIconButton` that has the `Icon color` that overrides the default icon color.
+  func iconColor(_ color: Color) -> TUIIconButton {
+    var newView = self
+    newView.iconColor = color
+    return newView
   }
 }
