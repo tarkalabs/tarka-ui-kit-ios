@@ -73,7 +73,6 @@ public struct TUISelectionRow: View {
       leftDetailView
     }
     .accessibilityElement(children: .contain)
-    .accessibilityIdentifier(Accessibility.leftView)
   }
   
   @ViewBuilder
@@ -159,7 +158,6 @@ public extension TUISelectionRow {
     case subDescription = "subDescription"
     case footer = "footer_Description"
     case leftIcon = "leftIcon"
-    case leftView = "leftView"
     case badge = "badge"
     case chevron = "chevronRight"
   }
