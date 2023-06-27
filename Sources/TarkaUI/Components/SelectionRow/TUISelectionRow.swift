@@ -170,7 +170,7 @@ public extension TUISelectionRow {
     /// Displays the title and description, with custom title font color, default `onSurface`
     case textDescription(String, fontColor: Color? = .onSurface)
     /// Displays  title, subTitle, description, with optional footer
-    case withFooterDescription(String, String, String? = nil)
+    case withFooterDescription(_ header: String, desc: String, footer: String? = nil)
   }
 }
 
@@ -183,7 +183,7 @@ struct TUISelectionRow_Previews: PreviewProvider {
       TUISelectionRow("Hello", style: .textDescription("Welcome"), isSelected: true)
       TUISelectionRow("Hello", style: .textDescription("SwiftUI", fontColor: .inputTextDim))
       
-      TUISelectionRow("Hello", style: .withFooterDescription("welcome", "to", "SwiftUI"),
+      TUISelectionRow("Hello", style: .withFooterDescription("welcome", desc: "to", footer: "SwiftUI"),
                       icon: Symbol.person, isSelected: true, badgeCount: 4) {}
     }
   }
