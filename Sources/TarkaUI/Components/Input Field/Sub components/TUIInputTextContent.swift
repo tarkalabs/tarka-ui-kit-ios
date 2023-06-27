@@ -88,7 +88,7 @@ Input Text
   }
 }
 
-struct TUIInputContent_Previews: PreviewProvider {
+struct TUIInputTextContent_Previews: PreviewProvider {
   static var previews: some View {
     VStack(spacing: 10) {
       Group {

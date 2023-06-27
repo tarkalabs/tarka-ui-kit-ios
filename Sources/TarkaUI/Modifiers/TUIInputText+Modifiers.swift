@@ -7,29 +7,29 @@
 
 import SwiftUI
 
-public extension TUIInputField {
+public extension TUIInputText {
   
-  func startItem(_ item: TUIInputField.AdditionalItem) -> TUIInputField {
+  func startItem(show: Bool = true, withStyle style: TUIInputAdditionalItem.Style) -> TUIInputText {
     var newView = self
-    newView.startItem = item
+    newView.startItemStyle = show ? style : nil
     return newView
   }
   
-  func endItem(_ item: TUIInputField.AdditionalItem) -> TUIInputField {
+  func endItem(show: Bool = true, withStyle style: TUIInputAdditionalItem.Style) -> TUIInputText {
     var newView = self
-    newView.endItem = item
+    newView.endItemStyle = show ? style : nil
     return newView
   }
 
-  func highlightBar(_ show: Bool = true) -> TUIInputField {
+  func highlightBar(_ show: Bool = true) -> TUIInputText {
     var newView = self
-    newView.highlightBar = show
+    newView.showHighlightBar = show
     return newView
   }
   
-  func helpText(_ text: String? = nil) -> TUIInputField {
+  func helperText(show: Bool = true, @ViewBuilder _ helperText: () -> TUIHelperText) -> TUIInputText {
     var newView = self
-    newView.helpText = text
+    newView.helperText = show ? helperText() : nil
     return newView
   }
 }

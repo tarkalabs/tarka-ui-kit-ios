@@ -57,7 +57,7 @@ public struct TUIInputText: View {
           .frame(alignment: .leading)
           .padding(.leading, 16)
       }
-      TUIInputContent(style: style)
+      TUIInputTextContent(style: style)
         .frame(maxWidth: .infinity, alignment: .leading)
 
       if let endItemStyle {
@@ -105,7 +105,8 @@ extension TUIInputText {
 
 // MARK: - Preview
 
-struct TUIInputField_Previews: PreviewProvider {
+struct TUIInputText_Previews: PreviewProvider {
+  
   static var previews: some View {
     Group {
       
