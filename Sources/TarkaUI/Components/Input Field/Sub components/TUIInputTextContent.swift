@@ -32,6 +32,8 @@ struct TUIInputTextContent: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     .frame(minHeight: height)
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder
@@ -43,15 +45,15 @@ struct TUIInputTextContent: View {
         .foregroundColor(.inputTextDim)
         .frame(minHeight: 20)
         .frame(alignment: .leading)
-//        .accessibilityIdentifier(Accessibility.title)
-      
+        .accessibilityIdentifier(Accessibility.title)
+
     case .titleWithValue(let title, _):
       Text(title)
         .font(.body8)
         .foregroundColor(.inputTextDim)
         .frame(minHeight: 14)
         .frame(alignment: .leading)
-//        .accessibilityIdentifier(Accessibility.title)
+        .accessibilityIdentifier(Accessibility.title)
       
     default:
        EmptyView()
@@ -72,7 +74,7 @@ Input Text
         .font(.body6)
         .foregroundColor(.inputText)
         .frame(minHeight: 20)
-//        .accessibilityIdentifier(Accessibility.title)
+        .accessibilityIdentifier(Accessibility.value)
     }
   }
   
@@ -88,6 +90,14 @@ Input Text
   }
 }
 
+extension TUIInputTextContent {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIInputTextContent"
+    case title = "Title"
+    case value = "Value"
+  }
+}
+
 struct TUIInputTextContent_Previews: PreviewProvider {
   static var previews: some View {
     VStack(spacing: 10) {
@@ -95,8 +105,7 @@ struct TUIInputTextContent_Previews: PreviewProvider {
         TUIInputTextContent(style: .onlyTitle("Label"))
         TUIInputTextContent(style: .titleWithValue(title: "Label", value: "Description"))
         TUIInputTextContent(style: .onlyValue("Description"))
-      }.border(.blue)
-        .padding(.horizontal, 20)
+      }.padding(.horizontal, 20)
     }
   }
 }

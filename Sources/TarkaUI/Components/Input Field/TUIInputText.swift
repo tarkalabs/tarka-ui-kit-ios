@@ -32,6 +32,8 @@ public struct TUIInputText: View {
         helperText
       }
     }
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder
@@ -42,6 +44,7 @@ public struct TUIInputText: View {
       
       if showHighlightBar {
         Color.primaryTUI.frame(height: 2)
+          .accessibilityIdentifier(Accessibility.highLightBar)
       }
     }
   }
@@ -100,6 +103,13 @@ extension TUIInputText {
   var hasContent: Bool {
     guard case .titleWithValue = style else { return false }
     return true
+  }
+}
+
+extension TUIInputText {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIInputText"
+    case highLightBar = "HighLightBar"
   }
 }
 

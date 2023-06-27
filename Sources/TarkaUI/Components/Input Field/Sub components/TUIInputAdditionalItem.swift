@@ -33,8 +33,8 @@ public struct TUIInputAdditionalItem: View {
         .foregroundColor(.inputTextDim)
         .frame(minHeight: 22)
         .padding(.top, textItemTopPadding + extraPadding)
-      //        .accessibilityIdentifier(Accessibility.title)
-      
+        .accessibilityIdentifier(Accessibility.label)
+
     case .icon(let icon):
       Image(icon)
         .resizable()
@@ -44,12 +44,10 @@ public struct TUIInputAdditionalItem: View {
         .padding(.horizontal, Spacing.custom(2.0))
         .padding(.top, iconItemTop + extraPadding) // fluent font size mismatch
         .padding(.bottom, 1)
-      
+        .accessibilityIdentifier(Accessibility.icon)
+
     case .button(let iconButton):
       iconButton
-//      TUIIconButton(icon: icon, action: action)
-//      .iconButtonStyle(.primary)
-//      .iconButtonSize(.m)
     }
   }
   
@@ -63,6 +61,13 @@ public struct TUIInputAdditionalItem: View {
   
   var extraPadding: CGFloat {
     return hasContent ? 1 : 0
+  }
+}
+
+extension TUIInputAdditionalItem {
+  enum Accessibility: String, TUIAccessibility {
+    case icon = "TUIInputAdditionalIconItem"
+    case label = "TUIInputAdditionaltextItem"
   }
 }
 
