@@ -11,27 +11,25 @@ import SwiftUI
 ///
 /// Example usage:
 ///
-///     TUICheckBoxRow("Hello", style: .onlyTitle, isSelected: true, selectionStyle: .border)
+///     TUICheckBoxRow("Hello", isSelected: true)
+///       .style(.textDescription("SwiftUI"))
+///       .borderStyle(.border)
 ///
 /// - Parameters:
+///   - title: This used to display the title
 ///   - isSelected: This Bool is used to display the checkBox selection,
-///   - selectionStyle: This used to display the border, The default selectionStyle is `.plain`
 ///
 /// - Returns: A closure that returns the content
 
 public struct TUICheckBoxRow: View {
   
-  public var title: any StringProtocol
-  public var style: Style
-  public var isSelected: Bool
-  public var selectionStyle: SelectionStyle
+  private var title: any StringProtocol
+  private var style: Style = .onlyTitle
+  private var isSelected: Bool
+  private var borderStyle: BorderStyle = .plain
   
-  public init(_ title: any StringProtocol, style: TUICheckBoxRow.Style,
-              isSelected: Bool = false,
-              selectionStyle: SelectionStyle = .plain) {
+  public init(_ title: any StringProtocol, isSelected: Bool = false) {
     self.title = title
-    self.style = style
-    self.selectionStyle = selectionStyle
     self.isSelected = isSelected
   }
   
@@ -43,7 +41,7 @@ public struct TUICheckBoxRow: View {
     .frame(maxWidth: .infinity, alignment: .leading)
     .padding(.horizontal, Spacing.halfHorizontal)
     .padding(.vertical, Spacing.baseVertical)
-    .background(selectionStyle == .border ? Color.surfaceHover : Color.surface)
+    .background(borderStyle == .border ? Color.surfaceHover : Color.surface)
     .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
   }
   
@@ -94,7 +92,7 @@ public struct TUICheckBoxRow: View {
 
 public extension TUICheckBoxRow  {
   
-  enum SelectionStyle {
+  enum BorderStyle {
     case plain, border
   }
   
@@ -111,13 +109,31 @@ public extension TUICheckBoxRow  {
     case title = "Title"
     case description = "Description"
   }
+  
+  // MARK: - Modifiers
+  
+  func style(_ style: TUICheckBoxRow.Style) -> Self {
+    var newValue = self
+    newValue.style = style
+    return newValue
+  }
+  
+  func borderStyle(_ style: BorderStyle) -> Self {
+    var newValue = self
+    newValue.borderStyle = style
+    return newValue
+  }
 }
 
 struct TUICheckBoxRow_Previews: PreviewProvider {
   static var previews: some View {
     VStack(spacing: 20) {
-      TUICheckBoxRow("Welcome", style: .textDescription("SwiftUI"))
-      TUICheckBoxRow("Hello", style: .onlyTitle, isSelected: true, selectionStyle: .border)
+      TUICheckBoxRow("Hello")
+        .borderStyle(.border)
+      
+      TUICheckBoxRow("Welcome", isSelected: true)
+        .style(.textDescription("SwiftUI"))
+        .borderStyle(.plain)
     }
   }
 }
