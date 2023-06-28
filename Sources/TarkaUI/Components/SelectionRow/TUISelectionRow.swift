@@ -12,18 +12,18 @@ import SwiftUI
 ///
 /// Example usage:
 ///
-///      TUISelectionRow("Hello", isSelected: true)
+///      TUISelectionRow("Hello", isSelected: true, showChevron: true) { }
 ///        .style(.withFooterDescription("welcome", desc: "to", footer: "SwiftUI"))
 ///        .badgeCount(24)
 ///        .badgeColor(.blue)
 ///        .iconImage(Symbol.person)
-///        .action {}
 ///
 /// - Parameters:
 ///   - isSelected: This Bool is used to display the selection, The default selection color is `.surface`
 ///   - title: The title to display in the text row.
+///   - showChevron: This Bool is used to display chevronRight. The default value `false`.
 ///
-/// - Returns: A closure that returns the content action
+/// - Returns: A closure that returns the content
 
 public struct TUISelectionRow: View {
   
@@ -33,12 +33,15 @@ public struct TUISelectionRow: View {
   private var style: Style = .onlyTitle
   private var badgeCount: Int = 0
   private var badgeColor: Color = .onTertiaryAlt
-  private var showChevron: Bool = false
+  private var showChevron: Bool
   private var action: (() -> Void)?
   
-  public init(_ title: any StringProtocol, isSelected: Bool = false) {
+  public init(_ title: any StringProtocol, isSelected: Bool = false,
+              showChevron: Bool = false, action: (() -> Void)? = nil) {
     self.isSelected = isSelected
     self.title = title
+    self.showChevron = showChevron
+    self.action = action
   }
   
   public var body: some View {
@@ -52,6 +55,7 @@ public struct TUISelectionRow: View {
     .background(isSelected ? Color.primaryAlt : Color.surface)
     .clipShape(RoundedRectangle(cornerRadius:Spacing.baseHorizontal))
     .accessibilityIdentifier(Accessibility.root)
+    .accessibilityElement(children: .contain)
     .onTapGesture {
       if let action { action() }
     }
@@ -184,13 +188,6 @@ public extension TUISelectionRow {
     return newView
   }
   
-  func action(_ show: Bool = true, _ action: @escaping () -> Void) -> Self {
-    var newView = self
-    newView.action = action
-    newView.showChevron = show
-    return newView
-  }
-  
   func iconImage(_ icon: Icon) -> Self {
     var newView = self
     newView.icon = icon
@@ -209,12 +206,11 @@ struct TUISelectionRow_Previews: PreviewProvider {
       TUISelectionRow("Example")
         .style(.textDescription("for subHeading", fontColor: .inputTextDim))
       
-      TUISelectionRow("Hello", isSelected: true)
+      TUISelectionRow("Hello", isSelected: true, showChevron: true) {}
         .style(.withFooterDescription("welcome", desc: "to", footer: "SwiftUI"))
         .badgeCount(24)
         .badgeColor(.blue)
         .iconImage(Symbol.person)
-        .action {}
     }
   }
 }
