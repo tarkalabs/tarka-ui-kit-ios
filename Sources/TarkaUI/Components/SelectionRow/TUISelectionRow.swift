@@ -62,8 +62,7 @@ public struct TUISelectionRow: View {
   }
   
   public var leftView: some View {
-    HStack(alignment: style == .onlyTitle ? .center : .top,
-           spacing: Spacing.baseHorizontal) {
+    HStack(alignment: style == .onlyTitle ? .center : .top, spacing: Spacing.baseHorizontal) {
       leftIconView
       leftDetailView
     }
