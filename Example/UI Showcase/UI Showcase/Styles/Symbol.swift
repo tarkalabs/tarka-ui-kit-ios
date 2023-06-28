@@ -21,6 +21,7 @@ public enum Symbol: String, Icon {
   case documentDownload
   case documentError
   case export
+  case info
   case map
   case questionCircle
   case refresh
@@ -58,6 +59,8 @@ public enum Symbol: String, Icon {
       return .documentError24Regular
     case .export:
       return .arrowExport24Regular
+    case .info:
+      return .info48Regular
     case .map:
       return .map24Regular
     case .questionCircle:
