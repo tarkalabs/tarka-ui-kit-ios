@@ -12,7 +12,7 @@ public struct TUIWrapperIcon: View {
   public var action: () -> Void
   public var image: Icon
   public var color: Color = .disabledContent
-  public var isInteractionEnabled = true
+  public var disableInteraction = false
 
   public init(image: Icon,
               action: @escaping () -> Void) {
@@ -32,7 +32,7 @@ public struct TUIWrapperIcon: View {
         .padding(.horizontal, Spacing.custom(2.0))
     }
     .frame(height: 40)
-    .allowsHitTesting(isInteractionEnabled)
+    .disabled(disableInteraction)
     .accessibilityIdentifier(Accessibility.wrapperIcon)
   }
 }
