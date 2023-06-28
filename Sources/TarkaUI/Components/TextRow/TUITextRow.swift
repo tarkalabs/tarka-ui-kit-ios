@@ -14,8 +14,8 @@ public struct TUITextRow: View {
   public var title: any StringProtocol
   public var style: Style
   
-  @Environment(\.wrapperIcon) private var wrapperIcon
-  @Environment(\.iconButton) private var iconButton
+  @ViewBuilder var wrapperIcon: (() -> TUIWrapperIcon?)
+  @TUIIconButtonBuilder var iconButtons: (() -> [TUIIconButton])
   
   /// Creates a text row with the specified title and style.
   ///
@@ -23,9 +23,12 @@ public struct TUITextRow: View {
   ///   - title: The title to display in the text row.
   ///   - style: The style to use to display the text row. The default value is `.onlyTitle`.
   ///
-  public init(_ title: any StringProtocol, style: TUITextRow.Style) {
+  public init(_ title: any StringProtocol,
+              style: TUITextRow.Style) {
     self.title = title
     self.style = style
+    self.wrapperIcon = { nil }
+    self.iconButtons = { [] }
   }
   
   public var body: some View {
@@ -94,25 +97,20 @@ public struct TUITextRow: View {
       .frame(minHeight: Spacing.custom(18))
       .accessibilityIdentifier(Accessibility.description)
   }
+
   
   @ViewBuilder
   private var rightView: some View {
-
-    HStack(spacing: Spacing.quarterHorizontal) {
+    
+    let icons = iconButtons()
+    let wrapperIcon = wrapperIcon()
+    if !icons.isEmpty || wrapperIcon != nil {
       
-      if iconButton.shouldShow {
-
-        TUIIconButton(
-          icon: iconButton.image,
-          action: iconButton.action)
-        .iconButtonStyle(.ghost)
-        .iconButtonSize(.l)
-      }
-
-      if wrapperIcon.shouldShow {
-        TUIWrapperIcon(image: wrapperIcon.image, color: wrapperIcon.color) {
-          wrapperIcon.action()
+      HStack(spacing: Spacing.quarterHorizontal) {
+        ForEach(icons) { component in
+          component
         }
+        wrapperIcon
       }
     }
   }
@@ -134,24 +132,39 @@ extension TUITextRow {
     case title = "Title"
     case description = "Description"
   }
+  
 }
 
 struct TextRow_Previews: PreviewProvider {
+  
+  
   static var previews: some View {
     VStack(spacing: 10) {
       Group {
         
         TUITextRow("Title", style: .onlyTitle)
+          .wrapperIcon {
+            TUIWrapperIcon(image: Symbol.chevronRight) { }
+          }
           .previewDisplayName("Only Title")
-          .iconButton(image: Symbol.warning) { }
         
         TUITextRow("Title", style: .textDescription("Description to test with multiple number of lines to verify its adaptability"))
+          .wrapperIcon {
+            TUIWrapperIcon(image: Symbol.info) { }
+          }
           .previewDisplayName("With Text Description")
-          .infoIcon(true) { }
-      }
-      TUITextRow("Title", style: .textDescription("Description"))
+        
+        TUITextRow("Title",
+                   style: .textDescription("Description"))
+        .iconButtons {
+          TUIIconButton(icon: Symbol.warning, action: { })
+          TUIIconButton(icon: Symbol.error, action: { })
+        }
+        .wrapperIcon {
+          TUIWrapperIcon(image: Symbol.info) { }
+        }
         .previewDisplayName("With Info Icon")
-        .wrapperIcon(true, image: Symbol.chevronRight) { }
+      }
     }
   }
 }
