@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct TUIInputText: View {
+public struct TUIInputField: View {
 
   private var style: TUIInputFieldStyle
   
@@ -76,7 +76,7 @@ public struct TUIInputText: View {
 }
 
 // MARK: - Padding & Height
-extension TUIInputText {
+extension TUIInputField {
   
   var fieldBodyHStackTopPadding: CGFloat {
     switch style {
@@ -106,7 +106,7 @@ extension TUIInputText {
   }
 }
 
-extension TUIInputText {
+extension TUIInputField {
   enum Accessibility: String, TUIAccessibility {
     case root = "TUIInputText"
     case highLightBar = "HighLightBar"
@@ -122,7 +122,7 @@ struct TUIInputText_Previews: PreviewProvider {
       
       VStack(spacing: 20) {
         Group {
-          TUIInputText(style: .onlyTitle("Label"))
+          TUIInputField(style: .onlyTitle("Label"))
             .startItem(withStyle: .text("$"))
             .endItem(withStyle:  .text("$"))
             .helperText {
@@ -130,44 +130,17 @@ struct TUIInputText_Previews: PreviewProvider {
             }
             .highlightBar()
           
-          TUIInputText(style: .onlyTitle("Label"))
+          TUIInputField(style: .onlyTitle("Label"))
             .startItem(withStyle: .icon(Symbol.info))
             .endItem(withStyle: .icon(Symbol.info))
             .highlightBar()
           
-          TUIInputText(style: .onlyTitle("Label"))
+          TUIInputField(style: .onlyTitle("Label"))
             .startItem(withStyle: .text("$"))
             .endItem(withStyle: .icon(Symbol.info))
             .highlightBar()
           
-          TUIInputText(style: .onlyTitle("Label"))
-            .startItem(withStyle: .icon(Symbol.info))
-            .endItem(withStyle: .text("$"))
-            .highlightBar()
-        }
-      }
-      
-      VStack(spacing: 20) {
-        Group {
-          TUIInputText(style: .titleWithValue(title: "Label", value: "Input Text"))
-            .startItem(withStyle: .text("$"))
-            .endItem(withStyle: .text("$"))
-            .highlightBar()
-            .helperText {
-              TUIHelperText(style: .hint, message: "Helper / hint message goes here.")
-            }
-          
-          TUIInputText(style: .titleWithValue(title: "Label", value: "Input Text"))
-            .startItem(withStyle: .icon(Symbol.info))
-            .endItem(withStyle: .icon(Symbol.info))
-            .highlightBar()
-          
-          TUIInputText(style: .titleWithValue(title: "Label", value: "Input Text"))
-            .startItem(withStyle: .text("$"))
-            .endItem(withStyle: .icon(Symbol.info))
-            .highlightBar()
-          
-          TUIInputText(style: .titleWithValue(title: "Label", value: "Input Text"))
+          TUIInputField(style: .onlyTitle("Label"))
             .startItem(withStyle: .icon(Symbol.info))
             .endItem(withStyle: .text("$"))
             .highlightBar()
@@ -176,7 +149,7 @@ struct TUIInputText_Previews: PreviewProvider {
       
       VStack(spacing: 20) {
         Group {
-          TUIInputText(style: .onlyValue("Input Text"))
+          TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
             .startItem(withStyle: .text("$"))
             .endItem(withStyle: .text("$"))
             .highlightBar()
@@ -184,17 +157,44 @@ struct TUIInputText_Previews: PreviewProvider {
               TUIHelperText(style: .hint, message: "Helper / hint message goes here.")
             }
           
-          TUIInputText(style: .onlyValue("Input Text"))
+          TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
             .startItem(withStyle: .icon(Symbol.info))
             .endItem(withStyle: .icon(Symbol.info))
             .highlightBar()
           
-          TUIInputText(style: .onlyValue("Input Text"))
+          TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
             .startItem(withStyle: .text("$"))
             .endItem(withStyle: .icon(Symbol.info))
             .highlightBar()
           
-          TUIInputText(style: .onlyValue("Input Text"))
+          TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
+            .startItem(withStyle: .icon(Symbol.info))
+            .endItem(withStyle: .text("$"))
+            .highlightBar()
+        }
+      }
+      
+      VStack(spacing: 20) {
+        Group {
+          TUIInputField(style: .onlyValue("Input Text"))
+            .startItem(withStyle: .text("$"))
+            .endItem(withStyle: .text("$"))
+            .highlightBar()
+            .helperText {
+              TUIHelperText(style: .hint, message: "Helper / hint message goes here.")
+            }
+          
+          TUIInputField(style: .onlyValue("Input Text"))
+            .startItem(withStyle: .icon(Symbol.info))
+            .endItem(withStyle: .icon(Symbol.info))
+            .highlightBar()
+          
+          TUIInputField(style: .onlyValue("Input Text"))
+            .startItem(withStyle: .text("$"))
+            .endItem(withStyle: .icon(Symbol.info))
+            .highlightBar()
+          
+          TUIInputField(style: .onlyValue("Input Text"))
             .startItem(withStyle: .icon(Symbol.info))
             .endItem(withStyle: .text("$"))
             .highlightBar()

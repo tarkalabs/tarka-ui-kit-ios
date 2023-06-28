@@ -11,19 +11,19 @@ import SwiftUI
 struct ContentView: View {
   var body: some View {
     VStack {
-      TUIInputText(style: .titleWithValue(title: "Label", value: "Input Text"))
+      TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
         .startItem(withStyle: .text("Title:"))
         .endItem(withStyle: .text("$"))
       
-      TUIInputText(style: .titleWithValue(title: "Label", value: "Input Text"))
+      TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
         .startItem(withStyle: .icon(Symbol.sync))
         .endItem(withStyle: .icon(Symbol.sync))
       
-      TUIInputText(style: .titleWithValue(title: "Label", value: "Input Text"))
+      TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
         .startItem(withStyle: .text("Title:"))
         .endItem(withStyle: .icon(Symbol.sync))
       
-      TUIInputText(style: .titleWithValue(title: "Label", value: "Input Text"))
+      TUIInputField(style: .titleWithValue(title: "Label", value: "Input Text"))
         .startItem(withStyle: .icon(Symbol.sync))
         .endItem(withStyle: .text("$"))
     }
