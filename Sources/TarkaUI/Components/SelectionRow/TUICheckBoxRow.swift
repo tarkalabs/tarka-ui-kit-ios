@@ -115,15 +115,15 @@ public extension TUICheckBoxRow  {
   // MARK: - Modifiers
   
   func style(_ style: TUICheckBoxRow.Style) -> Self {
-    var newValue = self
-    newValue.style = style
-    return newValue
+    var newView = self
+    newView.style = style
+    return newView
   }
   
   func borderStyle(_ style: BorderStyle) -> Self {
-    var newValue = self
-    newValue.borderStyle = style
-    return newValue
+    var newView = self
+    newView.borderStyle = style
+    return newView
   }
 }
 
