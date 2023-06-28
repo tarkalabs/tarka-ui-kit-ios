@@ -43,6 +43,7 @@ public struct TUICheckBoxRow: View {
     .padding(.vertical, Spacing.baseVertical)
     .background(borderStyle == .border ? Color.surfaceHover : Color.surface)
     .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
+    .accessibilityElement(children: .contain)
   }
   
   @ViewBuilder
