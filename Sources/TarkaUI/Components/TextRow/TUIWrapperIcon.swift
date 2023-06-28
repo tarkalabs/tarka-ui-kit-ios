@@ -12,6 +12,7 @@ public struct TUIWrapperIcon: View {
   public var action: () -> Void
   public var image: Icon
   public var color: Color = .disabledContent
+  public var disableInteraction = false
 
   public init(image: Icon,
               action: @escaping () -> Void) {
@@ -31,6 +32,7 @@ public struct TUIWrapperIcon: View {
         .padding(.horizontal, Spacing.custom(2.0))
     }
     .frame(height: 40)
+    .disabled(disableInteraction)
     .accessibilityIdentifier(Accessibility.wrapperIcon)
   }
 }
@@ -46,14 +48,5 @@ struct TUIWrapperIcon_Previews: PreviewProvider {
 extension TUIWrapperIcon {
   enum Accessibility: String, TUIAccessibility {
     case wrapperIcon = "Wrapper Icon"
-  }
-}
-
-extension TUIWrapperIcon {
-  
-  public func iconColor(_ color: Color) -> TUIWrapperIcon {
-    var newView = self
-    newView.color = color
-    return newView
   }
 }
