@@ -80,7 +80,7 @@ public struct TUISelectionRow: View {
   @ViewBuilder
   private var leftDetailView: some View {
     VStack(alignment: .leading, spacing: Spacing.halfVertical) {
-      detailViews()
+      detailViews
     }
     .frame(maxWidth: .infinity, alignment: .leading)
   }
@@ -97,7 +97,7 @@ public struct TUISelectionRow: View {
     }
   
   @ViewBuilder
-  private func detailViews() -> some View {
+  private var detailViews: some View {
     ForEach(style, id: \.self) { style in
       switch style {
       case .onlyTitle(let title):
@@ -201,7 +201,7 @@ struct TUISelectionRow_Previews: PreviewProvider {
                  .textDescription("to"), .footer("SwiftUI")])
         .iconImage(Symbol.person)
         .badgeCount(3)
-        .badgeColor(.pink)
+        .badgeColor(.green)
     }
   }
 }
