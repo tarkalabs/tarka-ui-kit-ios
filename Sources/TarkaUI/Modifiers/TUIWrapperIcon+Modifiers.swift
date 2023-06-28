@@ -17,7 +17,7 @@ public extension TUIWrapperIcon {
   
   func disableInteraction(_ disableInteraction: Bool = true) -> TUIWrapperIcon {
     var newView = self
-    newView.isInteractionEnabled = !disableInteraction
+    newView.disableInteraction = disableInteraction
     return newView
   }
 }
