@@ -9,9 +9,9 @@ import SwiftUI
 
 public extension TUITextRow {
   
-  func wrapperIcon(@ViewBuilder icon: @escaping () -> TUIWrapperIcon?) -> TUITextRow {
+  func wrapperIcon(show: Bool = true, @ViewBuilder icon: @escaping () -> TUIWrapperIcon?) -> TUITextRow {
     var newView = self
-    newView.wrapperIcon = icon
+    newView.wrapperIcon = show ? icon : { nil }
     return newView
   }
   
