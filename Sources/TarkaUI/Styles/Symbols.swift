@@ -28,6 +28,8 @@ internal enum Symbol: String, Icon {
   case warning
   case error
   case info
+  case checkBoxChecked
+  case checkBoxUnChecked
 
   public var name: String {
     rawValue
@@ -51,6 +53,10 @@ internal enum Symbol: String, Icon {
       return .warning28Filled
     case .error:
       return .errorCircle24Filled
+    case .checkBoxChecked:
+      return .checkboxChecked24Filled
+    case .checkBoxUnChecked:
+      return .checkboxUnchecked24Filled
     }
   }
 }

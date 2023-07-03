@@ -12,5 +12,14 @@ public extension View {
     self
       .accessibilityIdentifier(accessibility.identifier)
   }
+  
+  /// List Row Insets used to create a new view based on the padding amount
+  /// - Parameters:
+  ///   - vertical: vertical padding amount
+  ///   - horizontal: horizontal padding amount
+  /// - Returns: A view that's padded by the amount you specify.
+  /// 
+  func listRowInsets(_ vertical: CGFloat, _ horizontal: CGFloat) -> some View {
+    self.listRowInsets(EdgeInsets(top: vertical, leading: horizontal, bottom: vertical, trailing: horizontal))
+  }
 }
-
