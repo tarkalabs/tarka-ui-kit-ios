@@ -9,50 +9,24 @@ import SwiftUI
 
 public struct TUIDateInputField: TUIInputFieldProtocol {
   
-  @ObservedObject public var inputItem: TUIInputFieldItem {
-    didSet {
-      inputFieldItem = TUIInputField(inputItem: inputItem)
-    }
-  }
-  
-  public var startItemStyle: TUIInputAdditionalView.Style? {
-    didSet {
-      inputFieldItem.startItemStyle = startItemStyle
-    }
-  }
-  public var endItemStyle: TUIInputAdditionalView.Style? {
-    didSet {
-      inputFieldItem.endItemStyle = endItemStyle
-    }
-  }
-  
-  public var showHighlightBar = false {
-    didSet {
-      inputFieldItem.showHighlightBar = showHighlightBar
-    }
-  }
-  public var helperText: TUIHelperText? {
-    didSet {
-      inputFieldItem.helperText = helperText
-    }
-  }
+  @EnvironmentObject public var inputItem: TUIInputFieldItem
+
+  public var startItemStyle: TUIInputAdditionalView.Style?
+  public var endItemStyle: TUIInputAdditionalView.Style?
+  public var showHighlightBar = false
+  public var helperText: TUIHelperText?
   
   @State internal var isSheetPresented = false
   @State internal var date = Date()
   
-  var inputFieldItem: TUIInputField
-  
-  public init(inputItem: TUIInputFieldItem) {
-    self.inputItem = inputItem
-    inputFieldItem = TUIInputField(inputItem: inputItem)
-  }
-  
+  public init() { }
+    
   public var body: some View {
     
     Button(action: {
       self.isSheetPresented = true
     }) {
-      inputFieldItem
+      TUIInputField()
         .onChange(of: date) { newValue in
           self.inputItem.style = .titleWithValue
           self.inputItem.value = newValue.description
