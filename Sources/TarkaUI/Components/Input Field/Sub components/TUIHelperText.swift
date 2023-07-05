@@ -55,7 +55,7 @@ public struct TUIHelperText: View {
   
   public var body: some View {
     
-    HStack(spacing: 4) {
+    HStack(spacing: Spacing.quarterHorizontal) {
       if let icon = style.icon, showIcon {
         Image(icon)
           .resizable()
@@ -71,7 +71,7 @@ public struct TUIHelperText: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityIdentifier(Accessibility.label)
     }
-    .padding(.leading, Spacing.custom(16))
+    .padding(.horizontal, Spacing.baseHorizontal)
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
   }

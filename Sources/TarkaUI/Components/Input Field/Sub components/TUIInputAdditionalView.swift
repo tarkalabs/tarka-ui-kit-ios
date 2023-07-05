@@ -52,11 +52,11 @@ public struct TUIInputAdditionalView: View {
   }
   
   var textItemTopPadding: CGFloat {
-    return hasContent ? 14 : 0
+    return hasContent ? Spacing.custom(14) : 0
   }
   
   var iconItemTop: CGFloat {
-    return hasContent ? 6 : 0
+    return hasContent ? Spacing.custom(6) : 0
   }
   
   var extraPadding: CGFloat {
