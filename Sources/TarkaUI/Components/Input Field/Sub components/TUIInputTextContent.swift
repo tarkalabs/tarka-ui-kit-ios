@@ -24,7 +24,7 @@ struct TUIInputTextContent: View {
   
   var body: some View {
     
-      VStack(spacing: 2) {
+      VStack(spacing: Spacing.quarterVertical) {
         titleView
           .frame(maxWidth: .infinity, alignment: .leading)
         
@@ -66,7 +66,7 @@ struct TUIInputTextContent: View {
           .accessibilityIdentifier(Accessibility.title)
         
       case .onlyValue:
-        EmptyView().frame(height: 0)
+        EmptyView()
       }
   }
     
