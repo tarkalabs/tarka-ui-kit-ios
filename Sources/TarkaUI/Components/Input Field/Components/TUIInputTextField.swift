@@ -12,7 +12,6 @@ public struct TUIInputTextField: TUIInputFieldProtocol {
   
   @EnvironmentObject public var inputItem: TUIInputFieldItem
   
-  public var startItemStyle: TUIInputAdditionalView.Style?
   public var endItemStyle: TUIInputAdditionalView.Style? 
   public var showHighlightBar = false
   public var helperText: TUIHelperText?

@@ -45,36 +45,3 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
     }
   }
 }
-
-
-struct DatePopover: View {
-
-@Binding var date: Date
-@Binding var isShowing: Bool
-
-    var body: some View {
-        VStack {
-            DatePicker("", selection: $date, displayedComponents: [.date])
-                .datePickerStyle(.graphical)
-                .onChange(of: date, perform: { value in
-                 
-                    isShowing.toggle()
-                })
-            .padding(.all, 20)
-        }.frame(width: 350, height: 400, alignment: .center)
-        .background(.white)
-        .cornerRadius(5.0)
-    }
-}
-
-struct BackgroundClearView: UIViewRepresentable {
-    func makeUIView(context: Context) -> UIView {
-        let view = UIView()
-        DispatchQueue.main.async {
-          view.superview?.superview?.backgroundColor = .clear.withAlphaComponent(0.5)
-        }
-        return view
-    }
-
-    func updateUIView(_ uiView: UIView, context: Context) {}
-}
