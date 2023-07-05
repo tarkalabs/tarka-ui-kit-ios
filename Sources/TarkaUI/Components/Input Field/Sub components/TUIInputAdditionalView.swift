@@ -1,5 +1,5 @@
 //
-//  TUIInputAdditionalItem.swift
+//  TUIInputAdditionalView.swift
 //  
 //
 //  Created by Gopinath on 23/06/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct TUIInputAdditionalItem: View {
+public struct TUIInputAdditionalView: View {
   
   
   public enum Style {
@@ -64,7 +64,7 @@ public struct TUIInputAdditionalItem: View {
   }
 }
 
-extension TUIInputAdditionalItem {
+extension TUIInputAdditionalView {
   enum Accessibility: String, TUIAccessibility {
     case icon = "TUIInputAdditionalIconItem"
     case label = "TUIInputAdditionaltextItem"
@@ -76,15 +76,15 @@ struct TUIInputAdditionalItem_Previews: PreviewProvider {
   static var previews: some View {
     
     HStack(spacing: 10) {
-      TUIInputAdditionalItem(style: .text("$"), hasContent: false)
+      TUIInputAdditionalView(style: .text("$"), hasContent: false)
       
-      TUIInputAdditionalItem(style: .text("$"), hasContent: true)
+      TUIInputAdditionalView(style: .text("$"), hasContent: true)
       
-      TUIInputAdditionalItem(style: .icon(Symbol.info), hasContent: false)
+      TUIInputAdditionalView(style: .icon(Symbol.info), hasContent: false)
       
-      TUIInputAdditionalItem(style: .icon(Symbol.info), hasContent: true)
+      TUIInputAdditionalView(style: .icon(Symbol.info), hasContent: true)
       
-      TUIInputAdditionalItem(
+      TUIInputAdditionalView(
         style: .button(
           TUIIconButton(icon: Symbol.error, action: { })
             .size(.m)
