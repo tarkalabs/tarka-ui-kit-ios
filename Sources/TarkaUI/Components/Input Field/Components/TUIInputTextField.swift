@@ -10,44 +10,15 @@ import SwiftUI
 
 public struct TUIInputTextField: TUIInputFieldProtocol {
   
-  @ObservedObject public var inputItem: TUIInputFieldItem
+  @EnvironmentObject public var inputItem: TUIInputFieldItem
   
-  public var startItemStyle: TUIInputAdditionalView.Style? {
-    didSet {
-      inputFieldView.startItemStyle = startItemStyle
-    }
-  }
-  public var endItemStyle: TUIInputAdditionalView.Style? {
-    didSet {
-      inputFieldView.endItemStyle = endItemStyle
-    }
-  }
-  public var showHighlightBar = false {
-    didSet {
-      inputFieldView.showHighlightBar = showHighlightBar
-    }
-  }
-  public var helperText: TUIHelperText? {
-    didSet {
-      inputFieldView.helperText = helperText
-    }
-  }
+  public var startItemStyle: TUIInputAdditionalView.Style?
+  public var endItemStyle: TUIInputAdditionalView.Style? 
+  public var showHighlightBar = false
+  public var helperText: TUIHelperText?
   
   @Binding public var isTextFieldFocused: Bool
-
-  var inputFieldView: TUIInputField
-  
-  private var existingStyle: TUIInputFieldItem.InputFieldStyle
     
-  public init(inputItem: TUIInputFieldItem, isTextFieldFocused: Binding<Bool>) {
-    
-    self.inputItem = inputItem
-    self.inputFieldView = TUIInputField(
-      inputItem: inputItem, isTextFieldFocused: isTextFieldFocused)
-    self.existingStyle = inputItem.style
-    self._isTextFieldFocused = isTextFieldFocused
-  }
-  
   public var body: some View {
     mainBody
       .onChange(of: $isTextFieldFocused.wrappedValue, perform: { value in
@@ -58,6 +29,10 @@ public struct TUIInputTextField: TUIInputFieldProtocol {
           }
         }
       })
+  }
+  
+  public init(isTextFieldFocused: Binding<Bool>) {
+    self._isTextFieldFocused = isTextFieldFocused
   }
 
   @ViewBuilder
@@ -73,11 +48,18 @@ public struct TUIInputTextField: TUIInputFieldProtocol {
         self.isTextFieldFocused = true
         self.inputItem.isTextFieldInteractive = true
       }) {
-        inputFieldView
+        TUIInputField(isTextFieldFocused: $isTextFieldFocused)
       }
     } else {
-      inputFieldView
+      TUIInputField(isTextFieldFocused: $isTextFieldFocused)
     }
+  }
+  
+  var existingStyle: TUIInputFieldItem.InputFieldStyle {
+    guard inputItem.style == .titleWithValue else {
+      return inputItem.style
+    }
+    return .onlyTitle
   }
 }
 

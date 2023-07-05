@@ -9,8 +9,6 @@ import SwiftUI
 
 public protocol TUIInputFieldProtocol where Self: View {
   
-  var inputItem: TUIInputFieldItem { get set }
-  
   var startItemStyle: TUIInputAdditionalView.Style? { get set }
   var endItemStyle: TUIInputAdditionalView.Style? { get set }
   
