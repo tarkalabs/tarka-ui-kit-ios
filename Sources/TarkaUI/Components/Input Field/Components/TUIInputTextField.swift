@@ -12,11 +12,8 @@ public struct TUIInputTextField: TUIInputFieldProtocol {
   
   @EnvironmentObject public var inputItem: TUIInputFieldItem
   
-  public var startItemStyle: TUIInputAdditionalView.Style?
-  public var endItemStyle: TUIInputAdditionalView.Style? 
-  public var highlightBar: Color?
-  public var helperText: TUIHelperText?
-  
+  public var properties: TUIInputFieldProperties = TUIInputFieldProperties()
+
   @Binding public var isTextFieldFocused: Bool
     
   public var body: some View {
@@ -48,11 +45,16 @@ public struct TUIInputTextField: TUIInputFieldProtocol {
         self.isTextFieldFocused = true
         self.inputItem.isTextFieldInteractive = true
       }) {
-        TUIInputField(isTextFieldFocused: $isTextFieldFocused)
+        inputFiledView
       }
     } else {
-      TUIInputField(isTextFieldFocused: $isTextFieldFocused)
+      inputFiledView
     }
+  }
+  
+  var inputFiledView: some View {
+    TUIInputField(properties: properties,
+                  isTextFieldFocused: $isTextFieldFocused)
   }
   
   var existingStyle: TUIInputFieldItem.InputFieldStyle {
