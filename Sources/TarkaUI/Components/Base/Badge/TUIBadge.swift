@@ -23,13 +23,14 @@ import SwiftUI
 public struct TUIBadge: View {
   /// The count to be displayed in the center of the badge.
   public var count: Int?
+  public var badgeColor: Color?
 
   @Environment(\.badgeSize) var size
 
   public var body: some View {
     ZStack {
       Capsule()
-        .foregroundColor(Color.error)
+        .foregroundColor(badgeColor ?? .error)
 
       if let count = count {
         Text("\(count)")
