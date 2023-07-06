@@ -59,7 +59,6 @@ public struct TUINavigationRow<Content>: View where Content: View {
       leftView
       .padding(.vertical, Spacing.baseVertical)
       .padding(.horizontal, Spacing.halfHorizontal)
-      .accessibilityIdentifier(Accessibility.label)
       .frame(maxWidth: .infinity, alignment: .leading)
       
       rightView
@@ -87,6 +86,8 @@ public struct TUINavigationRow<Content>: View where Content: View {
         .foregroundColor(.onSurface)
         .padding(.vertical, Spacing.custom(3))
         .frame(minHeight: Spacing.custom(18))
+        .accessibilityIdentifier(Accessibility.label)
+
     }
   }
   
