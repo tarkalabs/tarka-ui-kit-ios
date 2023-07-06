@@ -18,7 +18,7 @@ public struct TUIHelperText: View {
       case .error:
         return Symbol.error
       case .success:
-        return Symbol.info
+        return Symbol.success
       case .warning:
         return Symbol.warning
       case .hint:

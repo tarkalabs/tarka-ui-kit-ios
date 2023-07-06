@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+
+/// This is the protocol that every InputField must confom
+public protocol TUIInputFieldProtocol where Self: View {
+  
+  var properties: TUIInputFieldProperties { get set }
+}
+
+/// These extension functions act as a modifiers for Input fields that conform to this protocol
 public extension TUIInputFieldProtocol {
   
   func startItem(show: Bool = true, withStyle style: TUIInputAdditionalView.Style) -> some TUIInputFieldProtocol {
@@ -23,7 +31,7 @@ public extension TUIInputFieldProtocol {
 
   func highlightBar(_ show: Bool = true, color: Color) -> some TUIInputFieldProtocol {
     var newView = self
-    newView.properties.highlightBar = show ? color : nil
+    newView.properties.highlightBarColor = show ? color : nil
     return newView
   }
   
@@ -38,5 +46,10 @@ public extension TUIInputFieldProtocol {
     newView.properties.placeholder = value
     return newView
   }
+  
+  func state(_ show: Bool = true, value: TUIInputFieldState) -> some TUIInputFieldProtocol {
+    var newView = self
+    newView.properties.state = show ? value : .none
+    return newView
+  }
 }
-

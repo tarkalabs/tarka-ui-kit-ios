@@ -14,6 +14,7 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
   public var properties: TUIInputFieldProperties = TUIInputFieldProperties()
 
   @State internal var isSheetPresented = false
+  @State internal var isDateSelected = false
   @State internal var date = Date()
   
   public init() { }
@@ -24,9 +25,9 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
       self.isSheetPresented = true
     }) {
       TUIInputField(properties: properties)
-        .onChange(of: date) { newValue in
+        .onChange(of: isDateSelected) { _ in
           self.inputItem.style = .titleWithValue
-          self.inputItem.value = newValue.description
+          self.inputItem.value = date.description
         }
       // TODO: @Gopi, need to decide about the presentation
 //        .popover(isPresented: $isSheetPresented) {
@@ -35,7 +36,7 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
         .sheet(
         isPresented: $isSheetPresented,
         content: {
-          TUIDatePopover(date: $date, isShowing: $isSheetPresented)
+          TUIDatePopover(date: $date, isShowing: $isSheetPresented, isSelected: $isDateSelected)
             .background(BackgroundClearView())
             .presentationDetents([.fraction(0.9)])
         })

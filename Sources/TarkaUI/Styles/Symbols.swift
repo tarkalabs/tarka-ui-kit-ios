@@ -29,6 +29,7 @@ internal enum Symbol: String, Icon {
   case error
   case person
   case info
+  case success
   case checkBoxChecked
   case checkBoxUnChecked
 
@@ -50,6 +51,8 @@ internal enum Symbol: String, Icon {
       return .checkmarkCircle48Filled
     case .info:
       return .info48Regular
+    case .success:
+      return .checkmarkCircle16Regular
     case .warning:
       return .warning28Filled
     case .person:
