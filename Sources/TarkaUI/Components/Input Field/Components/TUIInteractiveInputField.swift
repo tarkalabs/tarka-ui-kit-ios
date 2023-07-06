@@ -11,7 +11,7 @@ public struct TUIInteractiveInputField<Content: View>: TUIInputFieldProtocol {
   
   public var startItemStyle: TUIInputAdditionalView.Style?
   public var endItemStyle: TUIInputAdditionalView.Style?
-  public var showHighlightBar = false
+  public var highlightBar: Color?
   public var helperText: TUIHelperText?
   
   var content: Content
