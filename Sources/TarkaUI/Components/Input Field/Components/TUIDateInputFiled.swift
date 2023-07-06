@@ -11,11 +11,8 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
   
   @EnvironmentObject public var inputItem: TUIInputFieldItem
 
-  public var startItemStyle: TUIInputAdditionalView.Style?
-  public var endItemStyle: TUIInputAdditionalView.Style?
-  public var highlightBar: Color?
-  public var helperText: TUIHelperText?
-  
+  public var properties: TUIInputFieldProperties = TUIInputFieldProperties()
+
   @State internal var isSheetPresented = false
   @State internal var date = Date()
   
@@ -26,7 +23,7 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
     Button(action: {
       self.isSheetPresented = true
     }) {
-      TUIInputField()
+      TUIInputField(properties: properties)
         .onChange(of: date) { newValue in
           self.inputItem.style = .titleWithValue
           self.inputItem.value = newValue.description

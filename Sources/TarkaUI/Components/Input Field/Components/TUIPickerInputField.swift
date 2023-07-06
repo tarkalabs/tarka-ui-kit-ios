@@ -7,13 +7,9 @@
 
 import SwiftUI
 
-public struct TUIInteractiveInputField<Content: View>: TUIInputFieldProtocol {
+public struct TUIPickerInputField<Content: View>: TUIInputFieldProtocol {
   
-  public var startItemStyle: TUIInputAdditionalView.Style?
-  public var endItemStyle: TUIInputAdditionalView.Style?
-  public var highlightBar: Color?
-  public var helperText: TUIHelperText?
-  
+  public var properties: TUIInputFieldProperties = TUIInputFieldProperties()
   var content: Content
   
   @State internal var isSheetPresented = false
@@ -27,7 +23,7 @@ public struct TUIInteractiveInputField<Content: View>: TUIInputFieldProtocol {
     Button(action: {
       self.isSheetPresented = true
     }) {
-      TUIInputField()
+      TUIInputField(properties: properties)
         .sheet(
         isPresented: $isSheetPresented,
         content: {

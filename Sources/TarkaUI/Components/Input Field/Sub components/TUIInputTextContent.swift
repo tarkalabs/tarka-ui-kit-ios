@@ -11,15 +11,15 @@ struct TUIInputTextContent: View {
 
   @ObservedObject var inputItem: TUIInputFieldItem
     
-  var placeholder: String = ""
+  var placeholder: String
   
   @Binding private var isTextFieldFocused: Bool
   @FocusState private var isFocused: Bool
 
-  init(inputItem: TUIInputFieldItem, isTextFieldFocused: Binding<Bool>? = nil) {
+  init(inputItem: TUIInputFieldItem, isTextFieldFocused: Binding<Bool>? = nil, placeholder: String? = nil) {
     self.inputItem = inputItem
-    self.placeholder = inputItem.title
     self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
+    self.placeholder = placeholder ?? ""
   }
   
   var body: some View {

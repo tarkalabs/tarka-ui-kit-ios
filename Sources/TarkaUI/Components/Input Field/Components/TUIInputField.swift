@@ -7,20 +7,28 @@
 
 import SwiftUI
 
-struct TUIInputField: TUIInputFieldProtocol {
-
-  @EnvironmentObject public var inputItem: TUIInputFieldItem
+public struct TUIInputFieldProperties {
   
   var startItemStyle: TUIInputAdditionalView.Style?
   var endItemStyle: TUIInputAdditionalView.Style?
-  
   var highlightBar: Color?
   var helperText: TUIHelperText?
-  
+  var placeholder: String?
+}
+
+struct TUIInputField: TUIInputFieldProtocol {
+
+  @EnvironmentObject public var inputItem: TUIInputFieldItem
+
   @Binding public var isTextFieldFocused: Bool
 
-  init(isTextFieldFocused: Binding<Bool>? = nil) {
+  var properties: TUIInputFieldProperties
+  
+  init(properties: TUIInputFieldProperties? = nil,
+       isTextFieldFocused: Binding<Bool>? = nil) {
+    
     self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
+    self.properties = properties ?? TUIInputFieldProperties()
   }
   var body: some View {
     
@@ -35,7 +43,7 @@ struct TUIInputField: TUIInputFieldProtocol {
         .background(Color.inputBackground)
         .cornerRadius(8)
       
-      if let helperText {
+      if let helperText = properties.helperText {
         helperText
       }
     }
@@ -50,7 +58,7 @@ struct TUIInputField: TUIInputFieldProtocol {
       
       fieldBodyHeaderHStack
       
-      if let highlightBar {
+      if let highlightBar = properties.highlightBar {
         highlightBar.frame(height: 2)
           .accessibilityIdentifier(Accessibility.highLightBar)
       }
@@ -62,16 +70,18 @@ struct TUIInputField: TUIInputFieldProtocol {
     
     HStack(alignment: .top, spacing: Spacing.halfHorizontal) {
       
-      if let startItemStyle {
+      if let startItemStyle  = properties.startItemStyle {
         TUIInputAdditionalView(
           style: startItemStyle, hasContent: inputItem.hasContent)
           .frame(alignment: .leading)
       }
       TUIInputTextContent(
-        inputItem: inputItem, isTextFieldFocused: $isTextFieldFocused)
+        inputItem: inputItem,
+        isTextFieldFocused: $isTextFieldFocused,
+        placeholder: properties.placeholder)
         .frame(maxWidth: .infinity, alignment: .leading)
 
-      if let endItemStyle {
+      if let endItemStyle  = properties.endItemStyle {
         TUIInputAdditionalView(
           style: endItemStyle, hasContent: inputItem.hasContent)
           .frame(alignment: .trailing)

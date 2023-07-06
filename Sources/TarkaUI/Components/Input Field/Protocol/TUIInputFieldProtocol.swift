@@ -9,9 +9,5 @@ import SwiftUI
 
 public protocol TUIInputFieldProtocol where Self: View {
   
-  var startItemStyle: TUIInputAdditionalView.Style? { get set }
-  var endItemStyle: TUIInputAdditionalView.Style? { get set }
-  
-  var highlightBar: Color? { get set }
-  var helperText: TUIHelperText? { get set }
+  var properties: TUIInputFieldProperties { get set }
 }
