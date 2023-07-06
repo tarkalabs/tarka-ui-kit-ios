@@ -13,7 +13,7 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
 
   public var startItemStyle: TUIInputAdditionalView.Style?
   public var endItemStyle: TUIInputAdditionalView.Style?
-  public var showHighlightBar = false
+  public var highlightBar: Color?
   public var helperText: TUIHelperText?
   
   @State internal var isSheetPresented = false
@@ -38,7 +38,7 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
         .sheet(
         isPresented: $isSheetPresented,
         content: {
-          DatePopover(date: $date, isShowing: $isSheetPresented)
+          TUIDatePopover(date: $date, isShowing: $isSheetPresented)
             .background(BackgroundClearView())
             .presentationDetents([.fraction(0.9)])
         })
