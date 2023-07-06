@@ -12,10 +12,12 @@ struct TUIDatePopover: View {
   @Binding var date: Date
   @State private var storedDate: Date
   @Binding var isShowing: Bool
-  
-  init(date: Binding<Date>, isShowing: Binding<Bool>) {
+  @Binding var isSelected: Bool
+
+  init(date: Binding<Date>, isShowing: Binding<Bool>, isSelected: Binding<Bool>) {
     self._date = date
     self._isShowing = isShowing
+    self._isSelected = isSelected
     self._storedDate = State<Date>.init(initialValue: date.wrappedValue)
   }
   
@@ -25,6 +27,8 @@ struct TUIDatePopover: View {
       
       Button("Done") {
         self.date = storedDate
+        print("storedDate: \(storedDate)")
+        isSelected = true
         isShowing = false
       }
       .frame(maxWidth: .infinity, alignment: .trailing)
@@ -53,6 +57,6 @@ extension TUIDatePopover {
 
 struct DatePopover_Previews: PreviewProvider {
   static var previews: some View {
-    TUIDatePopover(date: Binding.constant(Date()), isShowing: Binding.constant(true))
+    TUIDatePopover(date: Binding.constant(Date()), isShowing: Binding.constant(true), isSelected: Binding.constant(false))
   }
 }

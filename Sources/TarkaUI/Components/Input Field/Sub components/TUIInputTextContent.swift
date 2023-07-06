@@ -91,7 +91,7 @@ struct TUIInputTextContent: View {
       .accessibilityIdentifier(Accessibility.value)
     }
   }
-  
+
   var height: CGFloat {
     switch inputItem.style {
     case .onlyTitle:

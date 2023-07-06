@@ -7,24 +7,16 @@
 
 import SwiftUI
 
-public struct TUIInputFieldProperties {
-  
-  var startItemStyle: TUIInputAdditionalView.Style?
-  var endItemStyle: TUIInputAdditionalView.Style?
-  var highlightBar: Color?
-  var helperText: TUIHelperText?
-  var placeholder: String?
-}
-
 struct TUIInputField: TUIInputFieldProtocol {
 
-  @EnvironmentObject public var inputItem: TUIInputFieldItem
+  @EnvironmentObject var inputItem: TUIInputFieldItem
 
-  @Binding public var isTextFieldFocused: Bool
-
+  @Binding var isTextFieldFocused: Bool
+  
   var properties: TUIInputFieldProperties
   
   init(properties: TUIInputFieldProperties? = nil,
+       state: TUIInputFieldState? = nil,
        isTextFieldFocused: Binding<Bool>? = nil) {
     
     self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
@@ -43,7 +35,8 @@ struct TUIInputField: TUIInputFieldProtocol {
         .background(Color.inputBackground)
         .cornerRadius(8)
       
-      if let helperText = properties.helperText {
+      let helperText = properties.state.helperText() ?? properties.helperText
+      if let helperText {
         helperText
       }
     }
@@ -58,7 +51,9 @@ struct TUIInputField: TUIInputFieldProtocol {
       
       fieldBodyHeaderHStack
       
-      if let highlightBar = properties.highlightBar {
+      let highlightBar =  properties.state.highlightBarColor ?? properties.highlightBarColor
+       
+        if let highlightBar {
         highlightBar.frame(height: 2)
           .accessibilityIdentifier(Accessibility.highLightBar)
       }
