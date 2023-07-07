@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct TUIInputFieldProperties {
+public struct TUIInputFieldOptionalProperties {
   
   var startItemStyle: TUIInputAdditionalView.Style?
   var endItemStyle: TUIInputAdditionalView.Style?

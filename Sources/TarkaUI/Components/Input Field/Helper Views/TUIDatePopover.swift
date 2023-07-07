@@ -13,8 +13,11 @@ struct TUIDatePopover: View {
   @State private var storedDate: Date
   @Binding var isShowing: Bool
   @Binding var isSelected: Bool
-
-  init(date: Binding<Date>, isShowing: Binding<Bool>, isSelected: Binding<Bool>) {
+  
+  init(date: Binding<Date>,
+       isShowing: Binding<Bool>,
+       isSelected: Binding<Bool>) {
+    
     self._date = date
     self._isShowing = isShowing
     self._isSelected = isSelected
@@ -34,16 +37,17 @@ struct TUIDatePopover: View {
       .frame(maxWidth: .infinity, alignment: .trailing)
       .padding(.trailing, Spacing.custom(30))
       .accessibilityIdentifier(Accessibility.done)
-
+      
       DatePicker("", selection: $storedDate, displayedComponents: [.date, .hourAndMinute])
         .datePickerStyle(.graphical)
-        .padding(.all, 20)
+        .padding(.all, Spacing.custom(20))
         .accessibilityIdentifier(Accessibility.datePicker)
-    }.frame(width: 350, height: 500, alignment: .center)
-      .background(.white)
-      .cornerRadius(5.0)
-      .accessibilityElement(children: .contain)
-      .accessibilityIdentifier(Accessibility.root)
+    }
+    .frame(width: 350, height: 500, alignment: .center)
+    .background(.white)
+    .cornerRadius(5.0)
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
 }
 

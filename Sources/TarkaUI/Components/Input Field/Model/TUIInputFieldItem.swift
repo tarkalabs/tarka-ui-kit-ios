@@ -24,7 +24,7 @@ public class TUIInputFieldItem: ObservableObject {
     self.value = value
   }
   
-  public var hasContent: Bool {
+  public var hasTitleAndValue: Bool {
     guard case .titleWithValue = self.style else { return false }
     return true
   }

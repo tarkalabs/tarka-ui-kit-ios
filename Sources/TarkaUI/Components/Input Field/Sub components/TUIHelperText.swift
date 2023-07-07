@@ -15,27 +15,19 @@ public struct TUIHelperText: View {
     
     var icon: Icon? {
       switch self {
-      case .error:
-        return Symbol.error
-      case .success:
-        return Symbol.success
-      case .warning:
-        return Symbol.warning
-      case .hint:
-        return nil
+      case .error: return Symbol.error
+      case .success: return Symbol.success
+      case .warning: return Symbol.warning
+      case .hint: return nil
       }
     }
     
     var iconColor: Color {
       switch self {
-      case .error:
-        return .error
-      case .success:
-        return .success
-      case .warning:
-        return .warning
-      case .hint:
-        return .clear
+      case .error: return .error
+      case .success: return .success
+      case .warning: return .warning
+      case .hint: return .clear
       }
     }
   }
@@ -43,7 +35,7 @@ public struct TUIHelperText: View {
   var style: Style
   var showIcon: Bool
   var message: String
-
+  
   init(style: Style,
        message: String,
        showIcon: Bool = true) {

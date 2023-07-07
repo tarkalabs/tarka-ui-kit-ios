@@ -21,33 +21,23 @@ public enum TUIInputFieldState {
     switch self {
     case .none:
       return nil
-    case .inactive(let message):
-      return message
-    case .focused(let message):
-      return message
-    case .error(let message):
-      return message
-    case .alert(let message):
-      return message
-    case .success(let message):
-      return message
-    case .disabled(let message):
+    case .inactive(let message),
+        .focused(let message),
+        .error(let message),
+        .alert(let message),
+        .success(let message),
+        .disabled(let message):
       return message
     }
   }
   
   var highlightBarColor: Color? {
     switch self {
-    case .focused:
-      return .primaryTUI
-    case .error:
-      return .error
-    case .alert:
-      return .warning
-    case .success:
-      return .success
-    default:
-      return nil
+    case .focused: return .primaryTUI
+    case .error: return .error
+    case .alert: return .warning
+    case .success: return .success
+    default: return nil
     }
   }
   

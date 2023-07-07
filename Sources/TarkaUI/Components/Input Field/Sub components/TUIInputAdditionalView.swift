@@ -17,11 +17,11 @@ public struct TUIInputAdditionalView: View {
   }
   
   var style: Style
-  var hasContent: Bool
+  var hasTitleAndValue: Bool
 
-  init(style: Style, hasContent: Bool) {
+  init(style: Style, hasTitleAndValue: Bool) {
     self.style = style
-    self.hasContent = hasContent
+    self.hasTitleAndValue = hasTitleAndValue
   }
   
   public var body: some View {
@@ -52,22 +52,22 @@ public struct TUIInputAdditionalView: View {
   }
   
   var textItemTopPadding: CGFloat {
-    return hasContent ? Spacing.custom(14) : 0
+    return hasTitleAndValue ? Spacing.custom(14) : 0
   }
   
   var iconItemTop: CGFloat {
-    return hasContent ? Spacing.custom(6) : 0
+    return hasTitleAndValue ? Spacing.custom(6) : 0
   }
   
   var extraPadding: CGFloat {
-    return hasContent ? 1 : 0
+    return hasTitleAndValue ? 1 : 0
   }
 }
 
 extension TUIInputAdditionalView {
   enum Accessibility: String, TUIAccessibility {
-    case icon = "TUIInputAdditionalIconItem"
-    case label = "TUIInputAdditionaltextItem"
+    case icon = "Icon"
+    case label = "Text"
   }
 }
 
@@ -76,13 +76,13 @@ struct TUIInputAdditionalItem_Previews: PreviewProvider {
   static var previews: some View {
     
     HStack(spacing: 10) {
-      TUIInputAdditionalView(style: .text("$"), hasContent: false)
+      TUIInputAdditionalView(style: .text("$"), hasTitleAndValue: false)
       
-      TUIInputAdditionalView(style: .text("$"), hasContent: true)
+      TUIInputAdditionalView(style: .text("$"), hasTitleAndValue: true)
       
-      TUIInputAdditionalView(style: .icon(Symbol.info), hasContent: false)
+      TUIInputAdditionalView(style: .icon(Symbol.info), hasTitleAndValue: false)
       
-      TUIInputAdditionalView(style: .icon(Symbol.info), hasContent: true)
+      TUIInputAdditionalView(style: .icon(Symbol.info), hasTitleAndValue: true)
       
       TUIInputAdditionalView(
         style: .button(
@@ -90,7 +90,7 @@ struct TUIInputAdditionalItem_Previews: PreviewProvider {
             .size(.m)
             .style(.primary)
         ),
-        hasContent: true)
+        hasTitleAndValue: true)
     }
   }
 }

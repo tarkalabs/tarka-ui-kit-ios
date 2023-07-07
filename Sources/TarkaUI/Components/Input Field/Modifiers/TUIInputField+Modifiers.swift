@@ -11,7 +11,7 @@ import SwiftUI
 /// This is the protocol that every InputField must confom
 public protocol TUIInputFieldProtocol where Self: View {
   
-  var properties: TUIInputFieldProperties { get set }
+  var properties: TUIInputFieldOptionalProperties { get set }
 }
 
 /// These extension functions act as a modifiers for Input fields that conform to this protocol
@@ -28,7 +28,7 @@ public extension TUIInputFieldProtocol {
     newView.properties.endItemStyle = show ? style : nil
     return newView
   }
-
+  
   func highlightBar(_ show: Bool = true, color: Color) -> some TUIInputFieldProtocol {
     var newView = self
     newView.properties.highlightBarColor = show ? color : nil
