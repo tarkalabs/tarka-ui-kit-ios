@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-/// A view that displays a navigation row with an optional symbol and badge count.
+/// A view that displays a navigation row with an optional fluent icon and badge count.
 ///
-/// The navigation row is a horizontal stack with an optional symbol, title and an optional extra view.
+/// The navigation row is a horizontal stack with an optional fluent icon, title and an optional extra view.
 ///
 /// `minHeight` of this View is 40. This is to match the exact design of our Design System
 ///
@@ -17,7 +17,7 @@ import SwiftUI
 ///
 ///     TUINavigationRow(
 ///       title: "Label",
-///       symbol: .export,
+///       icon: .export24Filled,
 ///       accessoryView: {
 ///         TUIBadge()
 ///       }
@@ -30,7 +30,7 @@ import SwiftUI
 ///
 public struct TUINavigationRow<Content>: View where Content: View {
   var title: any StringProtocol
-  var symbol: Icon?
+  var icon: FluentIcon?
   var accessoryView: () -> Content
   
   @Environment(\.detailDisclosure) private var showDetailDisclosure
@@ -44,11 +44,11 @@ public struct TUINavigationRow<Content>: View where Content: View {
   ///
   public init(
     title: any StringProtocol,
-    symbol: Icon? = nil,
+    icon: FluentIcon? = nil,
     @ViewBuilder _ accessoryView: @escaping () -> Content = { EmptyView() }
   ) {
     self.title = title
-    self.symbol = symbol
+    self.icon = icon
     self.accessoryView = accessoryView
   }
   
@@ -74,11 +74,11 @@ public struct TUINavigationRow<Content>: View where Content: View {
   private var leftView: some View {
     
     HStack(spacing: Spacing.baseHorizontal) {
-      if let symbol = symbol {
-        Image(symbol)
-          .resizable()
-          .foregroundColor(.secondaryTUI)
+      if let icon {
+        Image(fluent: icon)
           .frame(width: 24, height: 24)
+          .clipped()
+          .foregroundColor(.secondaryTUI)
           .accessibilityIdentifier(Accessibility.icon)
       }
       Text(title)
@@ -123,7 +123,7 @@ struct NavigationRow_Previews: PreviewProvider {
           TUIBadge(count: 4)
         }
         TUINavigationRow(title: "Label to test with multiple number of lines to verify its adaptability")
-        TUINavigationRow(title: "Label", symbol: Symbol.reorderDots) {
+        TUINavigationRow(title: "Label", icon: .reOrder24Regular) {
           TUIBadge(count: 100)
         }
       }

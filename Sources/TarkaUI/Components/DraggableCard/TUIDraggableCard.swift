@@ -41,10 +41,7 @@ public struct TUIDraggableCard<Content>: View where Content: View {
   
   public var body: some View {
       HStack {
-        TUIIconButton(
-          icon: Symbol.reorderDots
-        ) {
-          
+        TUIIconButton(icon: .reOrder24Regular) {
         }
         .padding(.horizontal, Spacing.halfHorizontal)
         // TODO: Add drag gesture to button
