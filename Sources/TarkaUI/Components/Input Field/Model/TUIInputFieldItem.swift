@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+
+/// This is the model class that holds the required values to render `TUIInputField` view
+///
 public class TUIInputFieldItem: ObservableObject {
 
   public enum InputFieldStyle {

@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-
+/// This is a SwiftUI view that displays helper text with icon in a horizontal stack.
+/// The view can be customized with different styles, such as error, success, warning or just hint.
+///
 public struct TUIHelperText: View {
   
   public enum Style {

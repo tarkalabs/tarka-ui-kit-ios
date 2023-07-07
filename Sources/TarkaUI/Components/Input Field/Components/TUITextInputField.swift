@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+/// This is a SwiftUI View that uses a `TUIInputField` and acts as Text Input Field view which takes text as input using keyboard.
+/// It wraps all the Text Input data flow and styles within it.
+///
+/// It conforms to the same protocol `TUIInputFieldProtocol` that `TUIInputField` conformed and
+/// holds all the same properties, variables and public functions that `TUIInputField` have.
+///
 public struct TUITextInputField: TUIInputFieldProtocol {
   
   @EnvironmentObject var inputItem: TUIInputFieldItem
@@ -68,11 +74,21 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   }
 }
 
-
 extension TUITextInputField {
   
   enum Accessibility: String, TUIAccessibility {
     case root = "TUITextInputField"
     case button = "TUITextInputField Row Button"
+  }
+}
+
+struct TUITextInputField_Previews: PreviewProvider {
+  
+  static var previews: some View {
+    
+    TUITextInputField(isTextFieldFocused: Binding.constant(false))
+      .state(.alert("Input values are sensitive"))
+          .endItem(withStyle: .icon(Symbol.info))
+          .environmentObject(TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo"))
   }
 }

@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+/// `TUIInputField` is a SwiftUI view that displays title and an content input filed in a vertical stack.
+/// The view can be customized with different styles, such as displaying only the title or displaying both the title and content.
+///
+/// It has few modifiers to configure its properties
+/// such as startItem, endItem, highlight bar, helper text, content placeholder and its state.
+///
+/// Please refer those functions in `TUIInputField+Modifiers.swift`
+///
 struct TUIInputField: TUIInputFieldProtocol {
   
   @EnvironmentObject var inputItem: TUIInputFieldItem
