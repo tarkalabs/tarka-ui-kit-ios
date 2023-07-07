@@ -30,13 +30,13 @@ public struct TUIPickerInputField<Content: View>: TUIInputFieldProtocol {
             content
           })
     }
-    .accessibilityIdentifier(Accessibility.button)
+    .accessibilityIdentifier(Accessibility.root)
   }
 }
 
 extension TUIPickerInputField {
   
   enum Accessibility: String, TUIAccessibility {
-    case button = "Row Button"
+    case root = "TUIPickerInputField"
   }
 }
