@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// `TUIInputField` is a SwiftUI view that displays title and an content input filed in a vertical stack.
+/// `TUIInputField` is a SwiftUI view that displays title and an content input field in a vertical stack.
 /// The view can be customized with different styles, such as displaying only the title or displaying both the title and content.
 ///
 /// It has few modifiers to configure its properties
@@ -18,13 +18,17 @@ import SwiftUI
 struct TUIInputField: TUIInputFieldProtocol {
   
   @EnvironmentObject var inputItem: TUIInputFieldItem
-  
-  @Binding var isTextFieldInteractive: Bool
-  
+  @Binding private var isTextFieldInteractive: Bool
   @Binding private var isTextFieldFocused: Bool
-
+  
   var properties: TUIInputFieldOptionalProperties
   
+  /// Creates a `TUIInputField` View
+  /// - Parameters:
+  ///   - properties: An `TUIInputFieldOptionalProperties` object that holds the optional values to create multiple variants of this View
+  ///   - isTextFieldInteractive: A bindable bool that used to handle the row interaction and text field interaction switch when user interacts
+  ///   - isTextFieldFocused: A bindable bool value that used to handle text field focus using keyboard
+  ///   
   init(properties: TUIInputFieldOptionalProperties? = nil,
        isTextFieldInteractive: Binding<Bool>? = nil,
        isTextFieldFocused: Binding<Bool>? = nil) {
@@ -113,12 +117,9 @@ extension TUIInputField {
   
   var fieldBodyHeight: CGFloat {
     switch inputItem.style {
-    case .onlyTitle:
-      return 54
-    case .titleWithValue:
-      return 56
-    case .onlyValue:
-      return 46
+    case .onlyTitle: return 54
+    case .titleWithValue: return 56
+    case .onlyValue: return 46
     }
   }
 }
@@ -143,28 +144,33 @@ struct TUIInputText_Previews: PreviewProvider {
             .startItem(withStyle: .text("$"))
             .endItem(withStyle:  .text("$"))
             .helperText {
-              TUIHelperText(style: .hint, message: "Helper / hint message goes here.")
+              TUIHelperText(
+                style: .hint, message: "Helper / hint message goes here.")
             }
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(TUIInputFieldItem(style: .onlyTitle, title: "Label"))
+            .environmentObject(
+              TUIInputFieldItem(style: .onlyTitle, title: "Label"))
           
           TUIInputField()
             .startItem(withStyle: .icon(Symbol.info))
             .endItem(withStyle: .icon(Symbol.info))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(TUIInputFieldItem(style: .onlyTitle, title: "Label"))
+            .environmentObject(
+              TUIInputFieldItem(style: .onlyTitle, title: "Label"))
           
           TUIInputField()
             .startItem(withStyle: .text("$"))
             .endItem(withStyle: .icon(Symbol.info))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(TUIInputFieldItem(style: .onlyTitle, title: "Label"))
+            .environmentObject(
+              TUIInputFieldItem(style: .onlyTitle, title: "Label"))
           
           TUIInputField()
             .startItem(withStyle: .icon(Symbol.info))
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(TUIInputFieldItem(style: .onlyTitle, title: "Label"))
+            .environmentObject(
+              TUIInputFieldItem(style: .onlyTitle, title: "Label"))
         }
       }
       
@@ -175,27 +181,40 @@ struct TUIInputText_Previews: PreviewProvider {
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
             .helperText {
-              TUIHelperText(style: .hint, message: "Helper / hint message goes here.")
+              TUIHelperText(
+                style: .hint, message: "Helper / hint message goes here.")
             }
-            .environmentObject(TUIInputFieldItem(style: .titleWithValue, title: "Label", value: "Input Text"))
+            .environmentObject(
+              TUIInputFieldItem(
+                style: .titleWithValue,
+                title: "Label", value: "Input Text"))
           
           TUIInputField()
             .startItem(withStyle: .icon(Symbol.info))
             .endItem(withStyle: .icon(Symbol.info))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(TUIInputFieldItem(style: .titleWithValue, title: "Label", value: "Input Text"))
+            .environmentObject(
+              TUIInputFieldItem(
+                style: .titleWithValue,
+                title: "Label", value: "Input Text"))
           
           TUIInputField()
             .startItem(withStyle: .text("$"))
             .endItem(withStyle: .icon(Symbol.info))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(TUIInputFieldItem(style: .titleWithValue, title: "Label", value: "Input Text"))
+            .environmentObject(
+              TUIInputFieldItem(
+                style: .titleWithValue,
+                title: "Label", value: "Input Text"))
           
           TUIInputField()
             .startItem(withStyle: .icon(Symbol.info))
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(TUIInputFieldItem(style: .titleWithValue, title: "Label", value: "Input Text"))
+            .environmentObject(
+              TUIInputFieldItem(
+                style: .titleWithValue,
+                title: "Label", value: "Input Text"))
         }
       }
       
@@ -206,27 +225,32 @@ struct TUIInputText_Previews: PreviewProvider {
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
             .helperText {
-              TUIHelperText(style: .hint, message: "Helper / hint message goes here.")
+              TUIHelperText(
+                style: .hint, message: "Helper / hint message goes here.")
             }
-            .environmentObject(TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
+            .environmentObject(
+              TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
           
           TUIInputField()
             .startItem(withStyle: .icon(Symbol.info))
             .endItem(withStyle: .icon(Symbol.info))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
+            .environmentObject(
+              TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
           
           TUIInputField()
             .startItem(withStyle: .text("$"))
             .endItem(withStyle: .icon(Symbol.info))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
+            .environmentObject(
+              TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
           
           TUIInputField()
             .startItem(withStyle: .icon(Symbol.info))
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
+            .environmentObject(
+              TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
         }
       }
     }.padding(.horizontal, 10)

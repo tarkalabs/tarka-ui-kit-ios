@@ -14,15 +14,19 @@ import SwiftUI
 struct TUIInputTextContentView: View {
   
   @ObservedObject var inputItem: TUIInputFieldItem
-  
-  var placeholder: String
-  
   @Binding private var isTextFieldFocused: Bool
-  
-  private var isTextFieldInteractive: Bool
-  
   @FocusState private var isFocused: Bool
   
+  private var isTextFieldInteractive: Bool
+  private var placeholder: String
+  
+  /// Creates a `TUIInputTextContentView` View
+  /// - Parameters:
+  ///   - inputItem: A `TUIInputFieldItem` instance that holds the required values to render `TUIInputTextContentView` View
+  ///   - isTextFieldInteractive: A bool value that decides whether text content field has to user interactive or not
+  ///   - placeholder: A string that to be shown as placeholder for text content field
+  ///   - isTextFieldFocused: A bindable bool value that handles text field keyboard focus
+  ///   
   init(inputItem: TUIInputFieldItem,
        isTextFieldInteractive: Bool = true,
        placeholder: String? = nil,
@@ -106,12 +110,9 @@ struct TUIInputTextContentView: View {
   
   var height: CGFloat {
     switch inputItem.style {
-    case .onlyTitle:
-      return 20
-    case .titleWithValue:
-      return 36
-    case .onlyValue:
-      return 20
+    case .onlyTitle: return 20
+    case .titleWithValue: return 36
+    case .onlyValue: return 20
     }
   }
 }
@@ -128,10 +129,17 @@ struct TUIInputTextContent_Previews: PreviewProvider {
   static var previews: some View {
     VStack(spacing: 10) {
       Group {
-        TUIInputTextContentView(inputItem: .init(style: .onlyTitle, title: "Label"))
-        TUIInputTextContentView(inputItem: .init(style: .titleWithValue, title: "Label", value: "Description"))
-        TUIInputTextContentView(inputItem: .init(style: .onlyValue, value: "Description"))
-      }.padding(.horizontal, 20)
+        TUIInputTextContentView(
+          inputItem: .init(style: .onlyTitle, title: "Label"))
+        
+        TUIInputTextContentView(
+          inputItem: .init(
+            style: .titleWithValue, title: "Label", value: "Description"))
+        
+        TUIInputTextContentView(
+          inputItem: .init(style: .onlyValue, value: "Description"))
+      }
+      .padding(.horizontal, 20)
     }
   }
 }

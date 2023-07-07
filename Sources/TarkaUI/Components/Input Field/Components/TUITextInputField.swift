@@ -7,22 +7,20 @@
 
 import SwiftUI
 
-/// This is a SwiftUI View that uses a `TUIInputField` and acts as Text Input Field view which takes text as input using keyboard.
+/// This is a SwiftUI View that uses a `TUIInputField` and acts as Text Input Field View which takes text as input using keyboard.
 /// It wraps all the Text Input data flow and styles within it.
 ///
-/// It conforms to the same protocol `TUIInputFieldProtocol` that `TUIInputField` conformed and
-/// holds all the same properties, variables and public functions that `TUIInputField` have.
+/// It conforms to the same protocol `TUIInputFieldProtocol` that `TUIInputField` View conformed and
+/// holds all the same properties, variables and public functions that `TUIInputField` View have.
 ///
 public struct TUITextInputField: TUIInputFieldProtocol {
   
   @EnvironmentObject var inputItem: TUIInputFieldItem
   
-  public var properties: TUIInputFieldOptionalProperties = TUIInputFieldOptionalProperties()
+  public var properties = TUIInputFieldOptionalProperties()
   
   /// Binds the bool that used to handle the row interaction and text field interaction switch when user interacts
-  /// Only applied for
   @State private var isTextFieldInteractive: Bool = false
-  
   @Binding private var isTextFieldFocused: Bool
   
   public var body: some View {
@@ -38,6 +36,8 @@ public struct TUITextInputField: TUIInputFieldProtocol {
       })
   }
   
+  /// Creates a `TUITextInputField` view
+  /// - Parameter isTextFieldFocused: A bindable bool value that used to handle text field focus using keyboard
   public init(isTextFieldFocused: Binding<Bool>) {
     
     self._isTextFieldFocused = isTextFieldFocused
@@ -94,7 +94,8 @@ struct TUITextInputField_Previews: PreviewProvider {
     
     TUITextInputField(isTextFieldFocused: Binding.constant(false))
       .state(.alert("Input values are sensitive"))
-          .endItem(withStyle: .icon(Symbol.info))
-          .environmentObject(TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo"))
+      .endItem(withStyle: .icon(Symbol.info))
+      .environmentObject(
+        TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo"))
   }
 }

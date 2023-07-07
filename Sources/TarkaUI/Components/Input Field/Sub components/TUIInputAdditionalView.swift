@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-/// This is a SwiftUI View that displays text or image in left or right side of the `TUIInputField` view
+/// This is a SwiftUI View that displays text or image in left or right side of the `TUIInputField` View
 /// 
 public struct TUIInputAdditionalView: View {
   
@@ -17,9 +17,15 @@ public struct TUIInputAdditionalView: View {
     case icon(Icon)
   }
   
-  var style: Style
-  var hasTitleAndValue: Bool
-
+  private var style: Style
+  private var hasTitleAndValue: Bool
+  
+  /// Creates a `TUIInputAdditionalView` View
+  /// - Parameters:
+  ///   - style: A style that defines a `TUIInputTextContentView` View to render
+  ///   - hasTitleAndValue: A bool value that tells it has both title and value.
+  ///   It is used to match the top padding difference that caused by fluent icons.
+  ///   
   init(style: Style, hasTitleAndValue: Bool) {
     self.style = style
     self.hasTitleAndValue = hasTitleAndValue
@@ -35,7 +41,7 @@ public struct TUIInputAdditionalView: View {
         .frame(minHeight: 22)
         .padding(.top, textItemTopPadding + extraPadding)
         .accessibilityIdentifier(Accessibility.label)
-
+      
     case .icon(let icon):
       Image(icon)
         .resizable()
@@ -72,15 +78,10 @@ extension TUIInputAdditionalView {
 struct TUIInputAdditionalItem_Previews: PreviewProvider {
   
   static var previews: some View {
-    
     HStack(spacing: 10) {
-      
       TUIInputAdditionalView(style: .text("$"), hasTitleAndValue: false)
-      
       TUIInputAdditionalView(style: .text("$"), hasTitleAndValue: true)
-      
       TUIInputAdditionalView(style: .icon(Symbol.info), hasTitleAndValue: false)
-      
       TUIInputAdditionalView(style: .icon(Symbol.info), hasTitleAndValue: true)
     }
   }
