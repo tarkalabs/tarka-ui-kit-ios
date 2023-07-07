@@ -16,10 +16,11 @@ public class TUIInputFieldItem: ObservableObject {
     case onlyTitle, titleWithValue, onlyValue
   }
   
+  /// Decides the style in which `TUIInputFieldItem` to render
   @Published public var style: InputFieldStyle
+  
   @Published public var title: String = ""
   @Published public var value: String = ""
-  @Published var isTextFieldInteractive: Bool = false
 
   public init(style: InputFieldStyle, title: String = "", value: String = "") {
     self.style = style

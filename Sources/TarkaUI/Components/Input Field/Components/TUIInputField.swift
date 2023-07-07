@@ -19,16 +19,19 @@ struct TUIInputField: TUIInputFieldProtocol {
   
   @EnvironmentObject var inputItem: TUIInputFieldItem
   
-  @Binding var isTextFieldFocused: Bool
+  @Binding var isTextFieldInteractive: Bool
   
+  @Binding private var isTextFieldFocused: Bool
+
   var properties: TUIInputFieldOptionalProperties
   
   init(properties: TUIInputFieldOptionalProperties? = nil,
-       state: TUIInputFieldState? = nil,
+       isTextFieldInteractive: Binding<Bool>? = nil,
        isTextFieldFocused: Binding<Bool>? = nil) {
     
-    self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
     self.properties = properties ?? TUIInputFieldOptionalProperties()
+    self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
+    self._isTextFieldInteractive = isTextFieldInteractive ?? Binding<Bool>.constant(false)
   }
   
   var body: some View {
@@ -75,8 +78,9 @@ struct TUIInputField: TUIInputFieldProtocol {
       }
       TUIInputTextContentView(
         inputItem: inputItem,
-        isTextFieldFocused: $isTextFieldFocused,
-        placeholder: properties.placeholder)
+        isTextFieldInteractive: isTextFieldInteractive,
+        placeholder: properties.placeholder,
+        isTextFieldFocused: $isTextFieldFocused)
       .frame(maxWidth: .infinity, alignment: .leading)
       
       if let endItemStyle  = properties.endItemStyle {
