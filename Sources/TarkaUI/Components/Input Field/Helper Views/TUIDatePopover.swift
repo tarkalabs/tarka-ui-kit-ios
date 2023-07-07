@@ -7,22 +7,20 @@
 
 import SwiftUI
 
-
-/// This is the class that displays the DatePicker in a View so that we can present it wherever we required.
+/// This is the class that displays the `DatePicker` in a View so that we can present it wherever we required.
 ///
 struct TUIDatePopover: View {
   
-  /// Bindable date value
-  @Binding var date: Date
-  
-  /// Bool that used to show or hide this view
-  @Binding var isShowing: Bool
-  
-  /// Bool that used to notify when date is selected
-  @Binding var isSelected: Bool
-  
+  @Binding private var date: Date
+  @Binding private var isShowing: Bool
+  @Binding private var isSelected: Bool
   @State private var storedDate: Date
-
+  
+  /// Creates a `TUIDatePopover` View
+  /// - Parameters:
+  ///   - date: A bindable date value that acts as output when selected
+  ///   - isShowing: A bindable bool value that used to show or hide this View
+  ///   - isSelected: A bindable bool value that used to notify when date is selected
   init(date: Binding<Date>,
        isShowing: Binding<Bool>,
        isSelected: Binding<Bool>) {
@@ -70,6 +68,9 @@ extension TUIDatePopover {
 
 struct DatePopover_Previews: PreviewProvider {
   static var previews: some View {
-    TUIDatePopover(date: Binding.constant(Date()), isShowing: Binding.constant(true), isSelected: Binding.constant(false))
+    TUIDatePopover(
+      date: Binding.constant(Date()),
+      isShowing: Binding.constant(true),
+      isSelected: Binding.constant(false))
   }
 }
