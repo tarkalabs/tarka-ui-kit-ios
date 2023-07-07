@@ -7,20 +7,20 @@
 
 import SwiftUI
 
-
 public struct TUITextInputField: TUIInputFieldProtocol {
   
-  @EnvironmentObject public var inputItem: TUIInputFieldItem
+  @EnvironmentObject var inputItem: TUIInputFieldItem
   
-  public var properties: TUIInputFieldProperties = TUIInputFieldProperties()
-
-  @Binding public var isTextFieldFocused: Bool
-    
+  public var properties: TUIInputFieldOptionalProperties = TUIInputFieldOptionalProperties()
+  
+  @Binding private var isTextFieldFocused: Bool
+  
   public var body: some View {
     mainBody
       .onChange(of: $isTextFieldFocused.wrappedValue, perform: { value in
         if !isTextFieldFocused {
           self.inputItem.isTextFieldInteractive = false
+          // revert the style when content is empty
           if self.inputItem.value.isEmpty {
             self.inputItem.style = existingStyle
           }
@@ -29,11 +29,12 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   }
   
   public init(isTextFieldFocused: Binding<Bool>) {
+    
     self._isTextFieldFocused = isTextFieldFocused
   }
-
+  
   @ViewBuilder
-  var mainBody: some View {
+  private var mainBody: some View {
     
     if !self.inputItem.isTextFieldInteractive {
       
@@ -47,17 +48,18 @@ public struct TUITextInputField: TUIInputFieldProtocol {
       }) {
         inputFiledView
       }
+      .accessibilityIdentifier(Accessibility.button)
     } else {
       inputFiledView
     }
   }
   
-  var inputFiledView: some View {
-    TUIInputField(properties: properties,
-                  isTextFieldFocused: $isTextFieldFocused)
+  private var inputFiledView: some View {
+    TUIInputField(
+      properties: properties, isTextFieldFocused: $isTextFieldFocused)
   }
   
-  var existingStyle: TUIInputFieldItem.InputFieldStyle {
+  private var existingStyle: TUIInputFieldItem.InputFieldStyle {
     guard inputItem.style == .titleWithValue else {
       return inputItem.style
     }
@@ -65,3 +67,10 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   }
 }
 
+
+extension TUITextInputField {
+  
+  enum Accessibility: String, TUIAccessibility {
+    case button = "Row Button"
+  }
+}

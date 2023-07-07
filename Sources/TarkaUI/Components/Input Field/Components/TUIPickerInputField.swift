@@ -9,10 +9,10 @@ import SwiftUI
 
 public struct TUIPickerInputField<Content: View>: TUIInputFieldProtocol {
   
-  public var properties: TUIInputFieldProperties = TUIInputFieldProperties()
-  var content: Content
+  public var properties: TUIInputFieldOptionalProperties = TUIInputFieldOptionalProperties()
+  private var content: Content
   
-  @State internal var isSheetPresented = false
+  @State private var isSheetPresented = false
   
   public init(@ViewBuilder _ content: @escaping () -> Content) {
     self.content = content()
@@ -25,10 +25,18 @@ public struct TUIPickerInputField<Content: View>: TUIInputFieldProtocol {
     }) {
       TUIInputField(properties: properties)
         .sheet(
-        isPresented: $isSheetPresented,
-        content: {
-          content
-        })
+          isPresented: $isSheetPresented,
+          content: {
+            content
+          })
     }
+    .accessibilityIdentifier(Accessibility.button)
+  }
+}
+
+extension TUIPickerInputField {
+  
+  enum Accessibility: String, TUIAccessibility {
+    case button = "Row Button"
   }
 }

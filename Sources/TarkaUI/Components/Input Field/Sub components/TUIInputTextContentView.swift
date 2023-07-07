@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct TUIInputTextContentView: View {
-
+  
   @ObservedObject var inputItem: TUIInputFieldItem
-    
+  
   var placeholder: String
   
   @Binding private var isTextFieldFocused: Bool
   @FocusState private var isFocused: Bool
-
-  init(inputItem: TUIInputFieldItem, isTextFieldFocused: Binding<Bool>? = nil, placeholder: String? = nil) {
+  
+  init(inputItem: TUIInputFieldItem,
+       isTextFieldFocused: Binding<Bool>? = nil,
+       placeholder: String? = nil) {
+    
     self.inputItem = inputItem
     self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
     self.placeholder = placeholder ?? ""
@@ -24,52 +27,52 @@ struct TUIInputTextContentView: View {
   
   var body: some View {
     
-      VStack(spacing: Spacing.quarterVertical) {
-        titleView
-          .frame(maxWidth: .infinity, alignment: .leading)
-        
-        valueView
-          .frame(maxWidth: .infinity, alignment: .leading)
+    VStack(spacing: Spacing.quarterVertical) {
+      titleView
+        .frame(maxWidth: .infinity, alignment: .leading)
+      
+      valueView
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    .onAppear {
+      if inputItem.isTextFieldInteractive {
+        self.isFocused = true
       }
-      .onAppear {
-        if inputItem.isTextFieldInteractive {
-            self.isFocused = true
-        }
-      }
-      .onChange(of: $isFocused.wrappedValue, perform: { value in
-        isTextFieldFocused = isFocused
-      })
-      .frame(minHeight: height)
-      .accessibilityElement(children: .contain)
-      .accessibilityIdentifier(Accessibility.root)
+    }
+    .onChange(of: $isFocused.wrappedValue, perform: { value in
+      isTextFieldFocused = isFocused
+    })
+    .frame(minHeight: height)
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder
   private var titleView: some View {
     
     let title = inputItem.title
-      switch inputItem.style {
-      case .onlyTitle:
-        Text(title)
-          .font(.body6)
-          .foregroundColor(.inputTextDim)
-          .frame(minHeight: 20)
-          .frame(alignment: .leading)
-          .accessibilityIdentifier(Accessibility.title)
-        
-      case .titleWithValue:
-        Text(title)
-          .font(.body8)
-          .foregroundColor(.inputTextDim)
-          .frame(minHeight: 14)
-          .frame(alignment: .leading)
-          .accessibilityIdentifier(Accessibility.title)
-        
-      case .onlyValue:
-        EmptyView()
-      }
+    switch inputItem.style {
+    case .onlyTitle:
+      Text(title)
+        .font(.body6)
+        .foregroundColor(.inputTextDim)
+        .frame(minHeight: 20)
+        .frame(alignment: .leading)
+        .accessibilityIdentifier(Accessibility.title)
+      
+    case .titleWithValue:
+      Text(title)
+        .font(.body8)
+        .foregroundColor(.inputTextDim)
+        .frame(minHeight: 14)
+        .frame(alignment: .leading)
+        .accessibilityIdentifier(Accessibility.title)
+      
+    case .onlyValue:
+      EmptyView()
+    }
   }
-    
+  
   @ViewBuilder
   private var valueView: some View {
     switch inputItem.style {
@@ -91,7 +94,7 @@ struct TUIInputTextContentView: View {
       .accessibilityIdentifier(Accessibility.value)
     }
   }
-
+  
   var height: CGFloat {
     switch inputItem.style {
     case .onlyTitle:
