@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+
+/// This is the struct that holds the optional values to create multiple variants of `TUIInputField` view
+/// 
 public struct TUIInputFieldOptionalProperties {
   
   var startItemStyle: TUIInputAdditionalView.Style?

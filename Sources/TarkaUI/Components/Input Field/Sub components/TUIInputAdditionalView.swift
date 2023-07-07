@@ -7,13 +7,14 @@
 
 import SwiftUI
 
+
+/// This is a SwiftUI View that displays text or image in left or right side of the `TUIInputField` view
+/// 
 public struct TUIInputAdditionalView: View {
-  
   
   public enum Style {
     case text(String)
     case icon(Icon)
-    case button(TUIIconButton)
   }
   
   var style: Style
@@ -45,9 +46,6 @@ public struct TUIInputAdditionalView: View {
         .padding(.top, iconItemTop + extraPadding) // fluent font size mismatch
         .padding(.bottom, 1)
         .accessibilityIdentifier(Accessibility.icon)
-
-    case .button(let iconButton):
-      iconButton
     }
   }
   
@@ -76,6 +74,7 @@ struct TUIInputAdditionalItem_Previews: PreviewProvider {
   static var previews: some View {
     
     HStack(spacing: 10) {
+      
       TUIInputAdditionalView(style: .text("$"), hasTitleAndValue: false)
       
       TUIInputAdditionalView(style: .text("$"), hasTitleAndValue: true)
@@ -83,14 +82,6 @@ struct TUIInputAdditionalItem_Previews: PreviewProvider {
       TUIInputAdditionalView(style: .icon(Symbol.info), hasTitleAndValue: false)
       
       TUIInputAdditionalView(style: .icon(Symbol.info), hasTitleAndValue: true)
-      
-      TUIInputAdditionalView(
-        style: .button(
-          TUIIconButton(icon: Symbol.error, action: { })
-            .size(.m)
-            .style(.primary)
-        ),
-        hasTitleAndValue: true)
     }
   }
 }

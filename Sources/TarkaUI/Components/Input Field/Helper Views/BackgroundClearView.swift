@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+
+/// A SwiftUI view that used to display a half transparent background
+/// 
 struct BackgroundClearView: UIViewRepresentable {
   
     func makeUIView(context: Context) -> UIView {

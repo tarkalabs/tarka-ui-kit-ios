@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+/// This is SwiftUI View that displays title and text content for the `TUIInputField` view in the vertical stack.
+/// The view can be customized with different styles,
+/// such as displaying only the title or displaying both the title and content.
+/// 
 struct TUIInputTextContentView: View {
   
   @ObservedObject var inputItem: TUIInputFieldItem
