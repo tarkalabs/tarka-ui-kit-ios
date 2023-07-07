@@ -1,5 +1,5 @@
 //
-//  TUIInputTextField.swift
+//  TUITextInputField.swift
 //
 //
 //  Created by Gopinath on 04/07/23.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-public struct TUIInputTextField: TUIInputFieldProtocol {
+public struct TUITextInputField: TUIInputFieldProtocol {
   
   @EnvironmentObject public var inputItem: TUIInputFieldItem
   

@@ -70,7 +70,7 @@ struct TUIInputField: TUIInputFieldProtocol {
           style: startItemStyle, hasContent: inputItem.hasContent)
           .frame(alignment: .leading)
       }
-      TUIInputTextContent(
+      TUIInputTextContentView(
         inputItem: inputItem,
         isTextFieldFocused: $isTextFieldFocused,
         placeholder: properties.placeholder)
