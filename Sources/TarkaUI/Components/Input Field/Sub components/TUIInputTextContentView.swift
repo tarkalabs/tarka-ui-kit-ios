@@ -1,5 +1,5 @@
 //
-//  TUIInputContent.swift
+//  TUIInputTextContentView.swift
 //  
 //
 //  Created by Gopinath on 27/06/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TUIInputTextContent: View {
+struct TUIInputTextContentView: View {
 
   @ObservedObject var inputItem: TUIInputFieldItem
     
@@ -104,7 +104,7 @@ struct TUIInputTextContent: View {
   }
 }
 
-extension TUIInputTextContent {
+extension TUIInputTextContentView {
   enum Accessibility: String, TUIAccessibility {
     case root = "TUIInputTextContent"
     case title = "Title"
@@ -116,9 +116,9 @@ struct TUIInputTextContent_Previews: PreviewProvider {
   static var previews: some View {
     VStack(spacing: 10) {
       Group {
-        TUIInputTextContent(inputItem: .init(style: .onlyTitle, title: "Label"))
-        TUIInputTextContent(inputItem: .init(style: .titleWithValue, title: "Label", value: "Description"))
-        TUIInputTextContent(inputItem: .init(style: .onlyValue, value: "Description"))
+        TUIInputTextContentView(inputItem: .init(style: .onlyTitle, title: "Label"))
+        TUIInputTextContentView(inputItem: .init(style: .titleWithValue, title: "Label", value: "Description"))
+        TUIInputTextContentView(inputItem: .init(style: .onlyValue, value: "Description"))
       }.padding(.horizontal, 20)
     }
   }
