@@ -18,15 +18,20 @@ struct TUIInputTextContentView: View {
   var placeholder: String
   
   @Binding private var isTextFieldFocused: Bool
+  
+  private var isTextFieldInteractive: Bool
+  
   @FocusState private var isFocused: Bool
   
   init(inputItem: TUIInputFieldItem,
-       isTextFieldFocused: Binding<Bool>? = nil,
-       placeholder: String? = nil) {
+       isTextFieldInteractive: Bool = true,
+       placeholder: String? = nil,
+       isTextFieldFocused: Binding<Bool>? = nil) {
     
     self.inputItem = inputItem
-    self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
+    self.isTextFieldInteractive = isTextFieldInteractive
     self.placeholder = placeholder ?? ""
+    self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
   }
   
   var body: some View {
@@ -39,7 +44,7 @@ struct TUIInputTextContentView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     .onAppear {
-      if inputItem.isTextFieldInteractive {
+      if isTextFieldInteractive {
         self.isFocused = true
       }
     }
@@ -94,7 +99,7 @@ struct TUIInputTextContentView: View {
       .font(.body6)
       .foregroundColor(.inputText)
       .frame(minHeight: 20, alignment: .leading)
-      .disabled(!inputItem.isTextFieldInteractive)
+      .disabled(!isTextFieldInteractive)
       .accessibilityIdentifier(Accessibility.value)
     }
   }

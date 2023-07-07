@@ -19,13 +19,17 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   
   public var properties: TUIInputFieldOptionalProperties = TUIInputFieldOptionalProperties()
   
+  /// Binds the bool that used to handle the row interaction and text field interaction switch when user interacts
+  /// Only applied for
+  @State private var isTextFieldInteractive: Bool = false
+  
   @Binding private var isTextFieldFocused: Bool
   
   public var body: some View {
     mainBody
       .onChange(of: $isTextFieldFocused.wrappedValue, perform: { value in
         if !isTextFieldFocused {
-          self.inputItem.isTextFieldInteractive = false
+          self.isTextFieldInteractive = false
           // revert the style when content is empty
           if self.inputItem.value.isEmpty {
             self.inputItem.style = existingStyle
@@ -42,7 +46,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   @ViewBuilder
   private var mainBody: some View {
     
-    if !self.inputItem.isTextFieldInteractive {
+    if !self.isTextFieldInteractive {
       
       Button(action: {
         // change style
@@ -50,7 +54,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
           self.inputItem.style = .titleWithValue
         }
         self.isTextFieldFocused = true
-        self.inputItem.isTextFieldInteractive = true
+        self.isTextFieldInteractive = true
       }) {
         inputFieldView
       }
@@ -62,7 +66,9 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   
   private var inputFieldView: some View {
     TUIInputField(
-      properties: properties, isTextFieldFocused: $isTextFieldFocused)
+      properties: properties,
+      isTextFieldInteractive: $isTextFieldFocused,
+      isTextFieldFocused: $isTextFieldFocused)
     .accessibilityIdentifier(Accessibility.root)
   }
   
