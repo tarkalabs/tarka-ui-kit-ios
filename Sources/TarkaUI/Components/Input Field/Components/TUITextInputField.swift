@@ -46,17 +46,18 @@ public struct TUITextInputField: TUIInputFieldProtocol {
         self.isTextFieldFocused = true
         self.inputItem.isTextFieldInteractive = true
       }) {
-        inputFiledView
+        inputFieldView
       }
       .accessibilityIdentifier(Accessibility.button)
     } else {
-      inputFiledView
+      inputFieldView
     }
   }
   
-  private var inputFiledView: some View {
+  private var inputFieldView: some View {
     TUIInputField(
       properties: properties, isTextFieldFocused: $isTextFieldFocused)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   private var existingStyle: TUIInputFieldItem.InputFieldStyle {
@@ -71,6 +72,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
 extension TUITextInputField {
   
   enum Accessibility: String, TUIAccessibility {
-    case button = "Row Button"
+    case root = "TUITextInputField"
+    case button = "TUITextInputField Row Button"
   }
 }

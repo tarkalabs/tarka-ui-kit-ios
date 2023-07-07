@@ -41,13 +41,13 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
               .presentationDetents([.fraction(0.9)])
           })
     }
-    .accessibilityIdentifier(Accessibility.button)
+    .accessibilityIdentifier(Accessibility.root)
   }
 }
 
 extension TUIDateInputField {
   
   enum Accessibility: String, TUIAccessibility {
-    case button = "Row Button"
+    case root = "TUIDateInputField"
   }
 }
