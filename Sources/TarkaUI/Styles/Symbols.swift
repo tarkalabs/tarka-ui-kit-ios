@@ -31,6 +31,8 @@ internal enum Symbol: String, Icon {
   case info
   case checkBoxChecked
   case checkBoxUnChecked
+  case dismiss
+  case caret
 
   public var name: String {
     rawValue
@@ -60,6 +62,10 @@ internal enum Symbol: String, Icon {
       return .checkboxChecked24Filled
     case .checkBoxUnChecked:
       return .checkboxUnchecked24Filled
+    case .dismiss:
+      return .dismiss24Regular
+    case .caret:
+      return .caretDown20Filled
     }
   }
 }

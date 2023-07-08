@@ -22,4 +22,27 @@ public extension View {
   func listRowInsets(_ vertical: CGFloat, _ horizontal: CGFloat) -> some View {
     self.listRowInsets(EdgeInsets(top: vertical, leading: horizontal, bottom: vertical, trailing: horizontal))
   }
+  
+  /// This method is used to vaildate the condition, if it's then it will create new view else return the same view
+  ///
+  /// Example usage:
+  ///
+  ///     HStack {
+  ///         Text("Description")
+  ///         .isEnabled(isSelected) { $0.foregroundColor(.green) }
+  ///       }
+  ///     }
+  ///
+  /// - Parameters:
+  ///   - show: This bool is used to vaildate the condition
+  ///   - content: The content can be any SwiftUI view.
+  /// - Returns: A closure that returns the content
+  @ViewBuilder
+  func isEnabled<Content: View>(_ show: Bool, content: (Self) -> Content) -> some View {
+    if show {
+      content(self)
+    } else {
+      self
+    }
+  }
 }
