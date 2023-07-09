@@ -32,6 +32,9 @@ public struct TUIChipView: View {
     .clipShape(
       RoundedRectangle(cornerRadius: Spacing.halfHorizontal)
     )
+    .onTapGesture {
+      if let action { action() }
+    }
   }
   
   @ViewBuilder private var detailView: some View {
@@ -103,7 +106,7 @@ public struct TUIChipView: View {
   @ViewBuilder
   private func filterView(for type: Filter) -> some View {
     switch type {
-    case .onlyTitle(let isSelected):
+    case .onlyTitle:
       if isSelected {
         leftIconView(
           chipStyle == .s ? Symbol.checkmark16 : Symbol.checkmark20,
@@ -118,7 +121,7 @@ public struct TUIChipView: View {
                   right: chipStyle == .s ? Spacing.custom(20) : Spacing.custom(28))
       }
       
-    case .withButton(let isSelected, let icon, let action):
+    case .withButton(let icon, let action):
       if isSelected {
         titleView(left: chipStyle == .s ? Spacing.custom(12) : Spacing.baseHorizontal,
                   right: Spacing.custom(0))
@@ -251,8 +254,7 @@ public extension TUIChipView {
   }
   
   enum Filter {
-    case onlyTitle(Bool = false),
-         withButton(Bool = false, icon: Icon, action: (() -> Void)? = nil), withIcon(Icon)
+    case onlyTitle, withButton(icon: Icon, action: (() -> Void)? = nil), withIcon(Icon)
   }
 }
 
@@ -321,7 +323,7 @@ struct TUIChipView_Previews: PreviewProvider {
       Divider()
       Section("Filter") {
         TUIChipView("Filter")
-          .style(.filter(.onlyTitle(true)), chipStyle: .s)
+          .style(filter: .onlyTitle, isSelected: true, chipStyle: .s)
         
         TUIChipView("With Button")
           .style(.filter(.withButton(icon: Symbol.dismiss, action: {})), chipStyle: .s)
