@@ -355,14 +355,15 @@ struct TUIChipView_Previews: PreviewProvider {
           .style(filter: .onlyTitle, chipStyle: .size32)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(icon: Symbol.dismiss, action: {}), isSelected: true, chipStyle: .size32, badgeCount: 5, action: {})
+          .style(filter: .withButton(icon: Symbol.dismiss),
+                 isSelected: true, chipStyle: .size32, badgeCount: 45)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(icon: Symbol.dismiss, action: {}), isSelected: true, chipStyle: .size40, badgeCount: 5, action: {})
+          .style(filter: .withButton(icon: Symbol.dismiss),
+                 isSelected: true, chipStyle: .size40, badgeCount: 125)
         
         TUIChipView("With Button")
-          .style(filter: .withIcon(Symbol.caret16),
-                 chipStyle: .size32, action: {})
+          .style(filter: .withIcon(Symbol.caret16), chipStyle: .size32)
       }
     }
     .padding(.leading, 10)
