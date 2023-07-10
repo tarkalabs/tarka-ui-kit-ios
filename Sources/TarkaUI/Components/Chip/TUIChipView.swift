@@ -12,8 +12,11 @@ import SwiftUI
 ///
 /// Example usage:
 ///
-///      TUIChipView("Hello welcome to SwiftUI")
-///        .style(filter: .onlyTitle, chipStyle: .size32)
+///      TUIChipView("Hello")
+///        .style(.input(.titleWithButton(Symbol.dismiss)), chipStyle: .size32)
+///
+///      TUIChipView("Welcome to SwiftUI")
+///        .style(filter: .onlyTitle, isSelected: true, chipStyle: .size32)
 ///
 /// - Parameters:
 ///   - title: This can be any StringProtocol
