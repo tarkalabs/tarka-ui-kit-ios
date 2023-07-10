@@ -40,10 +40,13 @@ public struct TUIChipView: View {
       $0.overlay(alignment: .topTrailing) {
         TUIBadge(count: badgeCount)
           .badgeSize(chipStyle == .size32 ? .m : .l)
+          .accessibilityIdentifier(Accessibility.badge)
           .alignmentGuide(.top) { $0[.top] + 8 }
           .alignmentGuide(.trailing) { $0[.trailing] - 8 }
       }
     }
+    .accessibilityIdentifier(Accessibility.root)
+    .accessibilityElement(children: .contain)
   }
   
   @ViewBuilder private var detailView: some View {
@@ -337,6 +340,9 @@ struct TUIChipView_Previews: PreviewProvider {
         
         TUIChipView("With Button")
           .style(filter: .withButton(icon: Symbol.dismiss, action: {}), isSelected: true, chipStyle: .size32, badgeCount: 5, action: {})
+        
+        TUIChipView("With Button")
+          .style(filter: .withButton(icon: Symbol.dismiss, action: {}), isSelected: true, chipStyle: .size40, badgeCount: 5, action: {})
         
         TUIChipView("With Button")
           .style(filter: .withIcon(Symbol.caret16),
