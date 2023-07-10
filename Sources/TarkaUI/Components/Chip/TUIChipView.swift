@@ -14,6 +14,7 @@ public struct TUIChipView: View {
   private var chipStyle: ChipStyle = .l
   private var style: Style = .assist(.onlyTitle)
   private var action: (() -> Void)?
+  private var badgeCount: Int = 0
   
   public init(_ title: any StringProtocol) {
     self.title = title
@@ -34,6 +35,17 @@ public struct TUIChipView: View {
     )
     .onTapGesture {
       if let action { action() }
+    }
+    .isEnabled(isSelected && badgeCount > 0) {
+      $0.overlay(alignment: .topTrailing) {
+        TUIBadge(count: badgeCount)
+          .alignmentGuide(.top) {
+            $0[.top] + 10
+          }
+          .alignmentGuide(.trailing) {
+            $0[.trailing] - 10
+          }
+      }
     }
   }
   
@@ -271,11 +283,13 @@ public extension TUIChipView {
   
   func style(filter: Filter, isSelected: Bool = false,
              chipStyle: ChipStyle = .l,
+             badgeCount: Int = 0,
              action: (() -> Void)? = nil) -> Self {
     var newView = self
     newView.style = Style.filter(filter)
     newView.isSelected = isSelected
     newView.chipStyle = chipStyle
+    newView.badgeCount = badgeCount
     newView.action = action
     return newView
   }
@@ -323,13 +337,13 @@ struct TUIChipView_Previews: PreviewProvider {
       Divider()
       Section("Filter") {
         TUIChipView("Filter")
-          .style(filter: .onlyTitle, isSelected: true, chipStyle: .s)
+          .style(filter: .onlyTitle, chipStyle: .s)
         
         TUIChipView("With Button")
-          .style(.filter(.withButton(icon: Symbol.dismiss, action: {})), chipStyle: .s)
+          .style(filter: .withButton(icon: Symbol.dismiss, action: {}), isSelected: true, chipStyle: .l, badgeCount: 5, action: {})
         
         TUIChipView("With Button")
-          .style(filter: .withIcon(Symbol.caret16), isSelected: true,
+          .style(filter: .withIcon(Symbol.caret16),
                  chipStyle: .l, action: {})
       }
     }
