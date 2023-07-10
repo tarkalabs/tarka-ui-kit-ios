@@ -12,7 +12,7 @@ import SwiftUI
 ///
 /// Example usage:
 ///
-///      TUIChipView("Hello welcome to SwiftUI") { }
+///      TUIChipView("Hello welcome to SwiftUI")
 ///        .style(filter: .onlyTitle, chipStyle: .size32)
 ///
 /// - Parameters:
