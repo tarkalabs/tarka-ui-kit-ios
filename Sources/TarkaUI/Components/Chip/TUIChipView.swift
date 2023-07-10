@@ -39,6 +39,7 @@ public struct TUIChipView: View {
     .isEnabled(isSelected && badgeCount > 0) {
       $0.overlay(alignment: .topTrailing) {
         TUIBadge(count: badgeCount)
+          .badgeSize(chipStyle == .s ? .m : .l)
           .alignmentGuide(.top) {
             $0[.top] + 10
           }
