@@ -289,6 +289,12 @@ public extension TUIChipView {
 
 public extension TUIChipView {
   
+  
+  /// The style used to display the title with given style options
+  /// - Parameters:
+  ///   - style: Style can be assist, input, suggestion, Filter
+  ///   - chipStyle: size32, size40
+  /// - Returns: A closure that returns the TUIChipView
   func style(_ style: Style, chipStyle: ChipStyle = .size40) -> Self {
     var newView = self
     newView.style = style
@@ -296,6 +302,14 @@ public extension TUIChipView {
     return newView
   }
   
+  /// Filter Style used to display chip options with title and button or icon
+  /// - Parameters:
+  ///   - filter: Choose the list of options to display chip view
+  ///   - isSelected: This bool used to select the chip view
+  ///   - chipStyle: .size32, size40
+  ///   - badgeCount: This is used to display the badge view in top trailing
+  ///   - action: This block will execute when view interacted
+  /// - Returns: A closure that returns the TUIChipView
   func style(filter: Filter, isSelected: Bool = false,
              chipStyle: ChipStyle = .size40,
              badgeCount: Int = 0,
