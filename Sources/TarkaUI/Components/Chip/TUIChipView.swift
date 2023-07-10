@@ -40,12 +40,8 @@ public struct TUIChipView: View {
       $0.overlay(alignment: .topTrailing) {
         TUIBadge(count: badgeCount)
           .badgeSize(chipStyle == .size32 ? .m : .l)
-          .alignmentGuide(.top) {
-            $0[.top] + 8
-          }
-          .alignmentGuide(.trailing) {
-            $0[.trailing] - 8
-          }
+          .alignmentGuide(.top) { $0[.top] + 8 }
+          .alignmentGuide(.trailing) { $0[.trailing] - 8 }
       }
     }
   }
@@ -123,7 +119,7 @@ public struct TUIChipView: View {
       if isSelected {
         leftIconView(
           chipStyle == .size32 ? Symbol.checkmark16 : Symbol.checkmark20,
-          size: chipStyle == .size32 ? Spacing.custom(20) : Spacing.custom(24),
+          size: chipStyle == .size32 ? Spacing.custom(16) : Spacing.custom(20),
           left: chipStyle == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
           right: chipStyle == .size32 ? Spacing.custom(3) : Spacing.quarterHorizontal)
         
@@ -337,13 +333,13 @@ struct TUIChipView_Previews: PreviewProvider {
       Divider()
       Section("Filter") {
         TUIChipView("Filter")
-          .style(filter: .onlyTitle, chipStyle: .size32)
+          .style(filter: .onlyTitle, isSelected: true, chipStyle: .size32)
         
         TUIChipView("With Button")
           .style(filter: .withButton(icon: Symbol.dismiss, action: {}), isSelected: true, chipStyle: .size32, badgeCount: 5, action: {})
         
         TUIChipView("With Button")
-          .style(filter: .withIcon(Symbol.caret16), isSelected: true,
+          .style(filter: .withIcon(Symbol.caret16),
                  chipStyle: .size32, action: {})
       }
     }
