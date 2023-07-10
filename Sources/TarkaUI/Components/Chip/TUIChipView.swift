@@ -7,6 +7,19 @@
 
 import SwiftUI
 
+/// `TUIChipView` is a  container view that displays title, image and button
+///  This view can be used in any SwiftUI view.
+///
+/// Example usage:
+///
+///      TUIChipView("Hello welcome to SwiftUI") { }
+///        .style(filter: .onlyTitle, chipStyle: .size32)
+///
+/// - Parameters:
+///   - title: This can be any StringProtocol
+///
+/// - Returns: A closure that returns the content
+///
 public struct TUIChipView: View {
   
   private var title: any StringProtocol
