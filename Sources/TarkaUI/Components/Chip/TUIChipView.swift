@@ -336,7 +336,7 @@ struct TUIChipView_Previews: PreviewProvider {
       Divider()
       Section("Filter") {
         TUIChipView("Filter")
-          .style(filter: .onlyTitle, isSelected: true, chipStyle: .size32)
+          .style(filter: .onlyTitle, chipStyle: .size32)
         
         TUIChipView("With Button")
           .style(filter: .withButton(icon: Symbol.dismiss, action: {}), isSelected: true, chipStyle: .size32, badgeCount: 5, action: {})
