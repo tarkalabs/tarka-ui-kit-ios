@@ -356,11 +356,11 @@ struct TUIChipView_Previews: PreviewProvider {
         
         TUIChipView("With Button")
           .style(filter: .withButton(icon: Symbol.dismiss),
-                 isSelected: true, chipStyle: .size32, badgeCount: 45)
+                 isSelected: true, chipStyle: .size32, badgeCount: 4)
         
         TUIChipView("With Button")
           .style(filter: .withButton(icon: Symbol.dismiss),
-                 isSelected: true, chipStyle: .size40, badgeCount: 125)
+                 isSelected: true, chipStyle: .size40, badgeCount: 5)
         
         TUIChipView("With Button")
           .style(filter: .withIcon(Symbol.caret16), chipStyle: .size32)
