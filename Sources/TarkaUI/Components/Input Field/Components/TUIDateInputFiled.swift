@@ -14,55 +14,51 @@ import SwiftUI
 /// holds all the same properties, variables and public functions that `TUIInputField` View have.
 /// 
 public struct TUIDateInputField: TUIInputFieldProtocol {
-  
-  @EnvironmentObject var inputItem: TUIInputFieldItem
-  
+    
   public var properties = TUIInputFieldOptionalProperties()
   
   @State private var isSheetPresented = false
   @State private var isDateSelected = false
   @State private var date = Date()
-  
-  private var defaultDateFormatter: DateFormatter = {
-    let dateFormatter = DateFormatter()
-    dateFormatter.locale = .current
-    dateFormatter.dateFormat = "d MMM yyyy hh:mma"
-    return dateFormatter
-  }()
-  
-  private var dateFormatter: DateFormatter
-  
-  
-  /// initializes with date formatter
-  /// - Parameter dateFormatter: DateFormatter used to define how we are gonna display the date string.
-  /// If we don't pass formatter, it picks the default value.
-  /// Default formatter is `"d MMM yyyy HH:mma"`.
-  /// Example result is`"6 Aug 2022 3:11PM"`
-  public init(dateFormatter: DateFormatter? = nil) {
-    self.dateFormatter = dateFormatter ?? defaultDateFormatter
+  @State private var inputItem: TUIInputFieldItem
+  @Binding private var dateInputItem: TUIDateInputFieldItem
+
+  /// initializes with date input item
+  /// - Parameter dateInputItem: TUIDateInputItem instance that holds the style and date value.
+  /// If we don't pass date, it picks the current date.
+  /// Internally, this will be converted to `TUIInputFieldItem` instance
+  /// and will be passed to `TUIInputFiled` as environmentObject
+  ///
+  public init(dateInputItem: Binding<TUIDateInputFieldItem>) {
+    
+    let dateInputValue = dateInputItem.wrappedValue
+    let inputItem = TUIInputFieldItem(
+      style: dateInputValue.style, title: dateInputValue.title)
+    
+    if let dateValue = dateInputValue.date {
+      inputItem.value = dateValue.formatted(dateInputValue.format)
+      inputItem.style = .titleWithValue
+    }
+    self._dateInputItem = dateInputItem
+    self._inputItem = State(initialValue: inputItem)
   }
   
   public var body: some View {
     
     Button(action: {
-      var date = Date()
-      let value = inputItem.value
-      if !value.isEmpty {
-        let formattedDate = dateFormatter.date(from: value)
-        date = formattedDate ?? Date()
-      }
+      self.date = dateInputItem.date ?? Date()
       self.isDateSelected = false
-      self.date = date
-      print("date: \(date)")
       self.isSheetPresented = true
     }) {
         TUIInputField(properties: properties)
           .onChange(of: isDateSelected) { newValue in
             
             self.inputItem.style = .titleWithValue
-            let newDate = dateFormatter.string(from: date)
-            self.inputItem.value = newDate
+            let dateString = date.formatted(dateInputItem.format)
+            self.inputItem.value = dateString
+            self.dateInputItem.date = date
           }
+          .environmentObject(inputItem)
           .onChange(of: date) { _ in }
           .sheet(
             isPresented: $isSheetPresented,
@@ -84,14 +80,15 @@ extension TUIDateInputField {
 }
 
 struct TUIDateInputField_Previews: PreviewProvider {
-  
+
   static var previews: some View {
-    
-    TUIDateInputField()
+
+    TUIDateInputField(
+      dateInputItem: Binding.constant(TUIDateInputFieldItem(
+        style: .onlyTitle, title: "StartDate",
+        format: .init(date: .abbreviated, time: .standard))))
       .endItem(withStyle: .icon(Symbol.checkBoxChecked))
       .highlightBar(color: .red)
       .state(.success("Values are valid"))
-      .environmentObject(
-        TUIInputFieldItem(style: .onlyTitle, title: "StartDate"))
   }
 }

@@ -72,7 +72,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
     .accessibilityIdentifier(Accessibility.root)
   }
   
-  private var existingStyle: TUIInputFieldItem.InputFieldStyle {
+  private var existingStyle: TUIInputFieldStyle {
     guard inputItem.style == .titleWithValue else {
       return inputItem.style
     }
