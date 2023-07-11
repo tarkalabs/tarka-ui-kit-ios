@@ -23,8 +23,8 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
   @State private var inputItem: TUIInputFieldItem
   @Binding private var dateInputItem: TUIDateInputFieldItem
 
-  /// initializes with date input item
-  /// - Parameter dateInputItem: TUIDateInputItem instance that holds the style and date value.
+  /// Initializes with date input item
+  /// - Parameter dateInputItem: TUIDateInputFieldItem instance that holds the style and date value.
   /// If we don't pass date, it picks the current date.
   /// Internally, this will be converted to `TUIInputFieldItem` instance
   /// and will be passed to `TUIInputFiled` as environmentObject
