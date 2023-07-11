@@ -37,7 +37,6 @@ struct TUIDatePopover: View {
       
       Button("Done") {
         self.date = storedDate
-        print("storedDate: \(storedDate)")
         isSelected = true
         isShowing = false
       }
