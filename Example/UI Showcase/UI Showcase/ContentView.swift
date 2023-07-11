@@ -8,17 +8,32 @@
 import TarkaUI
 import SwiftUI
 
+private var testDate: Date {
+  let dateFormatter = DateFormatter()
+  dateFormatter.timeZone = TimeZone(abbreviation: "GMT+5:30")!
+  dateFormatter.dateFormat = "dd MMM yyyy hh:mm:ss a"
+  
+  let dateGiven = "4 Jul 2023 9:11:00 AM" // EAM
+  let dateValue = dateFormatter.date(from: dateGiven) ?? Date()
+  return dateValue
+}
+
+var defaultFormat: Date.FormatStyle {
+  .init(date: .abbreviated, time: .standard)
+}
+
+var globalEmptyDateFieldItem = TUIDateInputFieldItem(
+  style: .onlyTitle, title: "StartDate",
+  format: defaultFormat)
+
+var globalDateFieldItem = TUIDateInputFieldItem(
+  style: .onlyTitle, title: "StartDate",
+  date: testDate,
+  format: defaultFormat)
+
 struct ContentView: View {
   
-  private var dateFormatter: DateFormatter = {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MMM-dd hh:mm:ss"
-    return dateFormatter
-  }()
-  
-  @StateObject var emptyDateFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "StartDate")
-  
-  @StateObject var dateFieldItem = TUIInputFieldItem(style: .titleWithValue, title: "StartDate", value: "2023-Feb-02 12:00:00")
+  @State var dateFieldItem = globalEmptyDateFieldItem
   
   @StateObject var memoTextFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo")
   
@@ -33,18 +48,17 @@ struct ContentView: View {
   
   var body: some View {
     VStack {
-      Button("Done") {
+      Button("Submit") {
         print("""
-Final input: Date - \(dateFieldItem.value)
+Final input: Date - \(String(describing: dateFieldItem.date?.formatted(defaultFormat)))
 First Text - \(memoTextFieldItem.value)
 Second Text - \(valueOnlyTextFieldItem.value)
 """)
       }
-      TUIDateInputField(dateFormatter: dateFormatter)
+      TUIDateInputField(dateInputItem: $dateFieldItem)
         .endItem(withStyle: .icon(Symbol.document))
         .highlightBar(color: .red)
         .state(.success("Values are valid"))
-        .environmentObject(dateFieldItem)
 
       TUIPickerInputField()
       {
