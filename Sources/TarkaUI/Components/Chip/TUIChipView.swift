@@ -81,7 +81,7 @@ public struct TUIChipView: View {
       
     case .withImage(let image):
       leftImageView(
-        image, size: chipStyle == .size32 ? Spacing.horizontalMultiple(2) : Spacing.custom(24),
+        image, size: chipStyle == .size40 ? Spacing.horizontalMultiple(2) : Spacing.custom(24),
         left: Spacing.quarterHorizontal, right: Spacing.quarterHorizontal)
       
       titleView(left: Spacing.quarterHorizontal, right: Spacing.baseHorizontal)
@@ -104,13 +104,19 @@ public struct TUIChipView: View {
       rightButtonView(icon, action: action)
       
     case .withLeftImage(let image, rightIcon: let icon, let action):
-      leftImageView(image, left: Spacing.quarterHorizontal, right: Spacing.quarterHorizontal)
+      leftImageView(
+        image, size: chipStyle == .size40 ? Spacing.horizontalMultiple(2) : Spacing.custom(24),
+        left: Spacing.quarterHorizontal, right: Spacing.quarterHorizontal)
+      
       titleView(left: Spacing.quarterHorizontal, right: Spacing.custom(0))
       rightButtonView(icon, action: action)
       
     case .withLeftIcon(let icon, rightIcon: let rightIcon, let action):
-      leftIconView(icon, left: chipStyle == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
-                   right: Spacing.quarterHorizontal)
+      leftIconView(
+        icon, size: chipStyle == .size32 ? Spacing.custom(20) : Spacing.custom(24),
+        left: chipStyle == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
+        right: Spacing.quarterHorizontal)
+      
       titleView(left: Spacing.quarterHorizontal, right: Spacing.custom(0))
       rightButtonView(rightIcon, action: action)
     }
@@ -184,7 +190,7 @@ public struct TUIChipView: View {
   }
   
   @ViewBuilder
-  private func leftImageView(_ image: Image, size: CGFloat = Spacing.custom(24),
+  private func leftImageView(_ image: Image, size: CGFloat,
                              left: CGFloat, right: CGFloat) -> some View {
     image
       .frame(maxWidth: size, maxHeight: size)
@@ -195,7 +201,7 @@ public struct TUIChipView: View {
   }
   
   @ViewBuilder
-  private func leftIconView(_ icon: Icon, size: CGFloat = Spacing.custom(24),
+  private func leftIconView(_ icon: Icon, size: CGFloat,
                             left: CGFloat, right: CGFloat) -> some View {
     Image(icon)
       .frame(maxWidth: size, maxHeight: size)
@@ -206,7 +212,7 @@ public struct TUIChipView: View {
   }
   
   @ViewBuilder
-  private func rightIconView(_ icon: Icon, size: CGFloat = Spacing.custom(24),
+  private func rightIconView(_ icon: Icon, size: CGFloat,
                              left: CGFloat, right: CGFloat) -> some View {
     Image(icon)
       .frame(maxWidth: size, maxHeight: size)
