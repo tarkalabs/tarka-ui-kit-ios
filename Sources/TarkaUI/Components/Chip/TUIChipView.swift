@@ -290,7 +290,7 @@ public extension TUIChipView {
       }
     }
     
-    var isSelectedEnabled: Bool {
+    var isSelectionEnabled: Bool {
       switch self {
       case .onlyTitle, .withButton: return true
       case .withIcon: return false
@@ -330,7 +330,7 @@ public extension TUIChipView {
              action: (() -> Void)? = nil) -> Self {
     var newView = self
     newView.style = Style.filter(filter)
-    newView.isSelected = filter.isSelectedEnabled ? isSelected : false
+    newView.isSelected = filter.isSelectionEnabled ? isSelected : false
     newView.chipStyle = chipStyle
     newView.badgeCount = filter.isBadgeEnabled ? badgeCount : 0
     newView.action = action
