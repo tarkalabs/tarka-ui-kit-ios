@@ -23,31 +23,54 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
   @State private var isDateSelected = false
   @State private var date = Date()
   
-  public init() { }
+  private var defaultDateFormatter: DateFormatter = {
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = .current
+    dateFormatter.dateFormat = "d MMM yyyy HH:mma"
+    return dateFormatter
+  }()
+  
+  private var dateFormatter: DateFormatter
+  
+  
+  /// initializes with date formatter
+  /// - Parameter dateFormatter: DateFormatter used to define how we are gonna display the date string.
+  /// If we don't pass formatter, it picks the default value.
+  /// Default formatter is `"d MMM yyyy HH:mma"`.
+  /// Example result is`"6 Aug 2022 3:11PM"`
+  public init(dateFormatter: DateFormatter? = nil) {
+    self.dateFormatter = dateFormatter ?? defaultDateFormatter
+  }
   
   public var body: some View {
     
     Button(action: {
-      self.isSheetPresented = true
-    }) {
-      TUIInputField(properties: properties)
-        .onChange(of: isDateSelected) { _ in
-          self.inputItem.style = .titleWithValue
-          self.inputItem.value = date.description
-        }
-      // TODO: @Gopi, need to decide about the presentation
-      //        .popover(isPresented: $isSheetPresented) {
-      //        .fullScreenCover(
-      //          isPresented: $isSheetPresented) {
-        .sheet(
-          isPresented: $isSheetPresented,
-          content: {
-            TUIDatePopover(date: $date, isShowing: $isSheetPresented, isSelected: $isDateSelected)
-              .background(BackgroundClearView())
-              .presentationDetents([.fraction(0.9)])
-          })
-    }
-    .accessibilityIdentifier(Accessibility.root)
+      var date = Date()
+      let value = inputItem.value
+      if !value.isEmpty {
+        let formattedDate = dateFormatter.date(from: value)
+        date = formattedDate ?? Date()
+      }
+      self.isDateSelected = false
+      self.date = date
+      self.isSheetPresented = true    }) {
+        TUIInputField(properties: properties)
+          .onChange(of: isDateSelected) { newValue in
+            
+            self.inputItem.style = .titleWithValue
+            let newDate = dateFormatter.string(from: date)
+            self.inputItem.value = newDate
+          }
+          .onChange(of: date) { _ in }
+        
+          .sheet(
+            isPresented: $isSheetPresented,
+            content: {
+              TUIDatePopover(date: $date, isShowing: $isSheetPresented, isSelected: $isDateSelected)
+                .background(BackgroundClearView())
+            })
+      }
+      .accessibilityIdentifier(Accessibility.root)
   }
 }
 
