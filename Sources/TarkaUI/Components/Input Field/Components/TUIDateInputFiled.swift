@@ -14,40 +14,61 @@ import SwiftUI
 /// holds all the same properties, variables and public functions that `TUIInputField` View have.
 /// 
 public struct TUIDateInputField: TUIInputFieldProtocol {
-  
-  @EnvironmentObject var inputItem: TUIInputFieldItem
-  
+    
   public var properties = TUIInputFieldOptionalProperties()
   
   @State private var isSheetPresented = false
   @State private var isDateSelected = false
   @State private var date = Date()
-  
-  public init() { }
+  @State private var inputItem: TUIInputFieldItem
+  @Binding private var dateInputItem: TUIDateInputFieldItem
+
+  /// Initializes with date input item
+  /// - Parameter dateInputItem: TUIDateInputFieldItem instance that holds the style and date value.
+  /// If we don't pass date, it picks the current date.
+  /// Internally, this will be converted to `TUIInputFieldItem` instance
+  /// and will be passed to `TUIInputFiled` as environmentObject
+  ///
+  public init(dateInputItem: Binding<TUIDateInputFieldItem>) {
+    
+    let dateInputValue = dateInputItem.wrappedValue
+    let inputItem = TUIInputFieldItem(
+      style: dateInputValue.style, title: dateInputValue.title)
+    
+    if let dateValue = dateInputValue.date {
+      inputItem.value = dateValue.formatted(dateInputValue.format)
+      inputItem.style = .titleWithValue
+    }
+    self._dateInputItem = dateInputItem
+    self._inputItem = State(initialValue: inputItem)
+  }
   
   public var body: some View {
     
     Button(action: {
+      self.date = dateInputItem.date ?? Date()
+      self.isDateSelected = false
       self.isSheetPresented = true
     }) {
-      TUIInputField(properties: properties)
-        .onChange(of: isDateSelected) { _ in
-          self.inputItem.style = .titleWithValue
-          self.inputItem.value = date.description
-        }
-      // TODO: @Gopi, need to decide about the presentation
-      //        .popover(isPresented: $isSheetPresented) {
-      //        .fullScreenCover(
-      //          isPresented: $isSheetPresented) {
-        .sheet(
-          isPresented: $isSheetPresented,
-          content: {
-            TUIDatePopover(date: $date, isShowing: $isSheetPresented, isSelected: $isDateSelected)
-              .background(BackgroundClearView())
-              .presentationDetents([.fraction(0.9)])
-          })
-    }
-    .accessibilityIdentifier(Accessibility.root)
+        TUIInputField(properties: properties)
+          .onChange(of: isDateSelected) { newValue in
+            
+            self.inputItem.style = .titleWithValue
+            let dateString = date.formatted(dateInputItem.format)
+            self.inputItem.value = dateString
+            self.dateInputItem.date = date
+          }
+          .environmentObject(inputItem)
+          .onChange(of: date) { _ in }
+          .sheet(
+            isPresented: $isSheetPresented,
+            content: {
+              TUIDatePopover(date: $date, isShowing: $isSheetPresented, isSelected: $isDateSelected)
+                .transparentBackground()
+                .presentationDetents([.fraction(0.9)])
+            })
+      }
+      .accessibilityIdentifier(Accessibility.root)
   }
 }
 
@@ -59,14 +80,15 @@ extension TUIDateInputField {
 }
 
 struct TUIDateInputField_Previews: PreviewProvider {
-  
+
   static var previews: some View {
-    
-    TUIDateInputField()
+
+    TUIDateInputField(
+      dateInputItem: Binding.constant(TUIDateInputFieldItem(
+        style: .onlyTitle, title: "StartDate",
+        format: .init(date: .abbreviated, time: .standard))))
       .endItem(withStyle: .icon(Symbol.checkBoxChecked))
       .highlightBar(color: .red)
       .state(.success("Values are valid"))
-      .environmentObject(
-        TUIInputFieldItem(style: .onlyTitle, title: "StartDate"))
   }
 }

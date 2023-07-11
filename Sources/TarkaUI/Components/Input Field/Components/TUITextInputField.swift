@@ -23,6 +23,13 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   @State private var isTextFieldInteractive: Bool = false
   @Binding private var isTextFieldFocused: Bool
   
+  /// Creates a `TUITextInputField` view
+  /// - Parameter isTextFieldFocused: A bindable bool value that used to handle text field focus using keyboard
+  public init(isTextFieldFocused: Binding<Bool>) {
+    
+    self._isTextFieldFocused = isTextFieldFocused
+  }
+  
   public var body: some View {
     mainBody
       .onChange(of: $isTextFieldFocused.wrappedValue, perform: { value in
@@ -34,13 +41,6 @@ public struct TUITextInputField: TUIInputFieldProtocol {
           }
         }
       })
-  }
-  
-  /// Creates a `TUITextInputField` view
-  /// - Parameter isTextFieldFocused: A bindable bool value that used to handle text field focus using keyboard
-  public init(isTextFieldFocused: Binding<Bool>) {
-    
-    self._isTextFieldFocused = isTextFieldFocused
   }
   
   @ViewBuilder
@@ -72,7 +72,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
     .accessibilityIdentifier(Accessibility.root)
   }
   
-  private var existingStyle: TUIInputFieldItem.InputFieldStyle {
+  private var existingStyle: TUIInputFieldStyle {
     guard inputItem.style == .titleWithValue else {
       return inputItem.style
     }
