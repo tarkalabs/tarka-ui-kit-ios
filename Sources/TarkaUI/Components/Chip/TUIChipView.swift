@@ -194,6 +194,7 @@ public struct TUIChipView: View {
                              left: CGFloat, right: CGFloat) -> some View {
     image
       .frame(maxWidth: size, maxHeight: size)
+      .clipShape(Circle())
       .foregroundColor(isSelected ? .onSecondary : .onSurface)
       .padding(.leading, left)
       .padding(.trailing, right)
