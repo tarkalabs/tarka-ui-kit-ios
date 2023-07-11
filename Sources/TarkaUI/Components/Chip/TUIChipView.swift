@@ -282,6 +282,20 @@ public extension TUIChipView {
   
   enum Filter {
     case onlyTitle, withButton(icon: Icon, action: (() -> Void)? = nil), withIcon(Icon)
+    
+    var isBadgeEnabled: Bool {
+      switch self {
+      case .withButton: return true
+      default: return false
+      }
+    }
+    
+    var isSelectedEnabled: Bool {
+      switch self {
+      case .onlyTitle, .withButton: return true
+      case .withIcon: return false
+      }
+    }
   }
 }
 
@@ -305,9 +319,9 @@ public extension TUIChipView {
   /// Filter Style used to display chip options with title and button or icon
   /// - Parameters:
   ///   - filter: Choose the list of options to display chip view
-  ///   - isSelected: This bool used to select the chip view
+  ///   - isSelected: This bool used to select the chip view, applicable for onlyTitle and withButton
   ///   - chipStyle: .size32, size40
-  ///   - badgeCount: This is used to display the badge view in top trailing
+  ///   - badgeCount: This is used to display the badge view in top trailing only applicable for withButton type
   ///   - action: This block will execute when view interacted
   /// - Returns: A closure that returns the TUIChipView
   func style(filter: Filter, isSelected: Bool = false,
@@ -316,9 +330,9 @@ public extension TUIChipView {
              action: (() -> Void)? = nil) -> Self {
     var newView = self
     newView.style = Style.filter(filter)
-    newView.isSelected = isSelected
+    newView.isSelected = filter.isSelectedEnabled ? isSelected : false
     newView.chipStyle = chipStyle
-    newView.badgeCount = badgeCount
+    newView.badgeCount = filter.isBadgeEnabled ? badgeCount : 0
     newView.action = action
     return newView
   }
