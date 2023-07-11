@@ -7,15 +7,17 @@
 
 import SwiftUI
 
+/// This is the model class that defines the style for `TUIInputField` View to render
+///
+public enum TUIInputFieldStyle {
+  case onlyTitle, titleWithValue, onlyValue
+}
+
 /// This is the model class that holds the required values to render `TUIInputField` View
 ///
 public class TUIInputFieldItem: ObservableObject {
-  
-  public enum InputFieldStyle {
-    case onlyTitle, titleWithValue, onlyValue
-  }
-  
-  @Published public var style: InputFieldStyle
+
+  @Published public var style: TUIInputFieldStyle
   @Published public var title: String = ""
   @Published public var value: String = ""
   
@@ -25,7 +27,7 @@ public class TUIInputFieldItem: ObservableObject {
   ///   - title: A string that holds the title
   ///   - value: A string that holds the value ie. content description
   public init(
-    style: InputFieldStyle,
+    style: TUIInputFieldStyle,
     title: String = "", value: String = "") {
       
       self.style = style
