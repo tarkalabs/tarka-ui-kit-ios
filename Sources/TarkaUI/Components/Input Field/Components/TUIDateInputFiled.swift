@@ -26,7 +26,7 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
   private var defaultDateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
     dateFormatter.locale = .current
-    dateFormatter.dateFormat = "d MMM yyyy HH:mma"
+    dateFormatter.dateFormat = "d MMM yyyy hh:mma"
     return dateFormatter
   }()
   
@@ -53,7 +53,9 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
       }
       self.isDateSelected = false
       self.date = date
-      self.isSheetPresented = true    }) {
+      print("date: \(date)")
+      self.isSheetPresented = true
+    }) {
         TUIInputField(properties: properties)
           .onChange(of: isDateSelected) { newValue in
             
@@ -62,12 +64,12 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
             self.inputItem.value = newDate
           }
           .onChange(of: date) { _ in }
-        
           .sheet(
             isPresented: $isSheetPresented,
             content: {
               TUIDatePopover(date: $date, isShowing: $isSheetPresented, isSelected: $isDateSelected)
-                .background(BackgroundClearView())
+                .transparentBackground()
+                .presentationDetents([.fraction(0.9)])
             })
       }
       .accessibilityIdentifier(Accessibility.root)

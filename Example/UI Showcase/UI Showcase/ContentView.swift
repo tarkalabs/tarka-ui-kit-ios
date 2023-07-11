@@ -12,7 +12,7 @@ struct ContentView: View {
   
   private var dateFormatter: DateFormatter = {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MMM-dd HH:mm:ss"
+    dateFormatter.dateFormat = "yyyy-MMM-dd hh:mm:ss"
     return dateFormatter
   }()
   
@@ -40,11 +40,11 @@ First Text - \(memoTextFieldItem.value)
 Second Text - \(valueOnlyTextFieldItem.value)
 """)
       }
-      TUIDateInputField()
+      TUIDateInputField(dateFormatter: dateFormatter)
         .endItem(withStyle: .icon(Symbol.document))
         .highlightBar(color: .red)
         .state(.success("Values are valid"))
-        .environmentObject(emptyDateFieldItem)
+        .environmentObject(dateFieldItem)
 
       TUIPickerInputField()
       {
