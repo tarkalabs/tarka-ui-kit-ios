@@ -11,12 +11,12 @@ public enum TUISnackBarStyle: EnvironmentKey {
   case success, info, warning, error
   public static var defaultValue: TUISnackBarStyle = .success
   
-  var icon: Symbol {
+  var icon: FluentIcon {
     switch self {
-    case .success: return .checkmarkCircle
-    case .warning: return .warning
-    case .info: return .info
-    case .error: return .error
+    case .success: return .checkmarkCircle24Filled
+    case .warning: return .warning24Filled
+    case .info: return .info24Filled
+    case .error: return .errorCircle24Filled
     }
   }
   
@@ -84,13 +84,13 @@ public struct TUISnackBar: View {
   
   @ViewBuilder
   private var iconView: some View {
-    Image(style.icon)
-      .resizable()
+    Image(fluent: style.icon)
       .scaledToFit()
-      .foregroundColor(style.textColor)
       .frame(width: 24, height: 24)
       .padding(.leading, Spacing.baseHorizontal)
       .padding(.trailing, Spacing.halfHorizontal)
+      .clipped()
+      .foregroundColor(style.textColor)
   }
   
   @ViewBuilder

@@ -55,7 +55,7 @@ struct TUIPickerInputField_Previews: PreviewProvider {
     TUIPickerInputField() {
       TUITextRow("Test row", style: .onlyTitle)
     }
-    .endItem(withStyle: .icon(Symbol.info))
+    .endItem(withStyle: .icon(.info24Regular))
     .environmentObject(
       TUIInputFieldItem(style: .onlyTitle, title: "Pick value"))
   }

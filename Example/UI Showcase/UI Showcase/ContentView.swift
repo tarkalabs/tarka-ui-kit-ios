@@ -60,7 +60,7 @@ Second Text - \(valueOnlyTextFieldItem.value)
 """)
       }
       TUIDateInputField(dateInputItem: $dateFieldItem)
-        .endItem(withStyle: .icon(Symbol.document))
+        .endItem(withStyle: .icon(.document24Regular))
         .highlightBar(color: .red)
         .state(.success("Values are valid"))
 
@@ -68,17 +68,17 @@ Second Text - \(valueOnlyTextFieldItem.value)
       {
         ActivityView(activityItems: ["Test Export"], applicationActivities: nil)
       }
-      .endItem(withStyle: .icon(Symbol.sync))
+      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
       .environmentObject(pickerFieldItem)
       
       TUITextInputField(
         isTextFieldFocused: $isTextFieldFocused)
       .state(.alert("Input values are sensitive"))
-      .endItem(withStyle: .icon(Symbol.sync))
+      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
       .environmentObject(memoTextFieldItem)
       
       TUITextInputField(isTextFieldFocused: $isTextFieldFocused)
-        .endItem(withStyle: .icon(Symbol.sync))
+        .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
         .state(.error("Input values are sensitive"))
         .placeholder("Enter Memo Description")
         .environmentObject(valueOnlyTextFieldItem)
@@ -93,14 +93,6 @@ Second Text - \(valueOnlyTextFieldItem.value)
         }
       }
     }
-    //    VStack {
-    //      Image(systemName: "globe")
-    //        .imageScale(.large)
-    //        .foregroundColor(.accentColor)
-    //      Text("Hello, world!")
-    //      Image(Symbol.map)
-    //    }
-    //    .padding()
   }
 }
 

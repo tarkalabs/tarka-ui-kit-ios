@@ -63,14 +63,14 @@ public struct TUIOverlayFooter: View {
 struct OverlayFooter_Previews: PreviewProvider {
   private enum TestAction: TUIOverlayFooterAction {
     var id: String {
-      icon.name
+      icon.resourceString
     }
     
-    var icon: Icon {
+    var icon: FluentIcon {
       switch self {
-      case .one: return Symbol.chevronLeft
-      case .two: return Symbol.chevronDown
-      case .three: return Symbol.chevronRight
+      case .one: return .chevronLeft24Regular
+      case .two: return .chevronDown24Regular
+      case .three: return .chevronRight24Regular
       }
     }
     

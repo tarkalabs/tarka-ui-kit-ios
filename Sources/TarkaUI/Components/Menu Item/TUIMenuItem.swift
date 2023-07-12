@@ -9,7 +9,7 @@ import SwiftUI
 
 /// A struct that represents a menu item.
 ///
-/// A menu item can be configured to display a title, description or symbol.
+/// A menu item can be configured to display a title, description or fluent icon.
 ///
 /// Example usage:
 ///
@@ -31,8 +31,8 @@ public struct TUIMenuItem {
     case onlyLabel
     /// Displays the title and description.
     case withDescription(String)
-    /// Displays the title and symbol.
-    case withSymbol(Icon)
+    /// Displays the title and icon.
+    case withIcon(FluentIcon)
   }
   
   public init(title: any StringProtocol, configuration: TUIMenuItem.Configuration) {

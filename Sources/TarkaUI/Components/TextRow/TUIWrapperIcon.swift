@@ -10,13 +10,13 @@ import SwiftUI
 public struct TUIWrapperIcon: View {
   
   public var action: () -> Void
-  public var image: Icon
+  public var icon: FluentIcon
   public var color: Color = .disabledContent
   public var disableInteraction = false
 
-  public init(image: Icon,
+  public init(icon: FluentIcon,
               action: @escaping () -> Void) {
-    self.image = image
+    self.icon = icon
     self.action = action
   }
   
@@ -24,14 +24,14 @@ public struct TUIWrapperIcon: View {
     Button {
       action()
     } label: {
-      Image(image)
-        .resizable()
+      Image(fluent: icon)
         .scaledToFit()
         .frame(width: 20, height: 20)
-        .foregroundColor(color)
         .padding(.horizontal, Spacing.custom(2.0))
+        .clipped()
+        .foregroundColor(color)
     }
-    .frame(height: 40)
+    .frame(width: 24, height: 40)
     .disabled(disableInteraction)
     .accessibilityIdentifier(Accessibility.wrapperIcon)
   }
@@ -40,7 +40,7 @@ public struct TUIWrapperIcon: View {
 struct TUIWrapperIcon_Previews: PreviewProvider {
   
   static var previews: some View {
-    TUIWrapperIcon(image: Symbol.error) { }
+    TUIWrapperIcon(icon: .errorCircle24Filled) { }
       .iconColor(.red)
   }
 }

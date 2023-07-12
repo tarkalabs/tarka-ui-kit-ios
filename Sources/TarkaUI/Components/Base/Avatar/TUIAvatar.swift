@@ -7,18 +7,21 @@
 
 import SwiftUI
 
-public enum TUIAvatarType {
-  case initials(fromString: String)
-  case image(Image)
-  case icon(Icon)
-  // TODO: add URL case
-}
-
 public struct TUIAvatar: View {
-  public var avatarType: TUIAvatarType
   
-  public init(avatarType: TUIAvatarType) {
-    self.avatarType = avatarType
+  // TODO: add size enum
+
+  public enum `Type` {
+    case initials(fromString: String)
+    case image(Image)
+    case icon(FluentIcon)
+    // TODO: add URL case
+  }
+  
+  private var type: `Type`
+  
+  public init(type: `Type`) {
+    self.type = type
   }
   
   public var body: some View {
@@ -34,7 +37,7 @@ public struct TUIAvatar: View {
   
   @ViewBuilder
   private var contentView: some View {
-    switch avatarType {
+    switch type {
     case .initials(let fromString):
       Text(fromString.initials)
         .font(.heading2)
@@ -42,9 +45,11 @@ public struct TUIAvatar: View {
         .accessibilityIdentifier(Accessibility.label)
     case .image(let image):
       image
+        .clipped()
         .accessibilityIdentifier(Accessibility.image)
     case .icon(let icon):
-      Image(icon)
+      Image(fluent: icon)
+        .clipped()
         .foregroundColor(Color.onTertiary)
         .accessibilityIdentifier(Accessibility.image)
     }
@@ -62,8 +67,8 @@ extension TUIAvatar {
 struct Avatar_Previews: PreviewProvider {
   static var previews: some View {
     Group {
-      TUIAvatar(avatarType: .initials(fromString: "John Smith"))
-      TUIAvatar(avatarType: .icon(Symbol.reorderDots))
+      TUIAvatar(type: .initials(fromString: "John Smith"))
+      TUIAvatar(type: .icon(.reOrderDotsVertical24Regular))
     }
   }
 }

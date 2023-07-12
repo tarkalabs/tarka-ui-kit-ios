@@ -94,7 +94,7 @@ struct TUITextInputField_Previews: PreviewProvider {
     
     TUITextInputField(isTextFieldFocused: Binding.constant(false))
       .state(.alert("Input values are sensitive"))
-      .endItem(withStyle: .icon(Symbol.info))
+      .endItem(withStyle: .icon(.info24Regular))
       .environmentObject(
         TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo"))
   }
