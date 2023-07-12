@@ -52,13 +52,9 @@ public struct TUIChipView: View {
     .onTapGesture {
       if let action { action() }
     }
-    .isEnabled(isSelected && badgeCount > 0) {
-      $0.overlayView {
-        TUIBadge(count: badgeCount)
-          .badgeSize(chipStyle == .size32 ? .m : .l)
-          .accessibilityIdentifier(Accessibility.badge)
-      }
-    }
+    .overlayBadgeView(
+      isSelected && badgeCount > 0,
+      count: badgeCount, badgeSize: chipStyle == .size32 ? .m : .l)
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
@@ -243,7 +239,6 @@ public extension TUIChipView {
     case leftIcon = "leftIcon"
     case rightIcon = "rightIcon"
     case rightButton = "rightButton"
-    case badge = "badge"
   }
   
   enum ChipStyle {
