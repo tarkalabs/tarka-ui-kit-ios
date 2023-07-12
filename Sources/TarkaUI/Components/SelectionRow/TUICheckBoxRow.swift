@@ -49,7 +49,9 @@ public struct TUICheckBoxRow: View {
   
   @ViewBuilder
   private var leftView: some View {
-    Image(isSelected ? Symbol.checkBoxChecked : Symbol.checkBoxUnChecked)
+    Image(fluent: isSelected ? .checkboxChecked24Filled : .checkboxUnchecked24Filled)
+      .frame(width: 24, height: 24)
+      .clipped()
       .foregroundColor(isSelected ? .primaryTUI : .outline)
   }
   
