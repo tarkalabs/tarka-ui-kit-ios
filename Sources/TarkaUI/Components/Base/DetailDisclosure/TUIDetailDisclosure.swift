@@ -8,13 +8,15 @@
 import SwiftUI
 
 public struct TUIDetailDisclosure: View {
+  
   public var body: some View {
-    Image(Symbol.chevronRight)
-      .resizable()
+    
+    Image(fluent: .arrowRight20Filled)
       .scaledToFit()
       .frame(width: 18, height: 18)
+      .padding(.all, Spacing.custom(2.0))
+      .clipped()
       .foregroundColor(Color.outline)
-      .padding(.all, 2.0)
       .accessibilityIdentifier(Accessibility.root)
   }
 }

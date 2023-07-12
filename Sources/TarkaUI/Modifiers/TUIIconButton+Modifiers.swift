@@ -14,7 +14,7 @@ public extension TUIIconButton {
   ///
   /// - Parameter style: The `TUIIconButtonStyle` to use.
   /// - Returns: A modified `TUIIconButton` that has the `style` that overrides the default style.
-  func style(_ style: TUIIconButtonStyle) -> TUIIconButton {
+  func style(_ style: TUIIconButton.Style) -> TUIIconButton {
     var newView = self
     newView.style = style
     return newView
@@ -24,7 +24,7 @@ public extension TUIIconButton {
   ///
   /// - Parameter size: The `TUIIconButtonSize` to use.
   /// - Returns: A modified `TUIIconButton` that has the `size` that overrides the default size.
-  func size(_ size: TUIIconButtonSize) -> TUIIconButton {
+  func size(_ size: TUIIconButton.Size) -> TUIIconButton {
     var newView = self
     newView.size = size
     return newView

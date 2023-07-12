@@ -7,32 +7,21 @@
 
 import SwiftUI
 
-
-public enum TUIIconButtonStyle: EnvironmentKey {
-  case outline, ghost, secondary, primary
-  public static let defaultValue: TUIIconButtonStyle = .ghost
-}
-
-public enum TUIIconButtonSize: EnvironmentKey {
-  case xs, s, m, l, xl
-  public static let defaultValue: TUIIconButtonSize = .l
-}
-
 /// A button that displays an icon.
 ///
 /// Use an `IconButton` to display an icon that performs an action when tapped.
 ///
 /// You can customize the appearance of the button by specifying a style. The `outline` style shows a transparent button with an outline around the icon, while the `ghost` style shows a transparent button with no outline. The `secondary` and `primary` styles show a button with a background color that matches the secondary and primary colors of the app, respectively.
 ///
-/// You can also customize the size of the button by specifying a size. The `xs`, `s`, `m`, `l`, and `xl` sizes correspond to 20, 24, 32, 40, and 48 points, respectively.
+/// You can also customize the size of the button by specifying a size.
 ///
 /// Example usage:
 ///
 ///     TUIIconButton(icon: .plus) {
 ///         doSomething()
 ///     }
-///     .iconButtonStyle(.primary)
-///     .iconButtonSize(.xl)
+///     .style(.primary)
+///     .size(.size40)
 ///
 /// - Parameters:
 ///   - icon: The icon to display in the button.
@@ -40,18 +29,26 @@ public enum TUIIconButtonSize: EnvironmentKey {
 ///
 public struct TUIIconButton: View, Identifiable {
   
+  public enum Style {
+    case outline, ghost, secondary, primary
+  }
+
+  public enum Size {
+    case size20, size24, size32, size40, size48
+  }
+  
   public let id = UUID()
   /// The icon to display in the button.
   /// 
-  public var icon: Icon
+  public var icon: FluentIcon
   
   var iconColor: Color?
 
   /// The action to perform when the user taps the button.
   public var action: () -> Void
 
-  var style: TUIIconButtonStyle = .ghost
-  var size: TUIIconButtonSize = .l
+  var style: Style = .ghost
+  var size: Size = .size40
   
   /// Creates a button that displays an icon.
   ///
@@ -59,7 +56,7 @@ public struct TUIIconButton: View, Identifiable {
   ///   - icon: The icon to display in the button.
   ///   - action: The action to perform when the user taps the button.
   ///
-  public init(icon: Icon, action: @escaping () -> Void) {
+  public init(icon: FluentIcon, action: @escaping () -> Void) {
     self.icon = icon
     self.action = action
   }
@@ -83,18 +80,14 @@ public struct TUIIconButton: View, Identifiable {
   
   @ViewBuilder
   private var iconView: some View {
-    Image(icon)
-      .resizable()
+    Image(fluent: icon)
       .scaledToFit()
       .frame(
         width: iconSize.width,
         height: iconSize.height
       )
+      .clipped()
       .foregroundColor(iconColor ?? defaultIconColor)
-      .frame(
-        maxWidth: .infinity,
-        maxHeight: .infinity
-      ) // So that the entire button is tappable, not just the icon
   }
   
   @ViewBuilder
@@ -149,24 +142,24 @@ extension TUIIconButton {
   
   var buttonSize: CGSize {
     switch size {
-    case .xs:
+    case .size20:
       return CGSize(width: 20, height: 20)
-    case .s:
+    case .size24:
       return CGSize(width: 24, height: 24)
-    case .m:
+    case .size32:
       return CGSize(width: 32, height: 32)
-    case .l:
+    case .size40:
       return CGSize(width: 40, height: 40)
-    case .xl:
+    case .size48:
       return CGSize(width: 48, height: 48)
     }
   }
   
   var iconSize: CGSize {
     switch size {
-    case .xs, .s:
+    case .size20, .size24:
       return CGSize(width: 12, height: 12)
-    case .m, .l, .xl:
+    default:
       return CGSize(width: 24, height: 24)
     }
   }
@@ -182,10 +175,10 @@ struct IconButtonView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
       TUIIconButton(
-        icon: Symbol.chevronRight) { }
+        icon: .chevronRight24Filled) { }
         .iconColor(.white)
         .style(.secondary)
-        .size(.m)
+        .size(.size40)
     }
   }
 }

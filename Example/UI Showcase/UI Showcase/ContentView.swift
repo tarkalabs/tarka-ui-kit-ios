@@ -15,10 +15,11 @@ struct ContentView: View {
         .imageScale(.large)
         .foregroundColor(.accentColor)
       Text("Hello, world!")
-      Image(Symbol.map)
+      Image(fluent: .map24Regular)
+
       
       TUIIconButton(
-        icon: Symbol.chevronRight) { }
+        icon: .chevronRight20Regular) { }
         .iconColor(.outline)
     }
     .padding()
