@@ -143,7 +143,7 @@ public struct TUIChipView: View {
     case .onlyTitle:
       if isSelected {
         leftIconView(
-          chipStyle == .size32 ? Symbol.checkmark16 : Symbol.checkmark20,
+          chipStyle == .size32 ? .checkmark16Filled : .checkmark20Filled,
           size: chipStyle == .size32 ? Spacing.custom(16) : Spacing.custom(20),
           left: chipStyle == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
           right: chipStyle == .size32 ? Spacing.custom(3) : Spacing.quarterHorizontal)
@@ -202,9 +202,9 @@ public struct TUIChipView: View {
   }
   
   @ViewBuilder
-  private func leftIconView(_ icon: Icon, size: CGFloat,
+  private func leftIconView(_ icon: FluentIcon, size: CGFloat,
                             left: CGFloat, right: CGFloat) -> some View {
-    Image(icon)
+    Image(fluent: icon)
       .frame(maxWidth: size, maxHeight: size)
       .foregroundColor(isSelected ? .onSecondary : .onSurface)
       .padding(.leading, left)
@@ -213,9 +213,9 @@ public struct TUIChipView: View {
   }
   
   @ViewBuilder
-  private func rightIconView(_ icon: Icon, size: CGFloat,
+  private func rightIconView(_ icon: FluentIcon, size: CGFloat,
                              left: CGFloat, right: CGFloat) -> some View {
-    Image(icon)
+    Image(fluent: icon)
       .frame(maxWidth: size, maxHeight: size)
       .foregroundColor(isSelected ? .onSecondary : .onSurface)
       .padding(.leading, left)
@@ -224,14 +224,14 @@ public struct TUIChipView: View {
   }
   
   @ViewBuilder
-  private func rightButtonView(_ icon: Icon = Symbol.dismiss,
+  private func rightButtonView(_ icon: FluentIcon = .dismiss24Regular,
                                action: (() -> Void)?) -> some View {
     TUIIconButton(icon: icon) {
       if let action { action() }
     }
     .style(.ghost)
     .iconColor(isSelected ? .onSecondary : .onSurface)
-    .size(chipStyle == .size32 ? .m : .l)
+    .size(chipStyle == .size32 ? .size24 : .size32)
     .accessibilityIdentifier(Accessibility.rightButton)
   }
 }
@@ -274,21 +274,21 @@ public extension TUIChipView {
 public extension TUIChipView {
   
   enum Assist {
-    case onlyTitle, withIcon(Icon), withImage(Image)
+    case onlyTitle, withIcon(FluentIcon), withImage(Image)
   }
   
   enum Input {
-    case titleWithButton(Icon, action: (() -> Void)? = nil),
-         withLeftIcon(Icon, rightIcon: Icon, action: (() -> Void)? = nil),
-         withLeftImage(Image, rightIcon: Icon, action: (() -> Void)? = nil)
+    case titleWithButton(FluentIcon, action: (() -> Void)? = nil),
+         withLeftIcon(FluentIcon, rightIcon: FluentIcon, action: (() -> Void)? = nil),
+         withLeftImage(Image, rightIcon: FluentIcon, action: (() -> Void)? = nil)
   }
   
   enum Suggestion {
-    case onlyTitle, withIcon(Icon)
+    case onlyTitle, withIcon(FluentIcon)
   }
   
   enum Filter {
-    case onlyTitle, withButton(icon: Icon, action: (() -> Void)? = nil), withIcon(Icon)
+    case onlyTitle, withButton(icon: FluentIcon, action: (() -> Void)? = nil), withIcon(FluentIcon)
     
     var isBadgeEnabled: Bool {
       switch self {
@@ -354,24 +354,24 @@ struct TUIChipView_Previews: PreviewProvider {
           .style(.assist(.onlyTitle), chipStyle: .size32)
         
         TUIChipView("Hello Welcome to swiftUI")
-          .style(.assist(.withIcon(Symbol.person)))
+          .style(.assist(.withIcon(.person24Regular)))
         
         TUIChipView("Hello Welcome to swiftUI")
-          .style(.assist(.withImage(Image(Symbol.checkmark20))))
+          .style(.assist(.withImage(Image(fluent: .checkmark20Filled))))
       }
       
       Divider()
       
       Section("Input") {
         TUIChipView("Input")
-          .style(.input(.titleWithButton(Symbol.dismiss)), chipStyle: .size32)
+          .style(.input(.titleWithButton(.dismiss24Regular)), chipStyle: .size32)
         
         TUIChipView("Input with Icon")
-          .style(.input(.withLeftIcon(Symbol.person, rightIcon: Symbol.dismiss)))
+          .style(.input(.withLeftIcon(.person24Regular, rightIcon: .dismiss24Regular)))
         
         TUIChipView("Input with Image")
-          .style(.input(.withLeftImage(Image(Symbol.person),
-                                       rightIcon: Symbol.dismiss)))
+          .style(.input(.withLeftImage(Image(fluent: .person24Regular),
+                                       rightIcon: .dismiss24Regular)))
       }
       
       Divider()
@@ -381,7 +381,7 @@ struct TUIChipView_Previews: PreviewProvider {
           .style(.suggestion(.onlyTitle), chipStyle: .size32)
         
         TUIChipView("Suggestion with Icon")
-          .style(.suggestion(.withIcon(Symbol.person)))
+          .style(.suggestion(.withIcon(.person24Regular)))
       }
       
       Divider()
@@ -390,15 +390,15 @@ struct TUIChipView_Previews: PreviewProvider {
           .style(filter: .onlyTitle, chipStyle: .size32)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(icon: Symbol.dismiss),
+          .style(filter: .withButton(icon: .dismiss24Regular),
                  isSelected: true, chipStyle: .size32, badgeCount: 4)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(icon: Symbol.dismiss),
+          .style(filter: .withButton(icon: .dismiss24Regular),
                  isSelected: true, chipStyle: .size40, badgeCount: 5)
         
         TUIChipView("With Button")
-          .style(filter: .withIcon(Symbol.caret16), chipStyle: .size32)
+          .style(filter: .withIcon(.caretDown16Filled), chipStyle: .size32)
       }
     }
     .padding(.leading, 10)
