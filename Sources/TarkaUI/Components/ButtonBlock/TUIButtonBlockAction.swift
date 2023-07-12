@@ -25,8 +25,8 @@ public protocol TUIButtonBlockAction {
 }
 
 public extension TUIButtonBlockAction {
-  var leftIcon: Icon? { return nil }
-  var rightIcon: Icon? { return nil }
+  var leftIcon: FluentIcon? { return nil }
+  var rightIcon: FluentIcon? { return nil }
 }
 
 /// The `ButtonBlockActionBuilder` result builder is used to build an array of `TUIButtonBlockAction` instances.
