@@ -27,14 +27,15 @@ public struct TUIChipView: View {
   
   private var title: any StringProtocol
   private var isSelected: Bool = false
-  private var size: Size = .size32
+  private var size: Size = .size40
   private var style: Style = .assist(.onlyTitle)
   private var action: (() -> Void)?
   private var badgeCount: Int?
   private var isBadgeEnabled: Bool = false
   
-  public init(_ title: any StringProtocol) {
+  public init(_ title: any StringProtocol, action: (() -> Void)? = nil) {
     self.title = title
+    self.action = action
   }
   
   public var body: some View {
@@ -367,10 +368,10 @@ public extension TUIChipView {
   ///   - style: Style can be assist, input, suggestion, Filter
   ///   - size: size32, size40
   /// - Returns: A closure that returns the TUIChipView
-  func style(_ style: Style, chipStyle: Size = .size40) -> Self {
+  func style(_ style: Style, size: Size = .size40) -> Self {
     var newView = self
     newView.style = style
-    newView.size = chipStyle
+    newView.size = size
     return newView
   }
   
@@ -382,8 +383,7 @@ public extension TUIChipView {
   ///   - action: This block will execute when view interacted
   /// - Returns: A closure that returns the TUIChipView
   func style(filter: Filter, isSelected: Bool = false,
-             badgeCount: Int? = nil,
-             action: (() -> Void)? = nil) -> Self {
+             badgeCount: Int? = nil) -> Self {
     var newView = self
     newView.style = Style.filter(filter)
     newView.isSelected = isSelected
@@ -391,20 +391,11 @@ public extension TUIChipView {
       newView.badgeCount = badgeCount
       newView.isBadgeEnabled = true
     }
-    newView.action = action
     return newView
   }
   
-  func size(_ size: Size = .size40) -> Self {
+  func size(_ size: Size) -> Self {
     var newView = self
-    newView.size = size
-    return newView
-  }
-  
-  func style(withRightIcon style: FilterWithIcon, size: Size = .size40,
-             action: (() -> Void)? = nil) -> Self {
-    var newView = self
-    newView.style = Style.filterWithIcon(style)
     newView.size = size
     return newView
   }
@@ -416,7 +407,7 @@ struct TUIChipView_Previews: PreviewProvider {
       
       Section("Assist") {
         TUIChipView("Hello Welcome to swiftUI")
-          .style(.assist(.onlyTitle), chipStyle: .size32)
+          .style(.assist(.onlyTitle), size: .size32)
         
         TUIChipView("Hello Welcome to swiftUI")
           .style(.assist(.withIcon(.person24Regular)))
@@ -429,11 +420,11 @@ struct TUIChipView_Previews: PreviewProvider {
       
       Section("Input") {
         TUIChipView("Input")
-          .style(.input(.titleWithButton(.dismiss24Regular)), chipStyle: .size32)
+          .style(.input(.titleWithButton(.dismiss24Regular)), size: .size32)
         
         TUIChipView("Input with Icon")
           .style(.input(.withLeftIcon(.person24Regular, rightIcon: .dismiss24Regular)),
-                 chipStyle: .size32)
+                 size: .size32)
         
         TUIChipView("Input with Image")
           .style(.input(.withLeftImage(Image(fluent: .person24Regular),
@@ -444,7 +435,7 @@ struct TUIChipView_Previews: PreviewProvider {
       
       Section("Suggestion") {
         TUIChipView("Suggestion")
-          .style(.suggestion(.onlyTitle), chipStyle: .size32)
+          .style(.suggestion(.onlyTitle), size: .size32)
         
         TUIChipView("Suggestion with Icon")
           .style(.suggestion(.withIcon(.person24Regular)))
@@ -454,18 +445,17 @@ struct TUIChipView_Previews: PreviewProvider {
       Section("Filter") {
         TUIChipView("Filter")
           .style(filter: .onlyTitle)
+          .size(.size32)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(icon: .dismiss24Filled),
-                 isSelected: true)
+          .style(filter: .withButton(icon: .dismiss24Filled), isSelected: true)
+          .size(.size32)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(icon: .dismiss24Filled),
-                 isSelected: true, badgeCount: 5)
-          .size(.size40)
+          .style(filter: .withButton(icon: .dismiss24Filled), isSelected: true, badgeCount: 5)
         
         TUIChipView("With")
-          .style(withRightIcon: .icon(.caretDown16Filled), size: .size32)
+          .style(.filterWithIcon(.icon(.caretDown16Filled)), size: .size32)
       }
     }
     .padding(.leading, 10)
