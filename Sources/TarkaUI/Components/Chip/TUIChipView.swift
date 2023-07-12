@@ -53,12 +53,10 @@ public struct TUIChipView: View {
       if let action { action() }
     }
     .isEnabled(isSelected && badgeCount > 0) {
-      $0.overlay(alignment: .topTrailing) {
+      $0.overlayView {
         TUIBadge(count: badgeCount)
           .badgeSize(chipStyle == .size32 ? .m : .l)
           .accessibilityIdentifier(Accessibility.badge)
-          .alignmentGuide(.top) { $0[.top] + 8 }
-          .alignmentGuide(.trailing) { $0[.trailing] - 8 }
       }
     }
     .accessibilityIdentifier(Accessibility.root)
