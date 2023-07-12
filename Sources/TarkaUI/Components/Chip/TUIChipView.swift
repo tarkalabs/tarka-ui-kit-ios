@@ -30,7 +30,8 @@ public struct TUIChipView: View {
   private var chipStyle: ChipStyle = .size32
   private var style: Style = .assist(.onlyTitle)
   private var action: (() -> Void)?
-  private var badgeCount: Int = 0
+  private var badgeCount: Int?
+  private var isBadgeEnabled: Bool = false
   
   public init(_ title: any StringProtocol) {
     self.title = title
@@ -52,8 +53,7 @@ public struct TUIChipView: View {
     .onTapGesture {
       if let action { action() }
     }
-    .overlayBadgeView(
-      isSelected && badgeCount > 0,
+    .overlayBadgeView(isSelected && isBadgeEnabled,
       count: badgeCount, badgeSize: chipStyle == .size32 ? .m : .l)
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
@@ -326,13 +326,16 @@ public extension TUIChipView {
   /// - Returns: A closure that returns the TUIChipView
   func style(filter: Filter, isSelected: Bool = false,
              chipStyle: ChipStyle = .size40,
-             badgeCount: Int = 0,
+             badgeCount: Int? = nil,
              action: (() -> Void)? = nil) -> Self {
     var newView = self
     newView.style = Style.filter(filter)
     newView.isSelected = filter.isSelectionEnabled ? isSelected : false
     newView.chipStyle = chipStyle
-    newView.badgeCount = filter.isBadgeEnabled ? badgeCount : 0
+    if filter.isBadgeEnabled {
+      newView.badgeCount = badgeCount
+      newView.isBadgeEnabled = true
+    }
     newView.action = action
     return newView
   }
@@ -384,7 +387,7 @@ struct TUIChipView_Previews: PreviewProvider {
         
         TUIChipView("With Button")
           .style(filter: .withButton(icon: .dismiss24Regular),
-                 isSelected: true, chipStyle: .size32, badgeCount: 4)
+                 isSelected: true, chipStyle: .size32)
         
         TUIChipView("With Button")
           .style(filter: .withButton(icon: .dismiss24Regular),
