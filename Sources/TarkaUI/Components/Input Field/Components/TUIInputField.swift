@@ -152,21 +152,21 @@ struct TUIInputText_Previews: PreviewProvider {
               TUIInputFieldItem(style: .onlyTitle, title: "Label"))
           
           TUIInputField()
-            .startItem(withStyle: .icon(Symbol.info))
-            .endItem(withStyle: .icon(Symbol.info))
+            .startItem(withStyle: .icon(.info24Regular))
+            .endItem(withStyle: .icon(.info24Regular))
             .highlightBar(color: Color.primaryTUI)
             .environmentObject(
               TUIInputFieldItem(style: .onlyTitle, title: "Label"))
           
           TUIInputField()
             .startItem(withStyle: .text("$"))
-            .endItem(withStyle: .icon(Symbol.info))
+            .endItem(withStyle: .icon(.info24Regular))
             .highlightBar(color: Color.primaryTUI)
             .environmentObject(
               TUIInputFieldItem(style: .onlyTitle, title: "Label"))
           
           TUIInputField()
-            .startItem(withStyle: .icon(Symbol.info))
+            .startItem(withStyle: .icon(.info24Regular))
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
             .environmentObject(
@@ -190,8 +190,8 @@ struct TUIInputText_Previews: PreviewProvider {
                 title: "Label", value: "Input Text"))
           
           TUIInputField()
-            .startItem(withStyle: .icon(Symbol.info))
-            .endItem(withStyle: .icon(Symbol.info))
+            .startItem(withStyle: .icon(.info24Regular))
+            .endItem(withStyle: .icon(.info24Regular))
             .highlightBar(color: Color.primaryTUI)
             .environmentObject(
               TUIInputFieldItem(
@@ -200,7 +200,7 @@ struct TUIInputText_Previews: PreviewProvider {
           
           TUIInputField()
             .startItem(withStyle: .text("$"))
-            .endItem(withStyle: .icon(Symbol.info))
+            .endItem(withStyle: .icon(.info24Regular))
             .highlightBar(color: Color.primaryTUI)
             .environmentObject(
               TUIInputFieldItem(
@@ -208,7 +208,7 @@ struct TUIInputText_Previews: PreviewProvider {
                 title: "Label", value: "Input Text"))
           
           TUIInputField()
-            .startItem(withStyle: .icon(Symbol.info))
+            .startItem(withStyle: .icon(.info24Regular))
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
             .environmentObject(
@@ -232,21 +232,21 @@ struct TUIInputText_Previews: PreviewProvider {
               TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
           
           TUIInputField()
-            .startItem(withStyle: .icon(Symbol.info))
-            .endItem(withStyle: .icon(Symbol.info))
+            .startItem(withStyle: .icon(.info24Regular))
+            .endItem(withStyle: .icon(.info24Regular))
             .highlightBar(color: Color.primaryTUI)
             .environmentObject(
               TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
           
           TUIInputField()
             .startItem(withStyle: .text("$"))
-            .endItem(withStyle: .icon(Symbol.info))
+            .endItem(withStyle: .icon(.info24Regular))
             .highlightBar(color: Color.primaryTUI)
             .environmentObject(
               TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
           
           TUIInputField()
-            .startItem(withStyle: .icon(Symbol.info))
+            .startItem(withStyle: .icon(.info24Regular))
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
             .environmentObject(

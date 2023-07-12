@@ -87,7 +87,7 @@ struct TUIDateInputField_Previews: PreviewProvider {
       dateInputItem: Binding.constant(TUIDateInputFieldItem(
         style: .onlyTitle, title: "StartDate",
         format: .init(date: .abbreviated, time: .standard))))
-      .endItem(withStyle: .icon(Symbol.checkBoxChecked))
+    .endItem(withStyle: .icon(.checkboxChecked24Filled))
       .highlightBar(color: .red)
       .state(.success("Values are valid"))
   }

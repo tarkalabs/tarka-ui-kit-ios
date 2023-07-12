@@ -16,7 +16,7 @@ import SwiftUI
 ///        .style([.textDescription("welcome")])
 ///        .badgeCount(24)
 ///        .badgeColor(.blue)
-///        .iconImage(Symbol.person)
+///        .icon(.chevronRight24Regular)
 ///
 /// - Parameters:
 ///   - isSelected: This Bool is used to display the selection, The default selection color is `.surface`
@@ -27,7 +27,7 @@ import SwiftUI
 public struct TUISelectionRow: View {
   
   private var isSelected: Bool
-  private var icon: Icon?
+  private var icon: FluentIcon?
   private var style: [Style] = []
   private var badgeCount: Int = 0
   private var badgeColor: Color = .onTertiaryAlt
@@ -69,7 +69,9 @@ public struct TUISelectionRow: View {
   @ViewBuilder
   private var leftIconView: some View {
     if let icon {
-      Image(icon)
+      Image(fluent: icon)
+        .frame(width: 24, height: 24)
+        .clipped()
         .foregroundColor(.secondaryTUI)
         .accessibilityIdentifier(Accessibility.leftIcon)
     } else {
@@ -130,7 +132,9 @@ public struct TUISelectionRow: View {
           .accessibilityIdentifier(Accessibility.badge)
       }
       if showChevron {
-        Image(systemName: "chevron.right")
+        Image(fluent: .chevronRight24Regular)
+          .frame(width: 24, height: 24)
+          .clipped()
           .foregroundColor(isSelected ? .onSurface : .outline)
           .accessibilityIdentifier(Accessibility.chevron)
       }
@@ -178,7 +182,7 @@ public extension TUISelectionRow {
     return newView
   }
   
-  func iconImage(_ icon: Icon) -> Self {
+  func icon(_ icon: FluentIcon) -> Self {
     var newView = self
     newView.icon = icon
     return newView
@@ -190,16 +194,16 @@ struct TUISelectionRow_Previews: PreviewProvider {
     VStack {
       TUISelectionRow()
         .style([.textDescription("Welcome")])
-        .iconImage(Symbol.person)
+        .icon(.person24Regular)
       
       TUISelectionRow(isSelected: true)
         .style([.onlyTitle("Hello"), .textDescription("Welcome")])
-        .iconImage(Symbol.person)
+        .icon(.person24Regular)
       
       TUISelectionRow(showChevron: true) {}
         .style([ .onlyTitle("Hello"), .textDescription("welcome"),
                  .textDescription("to"), .footer("SwiftUI")])
-        .iconImage(Symbol.person)
+        .icon(.person24Regular)
         .badgeCount(3)
         .badgeColor(.green)
     }

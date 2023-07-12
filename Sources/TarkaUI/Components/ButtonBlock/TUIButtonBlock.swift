@@ -72,11 +72,11 @@ struct ButtonBlock_Previews: PreviewProvider {
       }
     }
     
-    var leftIcon: Icon? {
+    var leftIcon: FluentIcon? {
       return nil
     }
     
-    var rightIcon: Icon? {
+    var rightIcon: FluentIcon? {
       return nil
     }
     

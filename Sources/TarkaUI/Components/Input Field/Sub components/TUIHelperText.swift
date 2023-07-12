@@ -35,7 +35,7 @@ public struct TUIHelperText: View {
     
     HStack(spacing: Spacing.quarterHorizontal) {
       if let icon = style.icon, showIcon {
-        Image(icon)
+        Image(fluent: icon)
           .resizable()
           .scaledToFit()
           .frame(width: 16, height: 16)
@@ -60,11 +60,11 @@ extension TUIHelperText {
   public enum Style {
     case error, success, warning, hint
     
-    var icon: Icon? {
+    var icon: FluentIcon? {
       switch self {
-      case .error: return Symbol.error
-      case .success: return Symbol.success
-      case .warning: return Symbol.warning
+      case .error: return .errorCircle24Filled
+      case .success: return .checkmarkCircle16Regular
+      case .warning: return .warning28Filled
       case .hint: return nil
       }
     }

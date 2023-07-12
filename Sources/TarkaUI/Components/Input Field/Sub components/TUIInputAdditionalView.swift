@@ -14,7 +14,7 @@ public struct TUIInputAdditionalView: View {
   
   public enum Style {
     case text(String)
-    case icon(Icon)
+    case icon(FluentIcon)
   }
   
   private var style: Style
@@ -43,7 +43,7 @@ public struct TUIInputAdditionalView: View {
         .accessibilityIdentifier(Accessibility.label)
       
     case .icon(let icon):
-      Image(icon)
+      Image(fluent: icon)
         .resizable()
         .scaledToFit()
         .frame(width: 20, height: 20)
@@ -81,8 +81,8 @@ struct TUIInputAdditionalItem_Previews: PreviewProvider {
     HStack(spacing: 10) {
       TUIInputAdditionalView(style: .text("$"), hasTitleAndValue: false)
       TUIInputAdditionalView(style: .text("$"), hasTitleAndValue: true)
-      TUIInputAdditionalView(style: .icon(Symbol.info), hasTitleAndValue: false)
-      TUIInputAdditionalView(style: .icon(Symbol.info), hasTitleAndValue: true)
+      TUIInputAdditionalView(style: .icon(.info24Regular), hasTitleAndValue: false)
+      TUIInputAdditionalView(style: .icon(.info24Regular), hasTitleAndValue: true)
     }
   }
 }
