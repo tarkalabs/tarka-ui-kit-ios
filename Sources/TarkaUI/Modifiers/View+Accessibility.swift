@@ -18,7 +18,7 @@ public extension View {
   ///   - vertical: vertical padding amount
   ///   - horizontal: horizontal padding amount
   /// - Returns: A view that's padded by the amount you specify.
-  /// 
+  ///
   func listRowInsets(_ vertical: CGFloat, _ horizontal: CGFloat) -> some View {
     self.listRowInsets(EdgeInsets(top: vertical, leading: horizontal, bottom: vertical, trailing: horizontal))
   }
@@ -43,6 +43,23 @@ public extension View {
       content(self)
     } else {
       self
+    }
+  }
+  
+  
+  /// This method is used to create overlay View, in top trailing corner in any swiftUI views
+  ///
+  /// Example usage:
+  ///
+  ///      Text("Description")
+  ///         .overlayView { Image(systemName: "star.fill") }
+  ///
+  @ViewBuilder
+  func overlayView<Content: View>(_ content: () -> Content)  -> some View {
+    self.overlay(alignment: .topTrailing) {
+      content()
+        .alignmentGuide(.top) { $0[.top] + 8 }
+        .alignmentGuide(.trailing) { $0[.trailing] - 8 }
     }
   }
 }
