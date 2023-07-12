@@ -32,7 +32,7 @@ public struct TUIMenuItem {
     /// Displays the title and description.
     case withDescription(String)
     /// Displays the title and symbol.
-    case withSymbol(Icon)
+    case withSymbol(FluentIcon)
   }
   
   public init(title: any StringProtocol, configuration: TUIMenuItem.Configuration) {

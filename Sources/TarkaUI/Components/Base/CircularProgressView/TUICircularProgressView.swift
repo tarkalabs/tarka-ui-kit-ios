@@ -122,17 +122,17 @@ struct CircularProgressView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
       TUICircularProgressView(progress: 0.4) {
-        Image(Symbol.reorderDots)
-          .resizable()
+        Image(fluent: .reOrder24Regular)
           .scaledToFit()
+          .clipped()
       }
       .circularProgressViewStyle(.determinate)
       .frame(width: 40, height: 40)
       
       TUICircularProgressView(progress: 0.4) {
-        Image(Symbol.reorderDots)
-          .resizable()
+        Image(fluent: .reOrder24Regular)
           .scaledToFit()
+          .clipped()
       }
       .circularProgressViewStyle(.indeterminate)
       .frame(width: 100, height: 100)

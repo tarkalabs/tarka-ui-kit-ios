@@ -42,12 +42,12 @@ public struct TUIMenuItemView: View {
   private var leftContentView: some View {
     switch item.configuration {
     case .withSymbol(let symbol):
-      Image(symbol)
-        .resizable()
+      Image(fluent: symbol)
         .scaledToFill()
         .frame(width: 24, height: 24)
         .padding(.leading, Spacing.baseHorizontal)
         .padding(.trailing, Spacing.halfHorizontal)
+        .clipped()
     default:
       Spacer()
         .frame(width: 48)
@@ -94,7 +94,7 @@ struct MenuItemView_Previews: PreviewProvider {
       TUIMenuItemView(
         item: TUIMenuItem(
           title: "Label",
-          configuration: .withSymbol(Symbol.reorderDots)
+          configuration: .withSymbol(.reOrder24Regular)
         ),
         action: {}
       )
