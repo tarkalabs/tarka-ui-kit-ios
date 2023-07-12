@@ -38,10 +38,12 @@ public struct TUIChipView: View {
   }
   
   public var body: some View {
-    HStack {
+    HStack(spacing: spacing) {
       detailView
     }
     .frame(maxHeight: size.height)
+    .padding(.leading, leading)
+    .padding(.trailing, trailing)
     .background(isSelected ? Color.secondaryTUI : .surface)
     .overlay(
       RoundedRectangle(cornerRadius: Spacing.halfHorizontal)
@@ -52,7 +54,7 @@ public struct TUIChipView: View {
       if let action { action() }
     }
     .overlayViewInTopTrailing(isSelected && isBadgeEnabled,
-      count: badgeCount, badgeSize: size == .size32 ? .m : .l)
+                              count: badgeCount, badgeSize: size == .size32 ? .m : .l)
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
@@ -70,22 +72,15 @@ public struct TUIChipView: View {
   @ViewBuilder
   private func assistView(for type: Assist) -> some View {
     switch type {
-    case .onlyTitle: titleView()
+    case .onlyTitle: titleView
       
     case .withImage(let image):
-      leftImageView(
-        image, size: size == .size40 ? Spacing.horizontalMultiple(2) : Spacing.custom(24),
-        left: Spacing.quarterHorizontal, right: Spacing.quarterHorizontal)
-      
-      titleView(left: Spacing.quarterHorizontal, right: Spacing.baseHorizontal)
+      leftImageView(image)
+      titleView
       
     case .withIcon(let icon):
-      leftIconView(
-        icon, size: size == .size32 ? Spacing.custom(20) : Spacing.custom(24),
-        left: size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
-        right: Spacing.quarterHorizontal)
-      
-      titleView(left: Spacing.quarterHorizontal, right: Spacing.baseHorizontal)
+      iconView(icon)
+      titleView
     }
   }
   
@@ -93,40 +88,33 @@ public struct TUIChipView: View {
   private func inputView(for type: Input) -> some View {
     switch type {
     case .titleWithButton(let icon, let action):
-      titleView(left: Spacing.custom(12), right: Spacing.custom(0))
-      rightButtonView(icon, action: action)
+      titleView
+      rightButtonView(icon) { if let action { action() } }
       
     case .withLeftImage(let image, rightIcon: let icon, let action):
-      leftImageView(
-        image, size: size == .size40 ? Spacing.horizontalMultiple(2) : Spacing.custom(24),
-        left: Spacing.quarterHorizontal, right: Spacing.quarterHorizontal)
-      
-      titleView(left: Spacing.quarterHorizontal, right: Spacing.custom(0))
-      rightButtonView(icon, action: action)
+      leftImageView(image)
+      HStack(spacing: Spacing.custom(0)) {
+        titleView
+        rightButtonView(icon) { if let action { action() } }
+      }
       
     case .withLeftIcon(let icon, rightIcon: let rightIcon, let action):
-      leftIconView(
-        icon, size: size == .size32 ? Spacing.custom(20) : Spacing.custom(24),
-        left: size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
-        right: Spacing.quarterHorizontal)
-      
-      titleView(left: Spacing.quarterHorizontal, right: Spacing.custom(0))
-      rightButtonView(rightIcon, action: action)
+      iconView(icon)
+      HStack(spacing: Spacing.custom(0)) {
+        titleView
+        rightButtonView(rightIcon) { if let action { action() } }
+      }
     }
   }
   
   @ViewBuilder
   private func suggestionView(for type: Suggestion) -> some View {
     switch type {
-    case .onlyTitle: titleView()
+    case .onlyTitle: titleView
       
     case .withIcon(let icon):
-      leftIconView(
-        icon, size: size == .size32 ? Spacing.custom(20) : Spacing.custom(24),
-        left: size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
-        right: Spacing.quarterHorizontal)
-      
-      titleView(left: Spacing.quarterHorizontal, right: Spacing.baseHorizontal)
+      iconView(icon)
+      titleView
     }
   }
   
@@ -135,27 +123,18 @@ public struct TUIChipView: View {
     switch type {
     case .onlyTitle:
       if isSelected {
-        leftIconView(
-          size == .size32 ? .checkmark16Filled : .checkmark20Filled,
-          size: size == .size32 ? Spacing.custom(16) : Spacing.custom(20),
-          left: size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
-          right: size == .size32 ? Spacing.custom(3) : Spacing.quarterHorizontal)
-        
-        titleView(left: size == .size32 ? Spacing.custom(3) : Spacing.quarterHorizontal,
-                  right: size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal)
+        iconView(size == .size32 ? .checkmark16Filled : .checkmark20Filled)
+        titleView
       } else {
-        titleView(left: size == .size32 ? Spacing.custom(20) : Spacing.custom(28),
-                  right: size == .size32 ? Spacing.custom(20) : Spacing.custom(28))
+        titleView
       }
       
     case .withButton(let icon, let action):
       if isSelected {
-        titleView(left: size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal,
-                  right: Spacing.custom(0))
+        titleView
         rightButtonView(icon) { if let action { action() }}
       } else {
-        titleView(left: size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal,
-                  right: Spacing.custom(0))
+        titleView
         rightButtonView(icon) { if let action { action() }}
       }
     }
@@ -165,60 +144,37 @@ public struct TUIChipView: View {
   private func filterViewWithIcon(for type: FilterWithIcon) -> some View {
     switch type {
     case .icon(let icon):
-      titleView(left: size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal,
-                right: size == .size32 ? Spacing.quarterHorizontal : Spacing.custom(5))
-      
-      rightIconView(
-        icon, size: size == .size32 ? Spacing.baseHorizontal : Spacing.custom(20),
-        left: size == .size32 ? Spacing.quarterHorizontal : Spacing.custom(5),
-        right: size == .size32 ? Spacing.halfHorizontal : Spacing.custom(10))
+      titleView
+      iconView(icon, accessibilityID: .rightIcon)
     }
   }
   
   @ViewBuilder
-  private func titleView(left: CGFloat = Spacing.baseHorizontal,
-                         right: CGFloat = Spacing.baseHorizontal) -> some View {
+  private var titleView: some View {
     Text(title)
       .font(size.textSize)
-      .frame(maxHeight: size == .size32 ? Spacing.custom(18) : Spacing.custom(20), alignment: .leading)
-      .padding(.trailing, right)
-      .padding(.leading, left)
+      .frame(maxHeight: size == .size32 ? Spacing.custom(18) : Spacing.custom(20),
+             alignment: .leading)
       .foregroundColor(isSelected ? .onSecondary : .onSurface)
       .accessibilityIdentifier(Accessibility.title)
   }
   
   @ViewBuilder
-  private func leftImageView(_ image: Image, size: CGFloat,
-                             left: CGFloat, right: CGFloat) -> some View {
+  private func leftImageView(_ image: Image) -> some View {
     image
-      .frame(maxWidth: size, maxHeight: size)
+      .frame(maxWidth: size.imageSize, maxHeight: size.imageSize)
       .clipShape(Circle())
       .foregroundColor(isSelected ? .onSecondary : .onSurface)
-      .padding(.leading, left)
-      .padding(.trailing, right)
       .accessibilityIdentifier(Accessibility.leftImage)
   }
   
   @ViewBuilder
-  private func leftIconView(_ icon: FluentIcon, size: CGFloat,
-                            left: CGFloat, right: CGFloat) -> some View {
+  private func iconView(_ icon: FluentIcon,
+                        accessibilityID: Accessibility = .leftIcon) -> some View {
     Image(fluent: icon)
-      .frame(maxWidth: size, maxHeight: size)
+      .frame(maxWidth: iconSize, maxHeight: iconSize)
       .foregroundColor(isSelected ? .onSecondary : .onSurface)
-      .padding(.leading, left)
-      .padding(.trailing, right)
-      .accessibilityIdentifier(Accessibility.leftIcon)
-  }
-  
-  @ViewBuilder
-  private func rightIconView(_ icon: FluentIcon, size: CGFloat,
-                             left: CGFloat, right: CGFloat) -> some View {
-    Image(fluent: icon)
-      .frame(maxWidth: size, maxHeight: size)
-      .foregroundColor(isSelected ? .onSecondary : .onSurface)
-      .padding(.leading, left)
-      .padding(.trailing, right)
-      .accessibilityIdentifier(Accessibility.rightIcon)
+      .accessibilityIdentifier(accessibilityID)
   }
   
   @ViewBuilder
@@ -231,6 +187,100 @@ public struct TUIChipView: View {
     .iconColor(isSelected ? .onSecondary : .onSurface)
     .size(size == .size32 ? .size24 : .size32)
     .accessibilityIdentifier(Accessibility.rightButton)
+  }
+}
+
+// MARK: - Padding
+
+extension TUIChipView {
+  
+  private var spacing: CGFloat {
+    switch style {
+    case .assist(let type):
+      switch type {
+      case .onlyTitle: return Spacing.quarterHorizontal
+      case .withImage, .withIcon: return Spacing.halfHorizontal
+      }
+    case .input(let type):
+      switch type {
+      case .titleWithButton: return Spacing.custom(0)
+      case .withLeftImage, .withLeftIcon: return Spacing.halfHorizontal
+      }
+    case .suggestion(let type):
+      switch type {
+      case .onlyTitle: return Spacing.quarterHorizontal
+      case .withIcon: return Spacing.halfHorizontal
+      }
+    case .filter(let type):
+      switch type {
+      case .onlyTitle:
+        return size == .size32 ? isSelected ? Spacing.custom(6) : Spacing.quarterHorizontal : isSelected ? Spacing.halfHorizontal : Spacing.quarterHorizontal
+      case .withButton:
+        return Spacing.custom(0)
+      }
+    case .filterWithIcon(let type):
+      switch type {
+      case .icon: return size == .size32 ? Spacing.halfHorizontal : Spacing.custom(10)
+      }
+    }
+  }
+  
+  private var leading: CGFloat {
+    switch style {
+    case .assist(let type):
+      switch type {
+      case .onlyTitle: return Spacing.baseHorizontal
+      case .withImage: return Spacing.quarterHorizontal
+      case .withIcon: return size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal
+      }
+    case .input(let type):
+      switch type {
+      case .titleWithButton: return Spacing.custom(12)
+      case .withLeftImage: return Spacing.quarterHorizontal
+      case .withLeftIcon: return size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal
+      }
+    case .suggestion(let type):
+      switch type {
+      case .onlyTitle: return Spacing.baseHorizontal
+      case .withIcon: return size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal
+      }
+    case .filter(let type):
+      switch type {
+      case .onlyTitle:
+        return size == .size32 ? isSelected ? Spacing.custom(6) : Spacing.custom(20) : isSelected ? Spacing.halfHorizontal : Spacing.custom(28)
+      case .withButton:
+        return size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal
+      }
+    case .filterWithIcon(let type):
+      switch type {
+      case .icon: return size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal
+      }
+    }
+  }
+  
+  private var trailing: CGFloat {
+    switch style {
+    case .assist, .suggestion: return Spacing.baseHorizontal
+    case .input: return Spacing.custom(0)
+    case .filter(let type):
+      switch type {
+      case .onlyTitle:
+        return size == .size32 ? isSelected ? Spacing.custom(12) : Spacing.custom(20) : isSelected ? Spacing.baseHorizontal : Spacing.custom(28)
+      case .withButton:
+        return Spacing.custom(0)
+      }
+    case .filterWithIcon:
+      return size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal
+    }
+  }
+  
+  private var iconSize: CGFloat {
+    switch style {
+    case .assist, .suggestion, .input, .filter:
+      return size == .size32 ? Spacing.custom(20) : Spacing.custom(24)
+    case .filterWithIcon:
+      return size == .size32 ? Spacing.baseHorizontal : Spacing.custom(20)
+    }
   }
 }
 
@@ -259,6 +309,13 @@ public extension TUIChipView {
       switch self {
       case .size32: return .button7
       case .size40: return .button6
+      }
+    }
+    
+    var imageSize: CGFloat {
+      switch self {
+      case .size32: return Spacing.custom(24)
+      case .size40: return Spacing.horizontalMultiple(2)
       }
     }
   }
@@ -375,7 +432,8 @@ struct TUIChipView_Previews: PreviewProvider {
           .style(.input(.titleWithButton(.dismiss24Regular)), chipStyle: .size32)
         
         TUIChipView("Input with Icon")
-          .style(.input(.withLeftIcon(.person24Regular, rightIcon: .dismiss24Regular)))
+          .style(.input(.withLeftIcon(.person24Regular, rightIcon: .dismiss24Regular)),
+                 chipStyle: .size32)
         
         TUIChipView("Input with Image")
           .style(.input(.withLeftImage(Image(fluent: .person24Regular),
