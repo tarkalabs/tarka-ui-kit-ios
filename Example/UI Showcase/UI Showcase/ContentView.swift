@@ -18,22 +18,26 @@ private var testDate: Date {
   return dateValue
 }
 
-var defaultFormat: Date.FormatStyle {
+var emptyFormat: Date.FormatStyle {
   .init(date: .abbreviated, time: .standard)
+}
+
+var dateFormat: Date.FormatStyle {
+  .init(date: .numeric, time: .standard)
 }
 
 var globalEmptyDateFieldItem = TUIDateInputFieldItem(
   style: .onlyTitle, title: "StartDate",
-  format: defaultFormat)
+  format: emptyFormat)
 
 var globalDateFieldItem = TUIDateInputFieldItem(
   style: .onlyTitle, title: "StartDate",
   date: testDate,
-  format: defaultFormat)
+  format: dateFormat)
 
 struct ContentView: View {
   
-  @State var dateFieldItem = globalEmptyDateFieldItem
+  @State var dateFieldItem = globalDateFieldItem
   
   @StateObject var memoTextFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo")
   
@@ -50,7 +54,7 @@ struct ContentView: View {
     VStack {
       Button("Submit") {
         print("""
-Final input: Date - \(String(describing: dateFieldItem.date?.formatted(defaultFormat)))
+Final input: Date - \(String(describing: dateFieldItem.date?.formatted(dateFieldItem.format)))
 First Text - \(memoTextFieldItem.value)
 Second Text - \(valueOnlyTextFieldItem.value)
 """)
