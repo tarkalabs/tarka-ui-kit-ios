@@ -19,8 +19,8 @@ import Foundation
 public protocol TUIButtonBlockAction {
   var id: String { get }
   var title: String { get }
-  var leftIcon: Icon? { get }
-  var rightIcon: Icon? { get }
+  var leftIcon: FluentIcon? { get }
+  var rightIcon: FluentIcon? { get }
   var handler: () -> Void { get }
 }
 
