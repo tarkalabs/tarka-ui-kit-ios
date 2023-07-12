@@ -13,10 +13,10 @@ import SwiftUI
 /// Example usage:
 ///
 ///      TUIChipView("Hello")
-///        .style(.input(.titleWithButton(Symbol.dismiss)), chipStyle: .size32)
+///        .style(.input(.titleWithButton(Symbol.dismiss)), size: .size32)
 ///
 ///      TUIChipView("Welcome to SwiftUI")
-///        .style(filter: .onlyTitle, isSelected: true, chipStyle: .size32)
+///        .style(filter: .onlyTitle, isSelected: true, size: .size32)
 ///
 /// - Parameters:
 ///   - title: This can be any StringProtocol
@@ -27,7 +27,7 @@ public struct TUIChipView: View {
   
   private var title: any StringProtocol
   private var isSelected: Bool = false
-  private var chipStyle: ChipStyle = .size32
+  private var size: Size = .size32
   private var style: Style = .assist(.onlyTitle)
   private var action: (() -> Void)?
   private var badgeCount: Int?
@@ -41,20 +41,18 @@ public struct TUIChipView: View {
     HStack {
       detailView
     }
-    .frame(maxHeight: chipStyle.size)
+    .frame(maxHeight: size.height)
     .background(isSelected ? Color.secondaryTUI : .surface)
     .overlay(
       RoundedRectangle(cornerRadius: Spacing.halfHorizontal)
         .stroke(Color.outline, lineWidth: isSelected ? 0 : 1.5)
     )
-    .clipShape(
-      RoundedRectangle(cornerRadius: Spacing.halfHorizontal)
-    )
+    .cornerRadius(Spacing.halfHorizontal)
     .onTapGesture {
       if let action { action() }
     }
-    .overlayBadgeView(isSelected && isBadgeEnabled,
-      count: badgeCount, badgeSize: chipStyle == .size32 ? .m : .l)
+    .overlayViewInTopTrailing(isSelected && isBadgeEnabled,
+      count: badgeCount, badgeSize: size == .size32 ? .m : .l)
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
@@ -65,6 +63,7 @@ public struct TUIChipView: View {
     case .input(let input): inputView(for: input)
     case .suggestion(let suggestion): suggestionView(for: suggestion)
     case .filter(let filter): filterView(for: filter)
+    case .filterWithIcon(let filterWithIcon): filterViewWithIcon(for: filterWithIcon)
     }
   }
   
@@ -75,15 +74,15 @@ public struct TUIChipView: View {
       
     case .withImage(let image):
       leftImageView(
-        image, size: chipStyle == .size40 ? Spacing.horizontalMultiple(2) : Spacing.custom(24),
+        image, size: size == .size40 ? Spacing.horizontalMultiple(2) : Spacing.custom(24),
         left: Spacing.quarterHorizontal, right: Spacing.quarterHorizontal)
       
       titleView(left: Spacing.quarterHorizontal, right: Spacing.baseHorizontal)
       
     case .withIcon(let icon):
       leftIconView(
-        icon, size: chipStyle == .size32 ? Spacing.custom(20) : Spacing.custom(24),
-        left: chipStyle == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
+        icon, size: size == .size32 ? Spacing.custom(20) : Spacing.custom(24),
+        left: size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
         right: Spacing.quarterHorizontal)
       
       titleView(left: Spacing.quarterHorizontal, right: Spacing.baseHorizontal)
@@ -99,7 +98,7 @@ public struct TUIChipView: View {
       
     case .withLeftImage(let image, rightIcon: let icon, let action):
       leftImageView(
-        image, size: chipStyle == .size40 ? Spacing.horizontalMultiple(2) : Spacing.custom(24),
+        image, size: size == .size40 ? Spacing.horizontalMultiple(2) : Spacing.custom(24),
         left: Spacing.quarterHorizontal, right: Spacing.quarterHorizontal)
       
       titleView(left: Spacing.quarterHorizontal, right: Spacing.custom(0))
@@ -107,8 +106,8 @@ public struct TUIChipView: View {
       
     case .withLeftIcon(let icon, rightIcon: let rightIcon, let action):
       leftIconView(
-        icon, size: chipStyle == .size32 ? Spacing.custom(20) : Spacing.custom(24),
-        left: chipStyle == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
+        icon, size: size == .size32 ? Spacing.custom(20) : Spacing.custom(24),
+        left: size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
         right: Spacing.quarterHorizontal)
       
       titleView(left: Spacing.quarterHorizontal, right: Spacing.custom(0))
@@ -123,8 +122,8 @@ public struct TUIChipView: View {
       
     case .withIcon(let icon):
       leftIconView(
-        icon, size: chipStyle == .size32 ? Spacing.custom(20) : Spacing.custom(24),
-        left: chipStyle == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
+        icon, size: size == .size32 ? Spacing.custom(20) : Spacing.custom(24),
+        left: size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
         right: Spacing.quarterHorizontal)
       
       titleView(left: Spacing.quarterHorizontal, right: Spacing.baseHorizontal)
@@ -137,37 +136,42 @@ public struct TUIChipView: View {
     case .onlyTitle:
       if isSelected {
         leftIconView(
-          chipStyle == .size32 ? .checkmark16Filled : .checkmark20Filled,
-          size: chipStyle == .size32 ? Spacing.custom(16) : Spacing.custom(20),
-          left: chipStyle == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
-          right: chipStyle == .size32 ? Spacing.custom(3) : Spacing.quarterHorizontal)
+          size == .size32 ? .checkmark16Filled : .checkmark20Filled,
+          size: size == .size32 ? Spacing.custom(16) : Spacing.custom(20),
+          left: size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal,
+          right: size == .size32 ? Spacing.custom(3) : Spacing.quarterHorizontal)
         
-        titleView(left: chipStyle == .size32 ? Spacing.custom(3) : Spacing.quarterHorizontal,
-                  right: chipStyle == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal)
+        titleView(left: size == .size32 ? Spacing.custom(3) : Spacing.quarterHorizontal,
+                  right: size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal)
       } else {
-        titleView(left: chipStyle == .size32 ? Spacing.custom(20) : Spacing.custom(28),
-                  right: chipStyle == .size32 ? Spacing.custom(20) : Spacing.custom(28))
+        titleView(left: size == .size32 ? Spacing.custom(20) : Spacing.custom(28),
+                  right: size == .size32 ? Spacing.custom(20) : Spacing.custom(28))
       }
       
     case .withButton(let icon, let action):
       if isSelected {
-        titleView(left: chipStyle == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal,
+        titleView(left: size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal,
                   right: Spacing.custom(0))
         rightButtonView(icon) { if let action { action() }}
       } else {
-        titleView(left: chipStyle == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal,
+        titleView(left: size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal,
                   right: Spacing.custom(0))
         rightButtonView(icon) { if let action { action() }}
       }
-      
-    case .withIcon(let icon):
-      titleView(left: chipStyle == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal,
-                right: chipStyle == .size32 ? Spacing.quarterHorizontal : Spacing.custom(5))
+    }
+  }
+  
+  @ViewBuilder
+  private func filterViewWithIcon(for type: FilterWithIcon) -> some View {
+    switch type {
+    case .icon(let icon):
+      titleView(left: size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal,
+                right: size == .size32 ? Spacing.quarterHorizontal : Spacing.custom(5))
       
       rightIconView(
-        icon, size: chipStyle == .size32 ? Spacing.baseHorizontal : Spacing.custom(20),
-        left: chipStyle == .size32 ? Spacing.quarterHorizontal : Spacing.custom(5),
-        right: chipStyle == .size32 ? Spacing.halfHorizontal : Spacing.custom(10))
+        icon, size: size == .size32 ? Spacing.baseHorizontal : Spacing.custom(20),
+        left: size == .size32 ? Spacing.quarterHorizontal : Spacing.custom(5),
+        right: size == .size32 ? Spacing.halfHorizontal : Spacing.custom(10))
     }
   }
   
@@ -175,8 +179,8 @@ public struct TUIChipView: View {
   private func titleView(left: CGFloat = Spacing.baseHorizontal,
                          right: CGFloat = Spacing.baseHorizontal) -> some View {
     Text(title)
-      .font(chipStyle.textSize)
-      .frame(maxHeight: chipStyle == .size32 ? Spacing.custom(18) : Spacing.custom(20), alignment: .leading)
+      .font(size.textSize)
+      .frame(maxHeight: size == .size32 ? Spacing.custom(18) : Spacing.custom(20), alignment: .leading)
       .padding(.trailing, right)
       .padding(.leading, left)
       .foregroundColor(isSelected ? .onSecondary : .onSurface)
@@ -225,7 +229,7 @@ public struct TUIChipView: View {
     }
     .style(.ghost)
     .iconColor(isSelected ? .onSecondary : .onSurface)
-    .size(chipStyle == .size32 ? .size24 : .size32)
+    .size(size == .size32 ? .size24 : .size32)
     .accessibilityIdentifier(Accessibility.rightButton)
   }
 }
@@ -241,10 +245,10 @@ public extension TUIChipView {
     case rightButton = "rightButton"
   }
   
-  enum ChipStyle {
+  enum Size {
     case size32, size40
     
-    var size: CGFloat {
+    var height: CGFloat {
       switch self {
       case .size32: return Spacing.horizontalMultiple(2)
       case .size40: return Spacing.custom(40)
@@ -260,7 +264,7 @@ public extension TUIChipView {
   }
   
   enum Style {
-    case assist(Assist), input(Input), suggestion(Suggestion), filter(Filter)
+    case assist(Assist), input(Input), suggestion(Suggestion), filter(Filter), filterWithIcon(FilterWithIcon)
   }
 }
 
@@ -281,7 +285,7 @@ public extension TUIChipView {
   }
   
   enum Filter {
-    case onlyTitle, withButton(icon: FluentIcon, action: (() -> Void)? = nil), withIcon(FluentIcon)
+    case onlyTitle, withButton(icon: FluentIcon, action: (() -> Void)? = nil)
     
     var isBadgeEnabled: Bool {
       switch self {
@@ -289,13 +293,10 @@ public extension TUIChipView {
       default: return false
       }
     }
-    
-    var isSelectionEnabled: Bool {
-      switch self {
-      case .onlyTitle, .withButton: return true
-      case .withIcon: return false
-      }
-    }
+  }
+  
+  enum FilterWithIcon {
+    case icon(FluentIcon)
   }
 }
 
@@ -307,12 +308,12 @@ public extension TUIChipView {
   /// The style used to display the title with given style options
   /// - Parameters:
   ///   - style: Style can be assist, input, suggestion, Filter
-  ///   - chipStyle: size32, size40
+  ///   - size: size32, size40
   /// - Returns: A closure that returns the TUIChipView
-  func style(_ style: Style, chipStyle: ChipStyle = .size40) -> Self {
+  func style(_ style: Style, chipStyle: Size = .size40) -> Self {
     var newView = self
     newView.style = style
-    newView.chipStyle = chipStyle
+    newView.size = chipStyle
     return newView
   }
   
@@ -320,23 +321,34 @@ public extension TUIChipView {
   /// - Parameters:
   ///   - filter: Choose the list of options to display chip view
   ///   - isSelected: This bool used to select the chip view, applicable for onlyTitle and withButton
-  ///   - chipStyle: .size32, size40
   ///   - badgeCount: This is used to display the badge view in top trailing only applicable for withButton type
   ///   - action: This block will execute when view interacted
   /// - Returns: A closure that returns the TUIChipView
   func style(filter: Filter, isSelected: Bool = false,
-             chipStyle: ChipStyle = .size40,
              badgeCount: Int? = nil,
              action: (() -> Void)? = nil) -> Self {
     var newView = self
     newView.style = Style.filter(filter)
-    newView.isSelected = filter.isSelectionEnabled ? isSelected : false
-    newView.chipStyle = chipStyle
+    newView.isSelected = isSelected
     if filter.isBadgeEnabled {
       newView.badgeCount = badgeCount
       newView.isBadgeEnabled = true
     }
     newView.action = action
+    return newView
+  }
+  
+  func size(_ size: Size = .size40) -> Self {
+    var newView = self
+    newView.size = size
+    return newView
+  }
+  
+  func style(withRightIcon style: FilterWithIcon, size: Size = .size40,
+             action: (() -> Void)? = nil) -> Self {
+    var newView = self
+    newView.style = Style.filterWithIcon(style)
+    newView.size = size
     return newView
   }
 }
@@ -383,18 +395,19 @@ struct TUIChipView_Previews: PreviewProvider {
       Divider()
       Section("Filter") {
         TUIChipView("Filter")
-          .style(filter: .onlyTitle, chipStyle: .size32)
+          .style(filter: .onlyTitle)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(icon: .dismiss24Regular),
-                 isSelected: true, chipStyle: .size32)
+          .style(filter: .withButton(icon: .dismiss24Filled),
+                 isSelected: true)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(icon: .dismiss24Regular),
-                 isSelected: true, chipStyle: .size40, badgeCount: 5)
+          .style(filter: .withButton(icon: .dismiss24Filled),
+                 isSelected: true, badgeCount: 5)
+          .size(.size40)
         
-        TUIChipView("With Button")
-          .style(filter: .withIcon(.caretDown16Filled), chipStyle: .size32)
+        TUIChipView("With")
+          .style(withRightIcon: .icon(.caretDown16Filled), size: .size32)
       }
     }
     .padding(.leading, 10)

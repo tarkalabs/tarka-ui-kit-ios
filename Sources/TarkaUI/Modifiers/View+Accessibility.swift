@@ -64,7 +64,7 @@ public extension View {
   }
   
   @ViewBuilder
-  func overlayBadgeView(_ show: Bool = true, count: Int?, badgeSize: BadgeSize)  -> some View {
+  func overlayViewInTopTrailing(_ show: Bool = true, count: Int?, badgeSize: BadgeSize)  -> some View {
     if show {
       self.overlayView {
         TUIBadge(count: count)
