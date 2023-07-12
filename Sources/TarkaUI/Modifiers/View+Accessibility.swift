@@ -62,4 +62,19 @@ public extension View {
         .alignmentGuide(.trailing) { $0[.trailing] - 8 }
     }
   }
+  
+  @ViewBuilder
+  func overlayBadgeView(_ show: Bool = true, count: Int = 0, badgeSize: BadgeSize)  -> some View {
+    if show {
+      self.overlay(alignment: .topTrailing) {
+        TUIBadge(count: count)
+          .badgeSize(badgeSize)
+          .alignmentGuide(.top) { $0[.top] + 8 }
+          .alignmentGuide(.trailing) { $0[.trailing] - 8 }
+          .accessibilityIdentifier("TUIBadge")
+      }
+    } else {
+      self
+    }
+  }
 }
