@@ -28,8 +28,8 @@ public extension TUIChipView {
   ///   - badgeCount: This is used to display the badge view in top trailing only applicable for withButton type
   ///   - action: This block will execute when view interacted
   /// - Returns: A closure that returns the TUIChipView
-  func styleForFilter(_ filter: Filter, isSelected: Bool = false,
-                      badgeCount: Int? = nil, action: (() -> Void)? = nil) -> Self {
+  func style(filter: Filter, isSelected: Bool = false,
+             badgeCount: Int? = nil, action: (() -> Void)? = nil) -> Self {
     var newView = self
     newView.style = Style.filter(filter)
     newView.isSelected = isSelected
@@ -44,7 +44,7 @@ public extension TUIChipView {
     return newView
   }
   
-  func styleWithAction(for style: FilterWithIcon, action: (() -> Void)? = nil) -> Self {
+  func styleWithAction(_ style: FilterWithIcon, action: (() -> Void)? = nil) -> Self {
     var newView = self
     newView.style = Style.filterWithIcon(style)
     newView.action = action

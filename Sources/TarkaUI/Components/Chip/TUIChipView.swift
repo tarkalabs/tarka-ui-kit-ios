@@ -401,18 +401,18 @@ struct TUIChipView_Previews: PreviewProvider {
       Divider()
       Section("Filter") {
         TUIChipView("Filter")
-          .styleForFilter(.onlyTitle)
+          .style(filter: .onlyTitle)
         
         TUIChipView("With Button")
-          .styleForFilter(.withButton(icon: .dismiss24Filled), isSelected: true)
+          .style(filter: .withButton(icon: .dismiss24Filled), isSelected: true)
         
         TUIChipView("With Button")
-          .styleForFilter(.withButton(icon: .dismiss24Filled),
+          .style(filter: .withButton(icon: .dismiss24Filled),
                           isSelected: true, badgeCount: 5)
           .size(.size40)
         
         TUIChipView("With")
-          .styleWithAction(for: .icon(.caretDown16Filled))
+          .styleWithAction(.icon(.caretDown16Filled))
       }
     }
     .padding(.leading, 10)
