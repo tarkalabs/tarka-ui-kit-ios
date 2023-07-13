@@ -16,6 +16,7 @@ public struct TUIMenuItemView: View {
   ///
   /// - Parameters:
   ///   - item: The `TUIMenuItem` to display.
+  ///   - isSelected: This bool is used to display selection color
   ///   - action: The action to perform when the menu item is tapped.
   ///
   public init(item: TUIMenuItem, isSelected: Bool = false,
@@ -39,6 +40,8 @@ public struct TUIMenuItemView: View {
       .contentShape(Rectangle())
     }
     .buttonStyle(MenuItemStyle(isSelected))
+    .accessibilityIdentifier(Accessibility.root)
+    .accessibilityElement(children: .contain)
   }
   
   @ViewBuilder
@@ -66,6 +69,13 @@ public struct TUIMenuItemView: View {
       titleView
       rightIconView(icon)
       
+    case .statusDots(let icon, let color):
+      statusDotView(icon, color: color)
+      titleView
+      if isSelected {
+        checkmarkView
+      }
+      
     case .withDescription(let desc):
       descriptionView(desc)
     }
@@ -76,7 +86,7 @@ public struct TUIMenuItemView: View {
     Text(item.title)
       .font(.body7)
       .foregroundColor(.onSurface)
-      .frame(maxWidth: .infinity, maxHeight: Spacing.custom(18), alignment: .topLeading)
+      .frame(maxWidth: .infinity, maxHeight: Spacing.custom(18), alignment: .leading)
   }
   
   @ViewBuilder
@@ -85,13 +95,16 @@ public struct TUIMenuItemView: View {
       Text(item.title)
         .font(.heading7)
         .foregroundColor(.onSurface)
-        .frame(maxWidth: .infinity, maxHeight: Spacing.custom(20), alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: Spacing.custom(20), alignment: .leading)
+        .accessibilityIdentifier(Accessibility.title)
       
       Text(desc)
         .font(.body6)
         .foregroundColor(.onSurface)
-        .frame(maxWidth: .infinity, maxHeight: Spacing.custom(20), alignment: .topLeading)
+        .frame(maxWidth: .infinity, maxHeight: Spacing.custom(20), alignment: .leading)
+        .accessibilityIdentifier(Accessibility.description)
     }
+    .accessibilityElement(children: .contain)
   }
   
   @ViewBuilder
@@ -99,12 +112,14 @@ public struct TUIMenuItemView: View {
     Image(fluent: .checkmark24Regular)
       .foregroundColor(.success)
       .frame(maxWidth: Spacing.custom(24), maxHeight: Spacing.custom(24))
+      .accessibilityIdentifier(Accessibility.checkmark)
   }
   
   private func leftIconView(_ icon: FluentIcon) -> some View {
     Image(fluent: icon)
       .scaledToFill()
       .frame(width: Spacing.custom(24), height: Spacing.custom(24))
+      .accessibilityIdentifier(Accessibility.leftIcon)
   }
   
   private func rightIconView(_ icon: FluentIcon) -> some View {
@@ -112,6 +127,15 @@ public struct TUIMenuItemView: View {
       .scaledToFill()
       .frame(width: Spacing.custom(20), height: Spacing.custom(20))
       .foregroundColor(.outline)
+      .accessibilityIdentifier(Accessibility.rightIcon)
+  }
+  
+  private func statusDotView(_ icon: FluentIcon, color: Color) -> some View {
+    Image(fluent: icon)
+      .scaledToFill()
+      .frame(width: Spacing.custom(16), height: Spacing.custom(16))
+      .foregroundColor(color)
+      .accessibilityIdentifier(Accessibility.leftIcon)
   }
 }
 
@@ -132,9 +156,22 @@ struct MenuItemStyle: ButtonStyle {
   }
 }
 
+public extension TUIMenuItemView {
+  
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIMenuItemView"
+    case title = "Title"
+    case description = "Description"
+    case leftIcon = "leftIcon"
+    case rightIcon = "rightIcon"
+    case checkmark = "checkmark"
+    case chevron = "chevronRight"
+  }
+}
+
 struct MenuItemView_Previews: PreviewProvider {
   static var previews: some View {
-    VStack {
+    VStack(spacing: 20) {
       TUIMenuItemView(item: TUIMenuItem(title: "Label", style: .onlyLabel)) { }
       
       TUIMenuItemView(item: TUIMenuItem(title: "Label is selected", style: .onlyLabel),
@@ -151,6 +188,12 @@ struct MenuItemView_Previews: PreviewProvider {
       
       TUIMenuItemView(item: TUIMenuItem(title: "Label with left and Right Icon",
                                         style: .withRightIcon(.add24Filled, .chevronRight24Filled))) {}
+      
+      TUIMenuItemView(item: TUIMenuItem(title: "Status Dots",
+                                        style: .statusDots(.circle16Filled, .success))) {}
+      
+      TUIMenuItemView(item: TUIMenuItem(title: "Status Dots",
+                                        style: .statusDots(.circle16Filled, .success)), isSelected: true) {}
       
       TUIMenuItemView(item: TUIMenuItem(title: "Label", style: .withDescription("Description"))) {}
     }
