@@ -14,10 +14,11 @@ public extension TUIWrapperIcon {
     newView.color = color
     return newView
   }
-  
-  func disableInteraction(_ disableInteraction: Bool = true) -> TUIWrapperIcon {
+ 
+  func action(action: @escaping () -> Void) -> TUIWrapperIcon {
     var newView = self
-    newView.disableInteraction = disableInteraction
+    newView.action = action
+    newView.disableInteraction = false
     return newView
   }
 }
