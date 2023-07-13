@@ -14,8 +14,8 @@ public struct TUIButton: View {
   }
   
   var title: String
-  var style: TUIButtonStyle = .primary
-  var size: TUIButtonSize = .regular
+  var style: Style = .primary
+  var size: Size = .regular
   var icon: Icon?
   var badge: String?
   var width: CGFloat?
@@ -34,15 +34,18 @@ public struct TUIButton: View {
       .foregroundColor(style.foregroundColor)
       .clipped()
   }
+  
   public var body: some View {
     
     Button(action: action) {
       
       HStack(spacing: size.hStackSpacing) {
+        
         if let icon = icon,
            case .left(let fluentIcon) = icon {
           image(for: fluentIcon)
         }
+        
         Text(title)
           .font(size.buttonSize)
           .foregroundColor(style.foregroundColor)
@@ -71,14 +74,14 @@ struct TUIButton_Previews: PreviewProvider {
   
   static var previews: some View {
     
-    ForEach(TUIButtonSize.allCases) { size in
+    ForEach(TUIButton.Size.allCases) { size in
       
       VStack(spacing: 40) {
         
         let isLargeIcon: Bool = size == .large || size == .regular
         let icon: FluentIcon = isLargeIcon ? .add24Regular : .add16Regular
         
-        ForEach(TUIButtonStyle.allCases) { style in
+        ForEach(TUIButton.Style.allCases) { style in
           
           HStack(spacing: 10.0) {
             
