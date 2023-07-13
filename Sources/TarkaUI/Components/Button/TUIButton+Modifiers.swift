@@ -9,13 +9,13 @@ import SwiftUI
 
 public extension TUIButton {
   
-  func style(_ style: TUIButtonStyle) -> Self {
+  func style(_ style: TUIButton.Style) -> Self {
     var newView = self
     newView.style = style
     return newView
   }
   
-  func size(_ size: TUIButtonSize) -> Self {
+  func size(_ size: TUIButton.Size) -> Self {
     var newView = self
     newView.size = size
     return newView
