@@ -10,6 +10,7 @@ import SwiftUI
 public struct TUIMenuItemView: View {
   public var item: TUIMenuItem
   public var action: () -> Void
+  private var isSelected: Bool
   
   /// Creates a menu item view.
   ///
@@ -17,8 +18,10 @@ public struct TUIMenuItemView: View {
   ///   - item: The `TUIMenuItem` to display.
   ///   - action: The action to perform when the menu item is tapped.
   ///
-  public init(item: TUIMenuItem, action: @escaping () -> Void) {
+  public init(item: TUIMenuItem, isSelected: Bool = false,
+              action: @escaping () -> Void) {
     self.item = item
+    self.isSelected = isSelected
     self.action = action
   }
 
@@ -35,7 +38,7 @@ public struct TUIMenuItemView: View {
       .frame(maxWidth: .infinity, alignment: .leading)
       .contentShape(Rectangle())
     }
-    .buttonStyle(MenuItemStyle())
+    .buttonStyle(MenuItemStyle(isSelected))
   }
   
   @ViewBuilder
@@ -81,10 +84,19 @@ public struct TUIMenuItemView: View {
 }
 
 struct MenuItemStyle: ButtonStyle {
+  var isSelected: Bool = false
+  
+  init(_ isSelected: Bool) {
+    self.isSelected = isSelected
+  }
   public func makeBody(configuration: Configuration) -> some View {
     configuration.label
-      .background(configuration.isPressed ? Color.surfaceHover : Color.clear)
+      .background(backgroundColor(configuration.isPressed))
       .clipShape(RoundedRectangle(cornerRadius: 8))
+  }
+  
+  func backgroundColor(_ isPressed: Bool) -> Color {
+    return isSelected ? .success.opacity(isPressed ? 0.2 : 0.1)  : isPressed ? .surfaceHover : .clear
   }
 }
 
@@ -96,6 +108,7 @@ struct MenuItemView_Previews: PreviewProvider {
           title: "Label",
           configuration: .withSymbol(.reOrder24Regular)
         ),
+        isSelected: true,
         action: {}
       )
     
