@@ -9,52 +9,16 @@ import SwiftUI
 
 public struct TUIButton: View {
   
-  enum Style {
-    case primary, secondary, outlined, ghost, danger
-    
-    var backgroundColor: Color {
-      switch self {
-        
-      case .primary:
-        return .primaryTUI
-      case .secondary:
-        return .secondaryTUI
-      case .outlined:
-        return .onSurface
-      case .ghost:
-        return .clear
-      case .danger:
-        return .error
-      }
-    }
-    
-    var textColor: Color {
-      switch self {
-        
-      case .primary:
-        return .onPrimary
-      case .secondary:
-        return .onSecondary
-      case .outlined:
-        return .onSurface
-      case .ghost:
-        return .secondary
-      case .danger:
-        return .onPrimary
-      }
-    }
-  }
-  
-  
-  enum Icon {
+  public enum Icon {
     case left(FluentIcon), right(FluentIcon)
   }
   
   var title: String
-  var style: Style = .primary
-  var size: Size = .regular
+  var style: TUIButtonStyle = .primary
+  var size: TUIButtonSize = .regular
   var icon: Icon?
   var badge: String?
+  var width: CGFloat?
   var action: () -> Void
   
   public init(title: String,
@@ -63,103 +27,174 @@ public struct TUIButton: View {
     self.action = action
   }
   
+  func image(for icon: FluentIcon) -> some View {
+    Image(fluent: icon)
+      .scaledToFit()
+      .frame(width: size.iconSize, height: size.iconSize)
+      .foregroundColor(style.foregroundColor)
+      .clipped()
+  }
   public var body: some View {
+    
     Button(action: action) {
-      Text(title)
-        .font(.button6)
-        .foregroundColor(.onPrimary)
-        .padding(.vertical, Spacing.custom(18))
-        .frame(maxWidth: .infinity)
+      
+      HStack(spacing: size.hStackSpacing) {
+        if let icon = icon,
+           case .left(let fluentIcon) = icon {
+          image(for: fluentIcon)
+        }
+        Text(title)
+          .font(size.buttonSize)
+          .foregroundColor(style.foregroundColor)
+          .padding(.vertical, size.titleTopPadding)
+          .frame(minHeight: size.titleHeight)
+        
+        if let icon = icon,
+           case .right(let fluentIcon) = icon {
+          image(for: fluentIcon)
+        }
+      }
+      .padding(.vertical, size.hStackTopPadding)
     }
-    .contentShape(Rectangle())
-    .tint(.primaryTUI)
-    .buttonStyle(.borderedProminent)
-    .buttonBorderShape(.capsule)
+    .frame(width: width)
+    .frame(minHeight: size.height)
+    .padding(.leading, size.leading(for: icon))
+    .padding(.trailing, size.trailing(for: icon))
+    .background(style.backgroundColor)
+    .roundedCorner(width: style.borderWidth, color: .onSurface)
+  }
+}
+
+// MARK: - Preview
+
+extension TUIButton {
+  
+  @ViewBuilder
+  static func constructPreview(_ size: TUIButtonSize) -> some View {
+    
+    let isLargeIcon: Bool = size == .large || size == .regular
+    let icon: FluentIcon = isLargeIcon ? .add24Regular : .add16Regular
+    let spacing = 10.0
+    
+    HStack(spacing: spacing) {
+      
+      TUIButton(title: "Label") { }
+        .style(.primary)
+        .size(size)
+      
+      TUIButton(title: "Label") { }
+        .style(.primary)
+        .size(size)
+        .icon(.right(icon))
+      
+      TUIButton(title: "Label") { }
+        .style(.primary)
+        .size(size)
+        .icon(.left(icon))
+    }
+    
+    HStack(spacing: spacing) {
+      
+      TUIButton(title: "Label") { }
+        .style(.secondary)
+        .size(size)
+      
+      TUIButton(title: "Label") { }
+        .style(.secondary)
+        .size(size)
+        .icon(.right(icon))
+      
+      TUIButton(title: "Label") { }
+        .style(.secondary)
+        .size(size)
+        .icon(.left(icon))
+    }
+    
+    HStack(spacing: spacing) {
+      
+      TUIButton(title: "Label") { }
+        .style(.outlined)
+        .size(size)
+      
+      TUIButton(title: "Label") { }
+        .style(.outlined)
+        .size(size)
+        .icon(.right(icon))
+      
+      TUIButton(title: "Label") { }
+        .style(.outlined)
+        .size(size)
+        .icon(.left(icon))
+    }
+    
+    HStack(spacing: spacing) {
+      
+      TUIButton(title: "Label") { }
+        .style(.ghost)
+        .size(size)
+      
+      TUIButton(title: "Label") { }
+        .style(.ghost)
+        .size(size)
+        .icon(.right(icon))
+      
+      TUIButton(title: "Label") { }
+        .style(.ghost)
+        .size(size)
+        .icon(.left(icon))
+    }
+    
+    HStack(spacing: spacing) {
+      
+      TUIButton(title: "Label") { }
+        .style(.danger)
+        .size(size)
+      
+      TUIButton(title: "Label") { }
+        .style(.danger)
+        .size(size)
+        .icon(.right(icon))
+      
+      TUIButton(title: "Label") { }
+        .style(.danger)
+        .size(size)
+        .icon(.left(icon))
+    }
   }
 }
 
 struct TUIButton_Previews: PreviewProvider {
-  static var previews: some View {
-    TUIButton(title: "Save") { }
-  }
-}
-
-extension TUIButton {
   
-  enum Size {
+  static var previews: some View {
     
-    case xs, small, regular, large
-    
-    func leading(for icon: Icon?) -> CGFloat {
+    ForEach(TUIButtonSize.allCases) { size in
       
-      guard let icon else {
-        // no icon
-        return leadingWithoutIcon
-      }
-      
-      switch icon {
+      VStack(spacing: 40) {
         
-      case .right:
-        return paddingWithTitle
+        let isLargeIcon: Bool = size == .large || size == .regular
+        let icon: FluentIcon = isLargeIcon ? .add24Regular : .add16Regular
         
-      case .left:
-        return paddingWithIcon
+        ForEach(TUIButtonStyle.allCases) { style in
+          
+          HStack(spacing: 10.0) {
+            
+            TUIButton(title: "Label") { }
+              .style(style)
+              .size(size)
+            
+            TUIButton(title: "Label") { }
+              .style(style)
+              .size(size)
+              .icon(.right(icon))
+            
+            TUIButton(title: "Label") { }
+              .style(style)
+              .size(size)
+              .icon(.left(icon))
+          }
+        }
       }
-    }
-    
-    func trailing(for icon: Icon?) -> CGFloat {
-      
-      guard let icon else {
-        // no icon
-        return leadingWithoutIcon
-      }
-      
-      switch icon {
-        
-      case .right:
-        return paddingWithIcon
-        
-      case .left:
-        return paddingWithTitle
-      }
-    }
-    
-    var leadingWithoutIcon: CGFloat {
-      switch self {
-      case .large:
-        return 24
-      case .regular:
-        return 24
-      case .small:
-        return 16
-      case .xs:
-        return 8
-      }
-    }
-    var paddingWithTitle: CGFloat {
-      switch self {
-      case .large:
-        return 24
-      case .regular:
-        return 24
-      case .small:
-        return 16
-      case .xs:
-        return 8
-      }
-    }
-    
-    var paddingWithIcon: CGFloat {
-      switch self {
-      case .large:
-        return 16
-      case .regular:
-        return 16
-      case .small:
-        return 8
-      case .xs:
-        return 4
-      }
+      .previewDisplayName(size.rawValue)
     }
   }
 }
