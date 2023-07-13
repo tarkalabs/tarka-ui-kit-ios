@@ -25,12 +25,12 @@ import SwiftUI
 ///
 public struct TUIChipView: View {
   
-  private var title: any StringProtocol
-  private var isSelected: Bool = false
-  private var size: Size = .size32
-  private var style: Style = .assist(.onlyTitle)
-  private var action: (() -> Void)?
-  private var badgeCount: Int?
+  internal var title: any StringProtocol
+  internal var isSelected: Bool = false
+  internal var size: Size = .size32
+  internal var style: Style = .assist(.onlyTitle)
+  internal var action: (() -> Void)?
+  internal var badgeCount: Int?
   
   public init(_ title: any StringProtocol) {
     self.title = title
@@ -185,7 +185,6 @@ public struct TUIChipView: View {
     }
     .iconColor(isSelected ? .onSecondary : .onSurface)
     .size(size == .size32 ? .size24 : .size32)
-    .accessibilityIdentifier(Accessibility.rightButton)
   }
 }
 
@@ -302,7 +301,6 @@ public extension TUIChipView {
     case leftImage = "leftImage"
     case leftIcon = "leftIcon"
     case rightIcon = "rightIcon"
-    case rightButton = "rightButton"
   }
   
   enum Size {
@@ -360,54 +358,6 @@ public extension TUIChipView {
   }
 }
 
-// MARK: - Modifiers
-
-public extension TUIChipView {
-  
-  
-  /// The style used to display the title with given style options
-  /// - Parameters:
-  ///   - style: Style can be assist, input, suggestion, Filter
-  ///   - size: size32, size40
-  /// - Returns: A closure that returns the TUIChipView
-  func style(_ style: Style, size: Size = .size40) -> Self {
-    var newView = self
-    newView.style = style
-    newView.size = size
-    return newView
-  }
-  
-  /// Filter Style used to display chip options with title and button or icon
-  /// - Parameters:
-  ///   - filter: Choose the list of options to display view
-  ///   - isSelected: This bool used to select the chip view, applicable for onlyTitle and withButton
-  ///   - badgeCount: This is used to display the badge view in top trailing only applicable for withButton type
-  ///   - action: This block will execute when view interacted
-  /// - Returns: A closure that returns the TUIChipView
-  func style(filter: Filter, isSelected: Bool = false,
-             badgeCount: Int? = nil, action: (() -> Void)? = nil) -> Self {
-    var newView = self
-    newView.style = Style.filter(filter)
-    newView.isSelected = isSelected
-    newView.badgeCount = badgeCount
-    newView.action = action
-    return newView
-  }
-  
-  func size(_ size: Size) -> Self {
-    var newView = self
-    newView.size = size
-    return newView
-  }
-  
-  func style(for style: FilterWithIcon, action: (() -> Void)? = nil) -> Self {
-    var newView = self
-    newView.style = Style.filterWithIcon(style)
-    newView.action = action
-    return newView
-  }
-}
-
 struct TUIChipView_Previews: PreviewProvider {
   static var previews: some View {
     VStack(alignment: .leading, spacing: 10) {
@@ -451,17 +401,18 @@ struct TUIChipView_Previews: PreviewProvider {
       Divider()
       Section("Filter") {
         TUIChipView("Filter")
-          .style(filter: .onlyTitle)
+          .styleForFilter(.onlyTitle)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(icon: .dismiss24Filled), isSelected: true)
+          .styleForFilter(.withButton(icon: .dismiss24Filled), isSelected: true)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(icon: .dismiss24Filled), isSelected: true, badgeCount: 5)
+          .styleForFilter(.withButton(icon: .dismiss24Filled),
+                          isSelected: true, badgeCount: 5)
           .size(.size40)
         
         TUIChipView("With")
-          .style(for: .icon(.caretDown16Filled))
+          .styleWithAction(for: .icon(.caretDown16Filled))
       }
     }
     .padding(.leading, 10)
