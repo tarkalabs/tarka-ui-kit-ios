@@ -11,7 +11,7 @@ public struct TUIDetailDisclosure: View {
   
   public var body: some View {
     
-    Image(fluent: .arrowRight20Filled)
+    Image(fluent: .chevronRight20Filled)
       .scaledToFit()
       .frame(width: 18, height: 18)
       .padding(.all, Spacing.custom(2.0))

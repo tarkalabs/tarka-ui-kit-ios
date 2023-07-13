@@ -101,7 +101,6 @@
 		D43CDD9929DFE34900F8081E /* UI Showcase */ = {
 			isa = PBXGroup;
 			children = (
-				D4F4ED5B2A1367AA003B9805 /* Styles */,
 				D43CDD9A29DFE34900F8081E /* UI_ShowcaseApp.swift */,
 				D43CDD9C29DFE34900F8081E /* ContentView.swift */,
 				D43CDD9E29DFE34A00F8081E /* Assets.xcassets */,
@@ -148,13 +147,6 @@
 			children = (
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D4F4ED5B2A1367AA003B9805 /* Styles */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Styles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
