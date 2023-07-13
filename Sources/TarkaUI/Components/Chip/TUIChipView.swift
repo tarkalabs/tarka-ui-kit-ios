@@ -51,7 +51,7 @@ public struct TUIChipView: View {
     )
     .cornerRadius(Spacing.halfHorizontal)
     .onTapGesture {
-      if let action { action() }
+      action?()
     }
     .overlayViewInTopTrailing(
       isBadgeEnabled, count: badgeCount, badgeSize: size == .size32 ? .m : .l)
@@ -89,20 +89,20 @@ public struct TUIChipView: View {
     switch type {
     case .titleWithButton(let icon, let action):
       titleView
-      rightButtonView(icon) { if let action { action() } }
+      rightButtonView(icon) { action?() }
       
     case .withLeftImage(let image, rightIcon: let icon, let action):
       leftImageView(image)
       HStack(spacing: Spacing.custom(0)) {
         titleView
-        rightButtonView(icon) { if let action { action() } }
+        rightButtonView(icon) { action?() }
       }
       
     case .withLeftIcon(let icon, rightIcon: let rightIcon, let action):
       iconView(icon)
       HStack(spacing: Spacing.custom(0)) {
         titleView
-        rightButtonView(rightIcon) { if let action { action() } }
+        rightButtonView(rightIcon) { action?() }
       }
     }
   }
@@ -132,10 +132,10 @@ public struct TUIChipView: View {
     case .withButton(let icon, let action):
       if isSelected {
         titleView
-        rightButtonView(icon) { if let action { action() }}
+        rightButtonView(icon) { action?() }
       } else {
         titleView
-        rightButtonView(icon) { if let action { action() }}
+        rightButtonView(icon) { action?() }
       }
     }
   }
@@ -180,9 +180,7 @@ public struct TUIChipView: View {
   @ViewBuilder
   private func rightButtonView(_ icon: FluentIcon = .dismiss24Regular,
                                action: (() -> Void)?) -> some View {
-    TUIIconButton(icon: icon) {
-      if let action { action() }
-    }
+    TUIIconButton(icon: icon) { action?() }
     .iconColor(isSelected ? .onSecondary : .onSurface)
     .size(size == .size32 ? .size24 : .size32)
   }
