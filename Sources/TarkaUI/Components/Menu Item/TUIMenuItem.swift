@@ -35,13 +35,14 @@ public struct TUIMenuItem {
     case withRightIcon(FluentIcon, FluentIcon)
     /// Displays the title and right symbol.
     case rightIcon(FluentIcon)
+    case statusDots(FluentIcon, Color)
     /// Displays the title and description.
     case withDescription(String)
     
     func leading(_ isSelected: Bool) -> CGFloat {
       switch self {
       case .onlyLabel: return isSelected ? Spacing.baseHorizontal : Spacing.custom(48)
-      case .leftIcon, .withRightIcon: return Spacing.baseHorizontal
+      case .leftIcon, .withRightIcon, .statusDots: return Spacing.baseHorizontal
       case .rightIcon: return Spacing.custom(48)
       case .withDescription: return Spacing.custom(40)
       }
@@ -50,7 +51,7 @@ public struct TUIMenuItem {
     func trailing(_ isSelected: Bool) -> CGFloat {
       switch self {
       case .onlyLabel: return isSelected ? Spacing.halfHorizontal : Spacing.custom(48)
-      case .leftIcon, .withRightIcon, .rightIcon: return Spacing.halfHorizontal
+      case .leftIcon, .withRightIcon, .rightIcon, .statusDots: return Spacing.halfHorizontal
       case .withDescription: return Spacing.custom(40)
       }
     }
@@ -58,7 +59,7 @@ public struct TUIMenuItem {
     func vertical(_ isSelected: Bool) -> CGFloat {
       switch self {
       case .onlyLabel: return isSelected ? Spacing.halfHorizontal : Spacing.custom(10)
-      case .leftIcon, .withRightIcon, .rightIcon: return Spacing.halfHorizontal
+      case .leftIcon, .withRightIcon, .rightIcon, .statusDots: return Spacing.halfHorizontal
       case .withDescription: return Spacing.custom(10)
       }
     }
