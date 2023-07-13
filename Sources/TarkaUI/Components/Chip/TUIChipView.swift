@@ -27,15 +27,13 @@ public struct TUIChipView: View {
   
   private var title: any StringProtocol
   private var isSelected: Bool = false
-  private var size: Size = .size40
+  private var size: Size = .size32
   private var style: Style = .assist(.onlyTitle)
   private var action: (() -> Void)?
   private var badgeCount: Int?
-  private var isBadgeEnabled: Bool = false
   
-  public init(_ title: any StringProtocol, action: (() -> Void)? = nil) {
+  public init(_ title: any StringProtocol) {
     self.title = title
-    self.action = action
   }
   
   public var body: some View {
@@ -45,6 +43,7 @@ public struct TUIChipView: View {
     .frame(maxHeight: size.height)
     .padding(.leading, leading)
     .padding(.trailing, trailing)
+    .padding(.vertical, Spacing.custom(0))
     .background(isSelected ? Color.secondaryTUI : .surface)
     .overlay(
       RoundedRectangle(cornerRadius: Spacing.halfHorizontal)
@@ -54,8 +53,8 @@ public struct TUIChipView: View {
     .onTapGesture {
       if let action { action() }
     }
-    .overlayViewInTopTrailing(isSelected && isBadgeEnabled,
-                              count: badgeCount, badgeSize: size == .size32 ? .m : .l)
+    .overlayViewInTopTrailing(
+      isBadgeEnabled, count: badgeCount, badgeSize: size == .size32 ? .m : .l)
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
@@ -184,7 +183,6 @@ public struct TUIChipView: View {
     TUIIconButton(icon: icon) {
       if let action { action() }
     }
-    .style(.ghost)
     .iconColor(isSelected ? .onSecondary : .onSurface)
     .size(size == .size32 ? .size24 : .size32)
     .accessibilityIdentifier(Accessibility.rightButton)
@@ -283,6 +281,17 @@ extension TUIChipView {
       return size == .size32 ? Spacing.baseHorizontal : Spacing.custom(20)
     }
   }
+  
+  private var isBadgeEnabled: Bool {
+    switch style {
+    case .filter(let type):
+      switch type {
+      case .onlyTitle: return false
+      case .withButton: return isSelected ? true : false
+      }
+    default: return false
+    }
+  }
 }
 
 public extension TUIChipView {
@@ -344,13 +353,6 @@ public extension TUIChipView {
   
   enum Filter {
     case onlyTitle, withButton(icon: FluentIcon, action: (() -> Void)? = nil)
-    
-    var isBadgeEnabled: Bool {
-      switch self {
-      case .withButton: return true
-      default: return false
-      }
-    }
   }
   
   enum FilterWithIcon {
@@ -377,26 +379,31 @@ public extension TUIChipView {
   
   /// Filter Style used to display chip options with title and button or icon
   /// - Parameters:
-  ///   - filter: Choose the list of options to display chip view
+  ///   - filter: Choose the list of options to display view
   ///   - isSelected: This bool used to select the chip view, applicable for onlyTitle and withButton
   ///   - badgeCount: This is used to display the badge view in top trailing only applicable for withButton type
   ///   - action: This block will execute when view interacted
   /// - Returns: A closure that returns the TUIChipView
   func style(filter: Filter, isSelected: Bool = false,
-             badgeCount: Int? = nil) -> Self {
+             badgeCount: Int? = nil, action: (() -> Void)? = nil) -> Self {
     var newView = self
     newView.style = Style.filter(filter)
     newView.isSelected = isSelected
-    if filter.isBadgeEnabled {
-      newView.badgeCount = badgeCount
-      newView.isBadgeEnabled = true
-    }
+    newView.badgeCount = badgeCount
+    newView.action = action
     return newView
   }
   
   func size(_ size: Size) -> Self {
     var newView = self
     newView.size = size
+    return newView
+  }
+  
+  func style(for style: FilterWithIcon, action: (() -> Void)? = nil) -> Self {
+    var newView = self
+    newView.style = Style.filterWithIcon(style)
+    newView.action = action
     return newView
   }
 }
@@ -445,17 +452,16 @@ struct TUIChipView_Previews: PreviewProvider {
       Section("Filter") {
         TUIChipView("Filter")
           .style(filter: .onlyTitle)
-          .size(.size32)
         
         TUIChipView("With Button")
           .style(filter: .withButton(icon: .dismiss24Filled), isSelected: true)
-          .size(.size32)
         
         TUIChipView("With Button")
           .style(filter: .withButton(icon: .dismiss24Filled), isSelected: true, badgeCount: 5)
+          .size(.size40)
         
         TUIChipView("With")
-          .style(.filterWithIcon(.icon(.caretDown16Filled)), size: .size32)
+          .style(for: .icon(.caretDown16Filled))
       }
     }
     .padding(.leading, 10)
