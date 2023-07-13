@@ -15,28 +15,57 @@ import SwiftUI
 ///
 ///     TUIMenuItem(
 ///       title: "Title",
-///       configuration: .withDescription("Description")
+///       style: .withDescription("Description")
 ///     )
 ///
 /// - Parameters:
 ///   - title: The title to display in the menu item.
-///   - configuration: The configuration to use to display the menu item. The default value is `.onlyLabel`.
+///   - style: The configuration to use to display the menu item. The default value is `.onlyLabel`.
 ///
 public struct TUIMenuItem {
   public var title: any StringProtocol
-  public var configuration: Configuration
+  public var style: Style
   
-  public enum Configuration {
+  public enum Style {
     /// Displays only the title.
     case onlyLabel
+    /// Displays the title and left symbol.
+    case leftIcon(FluentIcon)
+    /// Displays the title, left and right symbol.
+    case withRightIcon(FluentIcon, FluentIcon)
+    /// Displays the title and right symbol.
+    case rightIcon(FluentIcon)
     /// Displays the title and description.
     case withDescription(String)
-    /// Displays the title and symbol.
-    case withSymbol(FluentIcon)
+    
+    func leading(_ isSelected: Bool) -> CGFloat {
+      switch self {
+      case .onlyLabel: return isSelected ? Spacing.baseHorizontal : Spacing.custom(48)
+      case .leftIcon, .withRightIcon: return Spacing.baseHorizontal
+      case .rightIcon: return Spacing.custom(48)
+      case .withDescription: return Spacing.custom(40)
+      }
+    }
+    
+    func trailing(_ isSelected: Bool) -> CGFloat {
+      switch self {
+      case .onlyLabel: return isSelected ? Spacing.halfHorizontal : Spacing.custom(48)
+      case .leftIcon, .withRightIcon, .rightIcon: return Spacing.halfHorizontal
+      case .withDescription: return Spacing.custom(40)
+      }
+    }
+    
+    func vertical(_ isSelected: Bool) -> CGFloat {
+      switch self {
+      case .onlyLabel: return isSelected ? Spacing.halfHorizontal : Spacing.custom(10)
+      case .leftIcon, .withRightIcon, .rightIcon: return Spacing.halfHorizontal
+      case .withDescription: return Spacing.custom(10)
+      }
+    }
   }
   
-  public init(title: any StringProtocol, configuration: TUIMenuItem.Configuration) {
+  public init(title: any StringProtocol, style: TUIMenuItem.Style) {
     self.title = title
-    self.configuration = configuration
+    self.style = style
   }
 }

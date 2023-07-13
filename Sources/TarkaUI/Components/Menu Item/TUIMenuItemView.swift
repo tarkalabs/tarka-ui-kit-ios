@@ -24,17 +24,17 @@ public struct TUIMenuItemView: View {
     self.isSelected = isSelected
     self.action = action
   }
-
+  
   public var body: some View {
     Button {
       action()
     } label: {
-      HStack(spacing: 0) {
-        leftContentView
-        contentView
-        rightContentView
+      HStack(spacing: Spacing.halfHorizontal) {
+        detailView
       }
-      .padding(.vertical, Spacing.baseVertical)
+      .padding(.vertical, item.style.vertical(isSelected))
+      .padding(.leading, item.style.leading(isSelected))
+      .padding(.trailing, item.style.trailing(isSelected))
       .frame(maxWidth: .infinity, alignment: .leading)
       .contentShape(Rectangle())
     }
@@ -42,44 +42,76 @@ public struct TUIMenuItemView: View {
   }
   
   @ViewBuilder
-  private var leftContentView: some View {
-    switch item.configuration {
-    case .withSymbol(let symbol):
-      Image(fluent: symbol)
-        .scaledToFill()
-        .frame(width: 24, height: 24)
-        .padding(.leading, Spacing.baseHorizontal)
-        .padding(.trailing, Spacing.halfHorizontal)
-        .clipped()
-    default:
-      Spacer()
-        .frame(width: 48)
-    }
-  }
-  
-  @ViewBuilder
-  private var contentView: some View {
-    switch item.configuration {
-    case .onlyLabel, .withSymbol:
-      Text(item.title)
-        .font(.body7)
-        .foregroundColor(.onSurface)
-    case .withDescription(let desc):
-      VStack(alignment: .leading, spacing: Spacing.custom(2)) {
-        Text(item.title)
-          .font(.heading6)
-          .foregroundColor(.onSurface)
-        Text(desc)
-          .font(.body6)
-          .foregroundColor(.onSurface)
+  private var detailView: some View {
+    switch item.style {
+    case .onlyLabel:
+      if isSelected {
+        checkmarkView
       }
+      titleView
+      
+    case .leftIcon(let icon):
+      leftIconView(icon)
+      titleView
+      if isSelected {
+        checkmarkView
+      }
+      
+    case .withRightIcon(let leftIcon, let rightIcon):
+      leftIconView(leftIcon)
+      titleView
+      rightIconView(rightIcon)
+      
+    case .rightIcon(let icon):
+      titleView
+      rightIconView(icon)
+      
+    case .withDescription(let desc):
+      descriptionView(desc)
     }
   }
   
   @ViewBuilder
-  private var rightContentView: some View {
-    // TODO: Implement this
-    EmptyView()
+  private var titleView: some View {
+    Text(item.title)
+      .font(.body7)
+      .foregroundColor(.onSurface)
+      .frame(maxWidth: .infinity, maxHeight: Spacing.custom(18), alignment: .topLeading)
+  }
+  
+  @ViewBuilder
+  private func descriptionView(_ desc: String) -> some View {
+    VStack(alignment: .leading, spacing: Spacing.custom(0)) {
+      Text(item.title)
+        .font(.heading7)
+        .foregroundColor(.onSurface)
+        .frame(maxWidth: .infinity, maxHeight: Spacing.custom(20), alignment: .topLeading)
+      
+      Text(desc)
+        .font(.body6)
+        .foregroundColor(.onSurface)
+        .frame(maxWidth: .infinity, maxHeight: Spacing.custom(20), alignment: .topLeading)
+    }
+  }
+  
+  @ViewBuilder
+  private var checkmarkView: some View {
+    Image(fluent: .checkmark24Regular)
+      .foregroundColor(.success)
+      .frame(maxWidth: Spacing.custom(24), maxHeight: Spacing.custom(24))
+  }
+  
+  private func leftIconView(_ icon: FluentIcon) -> some View {
+    Image(fluent: icon)
+      .scaledToFill()
+      .frame(width: Spacing.custom(24), height: Spacing.custom(24))
+  }
+  
+  private func rightIconView(_ icon: FluentIcon) -> some View {
+    Image(fluent: icon)
+      .scaledToFill()
+      .frame(width: Spacing.custom(20), height: Spacing.custom(20))
+      .foregroundColor(.outline)
   }
 }
 
@@ -102,31 +134,25 @@ struct MenuItemStyle: ButtonStyle {
 
 struct MenuItemView_Previews: PreviewProvider {
   static var previews: some View {
-    Group {
-      TUIMenuItemView(
-        item: TUIMenuItem(
-          title: "Label",
-          configuration: .withSymbol(.reOrder24Regular)
-        ),
-        isSelected: true,
-        action: {}
-      )
-    
-      TUIMenuItemView(
-        item: TUIMenuItem(
-          title: "Label",
-          configuration: .onlyLabel
-        ),
-        action: {}
-      )
+    VStack {
+      TUIMenuItemView(item: TUIMenuItem(title: "Label", style: .onlyLabel)) { }
       
-      TUIMenuItemView(
-        item: TUIMenuItem(
-          title: "Label",
-          configuration: .withDescription("Description")
-        ),
-        action: {}
-      )
+      TUIMenuItemView(item: TUIMenuItem(title: "Label is selected", style: .onlyLabel),
+                      isSelected: true) { }
+      
+      TUIMenuItemView(item: .init(title: "Left Icon", style: .leftIcon(.add24Filled))) { }
+      
+      TUIMenuItemView(item: .init(title: "Left Icon is selected", style: .leftIcon(.add24Filled)),
+                      isSelected: true) { }
+      
+      
+      TUIMenuItemView(item: TUIMenuItem(title: "Label with left and Right Icon",
+                                        style: .withRightIcon(.add24Filled, .chevronRight24Filled))) {}
+      
+      TUIMenuItemView(item: TUIMenuItem(title: "Label with left and Right Icon",
+                                        style: .withRightIcon(.add24Filled, .chevronRight24Filled))) {}
+      
+      TUIMenuItemView(item: TUIMenuItem(title: "Label", style: .withDescription("Description"))) {}
     }
     .previewLayout(.sizeThatFits)
   }
