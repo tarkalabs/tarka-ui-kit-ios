@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 public struct TUIButton: View {
   
   public enum Icon {
@@ -19,6 +20,7 @@ public struct TUIButton: View {
   var icon: Icon?
   var badge: String?
   var width: CGFloat?
+  
   var action: () -> Void
   
   public init(title: String,
@@ -59,7 +61,7 @@ public struct TUIButton: View {
       }
       .padding(.vertical, size.hStackTopPadding)
     }
-    .frame(width: width)
+    .width(width)
     .frame(minHeight: size.height)
     .padding(.leading, size.leading(for: icon))
     .padding(.trailing, size.trailing(for: icon))
@@ -102,6 +104,19 @@ struct TUIButton_Previews: PreviewProvider {
         }
       }
       .previewDisplayName(size.rawValue)
+    }
+  }
+}
+
+private extension Button {
+  
+  @ViewBuilder
+  func width(_ value: CGFloat?) -> some View {
+    
+    if value == CGFloat.infinity {
+      self.frame(maxWidth: .infinity)
+    } else {
+      self.frame(width: value)
     }
   }
 }
