@@ -21,7 +21,7 @@ public extension TUIButton {
       switch self {
       case .primary: return .primaryTUI
       case .secondary: return .secondaryTUI
-      case .outlined: return .white
+      case .outlined: return .clear
       case .ghost: return .clear
       case .danger: return .error
       }

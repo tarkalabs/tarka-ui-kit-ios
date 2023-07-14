@@ -26,6 +26,7 @@ extension View {
         RoundedRectangle(cornerRadius: .infinity)
           .stroke(color, lineWidth: width)
       )
+      .clipShape(Capsule())
     } else {
       self
         .cornerRadius(.infinity)
