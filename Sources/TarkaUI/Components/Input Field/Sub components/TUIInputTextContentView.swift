@@ -17,23 +17,19 @@ struct TUIInputTextContentView: View {
   @Binding private var isTextFieldFocused: Bool
   @FocusState private var isFocused: Bool
   
-  private var isTextFieldInteractive: Bool
   private var placeholder: String
   
   /// Creates a `TUIInputTextContentView` View
   /// - Parameters:
   ///   - inputItem: A `TUIInputFieldItem` instance that holds the required values to render `TUIInputTextContentView` View
-  ///   - isTextFieldInteractive: A bool value that decides whether text content field has to user interactive or not
   ///   - placeholder: A string that to be shown as placeholder for text content field
   ///   - isTextFieldFocused: A bindable bool value that handles text field keyboard focus
   ///   
   init(inputItem: TUIInputFieldItem,
-       isTextFieldInteractive: Bool = true,
        placeholder: String? = nil,
        isTextFieldFocused: Binding<Bool>? = nil) {
     
     self.inputItem = inputItem
-    self.isTextFieldInteractive = isTextFieldInteractive
     self.placeholder = placeholder ?? ""
     self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
   }
@@ -48,7 +44,7 @@ struct TUIInputTextContentView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     .onAppear {
-      if isTextFieldInteractive {
+      if isTextFieldFocused {
         self.isFocused = true
       }
     }
@@ -103,7 +99,7 @@ struct TUIInputTextContentView: View {
       .font(.body6)
       .foregroundColor(.inputText)
       .frame(minHeight: 20, alignment: .leading)
-      .disabled(!isTextFieldInteractive)
+      .disabled(!isTextFieldFocused)
       .accessibilityIdentifier(Accessibility.value)
     }
   }

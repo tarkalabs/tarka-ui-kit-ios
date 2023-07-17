@@ -20,21 +20,27 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   public var properties = TUIInputFieldOptionalProperties()
   
   /// Binds the bool that used to handle the row interaction and text field interaction switch when user interacts
-  @State private var isTextFieldInteractive: Bool = false
-  @Binding private var isTextFieldFocused: Bool
-  
+  @Binding private var isDoneClicked: Bool
+
+  @State private var isFocused: Bool = false
+
   /// Creates a `TUITextInputField` view
   /// - Parameter isTextFieldFocused: A bindable bool value that used to handle text field focus using keyboard
-  public init(isTextFieldFocused: Binding<Bool>) {
+  public init(isDoneClicked: Binding<Bool>) {
     
-    self._isTextFieldFocused = isTextFieldFocused
+    self._isDoneClicked = isDoneClicked
   }
   
   public var body: some View {
     mainBody
-      .onChange(of: $isTextFieldFocused.wrappedValue, perform: { value in
-        if !isTextFieldFocused {
-          self.isTextFieldInteractive = false
+      .onChange(of: $isDoneClicked.wrappedValue, perform: { value in
+        if value {
+          isFocused = false
+        }
+      })
+      .onChange(of: $isFocused.wrappedValue, perform: { value in
+        if !value {
+          isDoneClicked = false
           // revert the style when content is empty
           if self.inputItem.value.isEmpty {
             self.inputItem.style = existingStyle
@@ -45,30 +51,20 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   
   @ViewBuilder
   private var mainBody: some View {
-    
-    if !self.isTextFieldInteractive {
-      
-      Button(action: {
-        // change style
-        if self.inputItem.style == .onlyTitle {
-          self.inputItem.style = .titleWithValue
-        }
-        self.isTextFieldFocused = true
-        self.isTextFieldInteractive = true
-      }) {
         inputFieldView
-      }
-      .accessibilityIdentifier(Accessibility.button)
-    } else {
-      inputFieldView
-    }
+      .accessibilityIdentifier(Accessibility.root)
   }
   
   private var inputFieldView: some View {
     TUIInputField(
       properties: properties,
-      isTextFieldInteractive: $isTextFieldFocused,
-      isTextFieldFocused: $isTextFieldFocused)
+      isTextFieldFocused: $isFocused) {
+        self.isFocused = true
+        // change style
+        if self.inputItem.style == .onlyTitle {
+          self.inputItem.style = .titleWithValue
+        }
+      }
     .accessibilityIdentifier(Accessibility.root)
   }
   
@@ -84,7 +80,6 @@ extension TUITextInputField {
   
   enum Accessibility: String, TUIAccessibility {
     case root = "TUITextInputField"
-    case button = "TUITextInputField Row Button"
   }
 }
 
@@ -92,7 +87,7 @@ struct TUITextInputField_Previews: PreviewProvider {
   
   static var previews: some View {
     
-    TUITextInputField(isTextFieldFocused: Binding.constant(false))
+    TUITextInputField(isDoneClicked: Binding.constant(false))
       .state(.alert("Input values are sensitive"))
       .endItem(withStyle: .icon(.info24Regular))
       .environmentObject(
