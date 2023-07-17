@@ -1,5 +1,5 @@
 //
-//  TUISelectionInputField.swift
+//  TUIInteractiveInputField.swift
 //
 //
 //  Created by Gopinath on 04/07/23.
@@ -13,7 +13,7 @@ import SwiftUI
 /// It conforms to the same protocol `TUIInputFieldProtocol` that `TUIInputField` conformed and
 /// holds all the same properties, variables and public functions that `TUIInputField` View have.
 ///
-public struct TUISelectionInputField: TUIInputFieldProtocol {
+public struct TUIInteractiveInputField: TUIInputFieldProtocol {
   
   @EnvironmentObject var inputItem: TUIInputFieldItem
   public var properties = TUIInputFieldOptionalProperties()
@@ -32,7 +32,7 @@ public struct TUISelectionInputField: TUIInputFieldProtocol {
   }
 }
 
-extension TUISelectionInputField {
+extension TUIInteractiveInputField {
   
   enum Accessibility: String, TUIAccessibility {
     case root = "TUISelectionInputField"
@@ -46,7 +46,7 @@ struct TUISelectionInputField_Previews: PreviewProvider {
     @State var item = TUIInputFieldItem(style: .onlyTitle,
                                         title: "Pick value")
 
-    TUISelectionInputField { item.title = "Value picked" }
+    TUIInteractiveInputField { item.title = "Value picked" }
     .endItem(withStyle: .icon(.info24Regular))
     .environmentObject(item)
   }
