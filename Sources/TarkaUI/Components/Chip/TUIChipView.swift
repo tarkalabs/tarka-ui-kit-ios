@@ -25,12 +25,12 @@ import SwiftUI
 ///
 public struct TUIChipView: View {
   
-  internal var title: any StringProtocol
-  internal var isSelected: Bool = false
-  internal var size: Size = .size32
-  internal var style: Style = .assist(.onlyTitle)
-  internal var action: (() -> Void)?
-  internal var badgeCount: Int?
+  var title: any StringProtocol
+  var isSelected: Bool = false
+  var size: Size = .size32
+  var style: Style = .assist(.onlyTitle)
+  var action: (() -> Void)?
+  var badgeCount: Int?
   
   public init(_ title: any StringProtocol) {
     self.title = title
@@ -87,22 +87,22 @@ public struct TUIChipView: View {
   @ViewBuilder
   private func inputView(for type: Input) -> some View {
     switch type {
-    case .titleWithButton(let icon, let action):
+    case .titleWithButton(let value):
       titleView
-      rightButtonView(icon) { action?() }
+      rightButtonView(value.icon, action: value.action)
       
-    case .withLeftImage(let image, rightIcon: let icon, let action):
+    case .withLeftImage(let image, rightIcon: let value):
       leftImageView(image)
-      HStack(spacing: Spacing.custom(0)) {
+      HStack(spacing: 0) {
         titleView
-        rightButtonView(icon) { action?() }
+        rightButtonView(value.icon, action: value.action)
       }
       
-    case .withLeftIcon(let icon, rightIcon: let rightIcon, let action):
+    case .withLeftIcon(let icon, rightIcon: let value):
       iconView(icon)
-      HStack(spacing: Spacing.custom(0)) {
+      HStack(spacing: 0) {
         titleView
-        rightButtonView(rightIcon) { action?() }
+        rightButtonView(value.icon, action: value.action)
       }
     }
   }
@@ -129,13 +129,13 @@ public struct TUIChipView: View {
         titleView
       }
       
-    case .withButton(let icon, let action):
+    case .withButton(let value):
       if isSelected {
         titleView
-        rightButtonView(icon) { action?() }
+        rightButtonView(value.icon, action: value.action)
       } else {
         titleView
-        rightButtonView(icon) { action?() }
+        rightButtonView(value.icon, action: value.action)
       }
     }
   }
@@ -179,10 +179,10 @@ public struct TUIChipView: View {
   
   @ViewBuilder
   private func rightButtonView(_ icon: FluentIcon = .dismiss24Regular,
-                               action: (() -> Void)?) -> some View {
-    TUIIconButton(icon: icon) { action?() }
-    .iconColor(isSelected ? .onSecondary : .onSurface)
-    .size(size == .size32 ? .size24 : .size32)
+                               action: @escaping () -> Void) -> some View {
+    TUIIconButton(icon: icon) { action() }
+      .iconColor(isSelected ? .onSecondary : .onSurface)
+      .size(size == .size32 ? .size24 : .size32)
   }
 }
 
@@ -210,7 +210,12 @@ extension TUIChipView {
     case .filter(let type):
       switch type {
       case .onlyTitle:
-        return size == .size32 ? isSelected ? Spacing.custom(6) : Spacing.quarterHorizontal : isSelected ? Spacing.halfHorizontal : Spacing.quarterHorizontal
+        if size == .size32 {
+          return isSelected ? Spacing.custom(6) : Spacing.quarterHorizontal
+        } else {
+          return isSelected ? Spacing.halfHorizontal : Spacing.quarterHorizontal
+        }
+        
       case .withButton:
         return Spacing.custom(0)
       }
@@ -243,7 +248,11 @@ extension TUIChipView {
     case .filter(let type):
       switch type {
       case .onlyTitle:
-        return size == .size32 ? isSelected ? Spacing.custom(6) : Spacing.custom(20) : isSelected ? Spacing.halfHorizontal : Spacing.custom(28)
+        if size == .size32 {
+          return isSelected ? Spacing.custom(6) : Spacing.custom(20)
+        } else {
+          return isSelected ? Spacing.halfHorizontal : Spacing.custom(28)
+        }
       case .withButton:
         return size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal
       }
@@ -261,7 +270,11 @@ extension TUIChipView {
     case .filter(let type):
       switch type {
       case .onlyTitle:
-        return size == .size32 ? isSelected ? Spacing.custom(12) : Spacing.custom(20) : isSelected ? Spacing.baseHorizontal : Spacing.custom(28)
+        if size == .size32 {
+          return isSelected ? Spacing.custom(12) : Spacing.custom(20)
+        } else {
+          return isSelected ? Spacing.baseHorizontal : Spacing.custom(28)
+        }
       case .withButton:
         return Spacing.custom(0)
       }
@@ -338,9 +351,14 @@ public extension TUIChipView {
   }
   
   enum Input {
-    case titleWithButton(FluentIcon, action: (() -> Void)? = nil),
-         withLeftIcon(FluentIcon, rightIcon: FluentIcon, action: (() -> Void)? = nil),
-         withLeftImage(Image, rightIcon: FluentIcon, action: (() -> Void)? = nil)
+    case titleWithButton(InputValue),
+         withLeftIcon(FluentIcon, rightIcon: InputValue),
+         withLeftImage(Image, rightIcon: InputValue)
+  }
+  
+  struct InputValue {
+    var icon: FluentIcon
+    var action: () -> Void
   }
   
   enum Suggestion {
@@ -348,7 +366,7 @@ public extension TUIChipView {
   }
   
   enum Filter {
-    case onlyTitle, withButton(icon: FluentIcon, action: (() -> Void)? = nil)
+    case onlyTitle, withButton(InputValue)
   }
   
   enum FilterWithIcon {
@@ -375,15 +393,15 @@ struct TUIChipView_Previews: PreviewProvider {
       
       Section("Input") {
         TUIChipView("Input")
-          .style(.input(.titleWithButton(.dismiss24Regular)), size: .size32)
+          .style(.input(.titleWithButton(.init(icon: .dismiss24Regular, action: {}))), size: .size32)
         
         TUIChipView("Input with Icon")
-          .style(.input(.withLeftIcon(.person24Regular, rightIcon: .dismiss24Regular)),
-                 size: .size32)
+          .style(.input(.withLeftIcon(.person24Regular, rightIcon: .init(icon: .dismiss24Filled, action: {}))))
         
         TUIChipView("Input with Image")
-          .style(.input(.withLeftImage(Image(fluent: .person24Regular),
-                                       rightIcon: .dismiss24Regular)))
+          .style(.input(.withLeftImage(Image(fluent: .circleLine24Filled),
+                                       rightIcon: .init(icon: .dismiss24Filled, action: {}))))
+          .size(.size32)
       }
       
       Divider()
@@ -399,18 +417,17 @@ struct TUIChipView_Previews: PreviewProvider {
       Divider()
       Section("Filter") {
         TUIChipView("Filter")
-          .style(filter: .onlyTitle)
+          .style(filter: .onlyTitle, action: {})
         
         TUIChipView("With Button")
-          .style(filter: .withButton(icon: .dismiss24Filled), isSelected: true)
+          .style(filter: .withButton(.init(icon: .dismiss24Filled, action: {})), isSelected: true) {}
         
         TUIChipView("With Button")
-          .style(filter: .withButton(icon: .dismiss24Filled),
-                          isSelected: true, badgeCount: 5)
+          .style(filter: .withButton(.init(icon: .dismiss24Filled, action: {})), isSelected: true, badgeCount: 4) {}
           .size(.size40)
         
         TUIChipView("With")
-          .styleWithAction(.icon(.caretDown16Filled))
+          .styleWithAction(.icon(.caretDown16Filled)) { }
       }
     }
     .padding(.leading, 10)
