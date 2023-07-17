@@ -19,6 +19,6 @@ Tarka UI Kit is a reusable component library for building iOS and iPadOS apps, b
 
   
 # Localization
-
-Please check the README under `Localization` folder
+Tarka UI Kit supports localization for the strings that have been used in the kit.
+Please check the `README` file under `Localization` folder, to avail.
 

@@ -16,7 +16,8 @@ Tarka UI Kit supports localization for the strings that have been used in the ki
 
 6. Localize the strings that provided in `Localization+Strings` file, with appropriate languages in your localizable file
 
-7. You are done with localization. Now change the language and run the app. 
+7. You are done with localization. Now change the language and run the app
 
-##### Note: It is supported even if you are already using localization in your app.
-Follow the same steps. It will work as expected
+##### Note:
+It is supported even if you are already using localization in your app.
+Follow the same steps. It will work as expected.
