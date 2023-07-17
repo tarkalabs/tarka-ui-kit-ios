@@ -18,24 +18,22 @@ import SwiftUI
 struct TUIInputField: TUIInputFieldProtocol {
   
   @EnvironmentObject var inputItem: TUIInputFieldItem
-  @Binding private var isTextFieldInteractive: Bool
   @Binding private var isTextFieldFocused: Bool
-  
+  private var action: (() -> Void)?
   var properties: TUIInputFieldOptionalProperties
   
   /// Creates a `TUIInputField` View
   /// - Parameters:
   ///   - properties: An `TUIInputFieldOptionalProperties` object that holds the optional values to create multiple variants of this View
-  ///   - isTextFieldInteractive: A bindable bool that used to handle the row interaction and text field interaction switch when user interacts
   ///   - isTextFieldFocused: A bindable bool value that used to handle text field focus using keyboard
   ///   
   init(properties: TUIInputFieldOptionalProperties? = nil,
-       isTextFieldInteractive: Binding<Bool>? = nil,
-       isTextFieldFocused: Binding<Bool>? = nil) {
+       isTextFieldFocused: Binding<Bool>? = nil,
+       action: (() -> Void)? = nil) {
     
     self.properties = properties ?? TUIInputFieldOptionalProperties()
     self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
-    self._isTextFieldInteractive = isTextFieldInteractive ?? Binding<Bool>.constant(false)
+    self.action = action
   }
   
   var body: some View {
@@ -59,7 +57,14 @@ struct TUIInputField: TUIInputFieldProtocol {
   private var fieldBody: some View {
     VStack(spacing: 0) {
       
-      fieldBodyHeaderHStack
+      if !self.isTextFieldFocused, let action {
+        Button(action: action) {
+          fieldBodyHeaderHStack
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+      } else {
+        fieldBodyHeaderHStack
+      }
       
       let highlightBar =  properties.state.highlightBarColor ?? properties.highlightBarColor
       
@@ -82,7 +87,6 @@ struct TUIInputField: TUIInputFieldProtocol {
       }
       TUIInputTextContentView(
         inputItem: inputItem,
-        isTextFieldInteractive: isTextFieldInteractive,
         placeholder: properties.placeholder,
         isTextFieldFocused: $isTextFieldFocused)
       .frame(maxWidth: .infinity, alignment: .leading)

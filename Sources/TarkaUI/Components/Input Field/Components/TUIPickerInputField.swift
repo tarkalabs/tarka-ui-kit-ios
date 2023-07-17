@@ -27,16 +27,14 @@ public struct TUIPickerInputField<Content: View>: TUIInputFieldProtocol {
   
   public var body: some View {
     
-    Button(action: {
+    TUIInputField(properties: properties) {
       self.isSheetPresented = true
-    }) {
-      TUIInputField(properties: properties)
-        .sheet(
-          isPresented: $isSheetPresented,
-          content: {
-            content
-          })
     }
+    .sheet(
+      isPresented: $isSheetPresented,
+      content: {
+        content
+      })
     .accessibilityIdentifier(Accessibility.root)
   }
 }

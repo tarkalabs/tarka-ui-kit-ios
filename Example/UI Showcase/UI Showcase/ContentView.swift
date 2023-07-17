@@ -39,6 +39,8 @@ struct ContentView: View {
   
   @State var dateFieldItem = globalDateFieldItem
   
+  @StateObject var locationPickerFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Location")
+
   @StateObject var memoTextFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo")
   
   @StateObject var valueOnlyTextFieldItem = TUIInputFieldItem(
@@ -46,7 +48,7 @@ struct ContentView: View {
   
   @StateObject var pickerFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Pick value")
   
-  @State private var isTextFieldFocused: Bool = false
+  @State private var isDoneClicked: Bool = false
   
   public init() { }
   
@@ -64,6 +66,15 @@ Second Text - \(valueOnlyTextFieldItem.value)
         .highlightBar(color: .red)
         .state(.success("Values are valid"))
 
+      TUISelectionInputField {
+        self.locationPickerFieldItem.style = .titleWithValue
+        self.locationPickerFieldItem.value = "20.123242, 73.24426t2"
+      }
+        .endItem(withStyle: .icon(.document24Regular))
+        .highlightBar(color: .red)
+        .state(.success("Values are valid"))
+        .environmentObject(locationPickerFieldItem)
+
       TUIPickerInputField()
       {
         ActivityView(activityItems: ["Test Export"], applicationActivities: nil)
@@ -71,25 +82,23 @@ Second Text - \(valueOnlyTextFieldItem.value)
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
       .environmentObject(pickerFieldItem)
       
-      TUITextInputField(
-        isTextFieldFocused: $isTextFieldFocused)
+      TUITextInputField(isDoneClicked: $isDoneClicked)
       .state(.alert("Input values are sensitive"))
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
       .environmentObject(memoTextFieldItem)
       
-      TUITextInputField(isTextFieldFocused: $isTextFieldFocused)
+      TUITextInputField(isDoneClicked: $isDoneClicked)
         .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
         .state(.error("Input values are sensitive"))
         .placeholder("Enter Memo Description")
         .environmentObject(valueOnlyTextFieldItem)
-      
     }
     .scrollDismissesKeyboard(.immediately)
     .toolbar {
       ToolbarItemGroup(placement: .keyboard) {
         Spacer()
         Button("Done") {
-          isTextFieldFocused = false
+          isDoneClicked = true
         }
       }
     }
