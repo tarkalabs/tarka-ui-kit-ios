@@ -29,7 +29,7 @@ public extension TUIChipView {
   ///   - action: This block will execute when view interacted
   /// - Returns: A closure that returns the TUIChipView
   func style(filter: Filter, isSelected: Bool = false,
-             badgeCount: Int? = nil, action: (() -> Void)? = nil) -> Self {
+             badgeCount: Int? = nil, action: @escaping () -> Void) -> Self {
     var newView = self
     newView.style = Style.filter(filter)
     newView.isSelected = isSelected
@@ -44,7 +44,7 @@ public extension TUIChipView {
     return newView
   }
   
-  func styleWithAction(_ style: FilterWithIcon, action: (() -> Void)? = nil) -> Self {
+  func styleWithAction(_ style: FilterWithIcon, action: @escaping () -> Void) -> Self {
     var newView = self
     newView.style = Style.filterWithIcon(style)
     newView.action = action
