@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+/// `TUIMobileButtonBlock` is a SwiftUI view that shows TUIButtons in a horizontal stack.
+/// The view can be customized with different styles, to configure the position of buttons,
+/// and its width
+///
 public struct TUIMobileButtonBlock: View {
   
   public enum Style {
@@ -16,6 +20,7 @@ public struct TUIMobileButtonBlock: View {
   }
   
   var style: Style
+  
   public init(style: Style) {
     self.style = style
   }

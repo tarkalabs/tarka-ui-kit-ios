@@ -10,32 +10,11 @@ import SwiftUI
 public extension TUIButton {
   
   enum Size: String, Identifiable, CaseIterable {
-        
+    
     case large, regular, small, xs
     
     public var id: String {
       UUID().uuidString
-    }
-
-    func leading(for icon: TUIButton.Icon?) -> CGFloat {
-      guard let icon else {
-        return paddingWithoutIcon
-      }
-      switch icon {
-      case .right: return paddingWithTitle
-      case .left: return paddingWithIcon
-      }
-    }
-    
-    func trailing(for icon: TUIButton.Icon?) -> CGFloat {
-      
-      guard let icon else {
-        return paddingWithoutIcon
-      }
-      switch icon {
-      case .right: return paddingWithIcon
-      case .left: return paddingWithTitle
-      }
     }
     
     var height: CGFloat {
@@ -64,24 +43,23 @@ public extension TUIButton {
     
     var hStackTopPadding: CGFloat {
       switch self {
-      case .large: return 12
-      case .regular: return 8
-      case .small: return 7
-      case .xs: return 5
+      case .large: return Spacing.custom(12)
+      case .regular: return Spacing.halfHorizontal
+      case .small: return Spacing.custom(7)
+      case .xs: return Spacing.custom(5)
       }
     }
     
     var hStackSpacing: CGFloat {
       switch self {
-      case .large, .regular: return 8
-      case .small, .xs: return 4
+      case .large, .regular: return Spacing.halfHorizontal
+      case .small, .xs: return Spacing.quarterHorizontal
       }
     }
     
     var titleTopPadding: CGFloat {
       switch self {
-      case .large: return 2
-      case .regular: return 2
+      case .large, .regular: return Spacing.custom(2)
       case .small, .xs: return 0
       }
     }
@@ -94,30 +72,41 @@ public extension TUIButton {
       }
     }
     
-    private var paddingWithoutIcon: CGFloat {
-      switch self {
-      case .large: return 24
-      case .regular: return 24
-      case .small: return 16
-      case .xs: return 8
+    func leading(for icon: TUIButton.Icon?) -> CGFloat {
+      guard let icon else {
+        return paddingWithTitle
+      }
+      switch icon {
+      case .right: return paddingWithTitle
+      case .left: return paddingWithIcon
+      }
+    }
+    
+    func trailing(for icon: TUIButton.Icon?) -> CGFloat {
+      
+      guard let icon else {
+        return paddingWithTitle
+      }
+      switch icon {
+      case .right: return paddingWithIcon
+      case .left: return paddingWithTitle
       }
     }
     
     private var paddingWithTitle: CGFloat {
       switch self {
-      case .large:  return 24
-      case .regular: return 24
-      case .small: return 16
-      case .xs: return 8
+      case .large, .regular: return Spacing.custom(24)
+      case .small: return Spacing.baseHorizontal
+      case .xs: return Spacing.halfHorizontal
       }
     }
     
     private var paddingWithIcon: CGFloat {
       switch self {
-      case .large: return 16
-      case .regular: return 16
-      case .small: return 8
-      case .xs: return 4
+      case .large: return Spacing.baseHorizontal
+      case .regular: return Spacing.baseHorizontal
+      case .small: return Spacing.halfHorizontal
+      case .xs: return Spacing.quarterHorizontal
       }
     }
   }
