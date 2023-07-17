@@ -66,7 +66,7 @@ Second Text - \(valueOnlyTextFieldItem.value)
         .highlightBar(color: .red)
         .state(.success("Values are valid"))
 
-      TUISelectionInputField {
+      TUIInteractiveInputField {
         self.locationPickerFieldItem.style = .titleWithValue
         self.locationPickerFieldItem.value = "20.123242, 73.24426t2"
       }
