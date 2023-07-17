@@ -7,7 +7,12 @@
 
 import SwiftUI
 
-
+/// `TUIButton` is a SwiftUI view that acts as a button.
+/// The view can be customized with different styles, to configure the title, background colors and sizes
+///
+/// It has few modifiers to configure its properties. To explore that, please check
+/// `TUIButton+Modifiers.swift`
+///
 public struct TUIButton: View {
   
   public enum Icon {
@@ -27,14 +32,6 @@ public struct TUIButton: View {
               action: @escaping () -> Void) {
     self.title = title
     self.action = action
-  }
-  
-  func image(for icon: FluentIcon) -> some View {
-    Image(fluent: icon)
-      .scaledToFit()
-      .frame(width: size.iconSize, height: size.iconSize)
-      .foregroundColor(style.foregroundColor)
-      .clipped()
   }
   
   public var body: some View {
@@ -67,6 +64,14 @@ public struct TUIButton: View {
     .padding(.trailing, size.trailing(for: icon))
     .background(style.backgroundColor)
     .roundedCorner(width: style.borderWidth, color: .onSurface)
+  }
+  
+  private func image(for icon: FluentIcon) -> some View {
+    Image(fluent: icon)
+      .scaledToFit()
+      .frame(width: size.iconSize, height: size.iconSize)
+      .foregroundColor(style.foregroundColor)
+      .clipped()
   }
 }
 
