@@ -25,8 +25,22 @@ public struct TUIMobileButtonBlock: View {
     self.style = style
   }
   
+  let fixedWidth: CGFloat = 342
+  
   public var body: some View {
     
+    VStack(spacing: 15) {
+      
+      TUIDivider()
+        .horizontal(lrPadding: .zero, tbPadding: .zero)
+
+      buttonBlock
+    }
+    .background(Color.surface50)
+  }
+  
+  @ViewBuilder
+  private var buttonBlock: some View {
     HStack(spacing: Spacing.halfHorizontal) {
       
       switch style {
@@ -35,17 +49,17 @@ public struct TUIMobileButtonBlock: View {
         button
           .style(.primary)
           .size(.large)
-          .width(.infinity)
+          .width(.fixed(fixedWidth))
         
       case .two(let left, let right):
         left
           .style(.outlined)
           .size(.large)
-          .width(.infinity)
+          .width(.maximum(.infinity))
         right
           .style(.primary)
           .size(.large)
-          .width(.infinity)
+          .width(.maximum(.infinity))
         
       case .flexible(let left, let right):
         left
@@ -54,14 +68,13 @@ public struct TUIMobileButtonBlock: View {
         right
           .style(.primary)
           .size(.large)
-          .width(.infinity)
+          .width(.maximum(fixedWidth))
       }
     }
     .padding(.horizontal, Spacing.custom(24))
-    .padding(.top, 15)
     .padding(.bottom, 16)
     .frame(maxWidth: .infinity)
-    .background(Color.surface50)
+    .frame(minHeight: 88)
   }
 }
 
@@ -69,7 +82,7 @@ struct TUIMobileButtonBlock_Previews: PreviewProvider {
   
   static var previews: some View {
     
-    VStack {
+    VStack(spacing: 0) {
       VStack(spacing: 16) {
         TUIMobileButtonBlock(
           style: .one(
@@ -82,14 +95,13 @@ struct TUIMobileButtonBlock_Previews: PreviewProvider {
               TUIButton(title: "Label") { },
             right: TUIButton(title: "Label") { }
           ))
-        
+
         TUIMobileButtonBlock(
           style: .flexible(
             left: TUIButton(title: "Label") { },
             right: TUIButton(title: "Label") { }
           ))
       }
-      .padding(.all, 16)
     }
     .background(Color.background)
   }

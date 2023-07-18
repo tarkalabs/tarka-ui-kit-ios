@@ -19,12 +19,18 @@ public struct TUIButton: View {
     case left(FluentIcon), right(FluentIcon)
   }
   
+  public enum Width {
+    case fixed(CGFloat)
+    case fill
+    case maximum(CGFloat)
+  }
+  
   var title: String
   var style: Style = .primary
   var size: Size = .regular
   var icon: Icon?
   var badge: String?
-  var width: CGFloat?
+  var width: Width = .fill
   
   var action: () -> Void
   
@@ -57,11 +63,11 @@ public struct TUIButton: View {
         }
       }
       .padding(.vertical, size.hStackTopPadding)
+      .padding(.leading, size.leading(for: icon))
+      .padding(.trailing, size.trailing(for: icon))
     }
     .width(width)
     .frame(minHeight: size.height)
-    .padding(.leading, size.leading(for: icon))
-    .padding(.trailing, size.trailing(for: icon))
     .background(style.backgroundColor)
     .roundedCorner(width: style.borderWidth, color: .onSurface)
   }
@@ -116,12 +122,16 @@ struct TUIButton_Previews: PreviewProvider {
 private extension Button {
   
   @ViewBuilder
-  func width(_ value: CGFloat?) -> some View {
+  func width(_ width: TUIButton.Width) -> some View {
     
-    if value == CGFloat.infinity {
-      self.frame(maxWidth: .infinity)
-    } else {
+    switch width {
+    case .fixed(let value):
       self.frame(width: value)
+    case .maximum(let value):
+      self.frame(maxWidth: value)
+    case .fill:
+      self
     }
+    
   }
 }
