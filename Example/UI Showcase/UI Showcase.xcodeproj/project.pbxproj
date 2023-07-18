@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D312A8CA2A618511009DD631 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D312A8CC2A618511009DD631 /* Localizable.strings */; };
-		D312A8D02A61861A009DD631 /* TarkaUILocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D312A8D22A61861A009DD631 /* TarkaUILocalizable.strings */; };
 		D41499262A0CCE0C00929EAB /* TarkaUI in Frameworks */ = {isa = PBXBuildFile; productRef = D41499252A0CCE0C00929EAB /* TarkaUI */; };
 		D43CDD9B29DFE34900F8081E /* UI_ShowcaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDD9A29DFE34900F8081E /* UI_ShowcaseApp.swift */; };
 		D43CDD9D29DFE34900F8081E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDD9C29DFE34900F8081E /* ContentView.swift */; };
@@ -38,8 +37,6 @@
 
 /* Begin PBXFileReference section */
 		D312A8CB2A618511009DD631 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		D312A8D12A61861A009DD631 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/TarkaUILocalizable.strings; sourceTree = "<group>"; };
-		D312A8D32A618639009DD631 /* ta-IN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ta-IN"; path = "ta-IN.lproj/TarkaUILocalizable.strings"; sourceTree = "<group>"; };
 		D312A8D42A618655009DD631 /* ta-IN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ta-IN"; path = "ta-IN.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D43CDD9729DFE34900F8081E /* UI Showcase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UI Showcase.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43CDD9A29DFE34900F8081E /* UI_ShowcaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI_ShowcaseApp.swift; sourceTree = "<group>"; };
@@ -84,7 +81,6 @@
 			isa = PBXGroup;
 			children = (
 				D312A8CC2A618511009DD631 /* Localizable.strings */,
-				D312A8D22A61861A009DD631 /* TarkaUILocalizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -276,7 +272,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D43CDDA229DFE34A00F8081E /* Preview Assets.xcassets in Resources */,
-				D312A8D02A61861A009DD631 /* TarkaUILocalizable.strings in Resources */,
 				D312A8CA2A618511009DD631 /* Localizable.strings in Resources */,
 				D43CDD9F29DFE34A00F8081E /* Assets.xcassets in Resources */,
 			);
@@ -348,15 +343,6 @@
 				D312A8D42A618655009DD631 /* ta-IN */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		D312A8D22A61861A009DD631 /* TarkaUILocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D312A8D12A61861A009DD631 /* en */,
-				D312A8D32A618639009DD631 /* ta-IN */,
-			);
-			name = TarkaUILocalizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
