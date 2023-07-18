@@ -15,21 +15,28 @@ import SwiftUI
 ///
 public struct TUITextInputField: TUIInputFieldProtocol {
   
-  @EnvironmentObject var inputItem: TUIInputFieldItem
-  
   public var properties = TUIInputFieldOptionalProperties()
   
   /// Binds the bool that used to handle the row interaction and text field interaction switch when user interacts
   @Binding private var isDoneClicked: Bool
-
+  
   @State private var isFocused: Bool = false
-
+  
+  @Binding private var inputItem: TUIInputFieldItem
+  
+  
   /// Creates a `TUITextInputField` view
-  /// - Parameter isTextFieldFocused: A bindable bool value that used to handle text field focus using keyboard
-  public init(isDoneClicked: Binding<Bool>) {
-    
-    self._isDoneClicked = isDoneClicked
-  }
+  /// - Parameters:
+  ///   - inputItem: TUIInputItem's instance that holds the required values to render `TUIInputField` View
+  ///   - isDoneClicked: A bindable bool value that used to handle text field focus when done clicked in toolbar
+  ///   
+  public init(
+    inputItem: Binding<TUIInputFieldItem>,
+    isDoneClicked: Binding<Bool>) {
+      
+      self._inputItem = inputItem
+      self._isDoneClicked = isDoneClicked
+    }
   
   public var body: some View {
     mainBody
@@ -51,7 +58,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   
   @ViewBuilder
   private var mainBody: some View {
-        inputFieldView
+    inputFieldView
       .accessibilityIdentifier(Accessibility.root)
   }
   
@@ -65,7 +72,8 @@ public struct TUITextInputField: TUIInputFieldProtocol {
           self.inputItem.style = .titleWithValue
         }
       }
-    .accessibilityIdentifier(Accessibility.root)
+      .environmentObject(inputItem)
+      .accessibilityIdentifier(Accessibility.root)
   }
   
   private var existingStyle: TUIInputFieldStyle {
@@ -87,10 +95,11 @@ struct TUITextInputField_Previews: PreviewProvider {
   
   static var previews: some View {
     
-    TUITextInputField(isDoneClicked: Binding.constant(false))
-      .state(.alert("Input values are sensitive"))
-      .endItem(withStyle: .icon(.info24Regular))
-      .environmentObject(
-        TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo"))
+    @State var item = TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo")
+    
+    TUITextInputField(
+      inputItem: $item, isDoneClicked: Binding.constant(false))
+    .state(.alert("Input values are sensitive"))
+    .endItem(withStyle: .icon(.info24Regular))
   }
 }
