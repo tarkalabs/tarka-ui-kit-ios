@@ -46,11 +46,7 @@ public struct TUIChipView: View {
     .padding(.vertical, Spacing.custom(0))
     .background(isSelected ? Color.secondaryTUI : .surface,
                 in: RoundedRectangle(cornerRadius: Spacing.halfHorizontal))
-    .overlay(
-      RoundedRectangle(cornerRadius: Spacing.halfHorizontal)
-        .inset(by: isSelected ?  0.75 : 0.5)
-        .strokeBorder(Color.outline, lineWidth: isSelected ? 0 : 1)
-    )
+    .overlay(content: borderView)
     .onTapGesture {
       action?()
     }
@@ -184,6 +180,13 @@ public struct TUIChipView: View {
     TUIIconButton(icon: icon) { action() }
       .iconColor(isSelected ? .onSecondary : .onSurface)
       .size(size == .size32 ? .size24 : .size32)
+  }
+  
+  @ViewBuilder
+  private func borderView() -> some View {
+    RoundedRectangle(cornerRadius: Spacing.halfHorizontal)
+      .inset(by: isSelected ?  0.75 : 0.5)
+      .strokeBorder(Color.outline, lineWidth: isSelected ? 0 : 1)
   }
 }
 
