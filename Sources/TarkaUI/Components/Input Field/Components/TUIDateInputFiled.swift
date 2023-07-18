@@ -60,7 +60,7 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
     .environmentObject(inputItem)
     // without a below line of code, date can not receive updates. Weird one. For now, we go with this hack.
     .onChange(of: date) { _ in }
-    .sheet(
+    .fullScreenCover(
       isPresented: $isSheetPresented,
       content: {
         TUIDatePopover(date: $date, isShowing: $isSheetPresented, isSelected: $isDateSelected)
