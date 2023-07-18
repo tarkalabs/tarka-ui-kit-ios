@@ -46,7 +46,7 @@ public extension TUIButton {
   ///
   /// If you pass value, it will be set as width of the button.
   /// If you pass `infinity`, it will pick screen's size width.
-  func width(_ value: CGFloat? = nil) -> Self {
+  func width(_ value: TUIButton.Width) -> Self {
     var newView = self
     newView.width = value
     return newView
