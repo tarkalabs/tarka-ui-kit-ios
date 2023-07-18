@@ -15,20 +15,29 @@ import SwiftUI
 ///
 public struct TUIInteractiveInputField: TUIInputFieldProtocol {
   
-  @EnvironmentObject var inputItem: TUIInputFieldItem
   public var properties = TUIInputFieldOptionalProperties()
+  @Binding private var inputItem: TUIInputFieldItem
   private var action: () -> Void
   
-  /// Creates a`TUISelectionInputField` View
-  /// - Parameter content: A View that to be presented
-  public init(_ action: @escaping () -> Void) {
-    self.action = action
-  }
+  
+  /// Creates a`TUIInteractiveInputField` View
+  /// - Parameters:
+  ///   - inputItem: TUIInputItem's instance that holds the required values to render `TUIInputField` View
+  ///   - action: callback when the user interacts with the view
+  ///   
+  public init(
+    inputItem: Binding<TUIInputFieldItem>,
+    action: @escaping () -> Void) {
+      
+      self._inputItem = inputItem
+      self.action = action
+    }
   
   public var body: some View {
     
     TUIInputField(properties: properties, action: action)
-    .accessibilityIdentifier(Accessibility.root)
+      .environmentObject(inputItem)
+      .accessibilityIdentifier(Accessibility.root)
   }
 }
 
@@ -45,9 +54,8 @@ struct TUISelectionInputField_Previews: PreviewProvider {
     
     @State var item = TUIInputFieldItem(style: .onlyTitle,
                                         title: "Pick value")
-
-    TUIInteractiveInputField { item.title = "Value picked" }
-    .endItem(withStyle: .icon(.info24Regular))
-    .environmentObject(item)
+    
+    TUIInteractiveInputField(inputItem: $item) { item.title = "Value picked" }
+      .endItem(withStyle: .icon(.info24Regular))
   }
 }
