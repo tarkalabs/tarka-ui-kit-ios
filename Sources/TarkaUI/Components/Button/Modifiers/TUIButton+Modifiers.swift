@@ -24,8 +24,7 @@ public extension TUIButton {
     return newView
   }
   
-  
-  /// Accepts the icon and show it in the horizontal stack with title w.r.t to the title
+  /// Accepts the icon and shows it in the horizontal stack with title w.r.t to the title
   /// - Parameter icon: An optional `TUIButton.Icon`. It decides the position of icon,
   /// whether is to be in left or right
   /// - Returns: Modified TUIButton
@@ -42,8 +41,11 @@ public extension TUIButton {
     newView.badge = value
     return newView
   }
-  
+
   /// Sets the width for the button.
+  /// - Parameter value: An `Width` enum that decides the width of the button
+  /// - Returns: Modified TUIButton
+  ///
   func width(_ value: TUIButton.Width) -> Self {
     var newView = self
     newView.width = value

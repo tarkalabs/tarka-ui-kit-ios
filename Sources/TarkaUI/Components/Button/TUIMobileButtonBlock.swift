@@ -19,7 +19,7 @@ public struct TUIMobileButtonBlock: View {
     case flexible(left: TUIButton, right: TUIButton)
   }
   
-  var style: Style
+  private var style: Style
   
   public init(style: Style) {
     self.style = style
@@ -29,11 +29,11 @@ public struct TUIMobileButtonBlock: View {
   
   public var body: some View {
     
-    VStack(spacing: 15) {
+    VStack(spacing: Spacing.custom(15)) {
       
       TUIDivider()
         .horizontal(lrPadding: .zero, tbPadding: .zero)
-      
+
       buttonBlock
     }
     .background(Color.surface50)
@@ -72,7 +72,7 @@ public struct TUIMobileButtonBlock: View {
       }
     }
     .padding(.horizontal, Spacing.custom(24))
-    .padding(.bottom, 16)
+    .padding(.bottom, Spacing.doubleVertical)
     .frame(maxWidth: .infinity)
     .frame(minHeight: 88)
   }
@@ -95,7 +95,7 @@ struct TUIMobileButtonBlock_Previews: PreviewProvider {
               TUIButton(title: "Label") { },
             right: TUIButton(title: "Label") { }
           ))
-        
+
         TUIMobileButtonBlock(
           style: .flexible(
             left: TUIButton(title: "Label") { },
