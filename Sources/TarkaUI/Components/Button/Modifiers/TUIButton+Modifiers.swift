@@ -9,7 +9,6 @@ import SwiftUI
 
 public extension TUIButton {
   
-  
   /// Changes its style
   func style(_ style: TUIButton.Style) -> Self {
     var newView = self
