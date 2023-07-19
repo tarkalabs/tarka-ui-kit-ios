@@ -39,7 +39,7 @@ struct ContentView: View {
   
   @State var dateFieldItem = globalDateFieldItem
   
-  @StateObject var memoTextFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo")
+  @StateObject var memoTextFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo".localized)
   
   @StateObject var valueOnlyTextFieldItem = TUIInputFieldItem(
     style: .onlyValue, value: "Input Text that received as text for memo")
@@ -114,4 +114,13 @@ struct ActivityView: UIViewControllerRepresentable {
   }
   
   func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+}
+
+extension String {
+  
+  var localized: String {
+    return NSLocalizedString(
+      self, tableName: "Localizable",
+      bundle: .main, value: self, comment: self)
+  }
 }
