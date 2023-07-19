@@ -29,6 +29,7 @@ public extension TUIButton {
   /// - Parameter icon: An optional `TUIButton.Icon`. It decides the position of icon,
   /// whether is to be in left or right
   /// - Returns: Modified TUIButton
+  ///
   func icon(_ icon: TUIButton.Icon? = nil) -> Self {
     var newView = self
     newView.icon = icon
@@ -43,9 +44,6 @@ public extension TUIButton {
   }
   
   /// Sets the width for the button.
-  ///
-  /// If you pass value, it will be set as width of the button.
-  /// If you pass `infinity`, it will pick screen's size width.
   func width(_ value: TUIButton.Width) -> Self {
     var newView = self
     newView.width = value

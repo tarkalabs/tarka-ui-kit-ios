@@ -1,5 +1,5 @@
 //
-//  TUIDivider+Enums.swift
+//  TUIDivider+Enum.swift
 //  
 //
 //  Created by Gopinath on 18/07/23.
@@ -49,5 +49,4 @@ public extension TUIDivider {
       }
     }
   }
-  
 }

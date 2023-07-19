@@ -15,16 +15,6 @@ import SwiftUI
 ///
 public struct TUIButton: View {
   
-  public enum Icon {
-    case left(FluentIcon), right(FluentIcon)
-  }
-  
-  public enum Width {
-    case fixed(CGFloat)
-    case fill
-    case maximum(CGFloat)
-  }
-  
   var title: String
   var style: Style = .primary
   var size: Size = .regular
@@ -132,6 +122,5 @@ private extension Button {
     case .fill:
       self
     }
-    
   }
 }
