@@ -35,7 +35,7 @@ struct TUIDatePopover: View {
     
     VStack(spacing: 0) {
       
-      Button("Done") {
+      Button("Done".localized) {
         self.date = storedDate
         isSelected = true
         isShowing = false

@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  UI Showcase
+
+  Created by Gopinath on 14/07/23.
+  
+*/
+
+// Mark: - UI Showcase
+
+"Enter Memo" = "மெமோவை உள்ளிடவும்";
+
+
+// Mark: - Tarka UI Kit
+
+"Done" = "முடிந்தது";
+"Cancel" = "Cancel";
