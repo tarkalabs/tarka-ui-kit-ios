@@ -15,9 +15,7 @@ public extension TUIDivider {
   ///   - tbPadding: padding to be set for top or bottom
   /// - Returns: Modified TUIDivider view
   ///
-  func horizontal(
-    lrPadding: LRPadding,
-    tbPadding: TBPadding) -> Self {
+  func horizontal(lrPadding: LRPadding, tbPadding: TBPadding) -> Self {
       
       var newView = self
       newView.orientation = .horizontal
@@ -34,8 +32,7 @@ public extension TUIDivider {
   /// That's why we use `TBPadding` enum for lrPadding as it has only `zero` and `value 8` options.
   /// - Returns: Modified TUIDivider view
   ///
-  func vertical(
-    lrPadding: TBPadding) -> Self {
+  func vertical(lrPadding: TBPadding) -> Self {
       
       var newView = self
       newView.orientation = .vertical
@@ -43,7 +40,6 @@ public extension TUIDivider {
       newView.tbPadding = 0
       return newView
     }
-  
   
   /// Sets the foreground color of divider
   func color(_ color: Color) -> Self {

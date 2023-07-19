@@ -48,7 +48,6 @@ struct TUIDivider_Previews: PreviewProvider {
   
   static var previews: some View {
     
-    
     VStack (spacing: 16) {
       
       ForEach(TUIDivider.TBPadding.allCases) { tbPadding in
