@@ -6,5 +6,12 @@
   
 */
 
+// Mark: - UI Showcase
+
 "Enter Memo" = "மெமோவை உள்ளிடவும்";
+
+
+// Mark: - Tarka UI Kit
+
 "Done" = "முடிந்தது";
+"Cancel" = "Cancel";
