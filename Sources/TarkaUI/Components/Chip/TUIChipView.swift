@@ -43,7 +43,7 @@ public struct TUIChipView: View {
     .frame(maxHeight: size.height)
     .padding(.leading, leading)
     .padding(.trailing, trailing)
-    .padding(.vertical, Spacing.custom(0))
+    .padding(.vertical, 0)
     .background(isSelected ? Color.secondaryTUI : .surface)
     .borderView(RoundedRectangle(cornerRadius: Spacing.halfHorizontal),
                 width: isSelected ? 0 : 1,
