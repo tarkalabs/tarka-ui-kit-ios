@@ -1,9 +1,0 @@
-//
-//  Strings+Localization.swift
-//  
-//
-//  Created by Gopinath on 14/07/23.
-//
-
-"Done" = "Done";
-"Cancel" = "Cancel";
