@@ -14,7 +14,7 @@ Tarka UI Kit supports localization for the strings that have been used in the ki
 
 5. Now the file `Localizable` will be expandable. If you expand it, you can see separate files for each language
 
-6. Localize the strings that provided in `Localizable` file of UIShowcase app under Resources folder, with appropriate languages in your localizable file
+6. Localize the strings that provided in `Localizable` file of `UI Showcase` app under Resources folder, with appropriate languages in your localizable file
 
 7. You are done with localization. Now change the language and run the app
 
@@ -23,4 +23,4 @@ Tarka UI Kit supports localization for the strings that have been used in the ki
 
 If you are already using localization in your app, and if your localizable file name is `Localizable`, please use that file itself.
 
-Localize the strings that provided in `Localizable` file of UIShowcase app under Resources folder, with appropriate languages in your localizable file.
+Localize the strings that provided in `Localizable` file of `UI Showcase` app under Resources folder, with appropriate languages in your localizable file.
