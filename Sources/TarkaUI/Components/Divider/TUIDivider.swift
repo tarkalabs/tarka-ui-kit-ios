@@ -9,11 +9,10 @@ import SwiftUI
 
 public struct TUIDivider: View {
   
-  public var orientation = Orientation.horizontal
-  
-  public var tbPadding: CGFloat = 0
-  public var lrPadding: CGFloat = 0
-  public var color = Color.surfaceHover
+  var orientation = Orientation.horizontal
+  var tbPadding: CGFloat = 0
+  var lrPadding: CGFloat = 0
+  var color = Color.surfaceHover
   
   public init() { }
   

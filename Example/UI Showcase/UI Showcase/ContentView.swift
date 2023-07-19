@@ -16,13 +16,6 @@ struct ContentView: View {
         .foregroundColor(.accentColor)
       Text("Hello, world!")
       Image(fluent: .map24Regular)
-
-      
-      TUIIconButton(
-        icon: .chevronRight20Regular) { }
-        .iconColor(.outline)
-      
-      TUIButton(title: "Save") { }
     }
     .padding()
   }

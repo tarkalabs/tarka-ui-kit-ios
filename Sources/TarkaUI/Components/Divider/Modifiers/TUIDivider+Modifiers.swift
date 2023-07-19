@@ -9,7 +9,6 @@ import SwiftUI
 
 public extension TUIDivider {
   
-  
   /// Creates vertical oriented divider with given padding
   /// - Parameters:
   ///   - lrPadding: padding to be set for leading or right
@@ -26,7 +25,6 @@ public extension TUIDivider {
       newView.tbPadding = tbPadding.value
       return newView
     }
-  
   
   /// Creates vertical oriented divider with given padding
   /// - Parameter lrPadding: padding to be set for leading or right.

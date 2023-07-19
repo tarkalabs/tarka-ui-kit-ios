@@ -10,16 +10,6 @@ import SwiftUI
 extension View {
   
   @ViewBuilder
-  func isEnabled<Content: View>(_ show: Bool,
-                                content: (Self) -> Content) -> some View {
-    if show {
-      content(self)
-    } else {
-      self
-    }
-  }
-  
-  @ViewBuilder
   func roundedCorner(width: CGFloat, color: Color) -> some View {
     if width > 0 {
       self.overlay(
