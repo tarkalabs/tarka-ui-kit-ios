@@ -33,7 +33,7 @@ public struct TUIMobileButtonBlock: View {
       
       TUIDivider()
         .horizontal(lrPadding: .zero, tbPadding: .zero)
-
+      
       buttonBlock
     }
     .background(Color.surface50)
@@ -95,7 +95,7 @@ struct TUIMobileButtonBlock_Previews: PreviewProvider {
               TUIButton(title: "Label") { },
             right: TUIButton(title: "Label") { }
           ))
-
+        
         TUIMobileButtonBlock(
           style: .flexible(
             left: TUIButton(title: "Label") { },

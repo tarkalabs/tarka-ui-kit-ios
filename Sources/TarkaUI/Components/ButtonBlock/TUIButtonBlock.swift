@@ -32,7 +32,7 @@ public struct TUIButtonBlock: View {
   public init(@ButtonBlockActionBuilder actions: @escaping () -> [TUIButtonBlockAction]) {
     self.actions = actions()
   }
-    
+  
   public var body: some View {
     HStack(spacing: Spacing.halfHorizontal) {
       ForEach(actions, id: \.id) { action in
@@ -90,13 +90,13 @@ struct ButtonBlock_Previews: PreviewProvider {
     case test(() -> Void)
     case test2(() -> Void)
   }
-
+  
   static var previews: some View {
     TUIButtonBlock {
       TestAction.test {
         print("test")
       }
-        
+      
       TestAction.test2 {
         print("test 2")
       }

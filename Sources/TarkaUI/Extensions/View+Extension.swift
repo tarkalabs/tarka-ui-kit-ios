@@ -23,7 +23,7 @@ extension View {
   func roundedCorner(width: CGFloat, color: Color) -> some View {
     if width > 0 {
       self.overlay(
-        RoundedRectangle(cornerRadius: .infinity)
+        Capsule()
           .stroke(color, lineWidth: width)
       )
       .clipShape(Capsule())
