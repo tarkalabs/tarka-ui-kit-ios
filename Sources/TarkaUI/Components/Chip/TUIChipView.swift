@@ -44,9 +44,10 @@ public struct TUIChipView: View {
     .padding(.leading, leading)
     .padding(.trailing, trailing)
     .padding(.vertical, Spacing.custom(0))
-    .background(isSelected ? Color.secondaryTUI : .surface,
-                in: RoundedRectangle(cornerRadius: Spacing.halfHorizontal))
-    .overlay(content: borderView)
+    .background(isSelected ? Color.secondaryTUI : .surface)
+    .borderView(RoundedRectangle(cornerRadius: Spacing.halfHorizontal),
+                width: isSelected ? 0 : 1,
+                color: isSelected ? .secondaryTUI: .outline)
     .onTapGesture {
       action?()
     }
@@ -150,7 +151,8 @@ public struct TUIChipView: View {
   private var titleView: some View {
     Text(title)
       .font(size.textSize)
-      .frame(maxHeight: size == .size32 ? Spacing.custom(18) : Spacing.custom(20),
+      .frame(minHeight: size == .size32 ? Spacing.custom(18) : Spacing.custom(20),
+             maxHeight: size == .size32 ? Spacing.custom(18) : Spacing.custom(20),
              alignment: .leading)
       .foregroundColor(isSelected ? .onSecondary : .onSurface)
       .accessibilityIdentifier(Accessibility.title)
@@ -180,13 +182,6 @@ public struct TUIChipView: View {
     TUIIconButton(icon: icon) { action() }
       .iconColor(isSelected ? .onSecondary : .onSurface)
       .size(size == .size32 ? .size24 : .size32)
-  }
-  
-  @ViewBuilder
-  private func borderView() -> some View {
-    RoundedRectangle(cornerRadius: Spacing.halfHorizontal)
-      .inset(by: isSelected ?  0.75 : 0.5)
-      .strokeBorder(Color.outline, lineWidth: isSelected ? 0 : 1)
   }
 }
 
@@ -418,7 +413,6 @@ struct TUIChipView_Previews: PreviewProvider {
       Section("Filter") {
         TUIChipView("Filter")
           .style(filter: .onlyTitle)
-          
         
         TUIChipView("With Button")
           .style(filter: .withButton(.dismiss24Filled, action: {}), isSelected: true)

@@ -75,4 +75,18 @@ public extension View {
       self
     }
   }
+  
+  /// This method is used to create border View in any swiftUI views
+  ///
+  /// Example usage:
+  ///
+  ///      Text("Description")
+  ///         .borderView(RoundedRectangle(cornerRadius: Spacing.halfHorizontal), width: 1, color: .gray)
+  ///
+  @ViewBuilder
+  func borderView(_ shape: some Shape, width: CGFloat = 0, color: Color = .clear) -> some View {
+    self
+      .clipShape(shape)
+      .overlay(shape.stroke(color, lineWidth: width))
+  }
 }
