@@ -86,7 +86,8 @@ public struct TUIMenuItemView: View {
     Text(item.title)
       .font(.body7)
       .foregroundColor(.onSurface)
-      .frame(maxWidth: .infinity, maxHeight: Spacing.custom(18), alignment: .leading)
+      .frame(maxWidth: .infinity, minHeight: Spacing.custom(18),
+             maxHeight: Spacing.custom(18), alignment: .leading)
   }
   
   @ViewBuilder
@@ -95,13 +96,15 @@ public struct TUIMenuItemView: View {
       Text(item.title)
         .font(.heading7)
         .foregroundColor(.onSurface)
-        .frame(maxWidth: .infinity, maxHeight: Spacing.custom(20), alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: Spacing.custom(20),
+               maxHeight: Spacing.custom(20), alignment: .leading)
         .accessibilityIdentifier(Accessibility.title)
       
       Text(desc)
         .font(.body6)
         .foregroundColor(.onSurface)
-        .frame(maxWidth: .infinity, maxHeight: Spacing.custom(20), alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: Spacing.custom(20),
+               maxHeight: Spacing.custom(20), alignment: .leading)
         .accessibilityIdentifier(Accessibility.description)
     }
     .accessibilityElement(children: .contain)
@@ -152,7 +155,8 @@ struct MenuItemStyle: ButtonStyle {
   }
   
   func backgroundColor(_ isPressed: Bool) -> Color {
-    return isSelected ? .success.opacity(isPressed ? 0.2 : 0.1)  : isPressed ? .surfaceHover : .clear
+    let successColor = isPressed ? Color.success20 : .success10
+    return isSelected ? successColor  : isPressed ? .surfaceHover : .clear
   }
 }
 
