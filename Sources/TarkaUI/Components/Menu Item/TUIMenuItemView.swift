@@ -39,7 +39,7 @@ public struct TUIMenuItemView: View {
       .frame(maxWidth: .infinity, minHeight: item.style.height(isSelected), alignment: .leading)
       .contentShape(Rectangle())
     }
-    .buttonStyle(MenuItemStyle(isSelected))
+    .buttonStyle(TUIMenuItemView.MenuItemStyle(isSelected))
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
@@ -86,8 +86,7 @@ public struct TUIMenuItemView: View {
     Text(item.title)
       .font(.body7)
       .foregroundColor(.onSurface)
-      .frame(maxWidth: .infinity, minHeight: Spacing.custom(18),
-             maxHeight: Spacing.custom(18), alignment: .leading)
+      .frame(maxWidth: .infinity, minHeight: Spacing.custom(18), alignment: .leading)
   }
   
   @ViewBuilder
@@ -96,15 +95,13 @@ public struct TUIMenuItemView: View {
       Text(item.title)
         .font(.heading7)
         .foregroundColor(.onSurface)
-        .frame(maxWidth: .infinity, minHeight: Spacing.custom(20),
-               maxHeight: Spacing.custom(20), alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: Spacing.custom(20), alignment: .leading)
         .accessibilityIdentifier(Accessibility.title)
       
       Text(desc)
         .font(.body6)
         .foregroundColor(.onSurface)
-        .frame(maxWidth: .infinity, minHeight: Spacing.custom(20),
-               maxHeight: Spacing.custom(20), alignment: .leading)
+        .frame(maxWidth: .infinity, minHeight: Spacing.custom(20), alignment: .leading)
         .accessibilityIdentifier(Accessibility.description)
     }
     .frame(minHeight: Spacing.custom(42), alignment: .leading)
@@ -122,14 +119,14 @@ public struct TUIMenuItemView: View {
   private func leftIconView(_ icon: FluentIcon) -> some View {
     Image(fluent: icon)
       .scaledToFill()
-      .frame(minWidth: Spacing.custom(24), minHeight: Spacing.custom(24))
+      .frame(width: Spacing.custom(24), height: Spacing.custom(24))
       .accessibilityIdentifier(Accessibility.leftIcon)
   }
   
   private func rightIconView(_ icon: FluentIcon) -> some View {
     Image(fluent: icon)
       .scaledToFill()
-      .frame(minWidth: Spacing.custom(20), minHeight: Spacing.custom(20))
+      .frame(width: Spacing.custom(20), height: Spacing.custom(20))
       .foregroundColor(.outline)
       .accessibilityIdentifier(Accessibility.rightIcon)
   }
@@ -141,23 +138,26 @@ public struct TUIMenuItemView: View {
       .foregroundColor(color)
       .accessibilityIdentifier(Accessibility.leftIcon)
   }
-}
-
-struct MenuItemStyle: ButtonStyle {
-  var isSelected: Bool = false
   
-  init(_ isSelected: Bool) {
-    self.isSelected = isSelected
-  }
-  public func makeBody(configuration: Configuration) -> some View {
-    configuration.label
-      .background(backgroundColor(configuration.isPressed))
-      .clipShape(RoundedRectangle(cornerRadius: 8))
-  }
-  
-  func backgroundColor(_ isPressed: Bool) -> Color {
-    let successColor = isPressed ? Color.success20 : .success10
-    return isSelected ? successColor  : isPressed ? .surfaceHover : .clear
+  struct MenuItemStyle: ButtonStyle {
+    var isSelected: Bool = false
+    
+    init(_ isSelected: Bool) {
+      self.isSelected = isSelected
+    }
+    public func makeBody(configuration: Configuration) -> some View {
+      configuration.label
+        .background(backgroundColor(configuration.isPressed))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+    
+    func backgroundColor(_ isPressed: Bool) -> Color {
+      if isSelected {
+        return isPressed ? Color.success20 : .success10
+      } else {
+        return isPressed ? .surfaceHover : .clear
+      }
+    }
   }
 }
 
