@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// A view that displays a navigation row with an optional fluent icon and badge count.
+/// A view that displays a navigation row with an optional icon and badge count.
 ///
 /// The navigation row is a horizontal stack with an optional fluent icon, title and an optional extra view.
 ///
@@ -25,7 +25,8 @@ import SwiftUI
 ///
 /// - Parameters:
 ///   - title: The title to display in the navigation row.
-///   - symbol: The symbol to display in the navigation row. The default value is `nil`.
+///   - icon: The fluent icon to display in the navigation row.
+///   The default value is `nil`.
 ///   - accessoryView: Extra content to display in the navigation row
 ///
 public struct TUINavigationRow<Content>: View where Content: View {
@@ -35,11 +36,11 @@ public struct TUINavigationRow<Content>: View where Content: View {
   
   @Environment(\.detailDisclosure) private var showDetailDisclosure
   
-  /// Creates a navigation row with the specified title, symbol and an extra view.
+  /// Creates a navigation row with the specified title, icon and an extra view.
   ///
   /// - Parameters:
   ///   - title: The title to display in the navigation row.
-  ///   - symbol: The symbol to display in the navigation row. The default value is `nil`.
+  ///   - icon: The fluent icon to display in the navigation row. The default value is `nil`.
   ///   - accessoryView: Extra content to display in the navigation row.
   ///
   public init(

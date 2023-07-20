@@ -9,7 +9,7 @@ import SwiftUI
 
 /// A struct that represents a menu item.
 ///
-/// A menu item can be configured to display a title, description or symbol.
+/// A menu item can be configured to display a title, description or fluent icon.
 ///
 /// Example usage:
 ///
