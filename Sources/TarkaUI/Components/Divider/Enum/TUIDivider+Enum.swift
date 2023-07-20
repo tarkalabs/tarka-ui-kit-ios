@@ -9,12 +9,48 @@ import SwiftUI
 
 public extension TUIDivider {
   
-  enum Orientation: CaseIterable {
+  /// Decides the orientation of the divider
+  enum Orientation {
     
-    case horizontal, vertical
+    /// Creates horizontal oriented divider with given padding
+    /// - Parameters:
+    ///   - hPadding: padding to be set for leading or right
+    ///   - vPadding: padding to be set for top or bottom
+    ///
+    case horizontal(hPadding: HorizontalPadding, vPadding: VerticalPadding)
+    
+    /// Creates vertical oriented divider with given padding
+    /// - Parameters:
+    ///   - hPadding: padding to be set for leading or right
+    ///
+    /// It has few restriction on padding in vertical orientation.
+    /// Here vertical Padding must be `zero` and horizontal Padding has to be either `zero` or `value 8`.
+    /// That's why we use `VerticalPadding` enum for hPadding as it has only `zero` and `value 8` options.
+    ///
+    case vertical(hPadding: VerticalPadding)
+    
+    var hPadding: CGFloat {
+      
+      switch self {
+      case .horizontal(let hPadding, _):
+        return hPadding.value
+      case .vertical(let hPadding):
+        return hPadding.value
+      }
+    }
+    
+    var vPadding: CGFloat {
+      
+      switch self {
+      case .horizontal(_, let vPadding):
+        return vPadding.value
+      case .vertical(_):
+        return 0
+      }
+    }
   }
   
-  enum TBPadding: CaseIterable, Identifiable {
+  enum VerticalPadding: CaseIterable, Identifiable {
     
     public var id: String {
       UUID().uuidString
@@ -31,7 +67,7 @@ public extension TUIDivider {
     }
   }
   
-  enum LRPadding: CaseIterable, Identifiable {
+  enum HorizontalPadding: CaseIterable, Identifiable {
     
     public var id: String {
       UUID().uuidString
