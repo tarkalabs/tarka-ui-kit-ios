@@ -33,17 +33,51 @@ struct TUIDatePopover: View {
   
   var body: some View {
     
+    ZStack {
+      transparentBackground
+      datePicker
+    }
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
+  }
+  
+  @ViewBuilder
+  private var transparentBackground: some View {
+    VStack() {
+      EmptyView()
+    }
+    .frame(maxWidth: .infinity,
+           maxHeight: .infinity)
+    .background(Color.black.opacity(0.1))
+    .onTapGesture {
+      isShowing = false
+    }
+  }
+  
+  @ViewBuilder
+  private var datePicker: some View {
     VStack(spacing: 0) {
       
-      Button("Done".localized) {
-        self.date = storedDate
-        isSelected = true
-        isShowing = false
+      HStack(spacing: 0) {
+        
+        Button("Cancel".localized) {
+          isShowing = false
+        }
+        .frame(alignment: .trailing)
+        .accessibilityIdentifier(Accessibility.done)
+
+        Spacer()
+        
+        Button("Done".localized) {
+          self.date = storedDate
+          isSelected = true
+          isShowing = false
+        }
+        .frame(alignment: .leading)
+        .accessibilityIdentifier(Accessibility.cancel)
       }
-      .frame(maxWidth: .infinity, alignment: .trailing)
-      .padding(.trailing, Spacing.custom(30))
-      .accessibilityIdentifier(Accessibility.done)
-      
+      .padding(.horizontal, Spacing.custom(30))
+
       DatePicker("", selection: $storedDate, displayedComponents: [.date, .hourAndMinute])
         .datePickerStyle(.graphical)
         .padding(.all, Spacing.custom(20))
@@ -52,16 +86,17 @@ struct TUIDatePopover: View {
     .frame(width: 350, height: 500, alignment: .center)
     .background(.white)
     .cornerRadius(5.0)
-    .accessibilityElement(children: .contain)
-    .accessibilityIdentifier(Accessibility.root)
+    .accessibilityIdentifier(Accessibility.transparentBackground)
   }
 }
 
 extension TUIDatePopover {
   enum Accessibility: String, TUIAccessibility {
     case root = "TUIDatePopover"
+    case transparentBackground = "TransparentBackground"
     case datePicker = "DatePicker"
     case done = "Done"
+    case cancel = "Cancel"
   }
 }
 
