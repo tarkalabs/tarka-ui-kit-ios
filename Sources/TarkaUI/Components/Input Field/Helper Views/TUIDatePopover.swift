@@ -60,7 +60,7 @@ struct TUIDatePopover: View {
       
       HStack(spacing: 0) {
         
-        Button("Cancel") {
+        Button("Cancel".localized) {
           isShowing = false
         }
         .frame(alignment: .trailing)
@@ -68,7 +68,7 @@ struct TUIDatePopover: View {
 
         Spacer()
         
-        Button("Done") {
+        Button("Done".localized) {
           self.date = storedDate
           isSelected = true
           isShowing = false
