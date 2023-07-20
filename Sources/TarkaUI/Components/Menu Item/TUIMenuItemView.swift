@@ -36,7 +36,7 @@ public struct TUIMenuItemView: View {
       .padding(.vertical, item.style.vertical(isSelected))
       .padding(.leading, item.style.leading(isSelected))
       .padding(.trailing, item.style.trailing(isSelected))
-      .frame(maxWidth: .infinity, alignment: .leading)
+      .frame(maxWidth: .infinity, minHeight: item.style.height(isSelected), alignment: .leading)
       .contentShape(Rectangle())
     }
     .buttonStyle(MenuItemStyle(isSelected))
@@ -107,6 +107,7 @@ public struct TUIMenuItemView: View {
                maxHeight: Spacing.custom(20), alignment: .leading)
         .accessibilityIdentifier(Accessibility.description)
     }
+    .frame(minHeight: Spacing.custom(42), alignment: .leading)
     .accessibilityElement(children: .contain)
   }
   
@@ -114,21 +115,21 @@ public struct TUIMenuItemView: View {
   private var checkmarkView: some View {
     Image(fluent: .checkmark24Regular)
       .foregroundColor(.success)
-      .frame(maxWidth: Spacing.custom(24), maxHeight: Spacing.custom(24))
+      .frame(minWidth: Spacing.custom(24), minHeight: Spacing.custom(24))
       .accessibilityIdentifier(Accessibility.checkmark)
   }
   
   private func leftIconView(_ icon: FluentIcon) -> some View {
     Image(fluent: icon)
       .scaledToFill()
-      .frame(width: Spacing.custom(24), height: Spacing.custom(24))
+      .frame(minWidth: Spacing.custom(24), minHeight: Spacing.custom(24))
       .accessibilityIdentifier(Accessibility.leftIcon)
   }
   
   private func rightIconView(_ icon: FluentIcon) -> some View {
     Image(fluent: icon)
       .scaledToFill()
-      .frame(width: Spacing.custom(20), height: Spacing.custom(20))
+      .frame(minWidth: Spacing.custom(20), minHeight: Spacing.custom(20))
       .foregroundColor(.outline)
       .accessibilityIdentifier(Accessibility.rightIcon)
   }
@@ -136,7 +137,7 @@ public struct TUIMenuItemView: View {
   private func statusDotView(_ icon: FluentIcon, color: Color) -> some View {
     Image(fluent: icon)
       .scaledToFill()
-      .frame(width: Spacing.custom(16), height: Spacing.custom(16))
+      .frame(minWidth: Spacing.custom(16), minHeight: Spacing.custom(16))
       .foregroundColor(color)
       .accessibilityIdentifier(Accessibility.leftIcon)
   }
@@ -188,10 +189,10 @@ struct MenuItemView_Previews: PreviewProvider {
       
       
       TUIMenuItemView(item: TUIMenuItem(title: "Label with left and Right Icon",
-                                        style: .withRightIcon(.add24Filled, .chevronRight24Filled))) {}
+                                        style: .withRightIcon(.add24Filled, .chevronRight20Filled))) {}
       
       TUIMenuItemView(item: TUIMenuItem(title: "Label with left and Right Icon",
-                                        style: .withRightIcon(.add24Filled, .chevronRight24Filled))) {}
+                                        style: .rightIcon(.chevronRight20Filled))) {}
       
       TUIMenuItemView(item: TUIMenuItem(title: "Status Dots",
                                         style: .statusDots(.circle16Filled, .success))) {}
@@ -201,6 +202,7 @@ struct MenuItemView_Previews: PreviewProvider {
       
       TUIMenuItemView(item: TUIMenuItem(title: "Label", style: .withDescription("Description"))) {}
     }
+    .padding(.horizontal, 10)
     .previewLayout(.sizeThatFits)
   }
 }
