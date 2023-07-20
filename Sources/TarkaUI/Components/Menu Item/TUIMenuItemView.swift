@@ -41,8 +41,8 @@ public struct TUIMenuItemView: View {
   @ViewBuilder
   private var leftContentView: some View {
     switch item.configuration {
-    case .withSymbol(let symbol):
-      Image(fluent: symbol)
+    case .withIcon(let fluentIcon):
+      Image(fluent: fluentIcon)
         .scaledToFill()
         .frame(width: 24, height: 24)
         .padding(.leading, Spacing.baseHorizontal)
@@ -57,7 +57,7 @@ public struct TUIMenuItemView: View {
   @ViewBuilder
   private var contentView: some View {
     switch item.configuration {
-    case .onlyLabel, .withSymbol:
+    case .onlyLabel, .withIcon:
       Text(item.title)
         .font(.body7)
         .foregroundColor(.onSurface)
@@ -94,7 +94,7 @@ struct MenuItemView_Previews: PreviewProvider {
       TUIMenuItemView(
         item: TUIMenuItem(
           title: "Label",
-          configuration: .withSymbol(.reOrder24Regular)
+          configuration: .withIcon(.reOrder24Regular)
         ),
         action: {}
       )
