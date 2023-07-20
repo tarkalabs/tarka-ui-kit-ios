@@ -123,3 +123,12 @@ struct ActivityView: UIViewControllerRepresentable {
   
   func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
+
+extension String {
+  
+  var localized: String {
+    return NSLocalizedString(
+      self, tableName: "Localizable",
+      bundle: .main, value: self, comment: self)
+  }
+}
