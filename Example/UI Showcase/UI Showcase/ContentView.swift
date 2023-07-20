@@ -39,14 +39,17 @@ struct ContentView: View {
   
   @State var dateFieldItem = globalDateFieldItem
   
-  @StateObject var memoTextFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo".localized)
+  @State var locationPickerFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Location")
   
-  @StateObject var valueOnlyTextFieldItem = TUIInputFieldItem(
+  @State var pickerFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Pick value")
+  
+  @State var memoTextFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo")
+  
+  @State var valueOnlyTextFieldItem = TUIInputFieldItem(
     style: .onlyValue, value: "Input Text that received as text for memo")
   
-  @StateObject var pickerFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Pick value")
   
-  @State private var isTextFieldFocused: Bool = false
+  @State private var isDoneClicked: Bool = false
   
   public init() { }
   
@@ -63,33 +66,38 @@ Second Text - \(valueOnlyTextFieldItem.value)
         .endItem(withStyle: .icon(.document24Regular))
         .highlightBar(color: .red)
         .state(.success("Values are valid"))
-
-      TUIPickerInputField()
+      
+      TUIInteractiveInputField(inputItem: $locationPickerFieldItem) {
+        self.locationPickerFieldItem.style = .titleWithValue
+        self.locationPickerFieldItem.value = "20.123242, 73.24426t2"
+      }
+      .endItem(withStyle: .icon(.document24Regular))
+      .highlightBar(color: .red)
+      .state(.success("Values are valid"))
+      
+      TUIPickerInputField(inputItem: $pickerFieldItem)
       {
         ActivityView(activityItems: ["Test Export"], applicationActivities: nil)
       }
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
-      .environmentObject(pickerFieldItem)
       
       TUITextInputField(
-        isTextFieldFocused: $isTextFieldFocused)
+        inputItem: $memoTextFieldItem, isDoneClicked: $isDoneClicked)
       .state(.alert("Input values are sensitive"))
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
-      .environmentObject(memoTextFieldItem)
       
-      TUITextInputField(isTextFieldFocused: $isTextFieldFocused)
-        .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
-        .state(.error("Input values are sensitive"))
-        .placeholder("Enter Memo Description")
-        .environmentObject(valueOnlyTextFieldItem)
-      
+      TUITextInputField(
+        inputItem: $valueOnlyTextFieldItem, isDoneClicked: $isDoneClicked)
+      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
+      .state(.error("Input values are sensitive"))
+      .placeholder("Enter Memo Description")
     }
     .scrollDismissesKeyboard(.immediately)
     .toolbar {
       ToolbarItemGroup(placement: .keyboard) {
         Spacer()
         Button("Done") {
-          isTextFieldFocused = false
+          isDoneClicked = true
         }
       }
     }

@@ -18,25 +18,32 @@ public struct TUIPickerInputField<Content: View>: TUIInputFieldProtocol {
   public var properties = TUIInputFieldOptionalProperties()
   private var content: Content
   @State private var isSheetPresented = false
+  @Binding private var inputItem: TUIInputFieldItem
   
   /// Creates a`TUIPickerInputField` View
-  /// - Parameter content: A View that to be presented
-  public init(@ViewBuilder _ content: @escaping () -> Content) {
-    self.content = content()
+  /// - Parameters:
+  ///   - inputItem: TUIInputItem's instance that holds the required values to render `TUIInputField` View
+  ///   - Parameter content: A View that to be presented
+  ///   
+  public init(
+    inputItem: Binding<TUIInputFieldItem>,
+    @ViewBuilder _ content: @escaping () -> Content) {
+      
+      self._inputItem = inputItem
+      self.content = content()
   }
   
   public var body: some View {
     
-    Button(action: {
+    TUIInputField(properties: properties) {
       self.isSheetPresented = true
-    }) {
-      TUIInputField(properties: properties)
-        .sheet(
-          isPresented: $isSheetPresented,
-          content: {
-            content
-          })
     }
+    .sheet(
+      isPresented: $isSheetPresented,
+      content: {
+        content
+      })
+    .environmentObject(inputItem)
     .accessibilityIdentifier(Accessibility.root)
   }
 }
@@ -52,11 +59,11 @@ struct TUIPickerInputField_Previews: PreviewProvider {
   
   static var previews: some View {
     
-    TUIPickerInputField() {
+    @State var item = TUIInputFieldItem(style: .onlyTitle, title: "Pick value")
+    
+    TUIPickerInputField(inputItem: $item) {
       TUITextRow("Test row", style: .onlyTitle)
     }
     .endItem(withStyle: .icon(.info24Regular))
-    .environmentObject(
-      TUIInputFieldItem(style: .onlyTitle, title: "Pick value"))
-  }
+ }
 }
