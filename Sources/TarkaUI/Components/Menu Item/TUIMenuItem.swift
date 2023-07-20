@@ -63,6 +63,16 @@ public struct TUIMenuItem {
       case .withDescription: return Spacing.custom(10)
       }
     }
+    
+    func height(_ isSelected: Bool) -> CGFloat {
+      switch self {
+      case .onlyLabel, .leftIcon,
+          .withRightIcon: return isSelected ? Spacing.custom(40) : Spacing.custom(38)
+      case .rightIcon: return Spacing.custom(36)
+      case .statusDots: return isSelected ? Spacing.custom(40) : Spacing.custom(34)
+      case .withDescription: return Spacing.custom(62)
+      }
+    }
   }
   
   public init(title: any StringProtocol, style: TUIMenuItem.Style) {
