@@ -39,7 +39,7 @@ public struct TUIMenuItemView: View {
       .frame(maxWidth: .infinity, minHeight: item.style.height(isSelected), alignment: .leading)
       .contentShape(Rectangle())
     }
-    .buttonStyle(TUIMenuItemView.MenuItemStyle(isSelected))
+    .buttonStyle(MenuItemStyle(isSelected))
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
@@ -112,7 +112,7 @@ public struct TUIMenuItemView: View {
   private var checkmarkView: some View {
     Image(fluent: .checkmark24Regular)
       .foregroundColor(.success)
-      .frame(minWidth: Spacing.custom(24), minHeight: Spacing.custom(24))
+      .frame(width: Spacing.custom(24), height: Spacing.custom(24))
       .accessibilityIdentifier(Accessibility.checkmark)
   }
   
