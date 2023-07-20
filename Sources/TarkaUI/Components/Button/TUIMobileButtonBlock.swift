@@ -31,8 +31,9 @@ public struct TUIMobileButtonBlock: View {
     
     VStack(spacing: Spacing.custom(15)) {
       
-      TUIDivider()
-        .horizontal(lrPadding: .zero, tbPadding: .zero)
+      TUIDivider(
+        orientation: .horizontal(
+          hPadding: .zero, vPadding: .zero))
 
       buttonBlock
     }

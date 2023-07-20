@@ -10,7 +10,7 @@ import SwiftUI
 extension View {
   
   @ViewBuilder
-  func roundedCorner(width: CGFloat, color: Color) -> some View {
+  func roundedCornerWithBorder(width: CGFloat, color: Color) -> some View {
     if width > 0 {
       self.overlay(
         Capsule()
