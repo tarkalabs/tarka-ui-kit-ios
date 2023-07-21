@@ -39,7 +39,7 @@ public struct TUIMenuItemView: View {
       .frame(maxWidth: .infinity, minHeight: item.style.height(isSelected), alignment: .leading)
       .contentShape(Rectangle())
     }
-    .buttonStyle(MenuItemStyle(isSelected))
+    .buttonStyle(TUIMenuItemButtonStyle(isSelected))
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
@@ -139,7 +139,7 @@ public struct TUIMenuItemView: View {
       .accessibilityIdentifier(Accessibility.leftIcon)
   }
   
-  struct MenuItemStyle: ButtonStyle {
+  struct TUIMenuItemButtonStyle: ButtonStyle {
     var isSelected: Bool = false
     
     init(_ isSelected: Bool) {
