@@ -73,6 +73,13 @@ public struct TUIMenuItem {
       case .withDescription: return Spacing.custom(62)
       }
     }
+    
+    func isEnabled(_ isSelected: Bool) -> Bool {
+      switch self {
+      case .withRightIcon, .rightIcon, .withDescription: return false
+      default: return isSelected
+      }
+    }
   }
   
   public init(title: any StringProtocol, style: TUIMenuItem.Style) {

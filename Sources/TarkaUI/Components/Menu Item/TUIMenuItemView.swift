@@ -39,7 +39,7 @@ public struct TUIMenuItemView: View {
       .frame(maxWidth: .infinity, minHeight: item.style.height(isSelected), alignment: .leading)
       .contentShape(Rectangle())
     }
-    .buttonStyle(TUIMenuItemButtonStyle(isSelected))
+    .buttonStyle(TUIMenuItemButtonStyle(item.style.isEnabled(isSelected)))
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
