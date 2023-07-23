@@ -1,6 +1,6 @@
 //
 //  Spacing.swift
-//  
+//
 //
 //  Created by Arvindh Sukumar on 25/04/23.
 //
@@ -13,7 +13,8 @@ public enum Spacing {
   public static let baseVertical: CGFloat = 8
   public static let doubleVertical: CGFloat = baseVertical * 2
   public static let halfVertical: CGFloat = baseVertical / 2
-  
+  public static let quarterVertical: CGFloat = baseVertical / 4
+
   public static let baseHorizontal: CGFloat = 16
   public static let halfHorizontal: CGFloat = baseHorizontal / 2
   public static let quarterHorizontal: CGFloat = baseHorizontal / 4
