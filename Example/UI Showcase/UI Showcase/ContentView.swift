@@ -50,47 +50,22 @@ struct ContentView: View {
   
   
   @State private var isDoneClicked: Bool = false
-  
+  @State var text = ""
+  @State var isEditing = false
+
   public init() { }
   
   var body: some View {
-    VStack {
-      Button("Submit") {
-        print("""
-Final input: Date - \(String(describing: dateFieldItem.date?.formatted(dateFieldItem.format)))
-First Text - \(memoTextFieldItem.value)
-Second Text - \(valueOnlyTextFieldItem.value)
-""")
-      }
-      TUIDateInputField(dateInputItem: $dateFieldItem)
-        .endItem(withStyle: .icon(.document24Regular))
-        .highlightBar(color: .red)
-        .state(.success("Values are valid"))
+
+    let searchItem = TUISearchItem(placeholder: "Search", text: $text, isEditing: $isEditing)
+    
+    VStack(spacing: 20) {
       
-      TUIInteractiveInputField(inputItem: $locationPickerFieldItem) {
-        self.locationPickerFieldItem.style = .titleWithValue
-        self.locationPickerFieldItem.value = "20.123242, 73.24426t2"
-      }
-      .endItem(withStyle: .icon(.document24Regular))
-      .highlightBar(color: .red)
-      .state(.success("Values are valid"))
-      
-      TUIPickerInputField(inputItem: $pickerFieldItem)
-      {
-        ActivityView(activityItems: ["Test Export"], applicationActivities: nil)
-      }
-      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
-      
-      TUITextInputField(
-        inputItem: $memoTextFieldItem, isDoneClicked: $isDoneClicked)
-      .state(.alert("Input values are sensitive"))
-      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
-      
-      TUITextInputField(
-        inputItem: $valueOnlyTextFieldItem, isDoneClicked: $isDoneClicked)
-      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
-      .state(.error("Input values are sensitive"))
-      .placeholder("Enter Memo Description")
+      TUIAppTopBar(barStyle: .search(searchItem))
+        .padding(.horizontal, 16)
+
+      TUIAppTopBar(barStyle: .titleBar(.init(title: "Title", leftButton: .back, rightButtons: .none)))
+        .padding(.horizontal, 16)
     }
     .scrollDismissesKeyboard(.immediately)
     .toolbar {
@@ -98,6 +73,7 @@ Second Text - \(valueOnlyTextFieldItem.value)
         Spacer()
         Button("Done") {
           isDoneClicked = true
+          isEditing = false
         }
       }
     }
