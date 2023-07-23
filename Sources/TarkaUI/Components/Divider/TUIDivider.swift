@@ -9,12 +9,12 @@ import SwiftUI
 
 public struct TUIDivider: View {
   
-  var orientation = Orientation.horizontal
-  var tbPadding: CGFloat = 0
-  var lrPadding: CGFloat = 0
   var color = Color.surfaceHover
-  
-  public init() { }
+  private var orientation: Orientation
+
+  public init(orientation: Orientation) {
+    self.orientation = orientation
+  }
   
   public var body: some View {
     
@@ -22,8 +22,8 @@ public struct TUIDivider: View {
       .setHeight(for: orientation)
       .foregroundColor(.clear)
       .background(color)
-      .padding(.horizontal, lrPadding)
-      .padding(.vertical, tbPadding)
+      .padding(.horizontal, orientation.hPadding)
+      .padding(.vertical, orientation.vPadding)
   }
 }
 
@@ -32,7 +32,7 @@ private extension View {
   @ViewBuilder
   func setHeight(for orientation: TUIDivider.Orientation) -> some View {
     
-    if orientation == .horizontal {
+    if case .horizontal = orientation  {
       self
         .frame(maxWidth: .infinity)
         .frame(height: 1)
@@ -50,22 +50,23 @@ struct TUIDivider_Previews: PreviewProvider {
     
     VStack (spacing: 16) {
       
-      ForEach(TUIDivider.TBPadding.allCases) { tbPadding in
+      ForEach(TUIDivider.VerticalPadding.allCases) { vPadding in
         
-        ForEach(TUIDivider.LRPadding.allCases) { lrPadding in
+        ForEach(TUIDivider.HorizontalPadding.allCases) { hPadding in
           
-          TUIDivider()
-            .horizontal(lrPadding: lrPadding, tbPadding: tbPadding)
+          TUIDivider(
+            orientation: .horizontal(
+              hPadding: hPadding, vPadding: vPadding))
             .color(.black)
         }
       }
       
       VStack(alignment: .leading, spacing: 16) {
         
-        ForEach(TUIDivider.TBPadding.allCases) { lrPadding in
+        ForEach(TUIDivider.VerticalPadding.allCases) { hPadding in
           
-          TUIDivider()
-            .vertical(lrPadding: lrPadding)
+          TUIDivider(
+            orientation: .vertical(hPadding: hPadding))
             .color(.black)
         }
       }
