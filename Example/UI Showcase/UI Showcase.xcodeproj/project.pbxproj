@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D312A8CA2A618511009DD631 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D312A8CC2A618511009DD631 /* Localizable.strings */; };
 		D41499262A0CCE0C00929EAB /* TarkaUI in Frameworks */ = {isa = PBXBuildFile; productRef = D41499252A0CCE0C00929EAB /* TarkaUI */; };
 		D43CDD9B29DFE34900F8081E /* UI_ShowcaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDD9A29DFE34900F8081E /* UI_ShowcaseApp.swift */; };
 		D43CDD9D29DFE34900F8081E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43CDD9C29DFE34900F8081E /* ContentView.swift */; };
@@ -36,8 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D312A8CB2A618511009DD631 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		D312A8D42A618655009DD631 /* ta-IN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ta-IN"; path = "ta-IN.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D43CDD9729DFE34900F8081E /* UI Showcase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UI Showcase.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D43CDD9A29DFE34900F8081E /* UI_ShowcaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI_ShowcaseApp.swift; sourceTree = "<group>"; };
 		D43CDD9C29DFE34900F8081E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -77,14 +74,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D312A8B62A612951009DD631 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				D312A8CC2A618511009DD631 /* Localizable.strings */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		D43CDD8E29DFE34900F8081E = {
 			isa = PBXGroup;
 			children = (
@@ -115,7 +104,6 @@
 				D43CDD9A29DFE34900F8081E /* UI_ShowcaseApp.swift */,
 				D43CDD9C29DFE34900F8081E /* ContentView.swift */,
 				D43CDD9E29DFE34A00F8081E /* Assets.xcassets */,
-				D312A8B62A612951009DD631 /* Resources */,
 				D43CDDA029DFE34A00F8081E /* Preview Content */,
 			);
 			path = "UI Showcase";
@@ -250,7 +238,6 @@
 			knownRegions = (
 				en,
 				Base,
-				"ta-IN",
 			);
 			mainGroup = D43CDD8E29DFE34900F8081E;
 			packageReferences = (
@@ -272,7 +259,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D43CDDA229DFE34A00F8081E /* Preview Assets.xcassets in Resources */,
-				D312A8CA2A618511009DD631 /* Localizable.strings in Resources */,
 				D43CDD9F29DFE34A00F8081E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -335,24 +321,11 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		D312A8CC2A618511009DD631 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D312A8CB2A618511009DD631 /* en */,
-				D312A8D42A618655009DD631 /* ta-IN */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		D43CDDB929DFE34A00F8081E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -413,7 +386,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
