@@ -8,7 +8,6 @@
 import SwiftUI
 
 public extension Color {
-  
   static var primaryTUI: Color {
     TUIThemeManager.shared.theme.primary
   }
