@@ -24,6 +24,11 @@ public protocol TUIButtonBlockAction {
   var handler: () -> Void { get }
 }
 
+public extension TUIButtonBlockAction {
+  var leftIcon: FluentIcon? { return nil }
+  var rightIcon: FluentIcon? { return nil }
+}
+
 /// The `ButtonBlockActionBuilder` result builder is used to build an array of `TUIButtonBlockAction` instances.
 @resultBuilder
 public struct ButtonBlockActionBuilder {
