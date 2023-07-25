@@ -1,5 +1,5 @@
 //
-//  TUIMenuItem.swift
+//  TUIMenuItemProperties.swift
 //  
 //
 //  Created by Arvindh Sukumar on 27/04/23.
@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// Example usage:
 ///
-///     TUIMenuItem(
+///     TUIMenuItemProperties(
 ///       title: "Title",
 ///       style: .withDescription("Description")
 ///     )
@@ -22,7 +22,7 @@ import SwiftUI
 ///   - title: The title to display in the menu item.
 ///   - style: The configuration to use to display the menu item. The default value is `.onlyLabel`.
 ///
-public struct TUIMenuItem {
+public struct TUIMenuItemProperties {
   public var title: any StringProtocol
   public var style: Style
   
@@ -82,7 +82,7 @@ public struct TUIMenuItem {
     }
   }
   
-  public init(title: any StringProtocol, style: TUIMenuItem.Style) {
+  public init(title: any StringProtocol, style: TUIMenuItemProperties.Style) {
     self.title = title
     self.style = style
   }
