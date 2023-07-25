@@ -11,63 +11,66 @@ public struct TUIAppTopBar: View {
   
   var barStyle: BarStyle
   
-  @State private var text = ""
-  @State private var isEditing = false
-  
   public init(barStyle: BarStyle) {
     self.barStyle = barStyle
   }
   
   public var body: some View {
     
-    switch barStyle {
+    Group {
       
-    case .titleBar(let appBarItem):
-      titleBar(using: appBarItem)
-        .background(Color.surface)
-      
-    case .search(let searchItem):
-      searchBar(using: searchItem)
+      switch barStyle {
+        
+      case .titleBar(let appBarItem):
+        titleBar(using: appBarItem)
+        
+      case .search(let searchBarItem):
+        searchBar(using: searchBarItem)
+      }
     }
+    .background(theme.navColor)
+    .padding(.horizontal, -8)
   }
-  
   
   @ViewBuilder
   func titleBar(using barItem: BarItem) -> some View {
     
     HStack(spacing: 8) {
+      
       let leftButton = barItem.leftButton
       
-      if leftButton == .back  {
-        backButton()
-      } else if leftButton == .cancel  {
-        cancelButton()
+      if case .back(let action) = leftButton {
+        backButton(action)
+      } else if  case .cancel(let action) = leftButton {
+        cancelButton(action)
       }
+      
       Text(barItem.title)
         .foregroundColor(.onSurface)
         .font(.heading5)
         .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.leading, leftButton.leading)
       
       rightButtons(using: barItem.rightButtons)
     }
-    .frame(maxWidth: .infinity, minHeight: minHeight, alignment: .leading)
-    
+    .frame(maxWidth: .infinity, minHeight: barStyle.minHeight, alignment: .leading)
+    .padding(.horizontal, 8)
   }
   
   @ViewBuilder
-  private func backButton() -> TUIIconButton {
+  private func backButton(_ action: @escaping TUIButtonAction) -> TUIIconButton {
     
     TUIIconButton(icon: .chevronLeft24Regular) {
-      // back
+      action()
     }
     .style(.ghost)
     .size(.size48)
   }
   
   @ViewBuilder
-  private func cancelButton() -> TUIIconButton {
+  private func cancelButton(_ action: @escaping TUIButtonAction) -> TUIIconButton {
     TUIIconButton(icon: .dismiss24Regular) {
-      // cancel
+      action()
     }
     .style(.ghost)
     .size(.size48)
@@ -99,55 +102,53 @@ public struct TUIAppTopBar: View {
   }
   
   @ViewBuilder
-  func searchBar(using searchItem: TUISearchItem) -> some View {
-    
-    TUISearchBar(searchItem: searchItem)
-      .backButton {
-        TUIIconButton(icon: .chevronLeft24Regular) { }
+  func searchBar(
+    using searchBarItem: SearchBarItem) -> some View {
+      
+      let searchItem = searchBarItem.item
+      
+      TUISearchBar(searchItem: searchItem)
+        .backButton {
+          TUIIconButton(icon: .chevronLeft24Regular) {
+            searchBarItem.backAction()
+          }
           .style(.ghost)
           .size(.size40)
-      }
-      .trailingButton {
-        if searchItem.isEditing {
-          TUIIconButton(icon: .dismiss24Regular) {
-            searchItem.isEditing = false
-          }
+        }
+        .trailingButton {
+          if searchItem.isEditing {
+            TUIIconButton(icon: .dismiss24Regular) {
+              searchItem.isEditing = false
+            }
             .style(.ghost)
             .size(.size40)
+          }
         }
-      }
-      .padding(.horizontal, 8)
-      .padding(.vertical, 8)
-  }
-  
-  var minHeight: CGFloat {
-    
-    if case .titleBar(let barItem) = barStyle {
-      
-      if case .none = barItem.leftButton ,
-         case .none = barItem.rightButtons {
-        return 60
-      }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
     }
-    return 64
-  }
+  
 }
 
 struct TUIAppTopBar_Previews: PreviewProvider {
+  
   static var previews: some View {
     
     @State var text = ""
     @State var isEditing = false
     
-    let searchItem = TUISearchItem(placeholder: "Search", text: $text, isEditing: $isEditing)
+    let searchItem = TUISearchItem(
+      placeholder: "Search",
+      text: $text, isEditing: $isEditing)
     
     let rightButton = TUIIconButton(icon: .circle24Regular) { }
-    let leftButtons: [TUIAppTopBar.LeftButton] = [.none, .back]
+    let leftButtons: [TUIAppTopBar.LeftButton] = [.none, .back({ })]
+    
     ScrollView {
       VStack(spacing: 40) {
         
         ForEach(leftButtons, id: \.id) { leftButton in
-
+          
           TUIAppTopBar(
             barStyle: .titleBar(
               .init(
@@ -191,8 +192,13 @@ struct TUIAppTopBar_Previews: PreviewProvider {
     
     VStack {
       
-      TUIAppTopBar(barStyle: .search(searchItem))
-        .padding(.horizontal, 16)
-    }.frame(maxHeight: .infinity, alignment: .top)
+      TUIAppTopBar(
+        barStyle: .search(
+          .init(item: searchItem, backAction: { })
+        )
+      )
+      .padding(.horizontal, 16)
+    }
+    .frame(maxHeight: .infinity, alignment: .top)
   }
 }

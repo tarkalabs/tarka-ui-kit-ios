@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public class TUIThemeManager {
   public static let shared = TUIThemeManager()
@@ -15,3 +16,11 @@ public class TUIThemeManager {
     self.theme = theme
   }
 }
+
+extension TUITheme {
+  public var navColor: Color {
+    return Color.gray
+  }
+}
+
+public var theme = TUIThemeManager.shared.theme

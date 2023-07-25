@@ -8,74 +8,29 @@
 import TarkaUI
 import SwiftUI
 
-private var testDate: Date {
-  let dateFormatter = DateFormatter()
-  dateFormatter.timeZone = TimeZone(abbreviation: "GMT+5:30")!
-  dateFormatter.dateFormat = "dd MMM yyyy hh:mm:ss a"
-  
-  let dateGiven = "4 Jul 2023 9:11:00 AM" // EAM
-  let dateValue = dateFormatter.date(from: dateGiven) ?? Date()
-  return dateValue
-}
-
-var emptyFormat: Date.FormatStyle {
-  .init(date: .abbreviated, time: .standard)
-}
-
-var dateFormat: Date.FormatStyle {
-  .init(date: .numeric, time: .standard)
-}
-
-var globalEmptyDateFieldItem = TUIDateInputFieldItem(
-  style: .onlyTitle, title: "StartDate",
-  format: emptyFormat)
-
-var globalDateFieldItem = TUIDateInputFieldItem(
-  style: .onlyTitle, title: "StartDate",
-  date: testDate,
-  format: dateFormat)
-
 struct ContentView: View {
   
-  @State var dateFieldItem = globalDateFieldItem
-  
-  @State var locationPickerFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Location")
-  
-  @State var pickerFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Pick value")
-  
-  @State var memoTextFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo")
-  
-  @State var valueOnlyTextFieldItem = TUIInputFieldItem(
-    style: .onlyValue, value: "Input Text that received as text for memo")
-  
-  
-  @State private var isDoneClicked: Bool = false
-  @State var text = ""
-  @State var isEditing = false
+  @State private var isActive = false
+  let coloredNavAppearance = UINavigationBarAppearance()
 
-  public init() { }
-  
+  init() {
+    coloredNavAppearance.configureWithOpaqueBackground()
+    coloredNavAppearance.backgroundColor = UIColor(theme.navColor)
+
+    UINavigationBar.appearance().standardAppearance = coloredNavAppearance
+    UINavigationBar.appearance().scrollEdgeAppearance = coloredNavAppearance
+
+  }
+
   var body: some View {
-
-    let searchItem = TUISearchItem(placeholder: "Search", text: $text, isEditing: $isEditing)
     
-    VStack(spacing: 20) {
-      
-      TUIAppTopBar(barStyle: .search(searchItem))
-        .padding(.horizontal, 16)
-
-      TUIAppTopBar(barStyle: .titleBar(.init(title: "Title", leftButton: .back, rightButtons: .none)))
-        .padding(.horizontal, 16)
-    }
-    .scrollDismissesKeyboard(.immediately)
-    .toolbar {
-      ToolbarItemGroup(placement: .keyboard) {
-        Spacer()
-        Button("Done") {
-          isDoneClicked = true
-          isEditing = false
-        }
+    NavigationStack {
+      NavigationLink {
+        DetailView()
+      } label: {
+        Text("Hello, Nav View!")
       }
+      
     }
   }
 }
@@ -86,18 +41,62 @@ struct ContentView_Previews: PreviewProvider {
   }
 }
 
-struct ActivityView: UIViewControllerRepresentable {
-  typealias UIViewControllerType = UIActivityViewController
+struct DetailView: View {
   
-  var activityItems: [Any]
-  var applicationActivities: [UIActivity]? = nil
+  @Environment(\.dismiss) private var dismiss
   
-  func makeUIViewController(context: Context) -> UIActivityViewController {
-    let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
-    return controller
+  @State var text = ""
+  @State var isEditing = false
+  
+  var body: some View {
+    
+    let searchItem = TUISearchItem(
+      placeholder: "Search", text: $text, isEditing: $isEditing)
+    
+    let searchBarItem = TUIAppTopBar.SearchBarItem(
+      item: searchItem,
+      backAction: {
+        dismiss()
+      })
+    
+    var syncButton: TUIIconButton {
+      TUIIconButton(icon: .search24Regular) {
+        searchItem.isEditing = true
+      }
+      .style(.ghost)
+      .size(.size48)
+    }
+    
+    let titleBarItem = TUIAppTopBar.BarItem(
+      title: "Detail View",
+      leftButton: .back({
+        dismiss()
+      }),
+      rightButtons: .one(.init(button: syncButton)))
+    
+    self.navigationBar(
+      titleBarItem: titleBarItem,
+      searchBarItem: searchBarItem)
+    
+    VStack(spacing: 0) {
+      Button("Hello, Detail View!") {
+        searchItem.isEditing = true
+      }
+        .background(.white)
+        .frame(maxHeight: .infinity)
+    }
+    .toolbar {
+      ToolbarItemGroup(placement: .keyboard) {
+        Spacer()
+        Button("Done") {
+          searchItem.isEditing = false
+        }
+      }
+    }
+    .background(.blue)
+    .frame(maxHeight: .infinity)
+    .navigationBarBackButtonHidden(true)
   }
-  
-  func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 extension String {

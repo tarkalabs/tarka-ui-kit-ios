@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+public typealias TUIButtonAction = () -> Void
+
 public extension TUIAppTopBar {
   
   enum RightButtonType {
@@ -30,16 +32,24 @@ public extension TUIAppTopBar {
   
   enum LeftButton: Identifiable {
     
+    
     public var id: String {
       return UUID().uuidString
     }
-    case none, back, cancel
+    case none, back(TUIButtonAction), cancel(TUIButtonAction)
+    
+    var leading: CGFloat {
+      switch self {
+      case .none: return 16
+      default: return 0
+      }
+    }
   }
   
   struct BarItem {
     
     var title: String
-    var leftButton: LeftButton = .back
+    var leftButton: LeftButton
     var rightButtons: RightButtonType = .none
     
     public init(title: String, leftButton: LeftButton, rightButtons: RightButtonType = .none) {
@@ -49,9 +59,36 @@ public extension TUIAppTopBar {
     }
   }
   
+  struct SearchBarItem {
+    public var item: TUISearchItem
+    var backAction: TUIButtonAction
+    
+    public init(item: TUISearchItem, backAction: @escaping TUIButtonAction) {
+      self.item = item
+      self.backAction = backAction
+    }
+  }
+  
   enum BarStyle {
     
     case titleBar(BarItem)
-    case search(TUISearchItem)
+    case search(SearchBarItem)
+    
+    var minHeight: CGFloat {
+      
+      if case .titleBar(let barItem) = self {
+        
+        if case .none = barItem.leftButton ,
+           case .none = barItem.rightButtons {
+          return 60
+        }
+      }
+      return 64
+    }
+    
+    var extraPadding: CGFloat {
+      let padding: CGFloat = minHeight == 64 ? 2 : 0
+      return padding + 0
+    }
   }
 }

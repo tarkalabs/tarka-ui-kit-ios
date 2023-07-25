@@ -11,7 +11,7 @@ public struct TUISearchItem {
   
   var placeholder: String
   @Binding var text: String
-  @Binding var isEditing: Bool
+  @Binding public var isEditing: Bool
   
   public init(placeholder: String,
               text: Binding<String>,
@@ -30,23 +30,23 @@ public struct TUISearchBar: View {
   var searchItem: TUISearchItem
   
   public var body: some View {
+    
+    HStack(alignment: .center, spacing: 4) {
       
-      HStack(alignment: .center, spacing: 4) {
-        
-        if let backButton {
-          backButton
-        }
-        
-        SearchBar(searchItem: searchItem)
-        
-        if let trailingButton {
-          trailingButton
-        }
+      if let backButton {
+        backButton
       }
-      .padding(4)
-      .background(Color.inputBackground)
-      .cornerRadius(75)
+      
+      SearchBar(searchItem: searchItem)
+      
+      if let trailingButton {
+        trailingButton
+      }
     }
+    .padding(4)
+    .background(Color.inputBackground)
+    .cornerRadius(75)
+  }
 }
 
 public extension TUISearchBar {
@@ -66,27 +66,27 @@ public extension TUISearchBar {
 
 struct TUISearchBar_Previews: PreviewProvider {
   
-    static var previews: some View {
-      
-      @State var text = ""
-      @State var isEditing = false
-
-      let searchItem = TUISearchItem(placeholder: "Search", text: $text, isEditing: $isEditing)
-
-      TUISearchBar(searchItem: searchItem)
-        .backButton {
-          TUIIconButton(icon: .chevronLeft24Regular) { }
-            .style(.ghost)
-            .size(.size40)
-        }
-        .trailingButton {
-          TUIIconButton(icon: .dismiss24Regular) { }
-            .style(.ghost)
-            .size(.size40)
-        }
-    }
+  static var previews: some View {
+    
+    @State var text = ""
+    @State var isEditing = false
+    
+    let searchItem = TUISearchItem(placeholder: "Search", text: $text, isEditing: $isEditing)
+    
+    TUISearchBar(searchItem: searchItem)
+      .backButton {
+        TUIIconButton(icon: .chevronLeft24Regular) { }
+          .style(.ghost)
+          .size(.size40)
+      }
+      .trailingButton {
+        TUIIconButton(icon: .dismiss24Regular) { }
+          .style(.ghost)
+          .size(.size40)
+      }
+  }
 }
- 
+
 struct SearchBar: View {
   
   var searchItem: TUISearchItem
@@ -113,6 +113,9 @@ struct SearchBar_Previews: PreviewProvider {
     @State var text = ""
     @State var isEditing = false
     
-    SearchBar(searchItem: .init(placeholder: "Search", text: $text, isEditing: $isEditing))
+    let searchItem = TUISearchItem(
+      placeholder: "Search", text: $text, isEditing: $isEditing)
+    
+    SearchBar(searchItem: searchItem)
   }
 }
