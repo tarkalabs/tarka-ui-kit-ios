@@ -35,6 +35,7 @@ public struct TUIMenuItemProperties {
     case withRightIcon(FluentIcon, FluentIcon)
     /// Displays the title and right symbol.
     case rightIcon(FluentIcon)
+    /// Displays the title and status Dots.
     case statusDots(FluentIcon, Color)
     /// Displays the title and description.
     case withDescription(String)
