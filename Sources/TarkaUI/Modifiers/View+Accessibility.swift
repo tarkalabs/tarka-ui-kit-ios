@@ -99,10 +99,10 @@ public extension View {
   ///
   @ViewBuilder
   func contentUnavailableView(_ content: TUIContentUnavailableView, show: Bool = true) -> some View {
-    if show {
-      content
-    } else {
-      self
+    self.isEnabled(show) {
+      $0.overlay {
+        content
+      }
     }
   }
 }
