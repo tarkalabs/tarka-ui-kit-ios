@@ -89,4 +89,20 @@ public extension View {
       .clipShape(shape)
       .overlay(shape.stroke(color, lineWidth: width))
   }
+  
+  /// This method is used to create content Unavailable View in any swiftUI views
+  ///
+  /// Example usage:
+  ///
+  ///      Color.gray.opacity(0.4)
+  ///         .contentUnavailableView(.init("No Work type", icon: .errorCircle24Regular), show: false)
+  ///
+  @ViewBuilder
+  func contentUnavailableView(_ content: TUIContentUnavailableView, show: Bool = true) -> some View {
+    if show {
+      content
+    } else {
+      self
+    }
+  }
 }
