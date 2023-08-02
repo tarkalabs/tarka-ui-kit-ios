@@ -105,4 +105,25 @@ public extension View {
       }
     }
   }
+  
+  /// This method is used to create navigationTextRow View with title and optional description, used in any swiftUI views
+  ///
+  @ViewBuilder
+  func navigationTextRow(
+    _ title: String,
+    style: TUITextRow.Style,
+    destinationView: some View,
+    accessibilityID: TUIAccessibility,
+    @TUIIconButtonBuilder iconButtons: @escaping () -> [TUIIconButton]) -> some View {
+      
+      TUITextRow(title, style: style)
+        .iconButtons(icons: iconButtons)
+        .buttonStyle(.borderless)
+        .overlay(
+          NavigationLink(destination: destinationView, label: {})
+            .opacity(0)
+        )
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(accessibilityID)
+    }
 }
