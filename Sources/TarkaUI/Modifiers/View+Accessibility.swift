@@ -115,15 +115,16 @@ public extension View {
     destinationView: some View,
     accessibilityID: TUIAccessibility,
     @TUIIconButtonBuilder iconButtons: @escaping () -> [TUIIconButton]) -> some View {
-      
-      TUITextRow(title, style: style)
-        .iconButtons(icons: iconButtons)
-        .buttonStyle(.borderless)
-        .overlay(
-          NavigationLink(destination: destinationView, label: {})
-            .opacity(0)
-        )
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier(accessibilityID)
+      NavigationLink(destination: destinationView, label: {
+        TUITextRow(title, style: style)
+          .wrapperIcon {
+            TUIWrapperIcon(icon: .chevronRight20Filled)
+              .iconColor(.outline)
+          }
+          .iconButtons(icons: iconButtons)
+          .buttonStyle(.borderless)
+          .accessibilityElement(children: .contain)
+          .accessibilityIdentifier(accessibilityID)
+      })
     }
 }
