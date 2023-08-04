@@ -95,6 +95,7 @@ public struct TUITextRow: View {
       .font(.body7)
       .foregroundColor(.onSurface)
       .frame(minHeight: Spacing.custom(18))
+      .multilineTextAlignment(.leading)
       .accessibilityIdentifier(Accessibility.description)
   }
 
