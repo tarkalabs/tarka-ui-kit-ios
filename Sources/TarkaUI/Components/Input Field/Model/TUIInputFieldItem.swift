@@ -15,11 +15,11 @@ public enum TUIInputFieldStyle {
 
 /// This is the model class that holds the required values to render `TUIInputField` View
 ///
-public class TUIInputFieldItem: ObservableObject {
+public struct TUIInputFieldItem: Equatable, Hashable {
 
-  @Published public var style: TUIInputFieldStyle
-  @Published public var title: String = ""
-  @Published public var value: String = ""
+  public var style: TUIInputFieldStyle
+  public var title: String = ""
+  public var value: String = ""
   
   /// Creates a `TUIInputFieldItem` object that holds the required values to render `TUIInputField` View
   /// - Parameters:
