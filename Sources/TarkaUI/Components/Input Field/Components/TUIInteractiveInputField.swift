@@ -35,8 +35,7 @@ public struct TUIInteractiveInputField: TUIInputFieldProtocol {
   
   public var body: some View {
     
-    TUIInputField(properties: properties, action: action)
-      .environmentObject(inputItem)
+    TUIInputField(inputItem: $inputItem, properties: properties, action: action)
       .accessibilityIdentifier(Accessibility.root)
   }
 }
