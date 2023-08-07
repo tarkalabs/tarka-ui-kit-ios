@@ -28,6 +28,28 @@ public extension View {
               .ignoresSafeArea()
           }
         }
+      self
+        .navigationBarBackButtonHidden(true)
+    }
+  
+  @ViewBuilder
+  func customNavigationBar(
+    titleBarItem: TUIAppTopBar.BarItem,
+    searchBarItem: TUIAppTopBar.SearchBarItem? = nil) -> some View {
+      
+      let barStyle = barStyle(
+        titleBarItem: titleBarItem, searchBarItem: searchBarItem)
+      
+      VStack(spacing: 0) {
+        TUIAppTopBar(barStyle: barStyle)
+        self
+      }
+      .safeAreaInset(edge: .top, spacing: -10) {
+        Text("")
+          .frame(maxWidth: .infinity)
+          .background(.indigo)
+      }
+      .navigationBarHidden(true)
     }
   
   private func barStyle(titleBarItem: TUIAppTopBar.BarItem,

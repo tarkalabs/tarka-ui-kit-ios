@@ -88,7 +88,7 @@ public extension TUIAppTopBar {
     
     var extraPadding: CGFloat {
       let padding: CGFloat = minHeight == 64 ? 2 : 0
-      return padding + 0
+      return padding + 2
     }
   }
 }
