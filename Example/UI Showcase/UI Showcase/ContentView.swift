@@ -74,10 +74,6 @@ struct DetailView: View {
       }),
       rightButtons: .one(.init(button: syncButton)))
     
-    self.navigationBar(
-      titleBarItem: titleBarItem,
-      searchBarItem: searchBarItem)
-    
     VStack(spacing: 0) {
       Button("Hello, Detail View!") {
         searchItem.isEditing = true
@@ -95,7 +91,9 @@ struct DetailView: View {
     }
     .background(.blue)
     .frame(maxHeight: .infinity)
-    .navigationBarBackButtonHidden(true)
+    .customNavigationBar(
+      titleBarItem: titleBarItem,
+      searchBarItem: searchBarItem)
   }
 }
 
