@@ -37,20 +37,49 @@ public extension View {
     titleBarItem: TUIAppTopBar.BarItem,
     searchBarItem: TUIAppTopBar.SearchBarItem? = nil) -> some View {
       
-      let barStyle = barStyle(
-        titleBarItem: titleBarItem, searchBarItem: searchBarItem)
-      
-      VStack(spacing: 0) {
-        TUIAppTopBar(barStyle: barStyle)
-        self
+      GeometryReader { geometry in
+        
+        let barStyle = barStyle(
+          titleBarItem: titleBarItem, searchBarItem: searchBarItem)
+        
+        let safeAreaInset = geometry.safeAreaInsets.top
+        let minTop = max(safeAreaInset, 20)
+        let top = min(minTop, 40)
+
+        VStack(spacing: 1) {
+          TUIAppTopBar(barStyle: barStyle)
+            .padding(.top, top)
+            .background(theme.navColor)
+            .ignoresSafeArea()
+          self
+        }
+        .edgesIgnoringSafeArea(.top)        //      .safeAreaInset(edge: .top, spacing: -10) {
+        //        Text("")
+        //          .frame(maxWidth: .infinity)
+        //          .background(.indigo)
+        //      }
+        .navigationBarHidden(true)
       }
-      .safeAreaInset(edge: .top, spacing: -10) {
-        Text("")
-          .frame(maxWidth: .infinity)
-          .background(.indigo)
-      }
-      .navigationBarHidden(true)
     }
+  
+  var safeAreaTop: CGFloat {
+    
+    let keyWindow = UIApplication.shared.connectedScenes
+    
+      .filter({$0.activationState == .foregroundActive})
+    
+      .map({$0 as? UIWindowScene})
+    
+      .compactMap({$0})
+    
+      .first?.windows
+    
+      .filter({$0.isKeyWindow}).first
+    
+    var top =  keyWindow?.safeAreaInsets.top ?? 0
+    top = top == 0 ? 0 : 40
+    return top
+  }
   
   private func barStyle(titleBarItem: TUIAppTopBar.BarItem,
                         searchBarItem: TUIAppTopBar.SearchBarItem? = nil) -> TUIAppTopBar.BarStyle {

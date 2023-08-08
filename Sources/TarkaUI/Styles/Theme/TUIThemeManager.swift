@@ -19,7 +19,7 @@ public class TUIThemeManager {
 
 extension TUITheme {
   public var navColor: Color {
-    return Color.gray
+    return .surface
   }
 }
 

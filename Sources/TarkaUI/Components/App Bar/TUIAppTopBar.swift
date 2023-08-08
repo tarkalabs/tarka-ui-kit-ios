@@ -84,17 +84,23 @@ public struct TUIAppTopBar: View {
       switch type {
         
       case .one(let buttonItem):
-        buttonItem.button
-        
+        buttonItem.button?
+          .disabled(buttonItem.isDisabled)
+
       case .two(let buttonItem1, let buttonItem2):
-        buttonItem1.button
+        buttonItem1.button?
+          .disabled(buttonItem1.isDisabled)
         buttonItem2.button
-        
+          .disabled(buttonItem2.isDisabled)
+
       case .three(let buttonItem1, let buttonItem2, let buttonItem3):
-        buttonItem1.button
+        buttonItem1.button?
+          .disabled(buttonItem1.isDisabled)
         buttonItem2.button
+          .disabled(buttonItem2.isDisabled)
         buttonItem3.button
-        
+          .disabled(buttonItem3.isDisabled)
+
       case .none:
         EmptyView()
       }
