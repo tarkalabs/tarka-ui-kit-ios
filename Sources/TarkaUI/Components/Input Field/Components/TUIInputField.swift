@@ -17,7 +17,7 @@ import SwiftUI
 ///
 struct TUIInputField: TUIInputFieldProtocol {
   
-  @EnvironmentObject var inputItem: TUIInputFieldItem
+  @Binding var inputItem: TUIInputFieldItem
   @Binding private var isTextFieldFocused: Bool
   private var action: (() -> Void)?
   var properties: TUIInputFieldOptionalProperties
@@ -27,10 +27,11 @@ struct TUIInputField: TUIInputFieldProtocol {
   ///   - properties: An `TUIInputFieldOptionalProperties` object that holds the optional values to create multiple variants of this View
   ///   - isTextFieldFocused: A bindable bool value that used to handle text field focus using keyboard
   ///   
-  init(properties: TUIInputFieldOptionalProperties? = nil,
+  init(inputItem: Binding<TUIInputFieldItem>,
+       properties: TUIInputFieldOptionalProperties? = nil,
        isTextFieldFocused: Binding<Bool>? = nil,
        action: (() -> Void)? = nil) {
-    
+    self._inputItem = inputItem
     self.properties = properties ?? TUIInputFieldOptionalProperties()
     self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
     self.action = action
@@ -86,7 +87,7 @@ struct TUIInputField: TUIInputFieldProtocol {
         .frame(alignment: .leading)
       }
       TUIInputTextContentView(
-        inputItem: inputItem,
+        inputItem: $inputItem,
         placeholder: properties.placeholder,
         isTextFieldFocused: $isTextFieldFocused)
       .frame(maxWidth: .infinity, alignment: .leading)
@@ -144,7 +145,7 @@ struct TUIInputText_Previews: PreviewProvider {
       
       VStack(spacing: 20) {
         Group {
-          TUIInputField()
+          TUIInputField(inputItem: .constant(TUIInputFieldItem(style: .onlyTitle, title: "Label")))
             .startItem(withStyle: .text("$"))
             .endItem(withStyle:  .text("$"))
             .helperText {
@@ -152,35 +153,29 @@ struct TUIInputText_Previews: PreviewProvider {
                 style: .hint, message: "Helper / hint message goes here.")
             }
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(
-              TUIInputFieldItem(style: .onlyTitle, title: "Label"))
           
-          TUIInputField()
+          TUIInputField(inputItem: .constant(TUIInputFieldItem(style: .onlyTitle, title: "Label")))
             .startItem(withStyle: .icon(.info24Regular))
             .endItem(withStyle: .icon(.info24Regular))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(
-              TUIInputFieldItem(style: .onlyTitle, title: "Label"))
           
-          TUIInputField()
+          TUIInputField(inputItem: .constant(TUIInputFieldItem(style: .onlyTitle, title: "Label")))
             .startItem(withStyle: .text("$"))
             .endItem(withStyle: .icon(.info24Regular))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(
-              TUIInputFieldItem(style: .onlyTitle, title: "Label"))
           
-          TUIInputField()
+          TUIInputField(inputItem: .constant(TUIInputFieldItem(style: .onlyTitle, title: "Label")))
             .startItem(withStyle: .icon(.info24Regular))
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(
-              TUIInputFieldItem(style: .onlyTitle, title: "Label"))
         }
       }
       
       VStack(spacing: 20) {
         Group {
-          TUIInputField()
+          TUIInputField(inputItem: .constant(TUIInputFieldItem(
+            style: .titleWithValue,
+            title: "Label", value: "Input Text")))
             .startItem(withStyle: .text("$"))
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
@@ -188,43 +183,33 @@ struct TUIInputText_Previews: PreviewProvider {
               TUIHelperText(
                 style: .hint, message: "Helper / hint message goes here.")
             }
-            .environmentObject(
-              TUIInputFieldItem(
-                style: .titleWithValue,
-                title: "Label", value: "Input Text"))
           
-          TUIInputField()
+          TUIInputField(inputItem: .constant(TUIInputFieldItem(
+            style: .titleWithValue,
+            title: "Label", value: "Input Text")))
             .startItem(withStyle: .icon(.info24Regular))
             .endItem(withStyle: .icon(.info24Regular))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(
-              TUIInputFieldItem(
-                style: .titleWithValue,
-                title: "Label", value: "Input Text"))
           
-          TUIInputField()
+          TUIInputField(inputItem: .constant(TUIInputFieldItem(
+            style: .titleWithValue,
+            title: "Label", value: "Input Text")))
             .startItem(withStyle: .text("$"))
             .endItem(withStyle: .icon(.info24Regular))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(
-              TUIInputFieldItem(
-                style: .titleWithValue,
-                title: "Label", value: "Input Text"))
           
-          TUIInputField()
+          TUIInputField(inputItem: .constant(TUIInputFieldItem(
+            style: .titleWithValue,
+            title: "Label", value: "Input Text")))
             .startItem(withStyle: .icon(.info24Regular))
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(
-              TUIInputFieldItem(
-                style: .titleWithValue,
-                title: "Label", value: "Input Text"))
         }
       }
       
       VStack(spacing: 20) {
         Group {
-          TUIInputField()
+          TUIInputField(inputItem: .constant(TUIInputFieldItem(style: .onlyValue, value: "Input Text")))
             .startItem(withStyle: .text("$"))
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
@@ -232,29 +217,21 @@ struct TUIInputText_Previews: PreviewProvider {
               TUIHelperText(
                 style: .hint, message: "Helper / hint message goes here.")
             }
-            .environmentObject(
-              TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
           
-          TUIInputField()
+          TUIInputField(inputItem: .constant(TUIInputFieldItem(style: .onlyValue, value: "Input Text")))
             .startItem(withStyle: .icon(.info24Regular))
             .endItem(withStyle: .icon(.info24Regular))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(
-              TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
           
-          TUIInputField()
+          TUIInputField(inputItem: .constant(TUIInputFieldItem(style: .onlyValue, value: "Input Text")))
             .startItem(withStyle: .text("$"))
             .endItem(withStyle: .icon(.info24Regular))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(
-              TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
           
-          TUIInputField()
+          TUIInputField(inputItem: .constant(TUIInputFieldItem(style: .onlyValue, value: "Input Text")))
             .startItem(withStyle: .icon(.info24Regular))
             .endItem(withStyle: .text("$"))
             .highlightBar(color: Color.primaryTUI)
-            .environmentObject(
-              TUIInputFieldItem(style: .onlyValue, value: "Input Text"))
         }
       }
     }.padding(.horizontal, 10)

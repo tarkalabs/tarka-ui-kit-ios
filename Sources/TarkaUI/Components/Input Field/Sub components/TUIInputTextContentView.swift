@@ -13,7 +13,7 @@ import SwiftUI
 /// 
 struct TUIInputTextContentView: View {
   
-  @ObservedObject var inputItem: TUIInputFieldItem
+  @Binding var inputItem: TUIInputFieldItem
   @Binding private var isTextFieldFocused: Bool
   @FocusState private var isFocused: Bool
   
@@ -25,11 +25,11 @@ struct TUIInputTextContentView: View {
   ///   - placeholder: A string that to be shown as placeholder for text content field
   ///   - isTextFieldFocused: A bindable bool value that handles text field keyboard focus
   ///   
-  init(inputItem: TUIInputFieldItem,
+  init(inputItem: Binding<TUIInputFieldItem>,
        placeholder: String? = nil,
        isTextFieldFocused: Binding<Bool>? = nil) {
     
-    self.inputItem = inputItem
+    self._inputItem = inputItem
     self.placeholder = placeholder ?? ""
     self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
   }
@@ -126,14 +126,14 @@ struct TUIInputTextContent_Previews: PreviewProvider {
     VStack(spacing: 10) {
       Group {
         TUIInputTextContentView(
-          inputItem: .init(style: .onlyTitle, title: "Label"))
+          inputItem: .constant(.init(style: .onlyTitle, title: "Label")))
         
         TUIInputTextContentView(
-          inputItem: .init(
-            style: .titleWithValue, title: "Label", value: "Description"))
+          inputItem: .constant(.init(
+            style: .titleWithValue, title: "Label", value: "Description")))
         
         TUIInputTextContentView(
-          inputItem: .init(style: .onlyValue, value: "Description"))
+          inputItem: .constant(.init(style: .onlyValue, value: "Description")))
       }
       .padding(.horizontal, 20)
     }
