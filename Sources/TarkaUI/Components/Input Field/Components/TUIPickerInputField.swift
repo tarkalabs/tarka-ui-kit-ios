@@ -35,7 +35,7 @@ public struct TUIPickerInputField<Content: View>: TUIInputFieldProtocol {
   
   public var body: some View {
     
-    TUIInputField(properties: properties) {
+    TUIInputField(inputItem: $inputItem, properties: properties) {
       self.isSheetPresented = true
     }
     .sheet(
@@ -43,7 +43,6 @@ public struct TUIPickerInputField<Content: View>: TUIInputFieldProtocol {
       content: {
         content
       })
-    .environmentObject(inputItem)
     .accessibilityIdentifier(Accessibility.root)
   }
 }

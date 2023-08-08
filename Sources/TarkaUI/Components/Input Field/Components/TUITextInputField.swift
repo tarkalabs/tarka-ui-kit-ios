@@ -64,6 +64,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   
   private var inputFieldView: some View {
     TUIInputField(
+      inputItem: $inputItem,
       properties: properties,
       isTextFieldFocused: $isFocused) {
         self.isFocused = true
@@ -72,7 +73,6 @@ public struct TUITextInputField: TUIInputFieldProtocol {
           self.inputItem.style = .titleWithValue
         }
       }
-      .environmentObject(inputItem)
       .accessibilityIdentifier(Accessibility.root)
   }
   
