@@ -47,7 +47,8 @@ struct DetailView: View {
   
   @State var text = ""
   @State var isEditing = false
-  
+  @State var isSyncDisabled = false
+
   var body: some View {
     
     let searchItem = TUISearchItem(
@@ -59,9 +60,17 @@ struct DetailView: View {
         dismiss()
       })
     
-    var syncButton: TUIIconButton {
+    var searchButton: TUIIconButton {
       TUIIconButton(icon: .search24Regular) {
         searchItem.isEditing = true
+      }
+      .style(.ghost)
+      .size(.size48)
+    }
+    
+    var syncButton: TUIIconButton {
+      TUIIconButton(icon: .arrowCounterclockwise24Filled) {
+        isSyncDisabled = true
       }
       .style(.ghost)
       .size(.size48)
@@ -72,14 +81,16 @@ struct DetailView: View {
       leftButton: .back({
         dismiss()
       }),
-      rightButtons: .one(.init(button: syncButton)))
+      rightButtons: .two(
+        .init(button: searchButton),
+        .init(button: syncButton, isDisabled: $isSyncDisabled)))
     
     VStack(spacing: 0) {
       Button("Hello, Detail View!") {
         searchItem.isEditing = true
       }
-        .background(.white)
-        .frame(maxHeight: .infinity)
+      .background(.white)
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     .toolbar {
       ToolbarItemGroup(placement: .keyboard) {
@@ -89,8 +100,8 @@ struct DetailView: View {
         }
       }
     }
-    .background(.blue)
-    .frame(maxHeight: .infinity)
+    .background(.gray)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .customNavigationBar(
       titleBarItem: titleBarItem,
       searchBarItem: searchBarItem)
