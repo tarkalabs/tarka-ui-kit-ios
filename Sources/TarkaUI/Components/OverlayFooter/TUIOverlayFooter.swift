@@ -38,6 +38,15 @@ public struct TUIOverlayFooter: View {
   }
 
   public var body: some View {
+    VStack(spacing: 0) {
+      dividerView
+      buttonView
+    }
+    .frame(height: Spacing.custom(64))
+  }
+  
+  @ViewBuilder
+  private var buttonView: some View {
     HStack {
       ForEach(actions, id: \.id) { action in
         let index = actions.firstIndex { a in
@@ -50,8 +59,15 @@ public struct TUIOverlayFooter: View {
         view(forAction: action)
       }
     }
-    .padding()
+    .padding(.vertical, Spacing.baseVertical)
+    .padding(.horizontal, Spacing.custom(24))
     .background(Color.surface50)
+  }
+  
+  @ViewBuilder
+  private var dividerView: some View {
+    TUIDivider(orientation: .horizontal(hPadding: .zero, vPadding: .zero))
+      .color(.surfaceVariant)
   }
   
   @ViewBuilder
@@ -69,7 +85,7 @@ struct OverlayFooter_Previews: PreviewProvider {
     var icon: FluentIcon {
       switch self {
       case .one: return .chevronLeft24Regular
-      case .two: return .chevronDown24Regular
+      case .two: return .dismiss24Regular
       case .three: return .chevronRight24Regular
       }
     }

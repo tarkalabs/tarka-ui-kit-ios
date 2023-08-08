@@ -32,7 +32,7 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
   public init(dateInputItem: Binding<TUIDateInputFieldItem>) {
     
     let dateInputValue = dateInputItem.wrappedValue
-    let inputItem = TUIInputFieldItem(
+    var inputItem = TUIInputFieldItem(
       style: dateInputValue.style, title: dateInputValue.title)
     
     if let dateValue = dateInputValue.date {
@@ -45,7 +45,7 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
   
   public var body: some View {
     
-    TUIInputField(properties: properties) {
+    TUIInputField(inputItem: $inputItem, properties: properties) {
       self.date = dateInputItem.date ?? Date()
       self.isDateSelected = false
       self.isSheetPresented = true
@@ -57,7 +57,6 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
       self.inputItem.value = dateString
       self.dateInputItem.date = date
     }
-    .environmentObject(inputItem)
     // without a below line of code, date can not receive updates. Weird one. For now, we go with this hack.
     .onChange(of: date) { _ in }
     .fullScreenCover(
