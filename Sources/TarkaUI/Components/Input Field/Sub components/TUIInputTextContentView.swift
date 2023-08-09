@@ -18,7 +18,7 @@ struct TUIInputTextContentView: View {
   @FocusState private var isFocused: Bool
   
   private var placeholder: String
-  private var maxCharacters: Int = 0
+  private var maxCharacters: Int
   private var keyboardType: UIKeyboardType
   private var allowedCharacters: CharacterSet
 
@@ -30,13 +30,14 @@ struct TUIInputTextContentView: View {
   ///   
   init(inputItem: Binding<TUIInputFieldItem>,
        placeholder: String? = nil,
-       textLimit: Int = 0, allowedCharacters: CharacterSet = .init(),
+       maxCharacters: Int = 0,
+       allowedCharacters: CharacterSet = .init(),
        keyboardType: UIKeyboardType = .default,
        isTextFieldFocused: Binding<Bool>? = nil) {
     
     self._inputItem = inputItem
     self.placeholder = placeholder ?? ""
-    self.maxCharacters = textLimit
+    self.maxCharacters = maxCharacters
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
    self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
