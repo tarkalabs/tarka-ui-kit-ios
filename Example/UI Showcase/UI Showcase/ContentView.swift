@@ -69,7 +69,7 @@ Second Text - \(valueOnlyTextFieldItem.value)
         .endItem(withStyle: .icon(.document24Regular))
         .highlightBar(color: .red)
         .state(.success("Values are valid"))
-        .textLimit(5)
+        .maxCharacters(5)
       
       TUIInteractiveInputField(inputItem: $locationPickerFieldItem) {
         self.locationPickerFieldItem.style = .titleWithValue
@@ -78,7 +78,7 @@ Second Text - \(valueOnlyTextFieldItem.value)
       .endItem(withStyle: .icon(.document24Regular))
       .highlightBar(color: .red)
       .state(.success("Values are valid"))
-      .allowedCharacters("12345qwerty")
+      .allowedCharacters(CharacterSet(charactersIn: "12345qwerty"))
       
       TUIPickerInputField(inputItem: $pickerFieldItem)
       {
@@ -90,8 +90,8 @@ Second Text - \(valueOnlyTextFieldItem.value)
         inputItem: $memoTextFieldItem, isDoneClicked: $isDoneClicked)
       .state(.alert("Input values are sensitive"))
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
-      .textLimit(7)
-      .allowedCharacters("1234567890.")
+      .maxCharacters(7)
+      .allowedCharacters(CharacterSet(charactersIn: "1234567890."))
       .setKeyboardType(.decimalPad)
       
       TUITextInputField(
@@ -101,9 +101,7 @@ Second Text - \(valueOnlyTextFieldItem.value)
       .placeholder("Enter Memo Description")
     }
     .scrollDismissesKeyboard(.immediately)
-    .addDoneButtonInToolbar {
-      isDoneClicked = true
-    }
+    .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked)
   }
 }
 

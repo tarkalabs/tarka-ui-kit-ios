@@ -18,9 +18,9 @@ struct TUIInputTextContentView: View {
   @FocusState private var isFocused: Bool
   
   private var placeholder: String
-  private var textLimit: Int = 0
+  private var maxCharacters: Int = 0
   private var keyboardType: UIKeyboardType
-  private var allowedCharacters: String = ""
+  private var allowedCharacters: CharacterSet
 
   /// Creates a `TUIInputTextContentView` View
   /// - Parameters:
@@ -30,13 +30,13 @@ struct TUIInputTextContentView: View {
   ///   
   init(inputItem: Binding<TUIInputFieldItem>,
        placeholder: String? = nil,
-       textLimit: Int = 0, allowedCharacters: String = "",
+       textLimit: Int = 0, allowedCharacters: CharacterSet = .init(),
        keyboardType: UIKeyboardType = .default,
        isTextFieldFocused: Binding<Bool>? = nil) {
     
     self._inputItem = inputItem
     self.placeholder = placeholder ?? ""
-    self.textLimit = textLimit
+    self.maxCharacters = textLimit
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
    self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
@@ -120,10 +120,12 @@ struct TUIInputTextContentView: View {
     
     let count = inputItem.value.count
     
-    if textLimit > 0, count > textLimit {
-      inputItem.value = String(inputItem.value.prefix(textLimit))
+    if maxCharacters > 0, count > maxCharacters {
+      // restrict count
+      inputItem.value = String(inputItem.value.prefix(maxCharacters))
       
     } else if !allowedCharacters.isEmpty {
+      
       if keyboardType == .decimalPad {
         // restrict multiple dots
         let filtered = inputItem.value.filter { $0 == "." }
@@ -133,7 +135,10 @@ struct TUIInputTextContentView: View {
           return
         }
       }
-      let filtered = inputItem.value.filter { allowedCharacters.contains($0) }
+      // restrict character
+      let filtered = inputItem.value.filter { (c) -> Bool in
+          return !c.unicodeScalars.contains(where: { !allowedCharacters.contains($0)})
+      }
       if filtered != inputItem.value {
         inputItem.value = filtered
       }

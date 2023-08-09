@@ -17,8 +17,8 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   
   public var properties = TUIInputFieldOptionalProperties()
   
-  public var textLimit: Int = 0
-  public var allowedCharacters: String = ""
+  public var maxCharacters: Int = 0
+  public var allowedCharacters = CharacterSet()
   public var keyboardType: UIKeyboardType = .default
 
   /// Binds the bool that used to handle the row interaction and text field interaction switch when user interacts
@@ -72,7 +72,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
       inputItem: $inputItem,
       properties: properties,
       isTextFieldFocused: $isFocused,
-      textLimit: textLimit,
+      textLimit: maxCharacters,
       allowedCharacters: allowedCharacters,
       keyboardType: keyboardType) {
         

@@ -22,8 +22,8 @@ struct TUIInputField: TUIInputFieldProtocol {
   
   var properties: TUIInputFieldOptionalProperties
   
-  private var textLimit: Int = 0
-  private  var allowedCharacters: String = ""
+  private var maxCharacters: Int = 0
+  private var allowedCharacters: CharacterSet
   private var keyboardType: UIKeyboardType
   private var action: (() -> Void)?
 
@@ -35,12 +35,12 @@ struct TUIInputField: TUIInputFieldProtocol {
   init(inputItem: Binding<TUIInputFieldItem>,
        properties: TUIInputFieldOptionalProperties? = nil,
        isTextFieldFocused: Binding<Bool>? = nil,
-       textLimit: Int = 0, allowedCharacters: String = "",
+       textLimit: Int = 0, allowedCharacters: CharacterSet = .init(),
        keyboardType: UIKeyboardType = .default,
        action: (() -> Void)? = nil) {
     self._inputItem = inputItem
     self.properties = properties ?? TUIInputFieldOptionalProperties()
-    self.textLimit = textLimit
+    self.maxCharacters = textLimit
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
     self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
@@ -99,7 +99,7 @@ struct TUIInputField: TUIInputFieldProtocol {
       TUIInputTextContentView(
         inputItem: $inputItem,
         placeholder: properties.placeholder,
-        textLimit: textLimit, allowedCharacters: allowedCharacters,
+        textLimit: maxCharacters, allowedCharacters: allowedCharacters,
         keyboardType: keyboardType,
         isTextFieldFocused: $isTextFieldFocused)
       .frame(maxWidth: .infinity, alignment: .leading)

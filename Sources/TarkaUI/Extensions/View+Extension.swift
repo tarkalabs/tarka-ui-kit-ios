@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+
 public extension View {
   
   /// Adds done button in toolbar
@@ -14,15 +16,10 @@ public extension View {
   /// - Returns: View
   ///
   @ViewBuilder
-  func addDoneButtonInToolbar(onClicked: @escaping () -> Void) -> some View {
-    self.toolbar {
-      ToolbarItemGroup(placement: .keyboard) {
-        Spacer()
-        Button("Done".localized) {
-          onClicked()
-        }
-      }
-    }
+  func addDoneButtonInToolbar(
+    isDoneClicked: Binding<Bool>,
+    onClicked: (() -> Void)? = nil) -> some View {
+    modifier(ToolBarDoneButton(isDoneClicked: isDoneClicked))
   }
   
   @ViewBuilder

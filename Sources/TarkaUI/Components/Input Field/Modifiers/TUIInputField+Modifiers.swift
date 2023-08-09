@@ -93,11 +93,11 @@ public extension TUIInputFieldProtocol {
   /// - Parameter limit: maximum character limit
   /// - Returns: TUITextInputField with character count limitation
   ///
-  func textLimit(_ limit: Int) -> Self {
+  func maxCharacters(_ maxCharacters: Int) -> Self {
     guard var newView = self as? TUITextInputField else {
       return self
     }
-    newView.textLimit = limit
+    newView.maxCharacters = maxCharacters
     return newView as! Self
   }
   
@@ -105,7 +105,7 @@ public extension TUIInputFieldProtocol {
   /// - Parameter characters: Allowed Character set
   /// - Returns: TUITextInputField with character limitation
   ///
-  func allowedCharacters(_ characters: String) -> some TUIInputFieldProtocol {
+  func allowedCharacters(_ characters: CharacterSet) -> some TUIInputFieldProtocol {
     guard var newView = self as? TUITextInputField else {
       return self
     }
