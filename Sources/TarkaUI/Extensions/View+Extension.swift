@@ -7,7 +7,23 @@
 
 import SwiftUI
 
-extension View {
+public extension View {
+  
+  /// Adds done button in toolbar
+  /// - Parameter onClicked: closure that called when done button is clicked
+  /// - Returns: View
+  ///
+  @ViewBuilder
+  func addDoneButtonInToolbar(onClicked: @escaping () -> Void) -> some View {
+    self.toolbar {
+      ToolbarItemGroup(placement: .keyboard) {
+        Spacer()
+        Button("Done".localized) {
+          onClicked()
+        }
+      }
+    }
+  }
   
   @ViewBuilder
   func transparentBackground() -> some View {
