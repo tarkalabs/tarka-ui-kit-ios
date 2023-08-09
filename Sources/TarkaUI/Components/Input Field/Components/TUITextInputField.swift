@@ -72,7 +72,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
       inputItem: $inputItem,
       properties: properties,
       isTextFieldFocused: $isFocused,
-      textLimit: maxCharacters,
+      maxCharacters: maxCharacters,
       allowedCharacters: allowedCharacters,
       keyboardType: keyboardType) {
         
