@@ -18,7 +18,10 @@ struct TUIInputTextContentView: View {
   @FocusState private var isFocused: Bool
   
   private var placeholder: String
-  
+  private var textLimit: Int = 0
+  private var keyboardType: UIKeyboardType
+  private var allowedCharacters: String = ""
+
   /// Creates a `TUIInputTextContentView` View
   /// - Parameters:
   ///   - inputItem: A `TUIInputFieldItem` instance that holds the required values to render `TUIInputTextContentView` View
@@ -27,11 +30,16 @@ struct TUIInputTextContentView: View {
   ///   
   init(inputItem: Binding<TUIInputFieldItem>,
        placeholder: String? = nil,
+       textLimit: Int = 0, allowedCharacters: String = "",
+       keyboardType: UIKeyboardType = .default,
        isTextFieldFocused: Binding<Bool>? = nil) {
     
     self._inputItem = inputItem
     self.placeholder = placeholder ?? ""
-    self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
+    self.textLimit = textLimit
+    self.allowedCharacters = allowedCharacters
+    self.keyboardType = keyboardType
+   self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
   }
   
   var body: some View {
@@ -92,6 +100,10 @@ struct TUIInputTextContentView: View {
       TextField(placeholder,
                 text: $inputItem.value,
                 axis: .vertical)
+      .onChange(of: inputItem.value) { _ in
+        limitText()
+      }
+      .keyboardType(keyboardType)
       .lineSpacing(0)
       .focused($isFocused)
       .multilineTextAlignment(.leading)
@@ -101,6 +113,30 @@ struct TUIInputTextContentView: View {
       .frame(minHeight: 20, alignment: .leading)
       .disabled(!isTextFieldFocused)
       .accessibilityIdentifier(Accessibility.value)
+    }
+  }
+  
+  private func limitText() {
+    
+    let count = inputItem.value.count
+    
+    if textLimit > 0, count > textLimit {
+      inputItem.value = String(inputItem.value.prefix(textLimit))
+      
+    } else if !allowedCharacters.isEmpty {
+      if keyboardType == .decimalPad {
+        // restrict multiple dots
+        let filtered = inputItem.value.filter { $0 == "." }
+        if filtered.count > 1, let firstIndex = inputItem.value.firstIndex(of: ".") {
+          inputItem.value.removeAll(where: { $0 == "." })
+          inputItem.value.insert(".", at: firstIndex)
+          return
+        }
+      }
+      let filtered = inputItem.value.filter { allowedCharacters.contains($0) }
+      if filtered != inputItem.value {
+        inputItem.value = filtered
+      }
     }
   }
   

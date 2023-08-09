@@ -54,7 +54,9 @@ struct ContentView: View {
   public init() { }
   
   var body: some View {
+    
     VStack {
+      
       Button("Submit") {
         print("""
 Final input: Date - \(String(describing: dateFieldItem.date?.formatted(dateFieldItem.format)))
@@ -62,10 +64,12 @@ First Text - \(memoTextFieldItem.value)
 Second Text - \(valueOnlyTextFieldItem.value)
 """)
       }
+      
       TUIDateInputField(dateInputItem: $dateFieldItem)
         .endItem(withStyle: .icon(.document24Regular))
         .highlightBar(color: .red)
         .state(.success("Values are valid"))
+        .textLimit(5)
       
       TUIInteractiveInputField(inputItem: $locationPickerFieldItem) {
         self.locationPickerFieldItem.style = .titleWithValue
@@ -74,6 +78,7 @@ Second Text - \(valueOnlyTextFieldItem.value)
       .endItem(withStyle: .icon(.document24Regular))
       .highlightBar(color: .red)
       .state(.success("Values are valid"))
+      .allowedCharacters("12345qwerty")
       
       TUIPickerInputField(inputItem: $pickerFieldItem)
       {
@@ -85,6 +90,9 @@ Second Text - \(valueOnlyTextFieldItem.value)
         inputItem: $memoTextFieldItem, isDoneClicked: $isDoneClicked)
       .state(.alert("Input values are sensitive"))
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
+      .textLimit(7)
+      .allowedCharacters("1234567890.")
+      .setKeyboardType(.decimalPad)
       
       TUITextInputField(
         inputItem: $valueOnlyTextFieldItem, isDoneClicked: $isDoneClicked)
@@ -93,13 +101,8 @@ Second Text - \(valueOnlyTextFieldItem.value)
       .placeholder("Enter Memo Description")
     }
     .scrollDismissesKeyboard(.immediately)
-    .toolbar {
-      ToolbarItemGroup(placement: .keyboard) {
-        Spacer()
-        Button("Done") {
-          isDoneClicked = true
-        }
-      }
+    .addDoneButtonInToolbar {
+      isDoneClicked = true
     }
   }
 }
