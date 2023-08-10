@@ -11,6 +11,66 @@ public typealias TUIButtonAction = () -> Void
 
 public extension TUIAppTopBar {
   
+  /// Defines the navigation bar style
+  enum BarStyle {
+    
+    /// Assigns title and bar button items
+    case titleBar(TitleBarItem)
+    
+    /// Shows search bar with back and cancel buttons
+    case search(SearchBarItem)
+    
+    var minHeight: CGFloat {
+      
+      if case .titleBar(let barItem) = self {
+        
+        if case .none = barItem.leftButton ,
+           case .none = barItem.rightButtons {
+          return 60
+        }
+      }
+      return 64
+    }
+  }
+  
+  struct TitleBarItem {
+    
+    var title: String
+    var bottom: BottomContent
+    var leftButton: LeftButton
+    var rightButtons: RightButtonType
+    
+    public init(title: String,
+                bottom: BottomContent = .none,
+                leftButton: LeftButton,
+                rightButtons: RightButtonType = .none) {
+      
+      self.title = title
+      self.bottom = bottom
+      self.leftButton = leftButton
+      self.rightButtons = rightButtons
+    }
+  }
+  
+  enum BottomContent {
+    case none, tabs(TUITabBar)
+  }
+  
+  enum LeftButton: Identifiable {
+    
+    public var id: String {
+      return UUID().uuidString
+    }
+    case none, back(TUIButtonAction), cancel(TUIButtonAction)
+    
+    var leading: CGFloat {
+      switch self {
+      case .none: return 16
+      default: return 0
+      }
+    }
+  }
+  
   enum RightButtonType {
     // left to right order
     case none
@@ -30,65 +90,14 @@ public extension TUIAppTopBar {
     }
   }
   
-  enum LeftButton: Identifiable {
-    
-    
-    public var id: String {
-      return UUID().uuidString
-    }
-    case none, back(TUIButtonAction), cancel(TUIButtonAction)
-    
-    var leading: CGFloat {
-      switch self {
-      case .none: return 16
-      default: return 0
-      }
-    }
-  }
-  
-  struct BarItem {
-    
-    var title: String
-    var leftButton: LeftButton
-    var rightButtons: RightButtonType = .none
-    
-    public init(title: String, leftButton: LeftButton, rightButtons: RightButtonType = .none) {
-      self.title = title
-      self.leftButton = leftButton
-      self.rightButtons = rightButtons
-    }
-  }
-  
   struct SearchBarItem {
-    public var item: TUISearchItem
+    
+    var item: TUISearchItem
     var backAction: TUIButtonAction
     
     public init(item: TUISearchItem, backAction: @escaping TUIButtonAction) {
       self.item = item
       self.backAction = backAction
-    }
-  }
-  
-  enum BarStyle {
-    
-    case titleBar(BarItem)
-    case search(SearchBarItem)
-    
-    var minHeight: CGFloat {
-      
-      if case .titleBar(let barItem) = self {
-        
-        if case .none = barItem.leftButton ,
-           case .none = barItem.rightButtons {
-          return 60
-        }
-      }
-      return 64
-    }
-    
-    var extraPadding: CGFloat {
-      let padding: CGFloat = minHeight == 64 ? 2 : 0
-      return padding + 2
     }
   }
 }
