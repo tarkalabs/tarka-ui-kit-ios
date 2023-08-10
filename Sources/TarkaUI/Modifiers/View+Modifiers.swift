@@ -123,9 +123,9 @@ public extension View {
             }
             .iconButtons(icons: iconButtons)
             .buttonStyle(.borderless)
-            .accessibilityElement(children: .contain)
-            .accessibilityIdentifier(accessibilityID)
         })
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(accessibilityID)
       } else {
         textRow
           .buttonStyle(.borderless)
