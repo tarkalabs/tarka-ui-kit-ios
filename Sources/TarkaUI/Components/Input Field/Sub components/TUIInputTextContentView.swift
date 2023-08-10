@@ -121,24 +121,26 @@ struct TUIInputTextContentView: View {
     
     let count = inputItem.value.count
     
-    if maxCharacters > 0, count > maxCharacters {
-      // restrict count
-      inputItem.value = String(inputItem.value.prefix(maxCharacters))
-      
-    } else if !allowedCharacters.isEmpty {
+    if !allowedCharacters.isEmpty {
       
       if keyboardType == .decimalPad {
         // restrict multiple dots
-        let filtered = inputItem.value.filter { $0 == "." }
-        if filtered.count > 1, let firstIndex = inputItem.value.firstIndex(of: ".") {
-          inputItem.value.removeAll(where: { $0 == "." })
-          inputItem.value.insert(".", at: firstIndex)
+        let dot: Character = "."
+        let filtered = inputItem.value.filter { $0 == dot }
+        if filtered.count > 1, let firstIndex = inputItem.value.firstIndex(of: dot) {
+          inputItem.value.removeAll(where: { $0 == dot })
+          inputItem.value.insert(dot, at: firstIndex)
           return
         }
       }
+      if maxCharacters > 0, count > maxCharacters {
+        // restrict count
+        inputItem.value = String(inputItem.value.prefix(maxCharacters))
+        return
+      }
       // restrict character
       let filtered = inputItem.value.filter { (c) -> Bool in
-          return !c.unicodeScalars.contains(where: { !allowedCharacters.contains($0)})
+        return !c.unicodeScalars.contains(where: { !allowedCharacters.contains($0)})
       }
       if filtered != inputItem.value {
         inputItem.value = filtered
