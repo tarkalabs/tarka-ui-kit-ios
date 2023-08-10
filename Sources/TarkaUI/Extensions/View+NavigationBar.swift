@@ -10,31 +10,8 @@ import SwiftUI
 public extension View {
   
   @ViewBuilder
-  func navigationBar(
-    titleBarItem: TUIAppTopBar.BarItem,
-    searchBarItem: TUIAppTopBar.SearchBarItem? = nil) -> some View {
-      
-      let barStyle = barStyle(
-        titleBarItem: titleBarItem, searchBarItem: searchBarItem)
-      
-      VStack(spacing: 0) { }
-        .padding(.bottom, barStyle.extraPadding) // default extra padding
-        .toolbar {
-          
-          ToolbarItem(placement: .principal) {
-            
-            TUIAppTopBar(barStyle: barStyle)
-              .padding(.horizontal, -8) // default extra padding
-              .ignoresSafeArea()
-          }
-        }
-      self
-        .navigationBarBackButtonHidden(true)
-    }
-  
-  @ViewBuilder
   func customNavigationBar(
-    titleBarItem: TUIAppTopBar.BarItem,
+    titleBarItem: TUIAppTopBar.TitleBarItem,
     searchBarItem: TUIAppTopBar.SearchBarItem? = nil) -> some View {
       
       GeometryReader { geometry in
@@ -45,7 +22,7 @@ public extension View {
         let safeAreaInset = geometry.safeAreaInsets.top
         let minTop = max(safeAreaInset, 20)
         let top = min(minTop, 40)
-
+        
         VStack(spacing: 1) {
           TUIAppTopBar(barStyle: barStyle)
             .padding(.top, top)
@@ -53,35 +30,26 @@ public extension View {
             .ignoresSafeArea()
           self
         }
-        .edgesIgnoringSafeArea(.top)        //      .safeAreaInset(edge: .top, spacing: -10) {
-        //        Text("")
-        //          .frame(maxWidth: .infinity)
-        //          .background(.indigo)
-        //      }
-        .navigationBarHidden(true)
+        .edgesIgnoringSafeArea(.top)
+        .toolbar(.hidden, for: .navigationBar)
       }
     }
   
   var safeAreaTop: CGFloat {
     
     let keyWindow = UIApplication.shared.connectedScenes
-    
-      .filter({$0.activationState == .foregroundActive})
-    
-      .map({$0 as? UIWindowScene})
-    
-      .compactMap({$0})
-    
+      .filter({ $0.activationState == .foregroundActive })
+      .map({ $0 as? UIWindowScene })
+      .compactMap({ $0 })
       .first?.windows
-    
-      .filter({$0.isKeyWindow}).first
+      .filter({ $0.isKeyWindow }).first
     
     var top =  keyWindow?.safeAreaInsets.top ?? 0
     top = top == 0 ? 0 : 40
     return top
   }
   
-  private func barStyle(titleBarItem: TUIAppTopBar.BarItem,
+  private func barStyle(titleBarItem: TUIAppTopBar.TitleBarItem,
                         searchBarItem: TUIAppTopBar.SearchBarItem? = nil) -> TUIAppTopBar.BarStyle {
     
     if let searchBarItem, searchBarItem.item.isEditing {
@@ -89,5 +57,22 @@ public extension View {
     } else {
       return .titleBar(titleBarItem)
     }
+  }
+}
+
+struct DisabledView: ViewModifier {
+  
+  var isDisabled = false
+  
+  func body(content: Content) -> some View {
+    content
+      .disabled(isDisabled)
+      .opacity(isDisabled ? 0.5 : 1)
+  }
+}
+
+extension View {
+  func isDisabled(_ isDisabled: Bool) -> some View {
+    modifier(DisabledView(isDisabled: isDisabled))
   }
 }

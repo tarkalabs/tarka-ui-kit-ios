@@ -7,31 +7,24 @@
 
 import SwiftUI
 
-public struct TUISearchItem {
-  
-  var placeholder: String
-  @Binding var text: String
-  @Binding public var isEditing: Bool
-  
-  public init(placeholder: String,
-              text: Binding<String>,
-              isEditing: Binding<Bool>) {
-    
-    self.placeholder = placeholder
-    self._text = text
-    self._isEditing = isEditing
-  }
-}
-
+/// `TUISearchBar` is a SwiftUI view that used for search in a navigation bar.
+/// The view can be customized with placeholder, back and right bar button items
+///
 public struct TUISearchBar: View {
   
   var backButton: TUIIconButton?
   var trailingButton: TUIIconButton?
   var searchItem: TUISearchItem
   
+  public init(backButton: TUIIconButton? = nil, trailingButton: TUIIconButton? = nil, searchItem: TUISearchItem) {
+    self.backButton = backButton
+    self.trailingButton = trailingButton
+    self.searchItem = searchItem
+  }
+  
   public var body: some View {
     
-    HStack(alignment: .center, spacing: 4) {
+    HStack(alignment: .center, spacing: Spacing.quarterHorizontal) {
       
       if let backButton {
         backButton
@@ -43,24 +36,9 @@ public struct TUISearchBar: View {
         trailingButton
       }
     }
-    .padding(4)
+    .padding(Spacing.custom(4))
     .background(Color.inputBackground)
     .cornerRadius(75)
-  }
-}
-
-public extension TUISearchBar {
-  
-  func backButton(@ViewBuilder _ button: () -> TUIIconButton) -> Self {
-    var newView = self
-    newView.backButton = button()
-    return newView
-  }
-  
-  func trailingButton(@ViewBuilder _ button: () -> TUIIconButton?) -> Self {
-    var newView = self
-    newView.trailingButton = button()
-    return newView
   }
 }
 
@@ -87,35 +65,20 @@ struct TUISearchBar_Previews: PreviewProvider {
   }
 }
 
-struct SearchBar: View {
+// Mark: - Modifiers
+
+public extension TUISearchBar {
   
-  var searchItem: TUISearchItem
-  @FocusState private var isFocused: Bool
+  func backButton(@ViewBuilder _ button: () -> TUIIconButton) -> Self {
+    var newView = self
+    newView.backButton = button()
+    return newView
+  }
   
-  var body: some View {
-    TextField(searchItem.placeholder, text: searchItem.$text)
-      .focused($isFocused)
-      .onTapGesture {
-        searchItem.isEditing = true
-      }
-      .onChange(of: searchItem.$isEditing.wrappedValue, perform: { value in
-        isFocused = value
-      })
-      .transition(.move(edge: .trailing))
-    //        .animation(.default)
+  func trailingButton(@ViewBuilder _ button: () -> TUIIconButton?) -> Self {
+    var newView = self
+    newView.trailingButton = button()
+    return newView
   }
 }
 
-struct SearchBar_Previews: PreviewProvider {
-  
-  static var previews: some View {
-    
-    @State var text = ""
-    @State var isEditing = false
-    
-    let searchItem = TUISearchItem(
-      placeholder: "Search", text: $text, isEditing: $isEditing)
-    
-    SearchBar(searchItem: searchItem)
-  }
-}

@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+/// `TUIAppTopBar` is a SwiftUI view that acts as a navigation bar for a screen.
+/// The view can be customized with title, left and right bar button items and with search
+///
+/// To configure its properties, please check
+/// `TUIAppTopBar+Enums.swift`
+///
 public struct TUIAppTopBar: View {
   
   var barStyle: BarStyle
@@ -28,14 +34,12 @@ public struct TUIAppTopBar: View {
         searchBar(using: searchBarItem)
       }
     }
-    .background(theme.navColor)
-    .padding(.horizontal, -8)
   }
   
   @ViewBuilder
-  func titleBar(using barItem: BarItem) -> some View {
+  func titleBar(using barItem: TitleBarItem) -> some View {
     
-    HStack(spacing: 8) {
+    HStack(spacing: Spacing.halfHorizontal) {
       
       let leftButton = barItem.leftButton
       
@@ -54,7 +58,7 @@ public struct TUIAppTopBar: View {
       rightButtons(using: barItem.rightButtons)
     }
     .frame(maxWidth: .infinity, minHeight: barStyle.minHeight, alignment: .leading)
-    .padding(.horizontal, 8)
+    .padding(.horizontal, Spacing.halfHorizontal)
   }
   
   @ViewBuilder
@@ -85,22 +89,22 @@ public struct TUIAppTopBar: View {
         
       case .one(let buttonItem):
         buttonItem.button?
-          .disabled(buttonItem.isDisabled)
-
+          .isDisabled(buttonItem.isDisabled)
+        
       case .two(let buttonItem1, let buttonItem2):
         buttonItem1.button?
-          .disabled(buttonItem1.isDisabled)
+          .isDisabled(buttonItem1.isDisabled)
         buttonItem2.button
-          .disabled(buttonItem2.isDisabled)
-
+          .isDisabled(buttonItem2.isDisabled)
+        
       case .three(let buttonItem1, let buttonItem2, let buttonItem3):
         buttonItem1.button?
-          .disabled(buttonItem1.isDisabled)
+          .isDisabled(buttonItem1.isDisabled)
         buttonItem2.button
-          .disabled(buttonItem2.isDisabled)
+          .isDisabled(buttonItem2.isDisabled)
         buttonItem3.button
-          .disabled(buttonItem3.isDisabled)
-
+          .isDisabled(buttonItem3.isDisabled)
+        
       case .none:
         EmptyView()
       }
@@ -130,8 +134,8 @@ public struct TUIAppTopBar: View {
             .size(.size40)
           }
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 8)
+        .padding(.horizontal, Spacing.baseHorizontal)
+        .padding(.vertical, Spacing.baseVertical)
     }
   
 }
@@ -192,19 +196,14 @@ struct TUIAppTopBar_Previews: PreviewProvider {
           )
         }
         .padding(.horizontal, 16)
+        
+        TUIAppTopBar(
+          barStyle: .search(
+            .init(item: searchItem, backAction: { })
+          )
+        )
       }
     }
     .padding(.vertical, 20)
-    
-    VStack {
-      
-      TUIAppTopBar(
-        barStyle: .search(
-          .init(item: searchItem, backAction: { })
-        )
-      )
-      .padding(.horizontal, 16)
-    }
-    .frame(maxHeight: .infinity, alignment: .top)
   }
 }

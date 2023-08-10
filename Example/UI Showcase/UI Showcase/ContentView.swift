@@ -10,18 +10,6 @@ import SwiftUI
 
 struct ContentView: View {
   
-  @State private var isActive = false
-  let coloredNavAppearance = UINavigationBarAppearance()
-
-  init() {
-    coloredNavAppearance.configureWithOpaqueBackground()
-    coloredNavAppearance.backgroundColor = UIColor(theme.navColor)
-
-    UINavigationBar.appearance().standardAppearance = coloredNavAppearance
-    UINavigationBar.appearance().scrollEdgeAppearance = coloredNavAppearance
-
-  }
-
   var body: some View {
     
     NavigationStack {
@@ -45,50 +33,14 @@ struct DetailView: View {
   
   @Environment(\.dismiss) private var dismiss
   
-  @State var text = ""
-  @State var isEditing = false
+  @State var searchText = ""
+  @State var isSearchEditing = false
   @State var isSyncDisabled = false
-
+  
   var body: some View {
     
-    let searchItem = TUISearchItem(
-      placeholder: "Search", text: $text, isEditing: $isEditing)
-    
-    let searchBarItem = TUIAppTopBar.SearchBarItem(
-      item: searchItem,
-      backAction: {
-        dismiss()
-      })
-    
-    var searchButton: TUIIconButton {
-      TUIIconButton(icon: .search24Regular) {
-        searchItem.isEditing = true
-      }
-      .style(.ghost)
-      .size(.size48)
-    }
-    
-    var syncButton: TUIIconButton {
-      TUIIconButton(icon: .arrowCounterclockwise24Filled) {
-        isSyncDisabled = true
-      }
-      .style(.ghost)
-      .size(.size48)
-    }
-    
-    let titleBarItem = TUIAppTopBar.BarItem(
-      title: "Detail View",
-      leftButton: .back({
-        dismiss()
-      }),
-      rightButtons: .two(
-        .init(button: searchButton),
-        .init(button: syncButton, isDisabled: $isSyncDisabled)))
-    
     VStack(spacing: 0) {
-      Button("Hello, Detail View!") {
-        searchItem.isEditing = true
-      }
+      Text("Hello, Detail View!")
       .background(.white)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -96,15 +48,50 @@ struct DetailView: View {
       ToolbarItemGroup(placement: .keyboard) {
         Spacer()
         Button("Done") {
-          searchItem.isEditing = false
+          isSearchEditing = false
         }
       }
     }
     .background(.gray)
     .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .onChange(of: searchText, perform: { value in
+      print("Searching for \"\(searchText)\"")
+    })
     .customNavigationBar(
       titleBarItem: titleBarItem,
       searchBarItem: searchBarItem)
+  }
+  
+  private var searchBarItem: TUIAppTopBar.SearchBarItem {
+    
+    let searchItem = TUISearchItem(
+      placeholder: "Search", text: $searchText, isEditing: $isSearchEditing)
+    
+    return .init(item: searchItem, backAction: { dismiss() })
+  }
+  
+  private var titleBarItem: TUIAppTopBar.TitleBarItem {
+    
+    let searchButton = TUIIconButton(icon: .search24Regular) {
+      isSearchEditing = true
+    }
+      .style(.ghost)
+      .size(.size48)
+    
+    let syncButton = TUIIconButton(icon: .arrowCounterclockwise24Filled) {
+      isSyncDisabled.toggle()
+    }
+      .style(.ghost)
+      .size(.size48)
+    
+    return .init(
+      title: "Detail View",
+      leftButton: .back({
+        dismiss()
+      }),
+      rightButtons: .two(
+        .init(button: searchButton),
+        .init(button: syncButton, isDisabled: $isSyncDisabled)))
   }
 }
 
