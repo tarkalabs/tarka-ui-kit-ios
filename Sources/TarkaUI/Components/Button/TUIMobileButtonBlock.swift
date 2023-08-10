@@ -50,7 +50,7 @@ public struct TUIMobileButtonBlock: View {
         button
           .style(.primary)
           .size(.large)
-          .width(.fixed(fixedWidth))
+          .width(.maximum(fixedWidth))
         
       case .two(let left, let right):
         left

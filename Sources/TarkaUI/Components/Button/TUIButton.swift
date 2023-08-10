@@ -58,6 +58,7 @@ public struct TUIButton: View {
       .padding(.trailing, size.trailing(for: icon))
     }
     .frame(minHeight: size.height)
+    .width(width)
     .background(style.backgroundColor)
     .roundedCornerWithBorder(width: style.borderWidth, color: .onSurface)
   }
