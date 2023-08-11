@@ -19,9 +19,14 @@ struct TUIInputField: TUIInputFieldProtocol {
   
   @Binding var inputItem: TUIInputFieldItem
   @Binding private var isTextFieldFocused: Bool
-  private var action: (() -> Void)?
+  
   var properties: TUIInputFieldOptionalProperties
   
+  private var maxCharacters: Int
+  private var allowedCharacters: CharacterSet
+  private var keyboardType: UIKeyboardType
+  private var action: (() -> Void)?
+
   /// Creates a `TUIInputField` View
   /// - Parameters:
   ///   - properties: An `TUIInputFieldOptionalProperties` object that holds the optional values to create multiple variants of this View
@@ -30,9 +35,16 @@ struct TUIInputField: TUIInputFieldProtocol {
   init(inputItem: Binding<TUIInputFieldItem>,
        properties: TUIInputFieldOptionalProperties? = nil,
        isTextFieldFocused: Binding<Bool>? = nil,
+       maxCharacters: Int = 0,
+       allowedCharacters: CharacterSet = .init(),
+       keyboardType: UIKeyboardType = .default,
        action: (() -> Void)? = nil) {
+    
     self._inputItem = inputItem
     self.properties = properties ?? TUIInputFieldOptionalProperties()
+    self.maxCharacters = maxCharacters
+    self.allowedCharacters = allowedCharacters
+    self.keyboardType = keyboardType
     self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
     self.action = action
   }
@@ -89,6 +101,9 @@ struct TUIInputField: TUIInputFieldProtocol {
       TUIInputTextContentView(
         inputItem: $inputItem,
         placeholder: properties.placeholder,
+        maxCharacters: maxCharacters,
+        allowedCharacters: allowedCharacters,
+        keyboardType: keyboardType,
         isTextFieldFocused: $isTextFieldFocused)
       .frame(maxWidth: .infinity, alignment: .leading)
       

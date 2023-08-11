@@ -17,6 +17,10 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   
   public var properties = TUIInputFieldOptionalProperties()
   
+  public var maxCharacters: Int = 0
+  public var allowedCharacters = CharacterSet()
+  public var keyboardType: UIKeyboardType = .default
+
   /// Binds the bool that used to handle the row interaction and text field interaction switch when user interacts
   @Binding private var isDoneClicked: Bool
   
@@ -63,10 +67,15 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   }
   
   private var inputFieldView: some View {
+    
     TUIInputField(
       inputItem: $inputItem,
       properties: properties,
-      isTextFieldFocused: $isFocused) {
+      isTextFieldFocused: $isFocused,
+      maxCharacters: maxCharacters,
+      allowedCharacters: allowedCharacters,
+      keyboardType: keyboardType) {
+        
         self.isFocused = true
         // change style
         if self.inputItem.style == .onlyTitle {

@@ -7,7 +7,20 @@
 
 import SwiftUI
 
-extension View {
+
+
+public extension View {
+  
+  /// Adds done button in toolbar
+  /// - Parameter onClicked: closure that called when done button is clicked
+  /// - Returns: View
+  ///
+  @ViewBuilder
+  func addDoneButtonInToolbar(
+    isDoneClicked: Binding<Bool>,
+    onClicked: (() -> Void)? = nil) -> some View {
+    modifier(ToolBarDoneButton(isDoneClicked: isDoneClicked))
+  }
   
   @ViewBuilder
   func transparentBackground() -> some View {

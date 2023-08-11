@@ -101,6 +101,9 @@ Second Text - \(valueOnlyTextFieldItem.value)
         inputItem: $memoTextFieldItem, isDoneClicked: $isDoneClicked)
       .state(.alert("Input values are sensitive"))
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
+      .maxCharacters(7)
+      .allowedCharacters(CharacterSet(charactersIn: "1234567890."))
+      .setKeyboardType(.decimalPad)
       
       TUITextInputField(
         inputItem: $valueOnlyTextFieldItem, isDoneClicked: $isDoneClicked)
