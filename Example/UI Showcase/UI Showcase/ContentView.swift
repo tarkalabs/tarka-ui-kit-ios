@@ -54,8 +54,24 @@ struct ContentView: View {
   public init() { }
   
   var body: some View {
+    
+    ZStack(alignment: .bottom) {
+      
+      inputFiledViews
+      
+      TUIMobileButtonBlock(
+        style: .flexible(
+          left: TUIButton(title: "Label") { },
+          right: TUIButton(title: "Label") { }
+        ))
+    }
+  }
+  
+  @ViewBuilder
+  private var inputFiledViews: some View {
     VStack {
       Button("Submit") {
+        
         print("""
 Final input: Date - \(String(describing: dateFieldItem.date?.formatted(dateFieldItem.format)))
 First Text - \(memoTextFieldItem.value)

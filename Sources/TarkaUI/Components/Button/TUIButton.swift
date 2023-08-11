@@ -52,7 +52,6 @@ public struct TUIButton: View {
           image(for: fluentIcon)
         }
       }
-      .width(width)
       .padding(.vertical, size.hStackTopPadding)
       .padding(.leading, size.leading(for: icon))
       .padding(.trailing, size.trailing(for: icon))
