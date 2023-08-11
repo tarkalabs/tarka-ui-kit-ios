@@ -120,24 +120,22 @@ struct TUIInputTextContentView: View {
   private func limitText() {
     
     let count = inputItem.value.count
-    
-    if !allowedCharacters.isEmpty {
-      
-      if keyboardType == .decimalPad {
-        // restrict multiple dots
-        let dot: Character = "."
-        let filtered = inputItem.value.filter { $0 == dot }
-        if filtered.count > 1, let firstIndex = inputItem.value.firstIndex(of: dot) {
-          inputItem.value.removeAll(where: { $0 == dot })
-          inputItem.value.insert(dot, at: firstIndex)
-          return
-        }
-      }
-      if maxCharacters > 0, count > maxCharacters {
-        // restrict count
-        inputItem.value = String(inputItem.value.prefix(maxCharacters))
+
+    if keyboardType == .decimalPad {
+      // restrict multiple dots
+      let dot: Character = "."
+      let filtered = inputItem.value.filter { $0 == dot }
+      if filtered.count > 1, let firstIndex = inputItem.value.firstIndex(of: dot) {
+        inputItem.value.removeAll(where: { $0 == dot })
+        inputItem.value.insert(dot, at: firstIndex)
         return
       }
+    }
+    if maxCharacters > 0, count > maxCharacters {
+      // restrict count
+      inputItem.value = String(inputItem.value.prefix(maxCharacters))
+      
+    } else if !allowedCharacters.isEmpty {
       // restrict character
       let filtered = inputItem.value.filter { (c) -> Bool in
         return !c.unicodeScalars.contains(where: { !allowedCharacters.contains($0)})
