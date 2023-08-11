@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SearchBar: View {
   
-  var searchItem: TUISearchItem
+  var searchItem: TUISearchBarItem
   @FocusState private var isFocused: Bool
   
   var body: some View {
@@ -23,6 +23,9 @@ struct SearchBar: View {
       .onChange(of: searchItem.$isEditing.wrappedValue, perform: { value in
         isFocused = value
       })
+      .onAppear {
+        searchItem.isEditing = true
+      }
       .transition(.move(edge: .trailing))
   }
 }
@@ -32,10 +35,12 @@ struct SearchBar_Previews: PreviewProvider {
   static var previews: some View {
     
     @State var text = ""
+    @State var isActive = false
     @State var isEditing = false
     
-    let searchItem = TUISearchItem(
-      placeholder: "Search", text: $text, isEditing: $isEditing)
+    let searchItem = TUISearchBarItem(
+      placeholder: "Search", text: $text,
+      isActive: $isActive, isEditing: $isEditing)
     
     SearchBar(searchItem: searchItem)
   }

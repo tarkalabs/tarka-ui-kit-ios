@@ -12,7 +12,7 @@ public extension View {
   @ViewBuilder
   func customNavigationBar(
     titleBarItem: TUIAppTopBar.TitleBarItem,
-    searchBarItem: TUIAppTopBar.SearchBarItem? = nil) -> some View {
+    searchBarItem: TUISearchBarItem? = nil) -> some View {
       
       GeometryReader { geometry in
         
@@ -23,7 +23,7 @@ public extension View {
         let minTop = max(safeAreaInset, 20)
         let top = min(minTop, 40)
         
-        VStack(spacing: 1) {
+        VStack(spacing: 0) {
           TUIAppTopBar(barStyle: barStyle)
             .padding(.top, top)
             .background(theme.navColor)
@@ -50,9 +50,9 @@ public extension View {
   }
   
   private func barStyle(titleBarItem: TUIAppTopBar.TitleBarItem,
-                        searchBarItem: TUIAppTopBar.SearchBarItem? = nil) -> TUIAppTopBar.BarStyle {
+                        searchBarItem: TUISearchBarItem? = nil) -> TUIAppTopBar.BarStyle {
     
-    if let searchBarItem, searchBarItem.item.isEditing {
+    if let searchBarItem, searchBarItem.isActive {
       return .search(searchBarItem)
     } else {
       return .titleBar(titleBarItem)
