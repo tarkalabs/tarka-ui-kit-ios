@@ -39,4 +39,14 @@ public extension TUIIconButton {
     newView.iconColor = color
     return newView
   }
+  
+  /// Sets the `action` for an `TUIIconButton`.
+  ///
+  /// - Parameter action: The `action` to be called when button is clicked.
+  /// - Returns: A modified `TUIIconButton`
+  func action(_ action: @escaping () -> Void) -> TUIIconButton {
+    var newView = self
+    newView.action = action
+    return newView
+  }
 }

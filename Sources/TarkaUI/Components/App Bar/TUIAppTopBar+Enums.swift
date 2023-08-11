@@ -18,7 +18,7 @@ public extension TUIAppTopBar {
     case titleBar(TitleBarItem)
     
     /// Shows search bar with back and cancel buttons
-    case search(SearchBarItem)
+    case search(TUISearchBarItem)
     
     var minHeight: CGFloat {
       
@@ -87,17 +87,6 @@ public extension TUIAppTopBar {
     public init(button: TUIIconButton, isDisabled: Binding<Bool>? = nil) {
       self.button = button
       self._isDisabled = isDisabled ?? Binding<Bool>.constant(false)
-    }
-  }
-  
-  struct SearchBarItem {
-    
-    var item: TUISearchItem
-    var backAction: TUIButtonAction
-    
-    public init(item: TUISearchItem, backAction: @escaping TUIButtonAction) {
-      self.item = item
-      self.backAction = backAction
     }
   }
 }

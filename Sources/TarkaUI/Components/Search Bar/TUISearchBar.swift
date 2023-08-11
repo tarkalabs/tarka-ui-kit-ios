@@ -14,11 +14,9 @@ public struct TUISearchBar: View {
   
   var backButton: TUIIconButton?
   var trailingButton: TUIIconButton?
-  var searchItem: TUISearchItem
+  var searchItem: TUISearchBarItem
   
-  public init(backButton: TUIIconButton? = nil, trailingButton: TUIIconButton? = nil, searchItem: TUISearchItem) {
-    self.backButton = backButton
-    self.trailingButton = trailingButton
+  public init(searchItem: TUISearchBarItem) {
     self.searchItem = searchItem
   }
   
@@ -47,9 +45,12 @@ struct TUISearchBar_Previews: PreviewProvider {
   static var previews: some View {
     
     @State var text = ""
+    @State var isActive = false
     @State var isEditing = false
     
-    let searchItem = TUISearchItem(placeholder: "Search", text: $text, isEditing: $isEditing)
+    let searchItem = TUISearchBarItem(
+      placeholder: "Search", text: $text,
+      isActive: $isActive, isEditing: $isEditing)
     
     TUISearchBar(searchItem: searchItem)
       .backButton {
@@ -77,7 +78,10 @@ public extension TUISearchBar {
   
   func trailingButton(@ViewBuilder _ button: () -> TUIIconButton?) -> Self {
     var newView = self
-    newView.trailingButton = button()
+    let trailingButton = button()
+    newView.trailingButton = trailingButton?.action {
+      searchItem.text = ""
+    }
     return newView
   }
 }

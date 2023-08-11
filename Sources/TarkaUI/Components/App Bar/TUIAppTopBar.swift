@@ -113,20 +113,23 @@ public struct TUIAppTopBar: View {
   
   @ViewBuilder
   func searchBar(
-    using searchBarItem: SearchBarItem) -> some View {
+    using searchBarItem: TUISearchBarItem) -> some View {
       
-      let searchItem = searchBarItem.item
+      let searchItem = searchBarItem
       
       TUISearchBar(searchItem: searchItem)
         .backButton {
           TUIIconButton(icon: .chevronLeft24Regular) {
-            searchBarItem.backAction()
+            searchItem.isActive = false
+            searchItem.isEditing = false
+            searchItem.text = ""
           }
           .style(.ghost)
           .size(.size40)
         }
         .trailingButton {
-          if searchItem.isEditing {
+          if searchItem.isActive, searchItem.isEditing,
+             !searchItem.text.isEmpty {
             TUIIconButton(icon: .dismiss24Regular) {
               searchItem.isEditing = false
             }
@@ -145,11 +148,12 @@ struct TUIAppTopBar_Previews: PreviewProvider {
   static var previews: some View {
     
     @State var text = ""
+    @State var isActive = false
     @State var isEditing = false
     
-    let searchItem = TUISearchItem(
+    let searchItem = TUISearchBarItem(
       placeholder: "Search",
-      text: $text, isEditing: $isEditing)
+      text: $text, isActive: $isActive, isEditing: $isEditing)
     
     let rightButton = TUIIconButton(icon: .circle24Regular) { }
     let leftButtons: [TUIAppTopBar.LeftButton] = [.none, .back({ })]
@@ -197,11 +201,7 @@ struct TUIAppTopBar_Previews: PreviewProvider {
         }
         .padding(.horizontal, 16)
         
-        TUIAppTopBar(
-          barStyle: .search(
-            .init(item: searchItem, backAction: { })
-          )
-        )
+        TUIAppTopBar(barStyle: .search(searchItem))
       }
     }
     .padding(.vertical, 20)

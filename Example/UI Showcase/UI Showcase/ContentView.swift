@@ -35,6 +35,7 @@ struct DetailView: View {
   
   @State var searchText = ""
   @State var isSearchEditing = false
+  @State var isSearchActive = false
   @State var isSyncDisabled = false
   
   var body: some View {
@@ -62,18 +63,19 @@ struct DetailView: View {
       searchBarItem: searchBarItem)
   }
   
-  private var searchBarItem: TUIAppTopBar.SearchBarItem {
+  private var searchBarItem: TUISearchBarItem {
     
-    let searchItem = TUISearchItem(
-      placeholder: "Search", text: $searchText, isEditing: $isSearchEditing)
+    let searchItem = TUISearchBarItem(
+      placeholder: "Search", text: $searchText,
+      isActive: $isSearchActive, isEditing: $isSearchEditing)
     
-    return .init(item: searchItem, backAction: { dismiss() })
+    return searchItem
   }
   
   private var titleBarItem: TUIAppTopBar.TitleBarItem {
     
     let searchButton = TUIIconButton(icon: .search24Regular) {
-      isSearchEditing = true
+      isSearchActive = true
     }
       .style(.ghost)
       .size(.size48)
