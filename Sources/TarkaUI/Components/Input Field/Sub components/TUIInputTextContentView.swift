@@ -134,8 +134,10 @@ struct TUIInputTextContentView: View {
     if maxCharacters > 0, count > maxCharacters {
       // restrict count
       inputItem.value = String(inputItem.value.prefix(maxCharacters))
-      
-    } else if !allowedCharacters.isEmpty {
+      return
+    }
+    
+    if !allowedCharacters.isEmpty {
       // restrict character
       let filtered = inputItem.value.filter { (c) -> Bool in
         return !c.unicodeScalars.contains(where: { !allowedCharacters.contains($0)})
