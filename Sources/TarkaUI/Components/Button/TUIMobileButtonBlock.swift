@@ -29,15 +29,24 @@ public struct TUIMobileButtonBlock: View {
   
   public var body: some View {
     
-    VStack(spacing: Spacing.custom(15)) {
+    ZStack() {
       
-      TUIDivider(
-        orientation: .horizontal(
-          hPadding: .zero, vPadding: .zero))
-
-      buttonBlock
+      BackgroundBlur(radius: 5)
+        .frame(maxWidth: .infinity)
+      
+      VStack(spacing: Spacing.custom(15)) {
+        
+        TUIDivider(
+          orientation: .horizontal(
+            hPadding: .zero, vPadding: .zero))
+        
+        buttonBlock
+      }
+      .background(Color.surface50)
     }
-    .background(Color.surface50)
+    .frame(minHeight: 80)
+    .fixedSize(horizontal: false, vertical: true)
+    .border(.blue)
   }
   
   @ViewBuilder
@@ -75,7 +84,6 @@ public struct TUIMobileButtonBlock: View {
     .padding(.horizontal, Spacing.custom(24))
     .padding(.bottom, Spacing.doubleVertical)
     .frame(maxWidth: .infinity)
-    .frame(minHeight: 88)
   }
 }
 
