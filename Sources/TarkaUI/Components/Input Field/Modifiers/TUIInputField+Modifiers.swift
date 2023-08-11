@@ -77,7 +77,7 @@ public extension TUIInputFieldProtocol {
     return newView
   }
   
-  // Sets the `TUIInputFieldState` state for the `TUIInputField` View
+  /// Sets the `TUIInputFieldState` state for the `TUIInputField` View
   /// - Parameters:
   ///   - value: `TUIInputFieldState` state that has to be set for `TUIInputField` view
   /// - Returns: A `TUIInputFieldProtocol` conformed SwiftUI View that calls this func.
@@ -86,5 +86,42 @@ public extension TUIInputFieldProtocol {
     var newView = self
     newView.properties.state = value
     return newView
+  }
+  
+  
+  /// Sets the maximum chararcter limit for the textfield. It applies only for TUITextInputField.
+  /// - Parameter limit: maximum character limit
+  /// - Returns: TUITextInputField with character count limitation
+  ///
+  func maxCharacters(_ maxCharacters: Int) -> Self {
+    guard var newView = self as? TUITextInputField else {
+      return self
+    }
+    newView.maxCharacters = maxCharacters
+    return newView as! Self
+  }
+  
+  /// Restricts the user from entering disallowed characters. It applies only for `TUITextInputField`.
+  /// - Parameter characters: Allowed Character set
+  /// - Returns: TUITextInputField with character limitation
+  ///
+  func allowedCharacters(_ characters: CharacterSet) -> some TUIInputFieldProtocol {
+    guard var newView = self as? TUITextInputField else {
+      return self
+    }
+    newView.allowedCharacters = characters
+    return newView as! Self
+  }
+  
+  /// Sets the Keyboard type for textField. It applies only for `TUITextInputField`.
+  /// - Parameter keyboardType: UIKeyboardType
+  /// - Returns: TUITextInputField with assigned keyboard
+  ///
+  func setKeyboardType(_ keyboardType: UIKeyboardType) -> some TUIInputFieldProtocol {
+    guard var newView = self as? TUITextInputField else {
+      return self
+    }
+    newView.keyboardType = keyboardType
+    return newView as! Self
   }
 }
