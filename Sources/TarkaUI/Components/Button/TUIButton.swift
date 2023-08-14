@@ -52,11 +52,11 @@ public struct TUIButton: View {
           image(for: fluentIcon)
         }
       }
+      .width(width)
       .padding(.vertical, size.hStackTopPadding)
       .padding(.leading, size.leading(for: icon))
       .padding(.trailing, size.trailing(for: icon))
     }
-    .width(width)
     .frame(minHeight: size.height)
     .background(style.backgroundColor)
     .roundedCornerWithBorder(width: style.borderWidth, color: .onSurface)
@@ -109,7 +109,7 @@ struct TUIButton_Previews: PreviewProvider {
   }
 }
 
-private extension Button {
+private extension View {
   
   @ViewBuilder
   func width(_ width: TUIButton.Width) -> some View {
