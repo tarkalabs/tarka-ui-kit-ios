@@ -8,19 +8,25 @@
 import SwiftUI
 import JustifiableFlowLayout
 
-struct TUIEmailField: View {
-  var emails: [String] = []
-  var addAction: () -> Void
-  var removeEmail: (String) -> Void
+public struct TUIEmailField: View {
+  public var emails: [String] = []
+  public var addAction: () -> Void
+  public var removeAction: (String) -> Void
   
-  var body: some View {
-    HStack(alignment: .top, spacing: Spacing.halfHorizontal) {
-      label
-      emailField
-      addButton
+  public var body: some View {
+    VStack(spacing: Spacing.baseVertical) {
+      HStack(alignment: .top, spacing: Spacing.halfHorizontal) {
+        label
+        emailField
+        addButton
+      }
+      .padding(.leading, 24)
+      .padding(.trailing, 8)
+      
+      TUIDivider(
+        orientation: .horizontal(hPadding: .zero, vPadding: .zero)
+      )
     }
-    .padding(.leading, 24)
-    .padding(.trailing, 8)
   }
   
   @ViewBuilder
@@ -41,7 +47,7 @@ struct TUIEmailField: View {
               .titleWithButton(
                 .dismiss16Filled,
                 action: {
-                  removeEmail(email)
+                  removeAction(email)
                 }
               )
             ),
@@ -75,7 +81,7 @@ struct TUIEmailField_Previews: PreviewProvider {
   static var previews: some View {
     TUIEmailField(emails: emails) {
       
-    } removeEmail: { email in
+    } removeAction: { email in
       
     }
   }
