@@ -29,6 +29,8 @@ public struct TUIChipView: View {
   var isSelected: Bool = false
   var size: Size = .size32
   var style: Style = .assist(.onlyTitle)
+  var backgroundColor: Color = .surface
+  var borderColor: Color = .outline
   var action: (() -> Void)?
   var badgeCount: Int?
   
@@ -44,10 +46,10 @@ public struct TUIChipView: View {
     .padding(.leading, leading)
     .padding(.trailing, trailing)
     .padding(.vertical, 0)
-    .background(isSelected ? Color.secondaryTUI : .surface)
+    .background(isSelected ? Color.secondaryTUI : backgroundColor)
     .borderView(RoundedRectangle(cornerRadius: Spacing.halfHorizontal),
                 width: isSelected ? 0 : 1,
-                color: isSelected ? .secondaryTUI: .outline)
+                color: isSelected ? .secondaryTUI: borderColor)
     .onTapGesture {
       action?()
     }
