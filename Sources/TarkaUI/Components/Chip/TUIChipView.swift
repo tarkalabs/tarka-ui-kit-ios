@@ -179,11 +179,11 @@ public struct TUIChipView: View {
   }
   
   @ViewBuilder
-  private func rightButtonView(_ icon: FluentIcon = .dismiss24Regular,
+  private func rightButtonView(_ icon: FluentIcon = .dismiss16Filled,
                                action: @escaping () -> Void) -> some View {
     TUIIconButton(icon: icon) { action() }
       .iconColor(isSelected ? .onSecondary : .onSurface)
-      .size(size == .size32 ? .size24 : .size32)
+      .size(size == .size32 ? .size32 : .size40)
   }
 }
 
@@ -389,15 +389,15 @@ struct TUIChipView_Previews: PreviewProvider {
       
       Section("Input") {
         TUIChipView("Input")
-          .style(.input(.titleWithButton(.dismiss24Regular, action: {})), size: .size32)
+          .style(.input(.titleWithButton(.dismiss16Filled, action: {})), size: .size32)
         
         TUIChipView("Input with Icon")
           .style(.input(.withLeftIcon(.person24Regular,
-                                      rightIcon: .dismiss24Filled, action: {})))
+                                      rightIcon: .dismiss20Filled, action: {})))
         
         TUIChipView("Input with Image")
           .style(.input(.withLeftImage(Image(fluent: .circle32Filled),
-                                       rightIcon: .dismiss24Filled, action: {})))
+                                       rightIcon: .dismiss16Filled, action: {})))
           .size(.size32)
       }
       
@@ -417,10 +417,10 @@ struct TUIChipView_Previews: PreviewProvider {
           .style(filter: .onlyTitle)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(.dismiss24Filled, action: {}), isSelected: true)
+          .style(filter: .withButton(.dismiss16Filled, action: {}), isSelected: true)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(.dismiss24Filled, action: {}),
+          .style(filter: .withButton(.dismiss20Filled, action: {}),
                  isSelected: true, badgeCount: 4)
           .size(.size40)
         
