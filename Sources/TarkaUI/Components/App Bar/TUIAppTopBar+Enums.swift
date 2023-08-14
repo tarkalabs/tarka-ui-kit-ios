@@ -74,19 +74,8 @@ public extension TUIAppTopBar {
   enum RightButtonType {
     // left to right order
     case none
-    case one(BarButtonItem)
-    case two(BarButtonItem, BarButtonItem)
-    case three(BarButtonItem, BarButtonItem, BarButtonItem)
-  }
-  
-  struct BarButtonItem {
-    
-    var button: TUIIconButton?
-    @Binding var isDisabled: Bool
-    
-    public init(button: TUIIconButton, isDisabled: Binding<Bool>? = nil) {
-      self.button = button
-      self._isDisabled = isDisabled ?? Binding<Bool>.constant(false)
-    }
+    case one(TUIIconButton)
+    case two(TUIIconButton, TUIIconButton)
+    case three(TUIIconButton, TUIIconButton, TUIIconButton)
   }
 }

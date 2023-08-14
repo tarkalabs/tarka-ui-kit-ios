@@ -60,18 +60,22 @@ public extension View {
   }
 }
 
-struct DisabledView: ViewModifier {
+public struct DisabledView: ViewModifier {
   
   var isDisabled = false
   
-  func body(content: Content) -> some View {
+  public init(isDisabled: Bool = false) {
+    self.isDisabled = isDisabled
+  }
+  
+  public func body(content: Content) -> some View {
     content
       .disabled(isDisabled)
       .opacity(isDisabled ? 0.5 : 1)
   }
 }
 
-extension View {
+public extension View {
   func isDisabled(_ isDisabled: Bool) -> some View {
     modifier(DisabledView(isDisabled: isDisabled))
   }
