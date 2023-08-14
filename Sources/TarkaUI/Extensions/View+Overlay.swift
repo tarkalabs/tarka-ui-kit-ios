@@ -1,5 +1,5 @@
 //
-//  View+ComponentLayer.swift
+//  View+Overlay.swift
 //  
 //
 //  Created by Gopinath on 11/08/23.
@@ -8,6 +8,22 @@
 import SwiftUI
 
 public extension View {
+  
+  /// This method is used to create overlay View, in top trailing corner in any swiftUI views
+  ///
+  /// Example usage:
+  ///
+  ///      Text("Description")
+  ///         .overlayView { Image(systemName: "star.fill") }
+  ///
+  @ViewBuilder
+  func overlayView<Content: View>(_ content: () -> Content)  -> some View {
+    self.overlay(alignment: .topTrailing) {
+      content()
+        .alignmentGuide(.top) { $0[.top] + 8 }
+        .alignmentGuide(.trailing) { $0[.trailing] - 8 }
+    }
+  }
   
   @ViewBuilder
   func overlayViewInTopTrailing(_ show: Bool = true,
@@ -59,19 +75,27 @@ public extension View {
     }
   
   @ViewBuilder
-  /// Adds `TUIMobileButtonBlock` in bottom of the screen
-  /// - Parameter block: `TUIMobileButtonBlock`
+  /// Adds `TUIMobileButtonBlock` in safe area bottom of the screen
+  /// - Parameter block: `TUIMobileButtonBlock` that has to be added
   /// - Returns: View with button block added
   func addBottomMobileButtonBlock(_ block: TUIMobileButtonBlock) -> some View {
     
+    VStack(spacing: 0) {
+      self
+      Spacer()
+    }
+    .addButtonBlockInBottomSafeArea(block)
+  }
+  
+  @ViewBuilder
+  internal func addButtonBlockInBottomSafeArea(_ block: TUIMobileButtonBlock) -> some View {
     GeometryReader { geometry in
       
-      let safeAreaInset = geometry.safeAreaInsets.bottom
-      ZStack(alignment: .bottom) {
-        self
-          .frame(maxHeight: .infinity)
+      let safeAreaBottomInset = geometry.safeAreaInsets.bottom
+      let block = block.addSafeAreaBottomInset(safeAreaBottomInset > 0 ? 20 : 0)
+      
+      self.safeAreaInset(edge: .bottom, spacing: 16) {
         block
-          .considerSafeArea(safeAreaInset > 0)
       }
       .edgesIgnoringSafeArea(.bottom)
     }
