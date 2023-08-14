@@ -8,15 +8,41 @@
 import SwiftUI
 import JustifiableFlowLayout
 
+public enum TUIEmailFieldLabel {
+  case to, cc, bcc
+  case custom(String)
+  
+  var title: String {
+    switch self {
+    case .to: return "To".localized
+    case .cc: return "Cc".localized
+    case .bcc: return "Bcc".localized
+    case .custom(let title): return title
+    }
+  }
+}
 public struct TUIEmailField: View {
+  public var label: TUIEmailFieldLabel = .to
   public var emails: [String] = []
   public var addAction: () -> Void
   public var removeAction: (String) -> Void
   
+  public init(
+    label: TUIEmailFieldLabel,
+    emails: [String],
+    addAction: @escaping () -> Void,
+    removeAction: @escaping (String) -> Void
+  ) {
+    self.label = label
+    self.emails = emails
+    self.addAction = addAction
+    self.removeAction = removeAction
+  }
+  
   public var body: some View {
     VStack(spacing: Spacing.baseVertical) {
       HStack(alignment: .top, spacing: Spacing.halfHorizontal) {
-        label
+        labelView
         emailField
         addButton
       }
@@ -30,8 +56,8 @@ public struct TUIEmailField: View {
   }
   
   @ViewBuilder
-  private var label: some View {
-    Text("To".localized)
+  private var labelView: some View {
+    Text(label.title)
       .font(.body7)
       .foregroundColor(.outline)
       .padding(.top, 15)
@@ -79,7 +105,9 @@ struct TUIEmailField_Previews: PreviewProvider {
   ]
   
   static var previews: some View {
-    TUIEmailField(emails: emails) {
+    TUIEmailField(
+      label: .to,
+      emails: emails) {
       
     } removeAction: { email in
       
