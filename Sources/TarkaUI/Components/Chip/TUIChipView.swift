@@ -40,7 +40,7 @@ public struct TUIChipView: View {
     HStack(spacing: spacing) {
       detailView
     }
-    .frame(maxHeight: size.height)
+    .frame(height: size.height)
     .padding(.leading, leading)
     .padding(.trailing, trailing)
     .padding(.vertical, 0)
