@@ -20,18 +20,20 @@ public struct TUIMobileButtonBlock: View {
   }
   
   private var style: Style
-  
+  private var considerSafeArea: Bool = false
+
   public init(style: Style) {
     self.style = style
   }
   
-  let fixedWidth: CGFloat = 342
-  
+  private let fixedWidth: CGFloat = 342
+  private let blurRadius: CGFloat = 7
+
   public var body: some View {
     
-    ZStack() {
+    ZStack(alignment: .bottom) {
       
-      BackgroundBlur(radius: 5)
+      BackgroundBlur(radius: blurRadius)
         .frame(maxWidth: .infinity)
       
       VStack(spacing: Spacing.custom(15)) {
@@ -44,9 +46,8 @@ public struct TUIMobileButtonBlock: View {
       }
       .background(Color.surface50)
     }
-    .frame(minHeight: 80)
+    .frame(minHeight: minHeight)
     .fixedSize(horizontal: false, vertical: true)
-    .border(.blue)
   }
   
   @ViewBuilder
@@ -82,8 +83,27 @@ public struct TUIMobileButtonBlock: View {
       }
     }
     .padding(.horizontal, Spacing.custom(24))
-    .padding(.bottom, Spacing.doubleVertical)
+    .padding(.bottom, buttonBottomPadding)
+    .isEnabled(considerSafeArea, content: { view in
+      VStack(spacing: 10) {
+        view
+        BackgroundBlur(radius: blurRadius)
+          .frame(maxWidth: .infinity)
+      }
+    })
     .frame(maxWidth: .infinity)
+  }
+  
+  public var minHeight: CGFloat {
+    guard considerSafeArea else { return 80 }
+    return 96
+  }
+  
+  private var buttonBottomPadding: CGFloat {
+    guard considerSafeArea else {
+      return Spacing.doubleVertical
+    }
+    return 0
   }
 }
 
@@ -113,5 +133,18 @@ struct TUIMobileButtonBlock_Previews: PreviewProvider {
       }
     }
     .background(Color.background)
+  }
+}
+
+public extension TUIMobileButtonBlock {
+  
+  /// Considers safe area and reduces bottom height as safe area itself provides some bottom
+  /// - Parameter consider: true / false
+  /// - Returns: Modified View
+  ///
+  func considerSafeArea(_ consider: Bool) -> Self {
+    var newView = self
+    newView.considerSafeArea = consider
+    return newView
   }
 }

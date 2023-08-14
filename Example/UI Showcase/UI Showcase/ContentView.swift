@@ -55,15 +55,19 @@ struct ContentView: View {
   
   var body: some View {
     
-    ZStack(alignment: .bottom) {
-      
-      inputFiledViews
-      
-      TUIMobileButtonBlock(
-        style: .flexible(
-          left: TUIButton(title: "Label") { },
-          right: TUIButton(title: "Label") { }
-        ))
+    let block = TUIMobileButtonBlock(
+      style: .two(
+        left: TUIButton(title: "Label") { },
+        right: TUIButton(title: "Label") { }))
+    
+//    inputFiledViews
+//      .addBottomMobileButtonBlock(block)
+    
+    TUIMobileButtonBlockScrollView(buttonBlock: block) {
+      VStack(spacing: 10) {
+        inputFiledViews
+        inputFiledViews
+      }
     }
   }
   
