@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import JustifiableFlowLayout
 
 struct TUIEmailField: View {
   var emails: [String] = []
   var addAction: () -> Void
+  var removeEmail: (String) -> Void
   
   var body: some View {
     HStack(alignment: .top, spacing: Spacing.halfHorizontal) {
@@ -31,7 +33,26 @@ struct TUIEmailField: View {
   
   @ViewBuilder
   private var emailField: some View {
-    Spacer()
+    JustifiableFlowLayout(minSpacing: Spacing.halfHorizontal) {
+      ForEach(emails, id: \.self) { email in
+        TUIChipView(email)
+          .style(
+            .input(
+              .titleWithButton(
+                .dismiss16Filled,
+                action: {
+                  removeEmail(email)
+                }
+              )
+            ),
+            size: .size32
+          )
+          .backgroundColor(.surfaceVariant)
+          .borderColor(.surfaceVariant)
+      }
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .padding(.top, Spacing.baseVertical)
   }
   
   @ViewBuilder
@@ -40,13 +61,21 @@ struct TUIEmailField: View {
       icon: .addCircle24Regular,
       action: addAction
     )
-    .padding(12)
+    .size(.size48)
   }
 }
 
 struct TUIEmailField_Previews: PreviewProvider {
+  static let emails = [
+    "arvindh@tarkalabs.com",
+    "john@eam360.com",
+    "michael@sedintechnologies.com"
+  ]
+  
   static var previews: some View {
-    TUIEmailField(emails: ["a@b.com"]) {
+    TUIEmailField(emails: emails) {
+      
+    } removeEmail: { email in
       
     }
   }
