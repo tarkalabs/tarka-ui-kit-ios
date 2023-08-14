@@ -88,22 +88,16 @@ public struct TUIAppTopBar: View {
       switch type {
         
       case .one(let buttonItem):
-        buttonItem.button?
-          .isDisabled(buttonItem.isDisabled)
+        buttonItem
         
       case .two(let buttonItem1, let buttonItem2):
-        buttonItem1.button?
-          .isDisabled(buttonItem1.isDisabled)
-        buttonItem2.button
-          .isDisabled(buttonItem2.isDisabled)
+        buttonItem1
+        buttonItem2
         
       case .three(let buttonItem1, let buttonItem2, let buttonItem3):
-        buttonItem1.button?
-          .isDisabled(buttonItem1.isDisabled)
-        buttonItem2.button
-          .isDisabled(buttonItem2.isDisabled)
-        buttonItem3.button
-          .isDisabled(buttonItem3.isDisabled)
+        buttonItem1
+        buttonItem2
+        buttonItem3
         
       case .none:
         EmptyView()
@@ -175,8 +169,7 @@ struct TUIAppTopBar_Previews: PreviewProvider {
               .init(
                 title: "Title",
                 leftButton: leftButton,
-                rightButtons: .one(
-                  .init(button: rightButton))))
+                rightButtons: .one(rightButton)))
           )
           
           TUIAppTopBar(
@@ -185,8 +178,7 @@ struct TUIAppTopBar_Previews: PreviewProvider {
                 title: "Title",
                 leftButton: leftButton,
                 rightButtons: .two(
-                  .init(button: rightButton),
-                  .init(button: rightButton))))
+                  rightButton, rightButton)))
           )
           TUIAppTopBar(
             barStyle: .titleBar(
@@ -194,9 +186,7 @@ struct TUIAppTopBar_Previews: PreviewProvider {
                 title: "Title",
                 leftButton: leftButton,
                 rightButtons: .three(
-                  .init(button: rightButton),
-                  .init(button: rightButton),
-                  .init(button: rightButton))))
+                  rightButton, rightButton, rightButton)))
           )
         }
         .padding(.horizontal, 16)

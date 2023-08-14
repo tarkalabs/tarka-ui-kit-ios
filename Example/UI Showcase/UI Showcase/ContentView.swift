@@ -85,6 +85,7 @@ struct DetailView: View {
     }
       .style(.ghost)
       .size(.size48)
+      .isDisabled(isSyncDisabled)
     
     return .init(
       title: "Detail View",
@@ -92,8 +93,7 @@ struct DetailView: View {
         dismiss()
       }),
       rightButtons: .two(
-        .init(button: searchButton),
-        .init(button: syncButton, isDisabled: $isSyncDisabled)))
+        searchButton, syncButton))
   }
 }
 

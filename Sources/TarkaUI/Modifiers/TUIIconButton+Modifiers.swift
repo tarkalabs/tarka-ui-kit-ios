@@ -49,4 +49,14 @@ public extension TUIIconButton {
     newView.action = action
     return newView
   }
+  
+  /// Makes `TUIIconButton` disabled.
+  ///
+  /// - Parameter isDisabled: true / false
+  /// - Returns: A modified `TUIIconButton`
+  func isDisabled(_ isDisabled: Bool) -> TUIIconButton {
+    var newView = self
+    newView.isDisabled = isDisabled
+    return newView
+  }
 }
