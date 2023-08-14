@@ -32,4 +32,8 @@ extension View {
         .border(color, width: width)
     }
   }
+  
+  func isDisabled(_ isDisabled: Bool) -> some View {
+    modifier(DisabledView(isDisabled: isDisabled))
+  }
 }

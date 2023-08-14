@@ -34,6 +34,7 @@ public struct TUIAppTopBar: View {
         searchBar(using: searchBarItem)
       }
     }
+    .background(Color.surface)
   }
   
   @ViewBuilder
