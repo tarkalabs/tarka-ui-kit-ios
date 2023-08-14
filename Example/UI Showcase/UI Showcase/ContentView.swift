@@ -60,15 +60,13 @@ struct ContentView: View {
         left: TUIButton(title: "Label") { },
         right: TUIButton(title: "Label") { }))
     
-//    inputFiledViews
-//      .addBottomMobileButtonBlock(block)
-    
-    TUIMobileButtonBlockScrollView(buttonBlock: block) {
+    ScrollView {
       VStack(spacing: 10) {
         inputFiledViews
         inputFiledViews
       }
     }
+    .addBottomMobileButtonBlock(block)
   }
   
   @ViewBuilder
