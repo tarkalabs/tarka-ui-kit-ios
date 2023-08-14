@@ -110,17 +110,27 @@ public extension View {
     style: TUITextRow.Style,
     destinationView: some View,
     accessibilityID: TUIAccessibility,
+    isEnabled: Bool = true,
     @TUIIconButtonBuilder iconButtons: @escaping () -> [TUIIconButton]) -> some View {
-      NavigationLink(destination: destinationView, label: {
-        TUITextRow(title, style: style)
-          .wrapperIcon {
-            TUIWrapperIcon(icon: .chevronRight20Filled)
-              .iconColor(.outline)
-          }
-          .iconButtons(icons: iconButtons)
+      let textRow = TUITextRow(title, style: style)
+      
+      if isEnabled {
+        NavigationLink(destination: destinationView, label: {
+          textRow
+            .wrapperIcon {
+              TUIWrapperIcon(icon: .chevronRight20Filled)
+                .iconColor(.outline)
+            }
+            .iconButtons(icons: iconButtons)
+            .buttonStyle(.borderless)
+        })
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(accessibilityID)
+      } else {
+        textRow
           .buttonStyle(.borderless)
           .accessibilityElement(children: .contain)
           .accessibilityIdentifier(accessibilityID)
-      })
+      }
     }
 }
