@@ -17,10 +17,4 @@ public class TUIThemeManager {
   }
 }
 
-extension TUITheme {
-  public var navColor: Color {
-    return .surface
-  }
-}
-
 public var theme = TUIThemeManager.shared.theme
