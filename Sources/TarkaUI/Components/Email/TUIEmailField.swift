@@ -40,14 +40,12 @@ public struct TUIEmailField: View {
   }
   
   public var body: some View {
-    VStack(spacing: Spacing.baseVertical) {
+    VStack(spacing: 0) {
       HStack(alignment: .top, spacing: Spacing.halfHorizontal) {
         labelView
         emailField
         addButton
       }
-      .padding(.leading, 24)
-      .padding(.trailing, 8)
       
       TUIDivider(
         orientation: .horizontal(hPadding: .zero, vPadding: .zero)
@@ -61,6 +59,7 @@ public struct TUIEmailField: View {
       .font(.body7)
       .foregroundColor(.outline)
       .padding(.top, 15)
+      .padding(.leading, 24)
   }
   
   @ViewBuilder
@@ -84,7 +83,7 @@ public struct TUIEmailField: View {
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
-    .padding(.top, Spacing.baseVertical)
+    .padding(.vertical, emails.isEmpty ? 0 : Spacing.baseVertical)
   }
   
   @ViewBuilder
@@ -94,6 +93,7 @@ public struct TUIEmailField: View {
       action: addAction
     )
     .size(.size48)
+    .padding(.trailing, 8)
   }
 }
 
