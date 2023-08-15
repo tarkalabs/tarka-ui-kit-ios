@@ -80,6 +80,7 @@ public struct TUIEmailField: View {
           )
           .backgroundColor(.surfaceVariant)
           .borderColor(.surfaceVariant)
+          .frame(maxWidth: 250)
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
