@@ -27,6 +27,8 @@ public struct TUIEmailField: View {
   public var addAction: () -> Void
   public var removeAction: (String) -> Void
   
+  @State private var emailGridWidth: CGFloat = 0.0
+  
   public init(
     label: TUIEmailFieldLabel,
     emails: [String],
@@ -80,11 +82,22 @@ public struct TUIEmailField: View {
           )
           .backgroundColor(.surfaceVariant)
           .borderColor(.surfaceVariant)
-          .frame(maxWidth: 250)
+          .frame(maxWidth: emailGridWidth)
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
     .padding(.vertical, emails.isEmpty ? 0 : Spacing.baseVertical)
+    .background {
+      // Calculate and set the width of the view in a preference key
+      GeometryReader { gp in
+        Color.clear
+          .preference(key: FloatPreferenceKey.self, value: gp.size.width)
+      }
+    }
+    .onPreferenceChange(FloatPreferenceKey.self) { value in
+      // Use the preference key to set the width as state
+      emailGridWidth = value
+    }
   }
   
   @ViewBuilder
@@ -106,12 +119,22 @@ struct TUIEmailField_Previews: PreviewProvider {
   ]
   
   static var previews: some View {
-    TUIEmailField(
-      label: .to,
-      emails: emails) {
+    VStack(spacing: 0) {
+      TUIEmailField(
+        label: .to,
+        emails: []) {
+        
+      } removeAction: { email in
+        
+      }
       
-    } removeAction: { email in
-      
+      TUIEmailField(
+        label: .to,
+        emails: emails) {
+        
+      } removeAction: { email in
+        
+      }
     }
   }
 }
