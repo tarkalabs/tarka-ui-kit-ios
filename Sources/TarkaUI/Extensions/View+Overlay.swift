@@ -39,17 +39,6 @@ public extension View {
     }
   }
   
-  /// Adds done button in toolbar
-  /// - Parameter onClicked: closure that called when done button is clicked
-  /// - Returns: View
-  ///
-  @ViewBuilder
-  func addDoneButtonInToolbar(
-    isDoneClicked: Binding<Bool>,
-    onClicked: (() -> Void)? = nil) -> some View {
-      modifier(ToolBarDoneButton(isDoneClicked: isDoneClicked))
-    }
-  
   /// This method is used to create navigationTextRow View with title and optional description,
   /// used in any swiftUI views
   ///
@@ -80,24 +69,16 @@ public extension View {
   /// - Returns: View with button block added
   func addBottomMobileButtonBlock(_ block: TUIMobileButtonBlock) -> some View {
     
-    VStack(spacing: 0) {
-      self
-      Spacer()
-    }
-    .addButtonBlockInBottomSafeArea(block)
-  }
-  
-  @ViewBuilder
-  internal func addButtonBlockInBottomSafeArea(_ block: TUIMobileButtonBlock) -> some View {
     GeometryReader { geometry in
       
       let safeAreaBottomInset = geometry.safeAreaInsets.bottom
       let block = block.addSafeAreaBottomInset(safeAreaBottomInset > 0 ? 20 : 0)
       
-      self.safeAreaInset(edge: .bottom, spacing: 16) {
-        block
-      }
-      .edgesIgnoringSafeArea(.bottom)
+      self.frame(maxHeight: .infinity)
+        .safeAreaInset(edge: .bottom, spacing: 16) {
+          block
+        }
+        .edgesIgnoringSafeArea(.bottom)
     }
   }
 }
