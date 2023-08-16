@@ -125,8 +125,6 @@ struct ContentView_Previews: PreviewProvider {
 
 struct DetailView: View {
   
-  @Environment(\.dismiss) private var dismiss
-  
   @State var isSyncDisabled = false
   
   var body: some View {
@@ -174,9 +172,7 @@ struct DetailView: View {
     
     return .init(
       title: "Detail View",
-      leftButton: .back({
-        dismiss()
-      }),
+      leftButton: .back(),
       rightButtons: .two(
         searchButton, syncButton))
   }
