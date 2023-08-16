@@ -62,31 +62,4 @@ public extension View {
           .accessibilityIdentifier(accessibilityID)
       })
     }
-  
-  @ViewBuilder
-  /// Adds `TUIMobileButtonBlock` in safe area bottom of the screen
-  /// - Parameter block: `TUIMobileButtonBlock` that has to be added
-  /// - Returns: View with button block added
-  func addBottomMobileButtonBlock(
-    _ block: TUIMobileButtonBlock, isKeyboardShown: Binding<Bool>? = nil) -> some View {
-    
-      GeometryReader { geometry in
-        
-        let safeAreaBottomInset = geometry.safeAreaInsets.bottom
-        let block = block.addSafeAreaBottomInset(safeAreaBottomInset > 0 ? 20 : 0)
-        
-        self.frame(maxHeight: .infinity)
-          .safeAreaInset(edge: .bottom, spacing: 16) {
-            if let isKeyboardShown, isKeyboardShown.wrappedValue {
-              EmptyView().frame(height: 0)
-            } else {
-              block
-            }
-          }
-          .edgesIgnoringSafeArea(.bottom)
-          .isEnabled(isKeyboardShown != nil) { view in
-              view.adaptiveKeyboard(isKeyboardShown: isKeyboardShown!)
-          }
-      }
-  }
 }

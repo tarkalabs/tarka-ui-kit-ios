@@ -10,15 +10,15 @@ import Combine
 
 struct AdaptiveKeyboard: ViewModifier {
   
-  @State var currentHeight: CGFloat = 0
+  @State var bottomPadding: CGFloat = 0
   @Binding var isKeyboardShown: Bool
   
   func body(content: Content) -> some View {
     
     content
-      .padding(.bottom, currentHeight)
-      .onChange(of: currentHeight, perform: { newValue in
-        isKeyboardShown = newValue > 0
+      .padding(.bottom, bottomPadding)
+      .onChange(of: bottomPadding, perform: { newValue in
+        isKeyboardShown = bottomPadding > 0
       })
       .onAppear(
         perform: {
@@ -36,17 +36,19 @@ struct AdaptiveKeyboard: ViewModifier {
             }
           }
           .map { _ in
+            // Value as bottom padding from the keyboard.
+            // It has to be more than zero.
             1
           }
-          .subscribe(Subscribers.Assign(object: self, keyPath: \.currentHeight))
+          .subscribe(Subscribers.Assign(object: self, keyPath: \.bottomPadding))
           
           NotificationCenter.Publisher(
             center: .default,
             name: UIResponder.keyboardWillHideNotification)
           .compactMap { notification in
-            CGFloat.zero
+            .zero
           }
-          .subscribe(Subscribers.Assign(object: self, keyPath: \.currentHeight))
+          .subscribe(Subscribers.Assign(object: self, keyPath: \.bottomPadding))
         })
   }
 }
@@ -60,5 +62,3 @@ public extension View {
     modifier(AdaptiveKeyboard(isKeyboardShown: isKeyboardShown))
   }
 }
-
-

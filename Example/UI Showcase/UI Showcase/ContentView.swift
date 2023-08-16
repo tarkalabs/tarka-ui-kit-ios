@@ -80,7 +80,7 @@ struct ContentView: View {
       }
     }
     .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked)
-    .addBottomMobileButtonBlock(block, isKeyboardShown: $isKeyboardShown)
+    .addBottomMobileButtonBlock(block)
   }
   
   @ViewBuilder
