@@ -27,8 +27,16 @@ struct SearchBar: View {
         searchItem.isEditing = true
       }
       .transition(.move(edge: .trailing))
+      .accessibilityIdentifier(Accessibility.root)
   }
 }
+
+extension SearchBar {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "SearchBar"
+  }
+}
+
 
 struct SearchBar_Previews: PreviewProvider {
   

@@ -26,20 +26,31 @@ public struct TUISearchBar: View {
       
       if let backButton {
         backButton
+          .accessibilityIdentifier(Accessibility.backButton)
       }
       
       SearchBar(searchItem: searchItem)
       
       if let trailingButton {
         trailingButton
+          .accessibilityIdentifier(Accessibility.trailingButton)
       }
     }
     .padding(Spacing.custom(4))
     .background(Color.inputBackground)
     .cornerRadius(75)
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
 }
 
+extension TUISearchBar {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUISearchBar"
+    case backButton = "BackButton"
+    case trailingButton = "TrailingButton"
+  }
+}
 struct TUISearchBar_Previews: PreviewProvider {
   
   static var previews: some View {
