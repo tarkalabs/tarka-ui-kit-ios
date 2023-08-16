@@ -43,6 +43,7 @@ public protocol TUITheme {
   var surface: Color { get }
   var surface50: Color { get }
   var surfaceVariant: Color { get }
+  var surfaceVariantHover: Color { get }
   var surfaceHover: Color { get }
   var constantDark: Color { get }
   var constantLight: Color { get }

@@ -23,22 +23,35 @@ public struct TUIAppTopBar: View {
   
   public var body: some View {
     
-    Group {
+    VStack(spacing: 0) {
       
-      switch barStyle {
-        
-      case .titleBar(let appBarItem):
-        titleBar(using: appBarItem)
+      let divider = TUIDivider(orientation: .horizontal(hPadding: .zero, vPadding: .zero))
+        .color(.surfaceVariantHover)
+      
+      barView
+        .frame(
+          maxWidth: .infinity,
+          minHeight: barStyle.minHeight - divider.height,
+          alignment: .leading)
 
-      case .search(let searchBarItem):
-        searchBar(using: searchBarItem)
-      }
+      divider
     }
     .background(Color.surface)
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
   }
   
+  @ViewBuilder
+  var barView: some View {
+    switch barStyle {
+      
+    case .titleBar(let appBarItem):
+      titleBar(using: appBarItem)
+      
+    case .search(let searchBarItem):
+      searchBar(using: searchBarItem)
+    }
+  }
   @ViewBuilder
   func titleBar(using barItem: TitleBarItem) -> some View {
     
@@ -61,7 +74,6 @@ public struct TUIAppTopBar: View {
 
       rightButtons(using: barItem.rightButtons)
     }
-    .frame(maxWidth: .infinity, minHeight: barStyle.minHeight, alignment: .leading)
     .padding(.horizontal, Spacing.halfHorizontal)
     .accessibilityIdentifier(Accessibility.titleBar)
   }
