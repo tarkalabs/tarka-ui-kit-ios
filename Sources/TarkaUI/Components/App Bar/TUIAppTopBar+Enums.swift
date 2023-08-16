@@ -18,7 +18,7 @@ public extension TUIAppTopBar {
     case titleBar(TitleBarItem)
     
     /// Shows search bar with back and cancel buttons
-    case search(TUISearchBarItem)
+    case search(TUISearchBarViewModel)
     
     var minHeight: CGFloat {
       

@@ -16,9 +16,16 @@ import SwiftUI
 public struct TUIAppTopBar: View {
   
   var barStyle: BarStyle
-  
+  @ObservedObject var searchBarVM: TUISearchBarViewModel
+
   public init(barStyle: BarStyle) {
     self.barStyle = barStyle
+    if case .search(let searchBarItem) = barStyle {
+      self.searchBarVM = searchBarItem
+    } else {
+      self.searchBarVM = TUISearchBarViewModel(
+        searchItem: .init(placeholder: "Search", text: ""))
+    }
   }
   
   public var body: some View {
@@ -48,8 +55,8 @@ public struct TUIAppTopBar: View {
     case .titleBar(let appBarItem):
       titleBar(using: appBarItem)
       
-    case .search(let searchBarItem):
-      searchBar(using: searchBarItem)
+    case .search(_):
+      searchBar()
     }
   }
   @ViewBuilder
@@ -131,26 +138,25 @@ public struct TUIAppTopBar: View {
   }
   
   @ViewBuilder
-  func searchBar(
-    using searchBarItem: TUISearchBarItem) -> some View {
+  func searchBar() -> some View {
       
-      let searchItem = searchBarItem
+      var searchItem = searchBarVM.searchItem
       
-      TUISearchBar(searchItem: searchItem)
+      TUISearchBar(searchBarVM: searchBarVM)
         .backButton {
           TUIIconButton(icon: .chevronLeft24Regular) {
-            searchItem.isActive = false
-            searchItem.isEditing = false
+            searchBarVM.isActive = false
+            searchBarVM.isEditing = false
             searchItem.text = ""
           }
           .style(.ghost)
           .size(.size40)
         }
         .trailingButton {
-          if searchItem.isActive, searchItem.isEditing,
+          if searchBarVM.isActive, searchBarVM.isEditing,
              !searchItem.text.isEmpty {
             TUIIconButton(icon: .dismiss24Regular) {
-              searchItem.isEditing = false
+              searchBarVM.isEditing = false
             }
             .style(.ghost)
             .size(.size40)
@@ -178,13 +184,8 @@ struct TUIAppTopBar_Previews: PreviewProvider {
   
   static var previews: some View {
     
-    @State var text = ""
-    @State var isActive = false
-    @State var isEditing = false
-    
-    let searchItem = TUISearchBarItem(
-      placeholder: "Search",
-      text: $text, isActive: $isActive, isEditing: $isEditing)
+    @StateObject var searchBarVM = TUISearchBarViewModel(
+      searchItem: .init(placeholder: "Search", text: ""))
     
     let rightButton = TUIIconButton(icon: .circle24Regular) { }
     let leftButtons: [TUIAppTopBar.LeftButton] = [.none, .back({ })]
@@ -228,7 +229,7 @@ struct TUIAppTopBar_Previews: PreviewProvider {
         }
         .padding(.horizontal, 16)
         
-        TUIAppTopBar(barStyle: .search(searchItem))
+        TUIAppTopBar(barStyle: .search(searchBarVM))
       }
     }
     .padding(.vertical, 20)

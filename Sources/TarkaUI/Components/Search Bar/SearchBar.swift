@@ -10,21 +10,22 @@ import SwiftUI
 
 struct SearchBar: View {
   
-  var searchItem: TUISearchBarItem
+  @ObservedObject var searchBarVM: TUISearchBarViewModel
   @FocusState private var isFocused: Bool
-  
+  @State private var text = "false"
+
   var body: some View {
     
-    TextField(searchItem.placeholder, text: searchItem.$text)
+    TextField(searchBarVM.searchItem.placeholder, text: $searchBarVM.searchItem.text)
       .focused($isFocused)
       .onTapGesture {
-        searchItem.isEditing = true
+        searchBarVM.isEditing = true
       }
-      .onChange(of: searchItem.$isEditing.wrappedValue, perform: { value in
+      .onChange(of: searchBarVM.isEditing, perform: { value in
         isFocused = value
       })
       .onAppear {
-        searchItem.isEditing = true
+        searchBarVM.isEditing = true
       }
       .accessibilityIdentifier(Accessibility.root)
   }
@@ -41,14 +42,9 @@ struct SearchBar_Previews: PreviewProvider {
   
   static var previews: some View {
     
-    @State var text = ""
-    @State var isActive = false
-    @State var isEditing = false
-    
-    let searchItem = TUISearchBarItem(
-      placeholder: "Search", text: $text,
-      isActive: $isActive, isEditing: $isEditing)
-    
-    SearchBar(searchItem: searchItem)
+    @StateObject var searchBarVM = TUISearchBarViewModel(
+      searchItem: .init(placeholder: "Search", text: ""))
+
+    SearchBar(searchBarVM: searchBarVM)
   }
 }
