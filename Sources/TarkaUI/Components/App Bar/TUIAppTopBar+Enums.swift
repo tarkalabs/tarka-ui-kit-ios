@@ -61,7 +61,7 @@ public extension TUIAppTopBar {
     public var id: String {
       return UUID().uuidString
     }
-    case none, back(TUIButtonAction), cancel(TUIButtonAction)
+    case none, back(TUIButtonAction? = nil), cancel(TUIButtonAction? = nil)
     
     var leading: CGFloat {
       switch self {

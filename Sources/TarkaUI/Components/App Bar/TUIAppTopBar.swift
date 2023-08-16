@@ -85,11 +85,17 @@ public struct TUIAppTopBar: View {
     .accessibilityIdentifier(Accessibility.titleBar)
   }
   
+  @Environment(\.dismiss) private var dismiss
+
   @ViewBuilder
-  private func backButton(_ action: @escaping TUIButtonAction) -> some View {
+  private func backButton(_ action: TUIButtonAction?) -> some View {
     
     TUIIconButton(icon: .chevronLeft24Regular) {
-      action()
+      if let action {
+        action()
+      } else {
+        dismiss()
+      }
     }
     .style(.ghost)
     .size(.size48)
@@ -97,9 +103,13 @@ public struct TUIAppTopBar: View {
   }
   
   @ViewBuilder
-  private func cancelButton(_ action: @escaping TUIButtonAction) -> some View {
+  private func cancelButton(_ action: TUIButtonAction?) -> some View {
     TUIIconButton(icon: .dismiss24Regular) {
-      action()
+      if let action {
+        action()
+      } else {
+        dismiss()
+      }
     }
     .style(.ghost)
     .size(.size48)
