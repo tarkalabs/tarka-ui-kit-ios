@@ -50,7 +50,8 @@ struct ContentView: View {
   
   
   @State private var isDoneClicked: Bool = false
-  
+  @State private var isKeyboardShown: Bool = false
+
   public init() { }
   
   var body: some View {
@@ -71,6 +72,7 @@ struct ContentView: View {
     
     ScrollView {
       VStack(spacing: 10) {
+        Color.red.frame(height: 400)
         inputFieldViews
         inputFieldViews
         inputFieldViews
@@ -78,8 +80,7 @@ struct ContentView: View {
       }
     }
     .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked)
-    .addBottomMobileButtonBlock(block)
-    .adaptiveKeyboard()
+    .addBottomMobileButtonBlock(block, isKeyboardShown: $isKeyboardShown)
   }
   
   @ViewBuilder

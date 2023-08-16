@@ -11,11 +11,15 @@ import Combine
 struct AdaptiveKeyboard: ViewModifier {
   
   @State var currentHeight: CGFloat = 0
+  @Binding var isKeyboardShown: Bool
   
   func body(content: Content) -> some View {
     
     content
       .padding(.bottom, currentHeight)
+      .onChange(of: currentHeight, perform: { newValue in
+        isKeyboardShown = newValue > 0
+      })
       .onAppear(
         perform: {
           
@@ -52,8 +56,8 @@ public extension View {
   /// - Returns: View
   ///
   @ViewBuilder
-  func adaptiveKeyboard() -> some View {
-    modifier(AdaptiveKeyboard())
+  func adaptiveKeyboard(isKeyboardShown: Binding<Bool>) -> some View {
+    modifier(AdaptiveKeyboard(isKeyboardShown: isKeyboardShown))
   }
 }
 

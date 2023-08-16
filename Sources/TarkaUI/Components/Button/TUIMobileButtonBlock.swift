@@ -21,14 +21,14 @@ public struct TUIMobileButtonBlock: View {
   
   private var style: Style
   private var bottomSafeAreaInset: CGFloat = 0
-
+  
   public init(style: Style) {
     self.style = style
   }
   
   private let fixedWidth: CGFloat = 342
   private let blurRadius: CGFloat = 7
-
+  
   public var body: some View {
     
     ZStack(alignment: .bottom) {
@@ -48,10 +48,14 @@ public struct TUIMobileButtonBlock: View {
     }
     .frame(minHeight: minHeight)
     .fixedSize(horizontal: false, vertical: true)
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
+    
   }
   
   @ViewBuilder
   private var buttonBlock: some View {
+    
     HStack(spacing: Spacing.halfHorizontal) {
       
       switch style {
@@ -67,19 +71,23 @@ public struct TUIMobileButtonBlock: View {
           .style(.outlined)
           .size(.large)
           .width(.maximum(.infinity))
+          .accessibilityIdentifier(Accessibility.leftButton)
         right
           .style(.primary)
           .size(.large)
           .width(.maximum(.infinity))
+          .accessibilityIdentifier(Accessibility.rightButton)
         
       case .flexible(let left, let right):
         left
           .style(.outlined)
           .size(.large)
+          .accessibilityIdentifier(Accessibility.leftButton)
         right
           .style(.primary)
           .size(.large)
           .width(.maximum(fixedWidth))
+          .accessibilityIdentifier(Accessibility.rightButton)
       }
     }
     .padding(.horizontal, Spacing.custom(24))
@@ -107,6 +115,14 @@ public struct TUIMobileButtonBlock: View {
   }
 }
 
+extension TUIMobileButtonBlock {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIMobileButtonBlock"
+    case leftButton = "LeftButton"
+    case rightButton = "RightButton"
+  }
+}
+
 struct TUIMobileButtonBlock_Previews: PreviewProvider {
   
   static var previews: some View {
@@ -124,7 +140,7 @@ struct TUIMobileButtonBlock_Previews: PreviewProvider {
               TUIButton(title: "Label") { },
             right: TUIButton(title: "Label") { }
           ))
-
+        
         TUIMobileButtonBlock(
           style: .flexible(
             left: TUIButton(title: "Label") { },
