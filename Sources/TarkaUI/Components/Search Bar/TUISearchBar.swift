@@ -14,10 +14,10 @@ public struct TUISearchBar: View {
   
   var backButton: TUIIconButton?
   var trailingButton: TUIIconButton?
-  var searchItem: TUISearchBarItem
+  @ObservedObject var searchBarVM: TUISearchBarViewModel
   
-  public init(searchItem: TUISearchBarItem) {
-    self.searchItem = searchItem
+  public init(searchBarVM: TUISearchBarViewModel) {
+    self.searchBarVM = searchBarVM
   }
   
   public var body: some View {
@@ -29,7 +29,7 @@ public struct TUISearchBar: View {
           .accessibilityIdentifier(Accessibility.backButton)
       }
       
-      SearchBar(searchItem: searchItem)
+      SearchBar(searchBarVM: searchBarVM)
       
       if let trailingButton {
         trailingButton
@@ -55,15 +55,10 @@ struct TUISearchBar_Previews: PreviewProvider {
   
   static var previews: some View {
     
-    @State var text = ""
-    @State var isActive = false
-    @State var isEditing = false
-    
-    let searchItem = TUISearchBarItem(
-      placeholder: "Search", text: $text,
-      isActive: $isActive, isEditing: $isEditing)
-    
-    TUISearchBar(searchItem: searchItem)
+    @StateObject var searchBarVM = TUISearchBarViewModel(
+      searchItem: .init(placeholder: "Search", text: ""))
+
+    TUISearchBar(searchBarVM: searchBarVM)
       .backButton {
         TUIIconButton(icon: .chevronLeft24Regular) { }
           .style(.ghost)
@@ -91,7 +86,7 @@ public extension TUISearchBar {
     var newView = self
     let trailingButton = button()
     newView.trailingButton = trailingButton?.action {
-      searchItem.text = ""
+      searchBarVM.searchItem.text = ""
     }
     return newView
   }

@@ -127,9 +127,6 @@ struct DetailView: View {
   
   @Environment(\.dismiss) private var dismiss
   
-  @State var searchText = ""
-  @State var isSearchEditing = false
-  @State var isSearchActive = false
   @State var isSyncDisabled = false
   
   var body: some View {
@@ -143,33 +140,27 @@ struct DetailView: View {
       ToolbarItemGroup(placement: .keyboard) {
         Spacer()
         Button("Done") {
-          isSearchEditing = false
+          searchBarVM.isEditing = false
         }
       }
     }
     .background(.gray)
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .onChange(of: searchText, perform: { value in
-      print("Searching for \"\(searchText)\"")
+    .onChange(of: searchBarVM.searchItem.text, perform: { value in
+      print("Searching for \"\(value)\"")
     })
     .customNavigationBar(
       titleBarItem: titleBarItem,
-      searchBarItem: searchBarItem)
+      searchBarVM: searchBarVM)
   }
   
-  private var searchBarItem: TUISearchBarItem {
-    
-    let searchItem = TUISearchBarItem(
-      placeholder: "Search", text: $searchText,
-      isActive: $isSearchActive, isEditing: $isSearchEditing)
-    
-    return searchItem
-  }
+  @StateObject var searchBarVM = TUISearchBarViewModel(
+  searchItem: .init(placeholder: "Search", text: ""))
   
   private var titleBarItem: TUIAppTopBar.TitleBarItem {
     
     let searchButton = TUIIconButton(icon: .search24Regular) {
-      isSearchActive = true
+      searchBarVM.isActive = true
     }
       .style(.ghost)
       .size(.size48)
