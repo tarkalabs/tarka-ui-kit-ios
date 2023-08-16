@@ -50,7 +50,8 @@ public extension TUIIconButton {
     return newView
   }
   
-  /// Makes `TUIIconButton` disabled.
+  /// Makes `TUIIconButton` disabled. Internally, it just calls the view's `isDisabled()` func.
+  /// Purpose of this function is to have concrete return type
   ///
   /// - Parameter isDisabled: true / false
   /// - Returns: A modified `TUIIconButton`

@@ -26,7 +26,6 @@ struct SearchBar: View {
       .onAppear {
         searchItem.isEditing = true
       }
-      .transition(.move(edge: .trailing))
       .accessibilityIdentifier(Accessibility.root)
   }
 }

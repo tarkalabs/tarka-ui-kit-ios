@@ -16,5 +16,3 @@ public class TUIThemeManager {
     self.theme = theme
   }
 }
-
-public var theme = TUIThemeManager.shared.theme
