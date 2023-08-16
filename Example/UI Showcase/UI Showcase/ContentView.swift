@@ -57,47 +57,53 @@ struct ContentView: View {
     
     let block = TUIMobileButtonBlock(
       style: .two(
-        left: TUIButton(title: "Label") { },
-        right: TUIButton(title: "Label") { }))
+        left: TUIButton(title: "Cancel") {
+          isDoneClicked = true
+        },
+        right: TUIButton(title: "Save") {
+          print("""
+  Final input: Date - \(String(describing: dateFieldItem.date?.formatted(dateFieldItem.format)))
+  First Text - \(memoTextFieldItem.value)
+  Second Text - \(valueOnlyTextFieldItem.value)
+  """)
+          isDoneClicked = true
+        }))
     
     ScrollView {
       VStack(spacing: 10) {
-        inputFiledViews
-        inputFiledViews
+        inputFieldViews
+        inputFieldViews
+        inputFieldViews
+        inputFieldViews
       }
     }
+    .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked)
     .addBottomMobileButtonBlock(block)
+    .adaptiveKeyboard()
   }
   
   @ViewBuilder
-  private var inputFiledViews: some View {
+  private var inputFieldViews: some View {
     VStack {
-      Button("Submit") {
-        
-        print("""
-Final input: Date - \(String(describing: dateFieldItem.date?.formatted(dateFieldItem.format)))
-First Text - \(memoTextFieldItem.value)
-Second Text - \(valueOnlyTextFieldItem.value)
-""")
-      }
-      TUIDateInputField(dateInputItem: $dateFieldItem)
-        .endItem(withStyle: .icon(.document24Regular))
-        .highlightBar(color: .red)
-        .state(.success("Values are valid"))
       
-      TUIInteractiveInputField(inputItem: $locationPickerFieldItem) {
-        self.locationPickerFieldItem.style = .titleWithValue
-        self.locationPickerFieldItem.value = "20.123242, 73.24426t2"
-      }
-      .endItem(withStyle: .icon(.document24Regular))
-      .highlightBar(color: .red)
-      .state(.success("Values are valid"))
-      
-      TUIPickerInputField(inputItem: $pickerFieldItem)
-      {
-        ActivityView(activityItems: ["Test Export"], applicationActivities: nil)
-      }
-      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
+      //      TUIDateInputField(dateInputItem: $dateFieldItem)
+      //        .endItem(withStyle: .icon(.document24Regular))
+      //        .highlightBar(color: .red)
+      //        .state(.success("Values are valid"))
+      //
+      //      TUIInteractiveInputField(inputItem: $locationPickerFieldItem) {
+      //        self.locationPickerFieldItem.style = .titleWithValue
+      //        self.locationPickerFieldItem.value = "20.123242, 73.24426t2"
+      //      }
+      //      .endItem(withStyle: .icon(.document24Regular))
+      //      .highlightBar(color: .red)
+      //      .state(.success("Values are valid"))
+      //
+      //      TUIPickerInputField(inputItem: $pickerFieldItem)
+      //      {
+      //        ActivityView(activityItems: ["Test Export"], applicationActivities: nil)
+      //      }
+      //      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
       
       TUITextInputField(
         inputItem: $memoTextFieldItem, isDoneClicked: $isDoneClicked)
@@ -112,15 +118,20 @@ Second Text - \(valueOnlyTextFieldItem.value)
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
       .state(.error("Input values are sensitive"))
       .placeholder("Enter Memo Description")
-    }
-    .scrollDismissesKeyboard(.immediately)
-    .toolbar {
-      ToolbarItemGroup(placement: .keyboard) {
-        Spacer()
-        Button("Done") {
-          isDoneClicked = true
-        }
-      }
+      
+      TUITextInputField(
+        inputItem: $memoTextFieldItem, isDoneClicked: $isDoneClicked)
+      .state(.alert("Input values are sensitive"))
+      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
+      .maxCharacters(7)
+      .allowedCharacters(CharacterSet(charactersIn: "1234567890."))
+      .setKeyboardType(.decimalPad)
+      
+      TUITextInputField(
+        inputItem: $valueOnlyTextFieldItem, isDoneClicked: $isDoneClicked)
+      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
+      .state(.error("Input values are sensitive"))
+      .placeholder("Enter Memo Description")
     }
   }
 }
@@ -153,3 +164,4 @@ extension String {
       bundle: .main, value: self, comment: self)
   }
 }
+
