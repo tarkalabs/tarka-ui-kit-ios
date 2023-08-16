@@ -35,15 +35,14 @@ extension TUIDivider {
       return .infinity
     }
     return 1
-    
   }
+  
   var height: CGFloat {
     
     if case .horizontal = self.orientation  {
       return 1
     }
     return 40
-    
   }
 }
 
