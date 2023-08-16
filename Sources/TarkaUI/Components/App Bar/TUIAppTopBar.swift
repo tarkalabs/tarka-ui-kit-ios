@@ -29,12 +29,14 @@ public struct TUIAppTopBar: View {
         
       case .titleBar(let appBarItem):
         titleBar(using: appBarItem)
-        
+
       case .search(let searchBarItem):
         searchBar(using: searchBarItem)
       }
     }
     .background(Color.surface)
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder
@@ -55,30 +57,34 @@ public struct TUIAppTopBar: View {
         .font(.heading5)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.leading, leftButton.leading)
-      
+        .accessibilityIdentifier(Accessibility.title)
+
       rightButtons(using: barItem.rightButtons)
     }
     .frame(maxWidth: .infinity, minHeight: barStyle.minHeight, alignment: .leading)
     .padding(.horizontal, Spacing.halfHorizontal)
+    .accessibilityIdentifier(Accessibility.titleBar)
   }
   
   @ViewBuilder
-  private func backButton(_ action: @escaping TUIButtonAction) -> TUIIconButton {
+  private func backButton(_ action: @escaping TUIButtonAction) -> some View {
     
     TUIIconButton(icon: .chevronLeft24Regular) {
       action()
     }
     .style(.ghost)
     .size(.size48)
+    .accessibilityIdentifier(Accessibility.backButton)
   }
   
   @ViewBuilder
-  private func cancelButton(_ action: @escaping TUIButtonAction) -> TUIIconButton {
+  private func cancelButton(_ action: @escaping TUIButtonAction) -> some View {
     TUIIconButton(icon: .dismiss24Regular) {
       action()
     }
     .style(.ghost)
     .size(.size48)
+    .accessibilityIdentifier(Accessibility.cancelButton)
   }
   
   @ViewBuilder
@@ -90,16 +96,22 @@ public struct TUIAppTopBar: View {
         
       case .one(let buttonItem):
         buttonItem
-        
+          .accessibilityIdentifier(Accessibility.rightButton1)
+
       case .two(let buttonItem1, let buttonItem2):
         buttonItem1
+          .accessibilityIdentifier(Accessibility.rightButton1)
         buttonItem2
-        
+          .accessibilityIdentifier(Accessibility.rightButton2)
+
       case .three(let buttonItem1, let buttonItem2, let buttonItem3):
         buttonItem1
+          .accessibilityIdentifier(Accessibility.rightButton1)
         buttonItem2
+          .accessibilityIdentifier(Accessibility.rightButton2)
         buttonItem3
-        
+          .accessibilityIdentifier(Accessibility.rightButton3)
+
       case .none:
         EmptyView()
       }
@@ -135,7 +147,19 @@ public struct TUIAppTopBar: View {
         .padding(.horizontal, Spacing.baseHorizontal)
         .padding(.vertical, Spacing.baseVertical)
     }
-  
+}
+
+extension TUIAppTopBar {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIAppTopBar"
+    case titleBar = "TitleBar"
+    case backButton = "BackButton"
+    case cancelButton = "CancelButton"
+    case title = "title"
+    case rightButton1 = "RightButton1"
+    case rightButton2 = "RightButton2"
+    case rightButton3 = "RightButton3"
+  }
 }
 
 struct TUIAppTopBar_Previews: PreviewProvider {
