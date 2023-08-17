@@ -50,7 +50,6 @@ struct ContentView: View {
   
   
   @State private var isDoneClicked: Bool = false
-  @State private var isKeyboardShown: Bool = false
 
   public init() { }
   
