@@ -18,6 +18,8 @@ public struct TUIAppTopBar: View {
   var barStyle: BarStyle
   @ObservedObject var searchBarVM: TUISearchBarViewModel
 
+  @Environment(\.dismiss) private var dismiss
+
   public init(barStyle: BarStyle) {
     self.barStyle = barStyle
     if case .search(let searchBarItem) = barStyle {
@@ -67,9 +69,10 @@ public struct TUIAppTopBar: View {
       let leftButton = barItem.leftButton
       
       if case .back(let action) = leftButton {
-        backButton(action)
+        self.leftButton(icon: .chevronLeft24Regular, action: action)
+        
       } else if  case .cancel(let action) = leftButton {
-        cancelButton(action)
+        self.leftButton(icon: .dismiss24Regular, action: action)
       }
       
       Text(barItem.title)
@@ -85,12 +88,9 @@ public struct TUIAppTopBar: View {
     .accessibilityIdentifier(Accessibility.titleBar)
   }
   
-  @Environment(\.dismiss) private var dismiss
-
   @ViewBuilder
-  private func backButton(_ action: TUIButtonAction?) -> some View {
-    
-    TUIIconButton(icon: .chevronLeft24Regular) {
+  private func leftButton(icon: FluentIcon, action: TUIButtonAction?) -> some View {
+    TUIIconButton(icon: icon) {
       if let action {
         action()
       } else {
@@ -99,21 +99,7 @@ public struct TUIAppTopBar: View {
     }
     .style(.ghost)
     .size(.size48)
-    .accessibilityIdentifier(Accessibility.backButton)
-  }
-  
-  @ViewBuilder
-  private func cancelButton(_ action: TUIButtonAction?) -> some View {
-    TUIIconButton(icon: .dismiss24Regular) {
-      if let action {
-        action()
-      } else {
-        dismiss()
-      }
-    }
-    .style(.ghost)
-    .size(.size48)
-    .accessibilityIdentifier(Accessibility.cancelButton)
+    .accessibilityIdentifier(Accessibility.leftButton)
   }
   
   @ViewBuilder
@@ -181,8 +167,7 @@ extension TUIAppTopBar {
   enum Accessibility: String, TUIAccessibility {
     case root = "TUIAppTopBar"
     case titleBar = "TitleBar"
-    case backButton = "BackButton"
-    case cancelButton = "CancelButton"
+    case leftButton = "leftButton"
     case title = "title"
     case rightButton1 = "RightButton1"
     case rightButton2 = "RightButton2"
