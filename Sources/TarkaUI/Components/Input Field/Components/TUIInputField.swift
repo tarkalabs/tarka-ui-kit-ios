@@ -15,12 +15,12 @@ import SwiftUI
 ///
 /// Please refer those functions in `TUIInputField+Modifiers.swift`
 ///
-struct TUIInputField: TUIInputFieldProtocol {
+public struct TUIInputField: TUIInputFieldProtocol {
   
   @Binding var inputItem: TUIInputFieldItem
   @Binding private var isTextFieldFocused: Bool
   
-  var properties: TUIInputFieldOptionalProperties
+  public var properties: TUIInputFieldOptionalProperties
   
   private var maxCharacters: Int
   private var allowedCharacters: CharacterSet
@@ -32,7 +32,7 @@ struct TUIInputField: TUIInputFieldProtocol {
   ///   - properties: An `TUIInputFieldOptionalProperties` object that holds the optional values to create multiple variants of this View
   ///   - isTextFieldFocused: A bindable bool value that used to handle text field focus using keyboard
   ///   
-  init(inputItem: Binding<TUIInputFieldItem>,
+  public init(inputItem: Binding<TUIInputFieldItem>,
        properties: TUIInputFieldOptionalProperties? = nil,
        isTextFieldFocused: Binding<Bool>? = nil,
        maxCharacters: Int = 0,
@@ -49,7 +49,7 @@ struct TUIInputField: TUIInputFieldProtocol {
     self.action = action
   }
   
-  var body: some View {
+  public var body: some View {
     
     VStack(spacing: Spacing.halfVertical) {
       
