@@ -14,7 +14,7 @@ public struct TUIOverlayHeaderView: View {
   private var radius: CGFloat = 0.0
   private var corners: UIRectCorner = .allCorners
   
-  init(_ style: Style) {
+  public init(_ style: TUIOverlayHeaderView.Style) {
     self.style = style
   }
   
@@ -155,7 +155,7 @@ public struct TUIOverlayHeaderView: View {
   }
 }
 
-extension TUIOverlayHeaderView {
+public extension TUIOverlayHeaderView {
   
   enum Style {
     case handle
@@ -163,9 +163,6 @@ extension TUIOverlayHeaderView {
     case left(String, action: () -> Void)
     case right(String, rightIcon: FluentIcon, action: () -> Void)
   }
-}
-
-public extension TUIOverlayHeaderView {
   
   enum Accessibility: String, TUIAccessibility {
     case root = "TUIOverlayHeaderView"
