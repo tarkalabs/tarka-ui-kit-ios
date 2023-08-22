@@ -7,11 +7,16 @@
 
 import SwiftUI
 
-struct RoundedCorner: Shape {
-  var radius: CGFloat = .infinity
-  var corners: UIRectCorner = .allCorners
+public struct RoundedCorner: Shape {
+  private var radius: CGFloat = .infinity
+  private var corners: UIRectCorner = .allCorners
   
-  func path(in rect: CGRect) -> Path {
+  public init(radius: CGFloat, corners: UIRectCorner = .allCorners) {
+    self.radius = radius
+    self.corners = corners
+  }
+  
+  public func path(in rect: CGRect) -> Path {
     let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners,
                             cornerRadii: CGSize(width: radius, height: radius))
     return Path(path.cgPath)
