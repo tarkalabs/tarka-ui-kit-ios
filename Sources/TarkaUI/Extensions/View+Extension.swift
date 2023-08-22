@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-
-
 public extension View {
+  
+  func customCorner(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+    clipShape(RoundedCorner(radius: radius, corners: corners))
+  }
   
   /// Adds done button in toolbar
   /// - Parameter onClicked: closure that called when done button is clicked
