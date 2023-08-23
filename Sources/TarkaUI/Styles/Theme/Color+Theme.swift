@@ -147,6 +147,10 @@ public extension Color {
   static var surfaceVariant: Color {
     TUIThemeManager.shared.theme.surfaceVariant
   }
+  
+  static var surfaceVariantHover: Color {
+    TUIThemeManager.shared.theme.surfaceVariantHover
+  }
     
   static var surfaceHover: Color {
     TUIThemeManager.shared.theme.surfaceHover

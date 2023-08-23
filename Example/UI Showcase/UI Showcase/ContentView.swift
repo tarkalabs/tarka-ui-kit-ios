@@ -55,6 +55,18 @@ struct ContentView: View {
   
   var body: some View {
     
+    NavigationStack {
+      NavigationLink {
+        DetailView()
+      } label: {
+        Text("Hello, Nav View!")
+      }
+    }
+  }
+  
+  @ViewBuilder
+  var textFieldViews: some View {
+    
     VStack {
       
       Button("Submit") {
@@ -108,6 +120,61 @@ Second Text - \(valueOnlyTextFieldItem.value)
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     ContentView()
+  }
+}
+
+struct DetailView: View {
+  
+  @State var isSyncDisabled = false
+  
+  var body: some View {
+    
+    VStack(spacing: 0) {
+      Text("Hello, Detail View!")
+        .background(.white)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    .toolbar {
+      ToolbarItemGroup(placement: .keyboard) {
+        Spacer()
+        Button("Done") {
+          searchBarVM.isEditing = false
+        }
+      }
+    }
+    .background(.gray)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .onChange(of: searchBarVM.searchItem.text, perform: { value in
+      print("Searching for \"\(value)\"")
+    })
+    .customNavigationBar(
+      titleBarItem: titleBarItem,
+      searchBarVM: searchBarVM)
+  }
+  
+  @StateObject var searchBarVM = TUISearchBarViewModel(
+  searchItem: .init(placeholder: "Search", text: ""))
+  
+  private var titleBarItem: TUIAppTopBar.TitleBarItem {
+    
+    let searchButton = TUIIconButton(icon: .search24Regular) {
+      searchBarVM.isActive = true
+    }
+      .style(.ghost)
+      .size(.size48)
+    
+    let syncButton = TUIIconButton(icon: .arrowCounterclockwise24Filled) {
+      isSyncDisabled.toggle()
+    }
+      .style(.ghost)
+      .size(.size48)
+      .isDisabled(isSyncDisabled)
+    
+    return .init(
+      title: "Detail View",
+      leftButton: .back(),
+      rightButtons: .two(
+        searchButton, syncButton))
   }
 }
 

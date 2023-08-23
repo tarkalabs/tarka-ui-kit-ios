@@ -45,4 +45,11 @@ public extension View {
         .border(color, width: width)
     }
   }
+  
+  /// Makes View disabled. Applies `DisabledView` modifier on the current view
+  /// - Parameter isDisabled: true / false
+  /// - Returns: Modified View
+  func isDisabled(_ isDisabled: Bool) -> some View {
+    modifier(DisabledView(isDisabled: isDisabled))
+  }
 }
