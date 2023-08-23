@@ -17,4 +17,13 @@ public struct TUIInputFieldOptionalProperties {
   var helperText: TUIHelperText?
   var placeholder: String?
   var state = TUIInputFieldState.none
+  
+  public init(startItemStyle: TUIInputAdditionalView.Style? = nil, endItemStyle: TUIInputAdditionalView.Style? = nil, highlightBarColor: Color? = nil, helperText: TUIHelperText? = nil, placeholder: String? = nil, state: TUIInputFieldState = TUIInputFieldState.none) {
+    self.startItemStyle = startItemStyle
+    self.endItemStyle = endItemStyle
+    self.highlightBarColor = highlightBarColor
+    self.helperText = helperText
+    self.placeholder = placeholder
+    self.state = state
+  }
 }
