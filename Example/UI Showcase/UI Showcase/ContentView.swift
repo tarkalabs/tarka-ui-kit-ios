@@ -36,7 +36,29 @@ var globalDateFieldItem = TUIDateInputFieldItem(
   format: dateFormat)
 
 struct ContentView: View {
+
+  var body: some View {
+        
+    NavigationStack {
+      NavigationLink {
+        DetailView()
+      } label: {
+        Text("Hello, Nav View!")
+      }
+    }
+  }
+}
+
+struct ContentView_Previews: PreviewProvider {
+  static var previews: some View {
+    ContentView()
+  }
+}
+
+struct DetailView: View {
   
+  @State var isSyncDisabled = false
+
   @State var dateFieldItem = globalDateFieldItem
   
   @State var locationPickerFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Location")
@@ -50,26 +72,85 @@ struct ContentView: View {
   
   
   @State private var isDoneClicked: Bool = false
-  
-  public init() { }
-  
   var body: some View {
     
-    VStack {
-      
-      Button("Submit") {
-        print("""
-Final input: Date - \(String(describing: dateFieldItem.date?.formatted(dateFieldItem.format)))
-First Text - \(memoTextFieldItem.value)
-Second Text - \(valueOnlyTextFieldItem.value)
-""")
+    VStack(spacing: 0) {
+      mainView
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .onChange(of: searchBarVM.searchItem.text, perform: { value in
+      print("Searching for \"\(value)\"")
+    })
+    .customNavigationBar(
+      titleBarItem: titleBarItem,
+      searchBarVM: searchBarVM)
+  }
+  
+  @StateObject var searchBarVM = TUISearchBarViewModel(
+  searchItem: .init(placeholder: "Search", text: ""))
+  
+  private var titleBarItem: TUIAppTopBar.TitleBarItem {
+    
+    let searchButton = TUIIconButton(icon: .search24Regular) {
+      searchBarVM.isActive = true
+    }
+      .style(.ghost)
+      .size(.size48)
+    
+    let syncButton = TUIIconButton(icon: .arrowCounterclockwise24Filled) {
+      isSyncDisabled.toggle()
+    }
+      .style(.ghost)
+      .size(.size48)
+      .isDisabled(isSyncDisabled)
+    
+    return .init(
+      title: "Detail View",
+      leftButton: .back(),
+      rightButtons: .two(
+        searchButton, syncButton))
+  }
+}
+
+extension DetailView {
+  
+  @ViewBuilder
+  var mainView: some View {
+
+    let block = TUIMobileButtonBlock(
+      style: .two(
+        left: TUIButton(title: "Cancel") {
+          isDoneClicked = true
+        },
+        right: TUIButton(title: "Save") {
+          print("""
+      Final input: Date - \(String(describing: dateFieldItem.date?.formatted(dateFieldItem.format)))
+      First Text - \(memoTextFieldItem.value)
+      Second Text - \(valueOnlyTextFieldItem.value)
+      """)
+          isDoneClicked = true
+        }))
+
+    ScrollView {
+      VStack(spacing: 10) {
+        Color.red.frame(height: 400)
+        inputFieldViews
       }
+    }
+    .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked, onClicked: {
+      searchBarVM.isEditing = false
+    })
+    .addBottomMobileButtonBlock(block)
+  }
+  
+  @ViewBuilder
+  private var inputFieldViews: some View {
+    VStack {
       
       TUIDateInputField(dateInputItem: $dateFieldItem)
         .endItem(withStyle: .icon(.document24Regular))
         .highlightBar(color: .red)
         .state(.success("Values are valid"))
-        .maxCharacters(5)
       
       TUIInteractiveInputField(inputItem: $locationPickerFieldItem) {
         self.locationPickerFieldItem.style = .titleWithValue
@@ -78,7 +159,6 @@ Second Text - \(valueOnlyTextFieldItem.value)
       .endItem(withStyle: .icon(.document24Regular))
       .highlightBar(color: .red)
       .state(.success("Values are valid"))
-      .allowedCharacters(CharacterSet(charactersIn: "12345qwerty"))
       
       TUIPickerInputField(inputItem: $pickerFieldItem)
       {
@@ -99,17 +179,25 @@ Second Text - \(valueOnlyTextFieldItem.value)
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
       .state(.error("Input values are sensitive"))
       .placeholder("Enter Memo Description")
+      
+      TUITextInputField(
+        inputItem: $memoTextFieldItem, isDoneClicked: $isDoneClicked)
+      .state(.alert("Input values are sensitive"))
+      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
+      .maxCharacters(7)
+      .allowedCharacters(CharacterSet(charactersIn: "1234567890."))
+      .setKeyboardType(.decimalPad)
+      
+      TUITextInputField(
+        inputItem: $valueOnlyTextFieldItem, isDoneClicked: $isDoneClicked)
+      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
+      .state(.error("Input values are sensitive"))
+      .placeholder("Enter Memo Description")
     }
-    .scrollDismissesKeyboard(.immediately)
-    .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked)
   }
+
 }
 
-struct ContentView_Previews: PreviewProvider {
-  static var previews: some View {
-    ContentView()
-  }
-}
 
 struct ActivityView: UIViewControllerRepresentable {
   typealias UIViewControllerType = UIActivityViewController
@@ -133,3 +221,4 @@ extension String {
       bundle: .main, value: self, comment: self)
   }
 }
+

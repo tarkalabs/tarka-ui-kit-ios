@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public class TUIThemeManager {
   public static let shared = TUIThemeManager()
