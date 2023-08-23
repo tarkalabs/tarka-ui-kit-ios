@@ -141,6 +141,7 @@ public struct TUIOverlayHeaderView: View {
   
   private var borderView: some View {
     TUIDivider(orientation: .horizontal(hPadding: .zero, vPadding: .zero))
+      .color(.surfaceVariantHover)
   }
   
   private func buttonView(_ icon: FluentIcon,
