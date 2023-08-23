@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct BottomMobileButtonBlock: ViewModifier {
+struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
   
   @State var isKeyboardShown: Bool = false
   var block: TUIMobileButtonBlock
-  
+  var existingView: T? = nil
+
   func body(content: Content) -> some View {
     
     GeometryReader { geometry in
@@ -25,7 +26,10 @@ struct BottomMobileButtonBlock: ViewModifier {
           if isKeyboardShown {
             EmptyView().frame(height: 0)
           } else {
-            block
+            VStack(spacing: 0) {
+              existingView
+              block
+            }
           }
         }
         .edgesIgnoringSafeArea(.bottom)
@@ -39,9 +43,11 @@ public extension View {
   /// This function itself makes the keyboard adaptive. No need to handle that explicitly.
   /// - Parameter block: `TUIMobileButtonBlock` that has to be added
   /// - Returns: View with button block added
-  func addBottomMobileButtonBlock(_ block: TUIMobileButtonBlock) -> some View {
+  func addBottomMobileButtonBlock(
+    _ block: TUIMobileButtonBlock,
+    @ViewBuilder existingView: () -> some View = { EmptyView() }) -> some View {
       
-      modifier(BottomMobileButtonBlock(block: block))
+      modifier(BottomMobileButtonBlock(block: block, existingView: existingView()))
   }
 }
 

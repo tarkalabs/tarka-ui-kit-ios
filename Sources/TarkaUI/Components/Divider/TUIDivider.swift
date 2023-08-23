@@ -19,7 +19,7 @@ public struct TUIDivider: View {
   public var body: some View {
     
     Rectangle()
-      .frame(width: width, height: height)
+      .frame(width: abs(width), height: abs(height))
       .foregroundColor(.clear)
       .background(color)
       .padding(.horizontal, orientation.hPadding)
