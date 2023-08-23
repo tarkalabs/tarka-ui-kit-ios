@@ -71,7 +71,7 @@ public struct TUIOverlayHeaderView: View {
     .frame(height: Spacing.custom(64))
     .frame(maxWidth: .infinity)
     .background(Color.surface)
-    .customCorner(radius, corners: corners)
+    .setRadiusToCorners(radius, corners: corners)
     .accessibilityElement(children: .contain)
   }
   
@@ -93,7 +93,7 @@ public struct TUIOverlayHeaderView: View {
     .frame(height: Spacing.custom(64))
     .frame(maxWidth: .infinity)
     .background(Color.surface)
-    .customCorner(radius, corners: corners)
+    .setRadiusToCorners(radius, corners: corners)
     .accessibilityElement(children: .contain)
   }
   
@@ -116,7 +116,7 @@ public struct TUIOverlayHeaderView: View {
     .frame(height: Spacing.custom(64))
     .frame(maxWidth: .infinity)
     .background(Color.surface)
-    .customCorner(radius, corners: corners)
+    .setRadiusToCorners(radius, corners: corners)
     .accessibilityElement(children: .contain)
   }
   
