@@ -43,7 +43,7 @@ struct SearchBar_Previews: PreviewProvider {
   static var previews: some View {
     
     @StateObject var searchBarVM = TUISearchBarViewModel(
-      searchItem: .init(placeholder: "Search", text: ""))
+      searchItem: .init(placeholder: "Search", text: "")) { _ in }
 
     SearchBar(searchBarVM: searchBarVM)
   }

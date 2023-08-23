@@ -78,16 +78,15 @@ struct DetailView: View {
       mainView
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .onChange(of: searchBarVM.searchItem.text, perform: { value in
-      print("Searching for \"\(value)\"")
-    })
     .customNavigationBar(
       titleBarItem: titleBarItem,
       searchBarVM: searchBarVM)
   }
   
   @StateObject var searchBarVM = TUISearchBarViewModel(
-  searchItem: .init(placeholder: "Search", text: ""))
+    searchItem: .init(placeholder: "Search", text: "")) { value in
+      print("Searching for \"\(value)\"")
+    }
   
   private var titleBarItem: TUIAppTopBar.TitleBarItem {
     
@@ -140,7 +139,10 @@ extension DetailView {
     .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked, onClicked: {
       searchBarVM.isEditing = false
     })
-    .addBottomMobileButtonBlock(block)
+    .addBottomMobileButtonBlock(block) {
+      TUIChipView("Last seen \(Date().formatted())")
+        .padding(.bottom, 8)
+   }
   }
   
   @ViewBuilder
