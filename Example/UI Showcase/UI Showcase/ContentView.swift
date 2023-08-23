@@ -50,11 +50,11 @@ struct ContentView: View {
   
   
   @State private var isDoneClicked: Bool = false
-  
+
   public init() { }
-  
+
   var body: some View {
-    
+        
     NavigationStack {
       NavigationLink {
         DetailView()
@@ -62,6 +62,36 @@ struct ContentView: View {
         Text("Hello, Nav View!")
       }
     }
+  }
+  
+  @ViewBuilder
+  var mainView: some View {
+
+    let block = TUIMobileButtonBlock(
+      style: .two(
+        left: TUIButton(title: "Cancel") {
+          isDoneClicked = true
+        },
+        right: TUIButton(title: "Save") {
+          print("""
+      Final input: Date - \(String(describing: dateFieldItem.date?.formatted(dateFieldItem.format)))
+      First Text - \(memoTextFieldItem.value)
+      Second Text - \(valueOnlyTextFieldItem.value)
+      """)
+          isDoneClicked = true
+        }))
+
+    ScrollView {
+      VStack(spacing: 10) {
+        Color.red.frame(height: 400)
+        inputFieldViews
+        inputFieldViews
+        inputFieldViews
+        inputFieldViews
+      }
+    }
+    .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked)
+    .addBottomMobileButtonBlock(block)
   }
   
   @ViewBuilder
@@ -96,7 +126,45 @@ Second Text - \(valueOnlyTextFieldItem.value)
       {
         ActivityView(activityItems: ["Test Export"], applicationActivities: nil)
       }
+    }
+  }
+  
+  @ViewBuilder
+  private var inputFieldViews: some View {
+    VStack {
+      
+      //      TUIDateInputField(dateInputItem: $dateFieldItem)
+      //        .endItem(withStyle: .icon(.document24Regular))
+      //        .highlightBar(color: .red)
+      //        .state(.success("Values are valid"))
+      //
+      //      TUIInteractiveInputField(inputItem: $locationPickerFieldItem) {
+      //        self.locationPickerFieldItem.style = .titleWithValue
+      //        self.locationPickerFieldItem.value = "20.123242, 73.24426t2"
+      //      }
+      //      .endItem(withStyle: .icon(.document24Regular))
+      //      .highlightBar(color: .red)
+      //      .state(.success("Values are valid"))
+      //
+      //      TUIPickerInputField(inputItem: $pickerFieldItem)
+      //      {
+      //        ActivityView(activityItems: ["Test Export"], applicationActivities: nil)
+      //      }
+      //      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
+      
+      TUITextInputField(
+        inputItem: $memoTextFieldItem, isDoneClicked: $isDoneClicked)
+      .state(.alert("Input values are sensitive"))
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
+      .maxCharacters(7)
+      .allowedCharacters(CharacterSet(charactersIn: "1234567890."))
+      .setKeyboardType(.decimalPad)
+      
+      TUITextInputField(
+        inputItem: $valueOnlyTextFieldItem, isDoneClicked: $isDoneClicked)
+      .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
+      .state(.error("Input values are sensitive"))
+      .placeholder("Enter Memo Description")
       
       TUITextInputField(
         inputItem: $memoTextFieldItem, isDoneClicked: $isDoneClicked)
@@ -112,8 +180,6 @@ Second Text - \(valueOnlyTextFieldItem.value)
       .state(.error("Input values are sensitive"))
       .placeholder("Enter Memo Description")
     }
-    .scrollDismissesKeyboard(.immediately)
-    .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked)
   }
 }
 
@@ -200,3 +266,4 @@ extension String {
       bundle: .main, value: self, comment: self)
   }
 }
+

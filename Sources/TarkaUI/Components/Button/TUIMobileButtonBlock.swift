@@ -20,28 +20,42 @@ public struct TUIMobileButtonBlock: View {
   }
   
   private var style: Style
+  private var bottomSafeAreaInset: CGFloat = 0
   
   public init(style: Style) {
     self.style = style
   }
   
-  let fixedWidth: CGFloat = 342
+  private let fixedWidth: CGFloat = 342
+  private let blurRadius: CGFloat = 7
   
   public var body: some View {
     
-    VStack(spacing: Spacing.custom(15)) {
+    ZStack(alignment: .bottom) {
       
-      TUIDivider(
-        orientation: .horizontal(
-          hPadding: .zero, vPadding: .zero))
-
-      buttonBlock
+      BackgroundBlur(radius: blurRadius)
+        .frame(maxWidth: .infinity)
+      
+      VStack(spacing: Spacing.custom(15)) {
+        
+        TUIDivider(
+          orientation: .horizontal(
+            hPadding: .zero, vPadding: .zero))
+        
+        buttonBlock
+      }
+      .background(Color.surface50)
     }
-    .background(Color.surface50)
+    .frame(minHeight: minHeight)
+    .fixedSize(horizontal: false, vertical: true)
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
+    
   }
   
   @ViewBuilder
   private var buttonBlock: some View {
+    
     HStack(spacing: Spacing.halfHorizontal) {
       
       switch style {
@@ -50,32 +64,62 @@ public struct TUIMobileButtonBlock: View {
         button
           .style(.primary)
           .size(.large)
-          .width(.fixed(fixedWidth))
+          .width(.maximum(fixedWidth))
         
       case .two(let left, let right):
         left
           .style(.outlined)
           .size(.large)
           .width(.maximum(.infinity))
+          .accessibilityIdentifier(Accessibility.leftButton)
         right
           .style(.primary)
           .size(.large)
           .width(.maximum(.infinity))
+          .accessibilityIdentifier(Accessibility.rightButton)
         
       case .flexible(let left, let right):
         left
           .style(.outlined)
           .size(.large)
+          .accessibilityIdentifier(Accessibility.leftButton)
         right
           .style(.primary)
           .size(.large)
           .width(.maximum(fixedWidth))
+          .accessibilityIdentifier(Accessibility.rightButton)
       }
     }
     .padding(.horizontal, Spacing.custom(24))
-    .padding(.bottom, Spacing.doubleVertical)
+    .padding(.bottom, buttonBottomPadding)
+    .isEnabled(bottomSafeAreaInset > 0, content: { view in
+      // It reduces the unexpected extra blur effect that overlays on the button
+      VStack(spacing: Spacing.custom(10)) {
+        view
+        BackgroundBlur(radius: blurRadius)
+          .frame(maxWidth: .infinity)
+      }
+    })
     .frame(maxWidth: .infinity)
-    .frame(minHeight: 88)
+  }
+  
+  private var minHeight: CGFloat {
+    return 80 + bottomSafeAreaInset
+  }
+  
+  private var buttonBottomPadding: CGFloat {
+    guard bottomSafeAreaInset > 0 else {
+      return Spacing.doubleVertical
+    }
+    return 0
+  }
+}
+
+extension TUIMobileButtonBlock {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIMobileButtonBlock"
+    case leftButton = "LeftButton"
+    case rightButton = "RightButton"
   }
 }
 
@@ -96,7 +140,7 @@ struct TUIMobileButtonBlock_Previews: PreviewProvider {
               TUIButton(title: "Label") { },
             right: TUIButton(title: "Label") { }
           ))
-
+        
         TUIMobileButtonBlock(
           style: .flexible(
             left: TUIButton(title: "Label") { },
@@ -105,5 +149,19 @@ struct TUIMobileButtonBlock_Previews: PreviewProvider {
       }
     }
     .background(Color.background)
+  }
+}
+
+public extension TUIMobileButtonBlock {
+  
+  /// Manually handles bototm safe area inset by adding more bottom space and
+  /// adding extra blur layer for that extra added space
+  /// - Parameter value: bottom value that to be added
+  /// - Returns: Modified View
+  ///
+  func addSafeAreaBottomInset(_ value: CGFloat) -> Self {
+    var newView = self
+    newView.bottomSafeAreaInset = value
+    return newView
   }
 }
