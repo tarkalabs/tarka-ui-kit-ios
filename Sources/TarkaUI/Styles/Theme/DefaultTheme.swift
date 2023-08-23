@@ -147,6 +147,10 @@ internal struct DefaultTheme: TUITheme {
   var surfaceVariant: Color {
     color(withName: "surfaceVariant")
   }
+  
+  var surfaceVariantHover: Color {
+    onSurface.opacity(0.1)
+  }
     
   var surfaceHover: Color {
     color(withName: "surfaceHover")
