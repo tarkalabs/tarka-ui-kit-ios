@@ -10,19 +10,26 @@ import SwiftUI
 struct ToolBarDoneButton: ViewModifier {
   
   @Binding var isDoneClicked: Bool
+  @State var isKeyboardShown: Bool = false
+  
   var onClicked: (() -> Void)? = nil
-
+  
   func body(content: Content) -> some View {
     
-    content.toolbar {
-      ToolbarItemGroup(placement: .keyboard) {
-        Spacer()
-        Button("Done".localized) {
-          isDoneClicked = true
-          onClicked?()
+    content.frame(maxHeight: .infinity)
+      .safeAreaInset(edge: .bottom) {
+        EmptyView().frame(height: Spacing.baseVertical)
+      }
+      .adaptiveKeyboard(isKeyboardShown: $isKeyboardShown)
+      .toolbar {
+        ToolbarItemGroup(placement: .keyboard) {
+          Spacer()
+          Button("Done".localized) {
+            isDoneClicked = true
+            onClicked?()
+          }
         }
       }
-    }
   }
 }
 
