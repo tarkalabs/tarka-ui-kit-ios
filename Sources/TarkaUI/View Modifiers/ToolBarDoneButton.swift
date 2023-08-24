@@ -42,6 +42,6 @@ public extension View {
   func addDoneButtonInToolbar(
     isDoneClicked: Binding<Bool>,
     onClicked: (() -> Void)? = nil) -> some View {
-      modifier(ToolBarDoneButton(isDoneClicked: isDoneClicked))
+      modifier(ToolBarDoneButton(isDoneClicked: isDoneClicked, onClicked: onClicked))
     }
 }

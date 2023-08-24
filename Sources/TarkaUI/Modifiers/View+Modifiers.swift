@@ -95,4 +95,19 @@ public extension View {
   func isDisabled(_ isDisabled: Bool) -> some View {
     modifier(DisabledView(isDisabled: isDisabled))
   }
+  
+  /// Calculates and returns height of the view
+  /// - Parameter height: calculated height
+  /// - Returns: self with background added with clear color layer
+  func getHeight(_ height: Binding<CGFloat>) -> some View {
+    background(
+      GeometryReader { proxy in
+        Color.clear
+          .preference(key: HeightKey.self, value: proxy.size.height)
+      }
+        .onPreferenceChange(HeightKey.self) { value in
+          height.wrappedValue = value
+        }
+    )
+  }
 }
