@@ -57,6 +57,8 @@ struct ContentView_Previews: PreviewProvider {
 
 struct DetailView: View {
   
+  @State var bottomHeight: CGFloat = 0
+  
   @State var isSyncDisabled = false
 
   @State var dateFieldItem = globalDateFieldItem
@@ -132,17 +134,21 @@ extension DetailView {
 
     ScrollView {
       VStack(spacing: 10) {
-        Color.red.frame(height: 400)
+        Color.red.frame(height: bottomHeight)
         inputFieldViews
       }
     }
     .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked, onClicked: {
       searchBarVM.isEditing = false
     })
-    .addBottomMobileButtonBlock(block) {
+    .addBottomMobileButtonBlock(
+      block, bottomHeight: $bottomHeight) {
       TUIChipView("Last seen \(Date().formatted())")
         .padding(.bottom, 8)
-   }
+    }
+    .onChange(of: bottomHeight) { newValue in
+      print("Bottom Height: \(bottomHeight)")
+    }
   }
   
   @ViewBuilder
