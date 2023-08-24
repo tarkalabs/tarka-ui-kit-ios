@@ -67,11 +67,16 @@ public struct TUICheckBoxRow: View {
   
   @ViewBuilder
   private var titleView: some View {
-    Text(title)
-      .font(.heading7)
-      .foregroundColor(.onSurface)
-      .frame(minHeight: Spacing.custom(18))
-      .accessibilityIdentifier(Accessibility.title)
+    switch style {
+    case .onlyDescription:
+      EmptyView()
+    default:
+      Text(title)
+        .font(.heading7)
+        .foregroundColor(.onSurface)
+        .frame(minHeight: Spacing.custom(18))
+        .accessibilityIdentifier(Accessibility.title)
+    }    
   }
   
   @ViewBuilder
@@ -81,6 +86,8 @@ public struct TUICheckBoxRow: View {
       EmptyView()
     case .textDescription(let desc):
       textDescriptionView(desc)
+    case .onlyDescription(let desc):
+      onlyDescriptionView(desc)
     }
   }
   
@@ -89,6 +96,15 @@ public struct TUICheckBoxRow: View {
     Text(description)
       .font(.body7)
       .foregroundColor(.inputTextDim)
+      .frame(minHeight: Spacing.custom(18))
+      .accessibilityIdentifier(Accessibility.description)
+  }
+  
+  @ViewBuilder
+  private func onlyDescriptionView(_ description: String) -> some View {
+    Text(description)
+      .font(.body7)
+      .foregroundColor(.onSurface)
       .frame(minHeight: Spacing.custom(18))
       .accessibilityIdentifier(Accessibility.description)
   }
@@ -103,6 +119,9 @@ public extension TUICheckBoxRow  {
   enum Style {
     /// Displays only the title.
     case onlyTitle
+    
+    /// Displays only the description.
+    case onlyDescription(String)
     
     /// Displays the title and description.
     case textDescription(String)
