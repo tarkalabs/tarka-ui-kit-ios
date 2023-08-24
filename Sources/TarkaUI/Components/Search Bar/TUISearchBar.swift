@@ -39,6 +39,9 @@ public struct TUISearchBar: View {
     .padding(Spacing.custom(4))
     .background(Color.inputBackground)
     .cornerRadius(75)
+    .onChange(of: searchBarVM.searchItem.text, perform: { value in
+      searchBarVM.onEditing(value)
+    })
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
   }
@@ -56,7 +59,7 @@ struct TUISearchBar_Previews: PreviewProvider {
   static var previews: some View {
     
     @StateObject var searchBarVM = TUISearchBarViewModel(
-      searchItem: .init(placeholder: "Search", text: ""))
+      searchItem: .init(placeholder: "Search", text: "")) { _ in }
 
     TUISearchBar(searchBarVM: searchBarVM)
       .backButton {

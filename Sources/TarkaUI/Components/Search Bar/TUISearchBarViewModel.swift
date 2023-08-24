@@ -26,8 +26,13 @@ public class TUISearchBarViewModel: ObservableObject {
   @Published public var searchItem: TUISearchBarItem
   @Published public var isActive: Bool = false
   @Published public var isEditing = false
+  var onEditing: (String) -> Void
 
-  public init(searchItem: TUISearchBarItem) {
+  public init(
+    searchItem: TUISearchBarItem,
+    onEditing: @escaping (String) -> Void) {
+      
     self._searchItem = Published(initialValue: searchItem)
+      self.onEditing = onEditing
   }
 }
