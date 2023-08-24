@@ -103,16 +103,22 @@ public extension TUIAttachmentView {
     }
   }
   
-  func imageSize(_ imageSize: ImageSize) -> some View {
+  func imageSize(_ imageSize: ImageSize) -> Self {
     var newView = self
     newView.imageSize = imageSize
     return newView
   }
   
-  func download(_ show: Bool, action: @escaping () -> Void) -> some View {
+  func download(_ show: Bool, action: @escaping () -> Void) -> Self {
     var newView = self
     newView.isDownloadEnabled = show
     newView.downloadAction = action
+    return newView
+  }
+  
+  func iconColor(_ iconColor: Color) -> Self {
+    var newView = self
+    newView.iconColor = iconColor
     return newView
   }
 }
