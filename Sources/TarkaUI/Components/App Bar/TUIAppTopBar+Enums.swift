@@ -9,6 +9,12 @@ import SwiftUI
 
 public typealias TUIButtonAction = () -> Void
 
+let keyWindow = UIApplication.shared.connectedScenes
+  .filter({$0.activationState == .foregroundActive})
+  .compactMap({$0 as? UIWindowScene})
+  .first?.windows
+  .filter({$0.isKeyWindow}).first
+
 public extension TUIAppTopBar {
   
   /// Defines the navigation bar style
@@ -29,7 +35,19 @@ public extension TUIAppTopBar {
           return 60
         }
       }
-      return 64
+      return 64 + topPadding
+    }
+
+    var topPadding: CGFloat {
+      
+      // It is to give extra padding for dynamic island supported devices
+      // as it has more top inset than others that causes padding issue
+      let expectedSafeArea: CGFloat = 50
+      guard let topInsets = keyWindow?.safeAreaInsets.top,
+            topInsets > expectedSafeArea else {
+        return 0
+      }
+      return topInsets - expectedSafeArea
     }
   }
   
