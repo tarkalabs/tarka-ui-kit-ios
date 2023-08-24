@@ -56,7 +56,6 @@ public struct TUIAttachmentView: View {
   private var imageView: some View {
     image
       .resizable()
-      .scaledToFit()
       .frame(width: imageSize.width, height: Spacing.custom(40))
       .clipShape(RoundedRectangle(cornerRadius: Spacing.halfHorizontal))
   }
