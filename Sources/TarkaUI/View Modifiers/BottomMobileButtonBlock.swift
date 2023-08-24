@@ -11,7 +11,7 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
   
   @State var isKeyboardShown: Bool = false
   var block: TUIMobileButtonBlock
-  var existingView: T? = nil
+  var additionalView: T? = nil
 
   func body(content: Content) -> some View {
     
@@ -27,7 +27,7 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
             EmptyView().frame(height: 0)
           } else {
             VStack(spacing: 0) {
-              existingView
+              additionalView
               block
             }
           }
@@ -45,9 +45,9 @@ public extension View {
   /// - Returns: View with button block added
   func addBottomMobileButtonBlock(
     _ block: TUIMobileButtonBlock,
-    @ViewBuilder existingView: () -> some View = { EmptyView() }) -> some View {
+    @ViewBuilder additionalView: () -> some View = { EmptyView() }) -> some View {
       
-      modifier(BottomMobileButtonBlock(block: block, existingView: existingView()))
+      modifier(BottomMobileButtonBlock(block: block, additionalView: additionalView()))
   }
 }
 
