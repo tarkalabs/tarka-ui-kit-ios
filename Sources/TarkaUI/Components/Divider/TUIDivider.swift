@@ -19,7 +19,8 @@ public struct TUIDivider: View {
   public var body: some View {
     
     Rectangle()
-      .frame(width: abs(width), height: abs(height))
+      .frame(width: width, height: height)
+      .frame(maxWidth: maxWidth)
       .foregroundColor(.clear)
       .background(color)
       .padding(.horizontal, orientation.hPadding)
@@ -29,12 +30,20 @@ public struct TUIDivider: View {
 
 extension TUIDivider {
 
-  var width: CGFloat {
+  var width: CGFloat? {
+    
+    if case .horizontal = self.orientation  {
+      return nil
+    }
+    return 1
+  }
+  
+  var maxWidth: CGFloat? {
     
     if case .horizontal = self.orientation  {
       return .infinity
     }
-    return 1
+    return nil
   }
   
   var height: CGFloat {
