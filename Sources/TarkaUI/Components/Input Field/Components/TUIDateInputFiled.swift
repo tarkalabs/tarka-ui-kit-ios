@@ -23,13 +23,18 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
   @State private var inputItem: TUIInputFieldItem
   @Binding private var dateInputItem: TUIDateInputFieldItem
   
+  var minDate: Date?
+  var maxDate: Date?
+  
   /// Initializes with date input item
   /// - Parameter dateInputItem: TUIDateInputFieldItem instance that holds the style and date value.
   /// If we don't pass date, it picks the current date.
   /// Internally, this will be converted to `TUIInputFieldItem` instance
   /// and will be passed to `TUIInputFiled` as environmentObject
   ///
-  public init(dateInputItem: Binding<TUIDateInputFieldItem>) {
+  public init(dateInputItem: Binding<TUIDateInputFieldItem>,
+              minDate: Date? = nil,
+              maxDate: Date? = nil) {
     
     let dateInputValue = dateInputItem.wrappedValue
     var inputItem = TUIInputFieldItem(
@@ -41,12 +46,17 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
     }
     self._dateInputItem = dateInputItem
     self._inputItem = State(initialValue: inputItem)
+    
+    self.minDate = minDate
+    self.maxDate = maxDate
+    
+    _date = State(initialValue: dateToSet)
   }
   
   public var body: some View {
     
     TUIInputField(inputItem: $inputItem, properties: properties) {
-      self.date = dateInputItem.date ?? Date()
+      self.date = dateInputItem.date ?? dateToSet
       self.isDateSelected = false
       self.isSheetPresented = true
     }
@@ -62,11 +72,28 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
     .fullScreenCover(
       isPresented: $isSheetPresented,
       content: {
-        TUIDatePopover(date: $date, isShowing: $isSheetPresented, isSelected: $isDateSelected)
-          .transparentBackground()
-          .presentationDetents([.fraction(0.9)])
+        TUIDatePopover(
+          date: $date,
+          isShowing: $isSheetPresented,
+          isSelected: $isDateSelected,
+          minDate: minDate,
+          maxDate: maxDate
+        )
+        .transparentBackground()
+        .presentationDetents([.fraction(0.9)])
       })
     .accessibilityIdentifier(Accessibility.root)
+  }
+  
+  private var dateToSet: Date {
+    let currentDate = Date()
+    if let minDate, currentDate < minDate {
+      return minDate
+    } else if let maxDate, currentDate > maxDate {
+      return maxDate
+    }
+    
+    return currentDate
   }
 }
 

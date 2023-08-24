@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct TUIDateInputFieldItem {
+public struct TUIDateInputFieldItem: Hashable {
     
   public var style: TUIInputFieldStyle
   public var title: String = ""
