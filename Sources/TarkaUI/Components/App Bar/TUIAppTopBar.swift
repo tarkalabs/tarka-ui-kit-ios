@@ -26,7 +26,7 @@ public struct TUIAppTopBar: View {
       self.searchBarVM = searchBarItem
     } else {
       self.searchBarVM = TUISearchBarViewModel(
-        searchItem: .init(placeholder: "Search", text: ""))
+        searchItem: .init(placeholder: "Search", text: "")) { _ in }
     }
   }
   
@@ -42,6 +42,7 @@ public struct TUIAppTopBar: View {
           maxWidth: .infinity,
           minHeight: barStyle.minHeight - divider.height,
           alignment: .leading)
+        .padding(.top, barStyle.topPadding)
 
       divider
     }
@@ -180,7 +181,7 @@ struct TUIAppTopBar_Previews: PreviewProvider {
   static var previews: some View {
     
     @StateObject var searchBarVM = TUISearchBarViewModel(
-      searchItem: .init(placeholder: "Search", text: ""))
+      searchItem: .init(placeholder: "Search", text: "")) { _ in }
     
     let rightButton = TUIIconButton(icon: .circle24Regular) { }
     let leftButtons: [TUIAppTopBar.LeftButton] = [.none, .back({ })]
