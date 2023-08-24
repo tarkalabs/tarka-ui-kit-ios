@@ -12,15 +12,18 @@ public struct TUIAttachmentView: View {
   private var imageSize: ImageSize = .size40
   private var style: Style = .onlyTitle
   private var title: String
+  private var image: Image
   private var deleteAction: () -> Void
   private var isDownloadEnabled: Bool = false
   private var downloadAction: (() -> Void)?
   private var iconColor: Color = .secondaryTUI
   
   public init(_ title: String,
+              image: Image,
               style: TUIAttachmentView.Style,
               deleteAction: @escaping () -> Void) {
     self.title = title
+    self.image = image
     self.style = style
     self.deleteAction = deleteAction
   }
@@ -28,7 +31,7 @@ public struct TUIAttachmentView: View {
   public var body: some View {
     HStack(spacing: 0) {
       HStack(spacing: Spacing.halfHorizontal) {
-        imageView(.init(fluent: .documentPdf24Filled))
+        imageView
         mainView
       }
       if isDownloadEnabled {
@@ -50,7 +53,7 @@ public struct TUIAttachmentView: View {
     }
   }
   
-  private func imageView(_ image: Image) -> some View {
+  private var imageView: some View {
     image
       .resizable()
       .scaledToFit()
@@ -117,7 +120,8 @@ public extension TUIAttachmentView {
 
 struct TUIAttachmentView_Previews: PreviewProvider {
   static var previews: some View {
-    TUIAttachmentView("Hello", style: .withDescription("Example")) {}
+    TUIAttachmentView("Hello", image: .init(fluent: .document24Regular),
+                      style: .withDescription("Example")) {}
       .download(true, action: {})
       .padding(.horizontal, 20)
   }
