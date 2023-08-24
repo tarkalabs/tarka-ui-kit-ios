@@ -20,7 +20,7 @@ public struct TUIAttachmentView: View {
   
   public init(_ title: String,
               image: Image,
-              style: TUIAttachmentView.Style,
+              style: TUIAttachmentView.Style = .onlyTitle,
               deleteAction: @escaping () -> Void) {
     self.title = title
     self.image = image
