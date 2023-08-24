@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct TUIDivider: View {
   
-  var color = Color.surfaceHover
+  var color = Color.surface
   private var orientation: Orientation
 
   public init(orientation: Orientation) {
