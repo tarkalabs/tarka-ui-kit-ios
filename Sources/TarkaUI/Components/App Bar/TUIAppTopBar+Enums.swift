@@ -42,11 +42,12 @@ public extension TUIAppTopBar {
       
       // It is to give extra padding for dynamic island supported devices
       // as it has more top inset than others that causes padding issue
+      let expectedSafeArea: CGFloat = 50
       guard let topInsets = keyWindow?.safeAreaInsets.top,
-            topInsets > 50 else {
+            topInsets > expectedSafeArea else {
         return 0
       }
-      return topInsets - 50
+      return topInsets - expectedSafeArea
     }
   }
   
