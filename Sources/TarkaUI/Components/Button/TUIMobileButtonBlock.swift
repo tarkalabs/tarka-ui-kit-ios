@@ -20,9 +20,7 @@ public struct TUIMobileButtonBlock: View {
   }
   
   private var style: Style
-  private var hasSafeArea: Bool {
-    keyWindow?.safeAreaInsets.bottom ?? 0 > 0
-  }
+  private var hasSafeArea: Bool = false
   
   public init(style: Style) {
     self.style = style
@@ -147,5 +145,19 @@ struct TUIMobileButtonBlock_Previews: PreviewProvider {
       }
     }
     .background(Color.background)
+  }
+}
+
+public extension TUIMobileButtonBlock {
+  
+  /// Manually handles bottom padding based on  safe area inset and
+  /// adding extra blur layer for that extra added space
+  /// - Parameter value: bottom value that to be added
+  /// - Returns: Modified View
+  ///
+  func hasSafeArea(_ hasSafeArea: Bool) -> Self {
+    var newView = self
+    newView.hasSafeArea = hasSafeArea
+    return newView
   }
 }
