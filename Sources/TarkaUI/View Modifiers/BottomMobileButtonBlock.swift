@@ -21,7 +21,7 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
       
       let safeAreaBottomInset = geometry.safeAreaInsets.bottom
       // Set manual value of `20` for bottom safe area inset, as default inset seems more spacious
-      let block = block.addSafeAreaBottomInset(safeAreaBottomInset > 0 ? Spacing.custom(20) : 0)
+      let block = block.hasSafeArea(safeAreaBottomInset > 0)
       
       content.frame(maxHeight: .infinity)
         .safeAreaInset(edge: .bottom, spacing: Spacing.doubleVertical) {
@@ -35,7 +35,6 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
             .getHeight($bottomHeight)
           }
         }
-        .edgesIgnoringSafeArea(.bottom)
         .adaptiveKeyboard(isKeyboardShown: $isKeyboardShown)
     }
   }

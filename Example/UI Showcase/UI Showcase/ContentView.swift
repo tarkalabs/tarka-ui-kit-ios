@@ -136,6 +136,7 @@ extension DetailView {
       VStack(spacing: 10) {
         Color.red.frame(height: bottomHeight)
         inputFieldViews
+        inputFieldViews
       }
     }
     .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked, onClicked: {
