@@ -23,7 +23,7 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
       let block = block.hasSafeArea(safeAreaBottomInset > minimumExpectedSafeAreaInset)
       
       content.frame(maxHeight: .infinity)
-        .safeAreaInset(edge: .bottom, spacing: Spacing.doubleVertical) {
+        .safeAreaInset(edge: .bottom, spacing: 0) {
           if isKeyboardShown {
             EmptyView().frame(height: 0)
           } else {
