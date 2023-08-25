@@ -9,16 +9,13 @@ import SwiftUI
 /// A View in which content reflects all behind it
 private struct BackgroundVisualEffectiveView: UIViewRepresentable {
 
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        let view = UIVisualEffectView()
-      let blur = UIBlurEffect(style: .prominent)
-        let animator = UIViewPropertyAnimator()
-        animator.addAnimations { view.effect = blur }
-        animator.fractionComplete = 0
-        animator.stopAnimation(false)
-        animator.finishAnimation(at: .current)
-        return view
-    }
+  func makeUIView(context: Context) -> UIVisualEffectView {
+    let view = UIVisualEffectView()
+    view.alpha = 0.75
+    let blur = UIBlurEffect(style: .regular)
+    view.effect = blur
+    return view
+  }
     
     func updateUIView(_ uiView: UIVisualEffectView, context: Context) { }
 }
@@ -30,6 +27,6 @@ struct BackgroundBlur: View {
     
     @ViewBuilder
     var body: some View {
-        BackgroundVisualEffectiveView().blur(radius: radius)
+      BackgroundVisualEffectiveView()
     }
 }
