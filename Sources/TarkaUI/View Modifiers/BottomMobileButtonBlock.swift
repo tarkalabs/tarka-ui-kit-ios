@@ -10,33 +10,24 @@ import SwiftUI
 struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
   
   @State var isKeyboardShown: Bool = false
-  @Binding var bottomHeight: CGFloat
   
   var block: TUIMobileButtonBlock
   var additionalView: T? = nil
   
   func body(content: Content) -> some View {
     
-    GeometryReader { geometry in
-      
-      let safeAreaBottomInset = geometry.safeAreaInsets.bottom
-      // Set manual value of `20` for bottom safe area inset, as default inset seems more spacious
-      let block = block.hasSafeArea(safeAreaBottomInset > 0)
-      
-      content.frame(maxHeight: .infinity)
-        .safeAreaInset(edge: .bottom, spacing: Spacing.doubleVertical) {
-          if isKeyboardShown {
-            EmptyView().frame(height: 0)
-          } else {
-            VStack(spacing: 0) {
-              additionalView
-              block
-            }
-            .getHeight($bottomHeight)
+    content.frame(maxHeight: .infinity)
+      .safeAreaInset(edge: .bottom, spacing: Spacing.doubleVertical) {
+        if isKeyboardShown {
+          EmptyView().frame(height: 0)
+        } else {
+          VStack(spacing: 0) {
+            additionalView
+            block
           }
         }
-        .adaptiveKeyboard(isKeyboardShown: $isKeyboardShown)
-    }
+      }
+      .adaptiveKeyboard(isKeyboardShown: $isKeyboardShown)
   }
 }
 
@@ -53,7 +44,6 @@ public extension View {
     @ViewBuilder _ additionalView: () -> some View = { EmptyView() }) -> some View {
       
       let block = BottomMobileButtonBlock(
-        bottomHeight: bottomHeight,
         block: block,
         additionalView: additionalView())
       
