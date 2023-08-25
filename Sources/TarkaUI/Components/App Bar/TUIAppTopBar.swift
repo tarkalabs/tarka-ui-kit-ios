@@ -161,6 +161,9 @@ public struct TUIAppTopBar: View {
         }
         .padding(.horizontal, Spacing.baseHorizontal)
         .padding(.vertical, Spacing.baseVertical)
+        .onAppear {
+          searchBarVM.isEditing = true
+        }
     }
 }
 

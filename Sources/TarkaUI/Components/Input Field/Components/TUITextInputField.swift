@@ -44,7 +44,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   
   public var body: some View {
     mainBody
-      .onChange(of: $isDoneClicked.wrappedValue, perform: { value in
+      .onChange(of: isDoneClicked, perform: { value in
         if value {
           isFocused = false
         }
