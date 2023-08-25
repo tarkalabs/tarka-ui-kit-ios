@@ -16,18 +16,25 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
   
   func body(content: Content) -> some View {
     
-    content.frame(maxHeight: .infinity)
-      .safeAreaInset(edge: .bottom, spacing: Spacing.doubleVertical) {
-        if isKeyboardShown {
-          EmptyView().frame(height: 0)
-        } else {
-          VStack(spacing: 0) {
-            additionalView
-            block
+    GeometryReader { geometry in
+      
+      let safeAreaBottomInset = geometry.safeAreaInsets.bottom
+      let minimumExpectedSafeAreaInset = 24.0
+      let block = block.hasSafeArea(safeAreaBottomInset > minimumExpectedSafeAreaInset)
+      
+      content.frame(maxHeight: .infinity)
+        .safeAreaInset(edge: .bottom, spacing: Spacing.doubleVertical) {
+          if isKeyboardShown {
+            EmptyView().frame(height: 0)
+          } else {
+            VStack(spacing: 0) {
+              additionalView
+              block
+            }
           }
         }
-      }
-      .adaptiveKeyboard(isKeyboardShown: $isKeyboardShown)
+        .adaptiveKeyboard(isKeyboardShown: $isKeyboardShown)
+    }
   }
 }
 
@@ -40,7 +47,6 @@ public extension View {
   /// - Returns: View with button block added
   func addBottomMobileButtonBlock(
     _ block: TUIMobileButtonBlock,
-    bottomHeight: Binding<CGFloat> = .constant(0),
     @ViewBuilder _ additionalView: () -> some View = { EmptyView() }) -> some View {
       
       let block = BottomMobileButtonBlock(
