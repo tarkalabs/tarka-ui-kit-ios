@@ -30,12 +30,21 @@ public struct TUISearchBar: View {
       }
       
       SearchBar(searchBarVM: searchBarVM)
-      
+        .isEnabled(backButton == nil) { view in
+          view
+            .padding(.leading, 24)
+        }
+        .isEnabled(trailingButton == nil) { view in
+          view
+            .padding(.trailing, 24)
+        }
+
       if let trailingButton {
         trailingButton
           .accessibilityIdentifier(Accessibility.trailingButton)
       }
     }
+    .frame(minHeight: 48)
     .padding(Spacing.custom(4))
     .background(Color.inputBackground)
     .cornerRadius(75)
