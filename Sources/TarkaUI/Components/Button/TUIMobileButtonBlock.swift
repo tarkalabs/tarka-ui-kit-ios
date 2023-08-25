@@ -20,7 +20,7 @@ public struct TUIMobileButtonBlock: View {
   }
   
   private var style: Style
-  private var bottomSafeAreaInset: CGFloat = 0
+  private var hasSafeArea: Bool = false
   
   public init(style: Style) {
     self.style = style
@@ -31,26 +31,27 @@ public struct TUIMobileButtonBlock: View {
   
   public var body: some View {
     
-    ZStack(alignment: .bottom) {
+    ZStack {
       
       BackgroundBlur(radius: blurRadius)
         .frame(maxWidth: .infinity)
+        .edgesIgnoringSafeArea(.bottom)
       
       VStack(spacing: Spacing.custom(15)) {
         
         TUIDivider(
           orientation: .horizontal(
             hPadding: .zero, vPadding: .zero))
+        .color(.surfaceVariant)
         
         buttonBlock
       }
       .background(Color.surface50)
+      .frame(minHeight: minHeight)
     }
-    .frame(minHeight: minHeight)
     .fixedSize(horizontal: false, vertical: true)
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
-    
   }
   
   @ViewBuilder
@@ -92,26 +93,21 @@ public struct TUIMobileButtonBlock: View {
     }
     .padding(.horizontal, Spacing.custom(24))
     .padding(.bottom, buttonBottomPadding)
-    .isEnabled(bottomSafeAreaInset > 0, content: { view in
-      // It reduces the unexpected extra blur effect that overlays on the button
-      VStack(spacing: Spacing.custom(10)) {
-        view
-        BackgroundBlur(radius: blurRadius)
-          .frame(maxWidth: .infinity)
-      }
-    })
     .frame(maxWidth: .infinity)
   }
   
   private var minHeight: CGFloat {
-    return 80 + bottomSafeAreaInset
+    if hasSafeArea {
+      return 80 - Spacing.doubleVertical
+    }
+    return 80
   }
   
   private var buttonBottomPadding: CGFloat {
-    guard bottomSafeAreaInset > 0 else {
-      return Spacing.doubleVertical
+    if hasSafeArea {
+      return 0
     }
-    return 0
+    return Spacing.doubleVertical
   }
 }
 
@@ -154,14 +150,14 @@ struct TUIMobileButtonBlock_Previews: PreviewProvider {
 
 public extension TUIMobileButtonBlock {
   
-  /// Manually handles bototm safe area inset by adding more bottom space and
+  /// Manually handles bottom padding based on  safe area inset and
   /// adding extra blur layer for that extra added space
   /// - Parameter value: bottom value that to be added
   /// - Returns: Modified View
   ///
-  func addSafeAreaBottomInset(_ value: CGFloat) -> Self {
+  func hasSafeArea(_ hasSafeArea: Bool) -> Self {
     var newView = self
-    newView.bottomSafeAreaInset = value
+    newView.hasSafeArea = hasSafeArea
     return newView
   }
 }
