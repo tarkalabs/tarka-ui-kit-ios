@@ -20,7 +20,9 @@ public struct TUIMobileButtonBlock: View {
   }
   
   private var style: Style
-  private var hasSafeArea: Bool = false
+  private var hasSafeArea: Bool {
+    keyWindow?.safeAreaInsets.bottom ?? 0 > 0
+  }
   
   public init(style: Style) {
     self.style = style
@@ -31,35 +33,27 @@ public struct TUIMobileButtonBlock: View {
   
   public var body: some View {
     
+    ZStack {
+      
+      BackgroundBlur(radius: blurRadius)
+        .frame(maxWidth: .infinity)
+        .edgesIgnoringSafeArea(.bottom)
+      
       VStack(spacing: Spacing.custom(15)) {
         
         TUIDivider(
           orientation: .horizontal(
             hPadding: .zero, vPadding: .zero))
+        .color(.surfaceVariant)
         
         buttonBlock
       }
-      .isEnabled(hasSafeArea, content: { view in
-        // It assigns the blur for safe area portion
-        view.safeAreaInset(edge: .bottom) {
-          BackgroundBlur(radius: blurRadius)
-            .frame(maxWidth: .infinity)
-            .edgesIgnoringSafeArea(.bottom)
-        }
-      })
       .background(Color.surface50)
-      .background() {
-        // It assigns the blur for button block
-        BackgroundBlur(radius: blurRadius)
-          .frame(maxWidth: .infinity)
-        // this solves the blur issue at the bottom of the safe area
-          .edgesIgnoringSafeArea(.bottom)
-      }
-    .frame(minHeight: minHeight)
+    }
+
     .fixedSize(horizontal: false, vertical: true)
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
-    
   }
   
   @ViewBuilder
@@ -106,7 +100,7 @@ public struct TUIMobileButtonBlock: View {
   
   private var minHeight: CGFloat {
     guard hasSafeArea else {
-      return 80 - buttonBottomPadding
+      return 80 - Spacing.doubleVertical
     }
     return 80
   }
@@ -153,19 +147,5 @@ struct TUIMobileButtonBlock_Previews: PreviewProvider {
       }
     }
     .background(Color.background)
-  }
-}
-
-public extension TUIMobileButtonBlock {
-  
-  /// Manually handles bototm safe area inset by adding more bottom space and
-  /// adding extra blur layer for that extra added space
-  /// - Parameter value: bottom value that to be added
-  /// - Returns: Modified View
-  ///
-  func hasSafeArea(_ hasSafeArea: Bool) -> Self {
-    var newView = self
-    newView.hasSafeArea = hasSafeArea
-    return newView
   }
 }
