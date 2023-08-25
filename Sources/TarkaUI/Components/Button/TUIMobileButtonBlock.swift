@@ -47,8 +47,8 @@ public struct TUIMobileButtonBlock: View {
         buttonBlock
       }
       .background(Color.surface50)
+      .frame(minHeight: minHeight)
     }
-
     .fixedSize(horizontal: false, vertical: true)
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
@@ -97,17 +97,17 @@ public struct TUIMobileButtonBlock: View {
   }
   
   private var minHeight: CGFloat {
-    guard hasSafeArea else {
+    if hasSafeArea {
       return 80 - Spacing.doubleVertical
     }
     return 80
   }
   
   private var buttonBottomPadding: CGFloat {
-    guard hasSafeArea else {
-      return Spacing.doubleVertical
+    if hasSafeArea {
+      return 0
     }
-    return 0
+    return Spacing.doubleVertical
   }
 }
 
