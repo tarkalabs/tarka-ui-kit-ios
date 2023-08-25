@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct TUIDivider: View {
   
-  var color = Color.surfaceHover
+  var color = Color.surface
   private var orientation: Orientation
 
   public init(orientation: Orientation) {
@@ -19,7 +19,8 @@ public struct TUIDivider: View {
   public var body: some View {
     
     Rectangle()
-      .setHeight(for: orientation)
+      .frame(width: width, height: height)
+      .frame(maxWidth: maxWidth)
       .foregroundColor(.clear)
       .background(color)
       .padding(.horizontal, orientation.hPadding)
@@ -27,20 +28,30 @@ public struct TUIDivider: View {
   }
 }
 
-private extension View {
-  
-  @ViewBuilder
-  func setHeight(for orientation: TUIDivider.Orientation) -> some View {
+extension TUIDivider {
+
+  var width: CGFloat? {
     
-    if case .horizontal = orientation  {
-      self
-        .frame(maxWidth: .infinity)
-        .frame(height: 1)
-    } else {
-      self
-        .frame(height: 40)
-        .frame(width: 1)
+    if case .horizontal = self.orientation  {
+      return nil
     }
+    return 1
+  }
+  
+  var maxWidth: CGFloat? {
+    
+    if case .horizontal = self.orientation  {
+      return .infinity
+    }
+    return nil
+  }
+  
+  var height: CGFloat {
+    
+    if case .horizontal = self.orientation  {
+      return 1
+    }
+    return 40
   }
 }
 

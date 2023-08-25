@@ -49,6 +49,7 @@ public struct TUIIconButton: View, Identifiable {
 
   var style: Style = .ghost
   var size: Size = .size40
+  var isDisabled: Bool = false
   
   /// Creates a button that displays an icon.
   ///
@@ -75,6 +76,7 @@ public struct TUIIconButton: View, Identifiable {
     .contentShape(Circle()) // So that only the circular portion is tappable
     .clipShape(Circle())
     .overlay(content: borderView)
+    .isDisabled(isDisabled)
     .accessibilityIdentifier(Accessibility.root)
   }
   

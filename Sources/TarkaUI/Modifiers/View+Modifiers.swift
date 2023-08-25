@@ -42,50 +42,6 @@ public extension View {
     }
   }
   
-  
-  /// This method is used to create overlay View, in top trailing corner in any swiftUI views
-  ///
-  /// Example usage:
-  ///
-  ///      Text("Description")
-  ///         .overlayView { Image(systemName: "star.fill") }
-  ///
-  @ViewBuilder
-  func overlayView<Content: View>(_ content: () -> Content)  -> some View {
-    self.overlay(alignment: .topTrailing) {
-      content()
-        .alignmentGuide(.top) { $0[.top] + 8 }
-        .alignmentGuide(.trailing) { $0[.trailing] - 8 }
-    }
-  }
-  
-  @ViewBuilder
-  func overlayViewInTopTrailing(_ show: Bool = true, count: Int?, badgeSize: BadgeSize)  -> some View {
-    if show {
-      self.overlayView {
-        TUIBadge(count: count)
-          .badgeSize(badgeSize)
-          .accessibilityIdentifier("TUIBadge")
-      }
-    } else {
-      self
-    }
-  }
-  
-  /// This method is used to create border View in any swiftUI views
-  ///
-  /// Example usage:
-  ///
-  ///      Text("Description")
-  ///         .borderView(RoundedRectangle(cornerRadius: Spacing.halfHorizontal), width: 1, color: .gray)
-  ///
-  @ViewBuilder
-  func borderView(_ shape: some Shape, width: CGFloat = 0, color: Color = .clear) -> some View {
-    self
-      .clipShape(shape)
-      .overlay(shape.stroke(color, lineWidth: width))
-  }
-  
   /// This method is used to create content Unavailable View in any swiftUI views
   ///
   /// Example usage:
@@ -133,4 +89,25 @@ public extension View {
           .accessibilityIdentifier(accessibilityID)
       }
     }
+  /// Makes View disabled. Applies `DisabledView` modifier on the current view
+  /// - Parameter isDisabled: true / false
+  /// - Returns: Modified View
+  func isDisabled(_ isDisabled: Bool) -> some View {
+    modifier(DisabledView(isDisabled: isDisabled))
+  }
+  
+  /// Calculates and returns height of the view
+  /// - Parameter height: calculated height
+  /// - Returns: self with background added with clear color layer
+  func getHeight(_ height: Binding<CGFloat>) -> some View {
+    background(
+      GeometryReader { proxy in
+        Color.clear
+          .preference(key: HeightKey.self, value: proxy.size.height)
+      }
+        .onPreferenceChange(HeightKey.self) { value in
+          height.wrappedValue = value
+        }
+    )
+  }
 }
