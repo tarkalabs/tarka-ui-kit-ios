@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
 // swift-compiler-version: Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)
-// swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name FluentIcons
+// swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name FluentIcons
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 @_exported import FluentIcons
 import Foundation
@@ -77,6 +77,8 @@ import _StringProcessing
   case addSquareMultiple16Regular
   case addSquareMultiple20Filled
   case addSquareMultiple20Regular
+  case addSquareMultiple24Filled
+  case addSquareMultiple24Regular
   case addSubtractCircle16Filled
   case addSubtractCircle16Regular
   case addSubtractCircle20Filled
@@ -455,6 +457,14 @@ import _StringProcessing
   case arrowBetweenDown24Regular
   case arrowBetweenUp20Filled
   case arrowBetweenUp20Regular
+  case arrowBidirectionalLeftRight16Filled
+  case arrowBidirectionalLeftRight16Regular
+  case arrowBidirectionalLeftRight20Filled
+  case arrowBidirectionalLeftRight20Regular
+  case arrowBidirectionalLeftRight24Filled
+  case arrowBidirectionalLeftRight24Regular
+  case arrowBidirectionalLeftRight28Filled
+  case arrowBidirectionalLeftRight28Regular
   case arrowBidirectionalUpDown12Filled
   case arrowBidirectionalUpDown12Regular
   case arrowBidirectionalUpDown16Filled
@@ -807,6 +817,18 @@ import _StringProcessing
   case arrowNext20Regular
   case arrowNext24Filled
   case arrowNext24Regular
+  case arrowOutlineDownLeft16Filled
+  case arrowOutlineDownLeft16Regular
+  case arrowOutlineDownLeft20Filled
+  case arrowOutlineDownLeft20Regular
+  case arrowOutlineDownLeft24Filled
+  case arrowOutlineDownLeft24Regular
+  case arrowOutlineDownLeft28Filled
+  case arrowOutlineDownLeft28Regular
+  case arrowOutlineDownLeft32Filled
+  case arrowOutlineDownLeft32Regular
+  case arrowOutlineDownLeft48Filled
+  case arrowOutlineDownLeft48Regular
   case arrowOutlineUpRight20Filled
   case arrowOutlineUpRight20Regular
   case arrowOutlineUpRight24Filled
@@ -1007,6 +1029,14 @@ import _StringProcessing
   case arrowStepIn24Regular
   case arrowStepIn28Filled
   case arrowStepIn28Regular
+  case arrowStepInDiagonalDownLeft16Filled
+  case arrowStepInDiagonalDownLeft16Regular
+  case arrowStepInDiagonalDownLeft20Filled
+  case arrowStepInDiagonalDownLeft20Regular
+  case arrowStepInDiagonalDownLeft24Filled
+  case arrowStepInDiagonalDownLeft24Regular
+  case arrowStepInDiagonalDownLeft28Filled
+  case arrowStepInDiagonalDownLeft28Regular
   case arrowStepInLeft12Filled
   case arrowStepInLeft12Regular
   case arrowStepInLeft16Filled
@@ -1041,10 +1071,14 @@ import _StringProcessing
   case arrowStepOver16Regular
   case arrowStepOver20Filled
   case arrowStepOver20Regular
+  case arrowSwap16Filled
+  case arrowSwap16Regular
   case arrowSwap20Filled
   case arrowSwap20Regular
   case arrowSwap24Filled
   case arrowSwap24Regular
+  case arrowSwap28Filled
+  case arrowSwap28Regular
   case arrowSync12Filled
   case arrowSync12Regular
   case arrowSync16Filled
@@ -1209,6 +1243,8 @@ import _StringProcessing
   case arrowUpRight32Regular
   case arrowUpRight48Filled
   case arrowUpRight48Regular
+  case arrowUpSquareSettings24Filled
+  case arrowUpSquareSettings24Regular
   case arrowUpload16Filled
   case arrowUpload16Regular
   case arrowUpload20Filled
@@ -1796,6 +1832,8 @@ import _StringProcessing
   case bracesVariable20Regular
   case bracesVariable24Filled
   case bracesVariable24Regular
+  case bracesVariable48Filled
+  case bracesVariable48Regular
   case brainCircuit20Filled
   case brainCircuit20Regular
   case brainCircuit24Filled
@@ -1870,6 +1908,8 @@ import _StringProcessing
   case briefcaseOff32Regular
   case briefcaseOff48Filled
   case briefcaseOff48Regular
+  case briefcasePerson24Filled
+  case briefcasePerson24Regular
   case briefcaseSearch20Filled
   case briefcaseSearch20Regular
   case briefcaseSearch24Filled
@@ -1958,6 +1998,8 @@ import _StringProcessing
   case buildingBankToolbox20Regular
   case buildingBankToolbox24Filled
   case buildingBankToolbox24Regular
+  case buildingCloud24Filled
+  case buildingCloud24Regular
   case buildingDesktop16Filled
   case buildingDesktop16Regular
   case buildingDesktop20Filled
@@ -1990,6 +2032,20 @@ import _StringProcessing
   case buildingHome24Regular
   case buildingLighthouse20Filled
   case buildingLighthouse20Regular
+  case buildingMosque12Filled
+  case buildingMosque12Regular
+  case buildingMosque16Filled
+  case buildingMosque16Regular
+  case buildingMosque20Filled
+  case buildingMosque20Regular
+  case buildingMosque24Filled
+  case buildingMosque24Regular
+  case buildingMosque28Filled
+  case buildingMosque28Regular
+  case buildingMosque32Filled
+  case buildingMosque32Regular
+  case buildingMosque48Filled
+  case buildingMosque48Regular
   case buildingMultiple20Filled
   case buildingMultiple20Regular
   case buildingMultiple24Filled
@@ -2156,6 +2212,12 @@ import _StringProcessing
   case calendarDataBar24Regular
   case calendarDataBar28Filled
   case calendarDataBar28Regular
+  case calendarDate20Filled
+  case calendarDate20Regular
+  case calendarDate24Filled
+  case calendarDate24Regular
+  case calendarDate28Filled
+  case calendarDate28Regular
   case calendarDay16Filled
   case calendarDay16Regular
   case calendarDay20Filled
@@ -2188,6 +2250,8 @@ import _StringProcessing
   case calendarError20Regular
   case calendarError24Filled
   case calendarError24Regular
+  case calendarEye20Filled
+  case calendarEye20Regular
   case calendarInfo16Filled
   case calendarInfo16Regular
   case calendarInfo20Filled
@@ -2566,6 +2630,12 @@ import _StringProcessing
   case cast24Regular
   case cast28Filled
   case cast28Regular
+  case castMultiple20Filled
+  case castMultiple20Regular
+  case castMultiple24Filled
+  case castMultiple24Regular
+  case castMultiple28Filled
+  case castMultiple28Regular
   case catchUp16Filled
   case catchUp16Regular
   case catchUp20Filled
@@ -2914,6 +2984,12 @@ import _StringProcessing
   case checkmarkCircle32Regular
   case checkmarkCircle48Filled
   case checkmarkCircle48Regular
+  case checkmarkCircleSquare16Filled
+  case checkmarkCircleSquare16Regular
+  case checkmarkCircleSquare20Filled
+  case checkmarkCircleSquare20Regular
+  case checkmarkCircleSquare24Filled
+  case checkmarkCircleSquare24Regular
   case checkmarkLock16Filled
   case checkmarkLock16Regular
   case checkmarkLock20Filled
@@ -3102,6 +3178,12 @@ import _StringProcessing
   case circleHint16Regular
   case circleHint20Filled
   case circleHint20Regular
+  case circleHintHalfVertical16Filled
+  case circleHintHalfVertical16Regular
+  case circleHintHalfVertical20Filled
+  case circleHintHalfVertical20Regular
+  case circleHintHalfVertical24Filled
+  case circleHintHalfVertical24Regular
   case circleImage16Filled
   case circleImage16Regular
   case circleImage20Filled
@@ -3252,6 +3334,8 @@ import _StringProcessing
   case clipboardPaste20Regular
   case clipboardPaste24Filled
   case clipboardPaste24Regular
+  case clipboardPaste32Filled
+  case clipboardPaste32Regular
   case clipboardPulse20Filled
   case clipboardPulse20Regular
   case clipboardPulse24Filled
@@ -3412,6 +3496,10 @@ import _StringProcessing
   case cloudArrowUp32Regular
   case cloudArrowUp48Filled
   case cloudArrowUp48Regular
+  case cloudBidirectional20Filled
+  case cloudBidirectional20Regular
+  case cloudBidirectional24Filled
+  case cloudBidirectional24Regular
   case cloudCheckmark16Filled
   case cloudCheckmark16Regular
   case cloudCheckmark20Filled
@@ -3713,6 +3801,8 @@ import _StringProcessing
   case commentDismiss20Regular
   case commentDismiss24Filled
   case commentDismiss24Regular
+  case commentEdit16Filled
+  case commentEdit16Regular
   case commentEdit20Filled
   case commentEdit20Regular
   case commentEdit24Filled
@@ -3995,6 +4085,10 @@ import _StringProcessing
   case crown16Regular
   case crown20Filled
   case crown20Regular
+  case crown24Filled
+  case crown24Regular
+  case crownSubtract24Filled
+  case crownSubtract24Regular
   case cube12Filled
   case cube12Regular
   case cube16Filled
@@ -4005,6 +4099,8 @@ import _StringProcessing
   case cube24Regular
   case cube32Filled
   case cube32Regular
+  case cube48Filled
+  case cube48Regular
   case cubeAdd20Filled
   case cubeAdd20Regular
   case cubeArrowCurveDown20Filled
@@ -4289,10 +4385,18 @@ import _StringProcessing
   case designIdeas20Regular
   case designIdeas24Filled
   case designIdeas24Regular
+  case desk16Filled
+  case desk16Regular
   case desk20Filled
   case desk20Regular
   case desk24Filled
   case desk24Regular
+  case desk28Filled
+  case desk28Regular
+  case desk32Filled
+  case desk32Regular
+  case desk48Filled
+  case desk48Regular
   case desktop16Filled
   case desktop16Regular
   case desktop20Filled
@@ -5795,7 +5899,26 @@ import _StringProcessing
   case flagPride20Filled
   case flagPride24Filled
   case flagPride28Filled
+  case flagPride32Filled
   case flagPride48Filled
+  case flagPrideIntersexInclusiveProgress16Filled
+  case flagPrideIntersexInclusiveProgress20Filled
+  case flagPrideIntersexInclusiveProgress24Filled
+  case flagPrideIntersexInclusiveProgress28Filled
+  case flagPrideIntersexInclusiveProgress32Filled
+  case flagPrideIntersexInclusiveProgress48Filled
+  case flagPridePhiladelphia16Filled
+  case flagPridePhiladelphia20Filled
+  case flagPridePhiladelphia24Filled
+  case flagPridePhiladelphia28Filled
+  case flagPridePhiladelphia32Filled
+  case flagPridePhiladelphia48Filled
+  case flagPrideProgress16Filled
+  case flagPrideProgress20Filled
+  case flagPrideProgress24Filled
+  case flagPrideProgress28Filled
+  case flagPrideProgress32Filled
+  case flagPrideProgress48Filled
   case flash16Filled
   case flash16Regular
   case flash20Filled
@@ -5836,6 +5959,10 @@ import _StringProcessing
   case flashSettings20Regular
   case flashSettings24Filled
   case flashSettings24Regular
+  case flashSparkle20Filled
+  case flashSparkle20Regular
+  case flashSparkle24Filled
+  case flashSparkle24Regular
   case flashlight16Filled
   case flashlight16Regular
   case flashlight20Filled
@@ -5920,6 +6047,8 @@ import _StringProcessing
   case folderAdd24Regular
   case folderAdd28Filled
   case folderAdd28Regular
+  case folderAdd32Filled
+  case folderAdd32Regular
   case folderAdd48Filled
   case folderAdd48Regular
   case folderArrowLeft16Filled
@@ -5932,6 +6061,8 @@ import _StringProcessing
   case folderArrowLeft28Regular
   case folderArrowLeft32Filled
   case folderArrowLeft32Regular
+  case folderArrowLeft48Filled
+  case folderArrowLeft48Regular
   case folderArrowRight16Filled
   case folderArrowRight16Regular
   case folderArrowRight20Filled
@@ -5940,6 +6071,8 @@ import _StringProcessing
   case folderArrowRight24Regular
   case folderArrowRight28Filled
   case folderArrowRight28Regular
+  case folderArrowRight32Filled
+  case folderArrowRight32Regular
   case folderArrowRight48Filled
   case folderArrowRight48Regular
   case folderArrowUp16Filled
@@ -5950,6 +6083,8 @@ import _StringProcessing
   case folderArrowUp24Regular
   case folderArrowUp28Filled
   case folderArrowUp28Regular
+  case folderArrowUp32Filled
+  case folderArrowUp32Regular
   case folderArrowUp48Filled
   case folderArrowUp48Regular
   case folderBriefcase20Filled
@@ -5964,12 +6099,16 @@ import _StringProcessing
   case folderLightning20Regular
   case folderLightning24Filled
   case folderLightning24Regular
+  case folderLink16Filled
+  case folderLink16Regular
   case folderLink20Filled
   case folderLink20Regular
   case folderLink24Filled
   case folderLink24Regular
   case folderLink28Filled
   case folderLink28Regular
+  case folderLink32Filled
+  case folderLink32Regular
   case folderLink48Filled
   case folderLink48Regular
   case folderList16Filled
@@ -5996,6 +6135,8 @@ import _StringProcessing
   case folderOpenVertical16Regular
   case folderOpenVertical20Filled
   case folderOpenVertical20Regular
+  case folderOpenVertical24Filled
+  case folderOpenVertical24Regular
   case folderPeople20Filled
   case folderPeople20Regular
   case folderPeople24Filled
@@ -6012,6 +6153,8 @@ import _StringProcessing
   case folderProhibited24Regular
   case folderProhibited28Filled
   case folderProhibited28Regular
+  case folderProhibited32Filled
+  case folderProhibited32Regular
   case folderProhibited48Filled
   case folderProhibited48Regular
   case folderSwap16Filled
@@ -6330,6 +6473,8 @@ import _StringProcessing
   case globe24Regular
   case globe32Filled
   case globe32Regular
+  case globe48Filled
+  case globe48Regular
   case globeAdd20Filled
   case globeAdd20Regular
   case globeAdd24Filled
@@ -6362,6 +6507,8 @@ import _StringProcessing
   case globeShield20Regular
   case globeShield24Filled
   case globeShield24Regular
+  case globeShield48Filled
+  case globeShield48Regular
   case globeStar16Filled
   case globeStar16Regular
   case globeStar20Filled
@@ -6484,8 +6631,14 @@ import _StringProcessing
   case handRight24Regular
   case handRight28Filled
   case handRight28Regular
+  case handRightOff16Filled
+  case handRightOff16Regular
   case handRightOff20Filled
   case handRightOff20Regular
+  case handRightOff24Filled
+  case handRightOff24Regular
+  case handRightOff28Filled
+  case handRightOff28Regular
   case handWave16Filled
   case handWave16Regular
   case handWave20Filled
@@ -6514,6 +6667,14 @@ import _StringProcessing
   case hatGraduation24Regular
   case hatGraduation28Filled
   case hatGraduation28Regular
+  case hatGraduationSparkle16Filled
+  case hatGraduationSparkle16Regular
+  case hatGraduationSparkle20Filled
+  case hatGraduationSparkle20Regular
+  case hatGraduationSparkle24Filled
+  case hatGraduationSparkle24Regular
+  case hatGraduationSparkle28Filled
+  case hatGraduationSparkle28Regular
   case hd16Filled
   case hd16Regular
   case hd20Filled
@@ -6606,6 +6767,12 @@ import _StringProcessing
   case heartCircleHint32Regular
   case heartCircleHint48Filled
   case heartCircleHint48Regular
+  case heartOff16Filled
+  case heartOff16Regular
+  case heartOff20Filled
+  case heartOff20Regular
+  case heartOff24Filled
+  case heartOff24Regular
   case heartPulse20Filled
   case heartPulse20Regular
   case heartPulse24Filled
@@ -6618,6 +6785,22 @@ import _StringProcessing
   case heartPulseError20Regular
   case heartPulseWarning20Filled
   case heartPulseWarning20Regular
+  case hexagon12Filled
+  case hexagon12Regular
+  case hexagon16Filled
+  case hexagon16Regular
+  case hexagon20Filled
+  case hexagon20Regular
+  case hexagon24Filled
+  case hexagon24Regular
+  case hexagonThree12Filled
+  case hexagonThree12Regular
+  case hexagonThree16Filled
+  case hexagonThree16Regular
+  case hexagonThree20Filled
+  case hexagonThree20Regular
+  case hexagonThree24Filled
+  case hexagonThree24Regular
   case highlight16Filled
   case highlight16Regular
   case highlight20Filled
@@ -6983,8 +7166,12 @@ import _StringProcessing
   case keyCommand20Regular
   case keyCommand24Filled
   case keyCommand24Regular
+  case keyMultiple16Filled
+  case keyMultiple16Regular
   case keyMultiple20Filled
   case keyMultiple20Regular
+  case keyMultiple24Filled
+  case keyMultiple24Regular
   case keyReset20Filled
   case keyReset20Regular
   case keyReset24Filled
@@ -7037,6 +7224,8 @@ import _StringProcessing
   case keyboardTab20Regular
   case keyboardTab24Filled
   case keyboardTab24Regular
+  case kiosk24Filled
+  case kiosk24Regular
   case laptop16Filled
   case laptop16Regular
   case laptop20Filled
@@ -7049,6 +7238,8 @@ import _StringProcessing
   case laptopDismiss16Regular
   case laptopDismiss20Filled
   case laptopDismiss20Regular
+  case laptopMultiple24Filled
+  case laptopMultiple24Regular
   case laptopShield16Filled
   case laptopShield16Regular
   case laptopShield20Filled
@@ -7169,8 +7360,30 @@ import _StringProcessing
   case lineDashes32Regular
   case lineDashes48Filled
   case lineDashes48Regular
+  case lineHorizontal116Filled
+  case lineHorizontal116Regular
   case lineHorizontal120Filled
   case lineHorizontal120Regular
+  case lineHorizontal124Filled
+  case lineHorizontal124Regular
+  case lineHorizontal128Filled
+  case lineHorizontal128Regular
+  case lineHorizontal1Dashes16Filled
+  case lineHorizontal1Dashes16Regular
+  case lineHorizontal1Dashes20Filled
+  case lineHorizontal1Dashes20Regular
+  case lineHorizontal1Dashes24Filled
+  case lineHorizontal1Dashes24Regular
+  case lineHorizontal1Dashes28Filled
+  case lineHorizontal1Dashes28Regular
+  case lineHorizontal2DashesSolid16Filled
+  case lineHorizontal2DashesSolid16Regular
+  case lineHorizontal2DashesSolid20Filled
+  case lineHorizontal2DashesSolid20Regular
+  case lineHorizontal2DashesSolid24Filled
+  case lineHorizontal2DashesSolid24Regular
+  case lineHorizontal2DashesSolid28Filled
+  case lineHorizontal2DashesSolid28Regular
   case lineHorizontal320Filled
   case lineHorizontal320Regular
   case lineHorizontal416Filled
@@ -7207,6 +7420,8 @@ import _StringProcessing
   case link32Regular
   case link48Filled
   case link48Regular
+  case linkAdd24Filled
+  case linkAdd24Regular
   case linkDismiss16Filled
   case linkDismiss16Regular
   case linkDismiss20Filled
@@ -7219,6 +7434,14 @@ import _StringProcessing
   case linkEdit20Regular
   case linkEdit24Filled
   case linkEdit24Regular
+  case linkMultiple16Filled
+  case linkMultiple16Regular
+  case linkMultiple20Filled
+  case linkMultiple20Regular
+  case linkMultiple24Filled
+  case linkMultiple24Regular
+  case linkSettings24Filled
+  case linkSettings24Regular
   case linkSquare12Filled
   case linkSquare12Regular
   case linkSquare16Filled
@@ -7347,8 +7570,12 @@ import _StringProcessing
   case lockClosed20Regular
   case lockClosed24Filled
   case lockClosed24Regular
+  case lockClosed28Filled
+  case lockClosed28Regular
   case lockClosed32Filled
   case lockClosed32Regular
+  case lockClosed48Filled
+  case lockClosed48Regular
   case lockClosedKey16Filled
   case lockClosedKey16Regular
   case lockClosedKey20Filled
@@ -7359,6 +7586,8 @@ import _StringProcessing
   case lockMultiple20Regular
   case lockMultiple24Filled
   case lockMultiple24Regular
+  case lockOpen12Filled
+  case lockOpen12Regular
   case lockOpen16Filled
   case lockOpen16Regular
   case lockOpen20Filled
@@ -7367,6 +7596,10 @@ import _StringProcessing
   case lockOpen24Regular
   case lockOpen28Filled
   case lockOpen28Regular
+  case lockOpen32Filled
+  case lockOpen32Regular
+  case lockOpen48Filled
+  case lockOpen48Regular
   case lockShield20Filled
   case lockShield20Regular
   case lockShield24Filled
@@ -7557,6 +7790,8 @@ import _StringProcessing
   case mailMultiple24Regular
   case mailMultiple28Filled
   case mailMultiple28Regular
+  case mailOff16Filled
+  case mailOff16Regular
   case mailOff20Filled
   case mailOff20Regular
   case mailOff24Filled
@@ -7815,6 +8050,12 @@ import _StringProcessing
   case micPulseOff32Regular
   case micPulseOff48Filled
   case micPulseOff48Regular
+  case micRecord20Filled
+  case micRecord20Regular
+  case micRecord24Filled
+  case micRecord24Regular
+  case micRecord28Filled
+  case micRecord28Regular
   case micSettings20Filled
   case micSettings20Regular
   case micSettings24Filled
@@ -8089,6 +8330,10 @@ import _StringProcessing
   case next32Regular
   case next48Filled
   case next48Regular
+  case nextFrame20Filled
+  case nextFrame20Regular
+  case nextFrame24Filled
+  case nextFrame24Regular
   case note16Filled
   case note16Regular
   case note20Filled
@@ -8189,6 +8434,60 @@ import _StringProcessing
   case numberCircle120Regular
   case numberCircle124Filled
   case numberCircle124Regular
+  case numberCircle128Filled
+  case numberCircle128Regular
+  case numberCircle132Filled
+  case numberCircle132Regular
+  case numberCircle148Filled
+  case numberCircle148Regular
+  case numberCircle216Filled
+  case numberCircle216Regular
+  case numberCircle220Filled
+  case numberCircle220Regular
+  case numberCircle224Filled
+  case numberCircle224Regular
+  case numberCircle228Filled
+  case numberCircle228Regular
+  case numberCircle232Filled
+  case numberCircle232Regular
+  case numberCircle248Filled
+  case numberCircle248Regular
+  case numberCircle316Filled
+  case numberCircle316Regular
+  case numberCircle320Filled
+  case numberCircle320Regular
+  case numberCircle324Filled
+  case numberCircle324Regular
+  case numberCircle328Filled
+  case numberCircle328Regular
+  case numberCircle332Filled
+  case numberCircle332Regular
+  case numberCircle348Filled
+  case numberCircle348Regular
+  case numberCircle416Filled
+  case numberCircle416Regular
+  case numberCircle420Filled
+  case numberCircle420Regular
+  case numberCircle424Filled
+  case numberCircle424Regular
+  case numberCircle428Filled
+  case numberCircle428Regular
+  case numberCircle432Filled
+  case numberCircle432Regular
+  case numberCircle448Filled
+  case numberCircle448Regular
+  case numberCircle516Filled
+  case numberCircle516Regular
+  case numberCircle520Filled
+  case numberCircle520Regular
+  case numberCircle524Filled
+  case numberCircle524Regular
+  case numberCircle528Filled
+  case numberCircle528Regular
+  case numberCircle532Filled
+  case numberCircle532Regular
+  case numberCircle548Filled
+  case numberCircle548Regular
   case numberRow16Filled
   case numberRow16Regular
   case numberRow20Filled
@@ -8215,6 +8514,8 @@ import _StringProcessing
   case numberSymbolSquare20Regular
   case numberSymbolSquare24Filled
   case numberSymbolSquare24Regular
+  case open12Filled
+  case open12Regular
   case open16Filled
   case open16Regular
   case open20Filled
@@ -8323,6 +8624,8 @@ import _StringProcessing
   case paintBrush20Regular
   case paintBrush24Filled
   case paintBrush24Regular
+  case paintBrush32Filled
+  case paintBrush32Regular
   case paintBrushArrowDown20Filled
   case paintBrushArrowDown20Regular
   case paintBrushArrowDown24Filled
@@ -8529,6 +8832,10 @@ import _StringProcessing
   case pauseCircle20Regular
   case pauseCircle24Filled
   case pauseCircle24Regular
+  case pauseCircle32Filled
+  case pauseCircle32Regular
+  case pauseCircle48Filled
+  case pauseCircle48Regular
   case pauseOff16Filled
   case pauseOff16Regular
   case pauseOff20Filled
@@ -8597,6 +8904,18 @@ import _StringProcessing
   case penProhibited32Regular
   case penProhibited48Filled
   case penProhibited48Regular
+  case penSparkle16Filled
+  case penSparkle16Regular
+  case penSparkle20Filled
+  case penSparkle20Regular
+  case penSparkle24Filled
+  case penSparkle24Regular
+  case penSparkle28Filled
+  case penSparkle28Regular
+  case penSparkle32Filled
+  case penSparkle32Regular
+  case penSparkle48Filled
+  case penSparkle48Regular
   case pentagon20Filled
   case pentagon20Regular
   case pentagon32Filled
@@ -8887,6 +9206,8 @@ import _StringProcessing
   case personEdit20Regular
   case personEdit24Filled
   case personEdit24Regular
+  case personEdit48Filled
+  case personEdit48Regular
   case personFeedback16Filled
   case personFeedback16Regular
   case personFeedback20Filled
@@ -8957,6 +9278,8 @@ import _StringProcessing
   case personNote20Regular
   case personNote24Filled
   case personNote24Regular
+  case personPhone24Filled
+  case personPhone24Regular
   case personPill20Filled
   case personPill20Regular
   case personPill24Filled
@@ -9019,6 +9342,8 @@ import _StringProcessing
   case personSubtract16Regular
   case personSubtract20Filled
   case personSubtract20Regular
+  case personSubtract24Filled
+  case personSubtract24Regular
   case personSupport16Filled
   case personSupport16Regular
   case personSupport20Filled
@@ -9087,6 +9412,8 @@ import _StringProcessing
   case phoneArrowRight20Regular
   case phoneArrowRight24Filled
   case phoneArrowRight24Regular
+  case phoneBriefcase24Filled
+  case phoneBriefcase24Regular
   case phoneChat16Filled
   case phoneChat16Regular
   case phoneChat20Filled
@@ -9145,6 +9472,10 @@ import _StringProcessing
   case phoneLock20Regular
   case phoneLock24Filled
   case phoneLock24Regular
+  case phoneMultiple24Filled
+  case phoneMultiple24Regular
+  case phoneMultipleSettings24Filled
+  case phoneMultipleSettings24Regular
   case phonePageHeader20Filled
   case phonePageHeader20Regular
   case phonePageHeader24Filled
@@ -9153,6 +9484,8 @@ import _StringProcessing
   case phonePagination20Regular
   case phonePagination24Filled
   case phonePagination24Regular
+  case phonePerson24Filled
+  case phonePerson24Regular
   case phoneScreenTime20Filled
   case phoneScreenTime20Regular
   case phoneScreenTime24Filled
@@ -9185,6 +9518,8 @@ import _StringProcessing
   case phoneStatusBar20Regular
   case phoneStatusBar24Filled
   case phoneStatusBar24Regular
+  case phoneSubtract24Filled
+  case phoneSubtract24Regular
   case phoneTablet20Filled
   case phoneTablet20Regular
   case phoneTablet24Filled
@@ -9339,12 +9674,18 @@ import _StringProcessing
   case plugConnectedAdd20Regular
   case plugConnectedCheckmark20Filled
   case plugConnectedCheckmark20Regular
+  case plugConnectedSettings20Filled
+  case plugConnectedSettings20Regular
+  case plugConnectedSettings24Filled
+  case plugConnectedSettings24Regular
   case plugDisconnected20Filled
   case plugDisconnected20Regular
   case plugDisconnected24Filled
   case plugDisconnected24Regular
   case plugDisconnected28Filled
   case plugDisconnected28Regular
+  case plugDisconnected48Filled
+  case plugDisconnected48Regular
   case pointScan20Filled
   case pointScan20Regular
   case pointScan24Filled
@@ -9502,6 +9843,10 @@ import _StringProcessing
   case previous32Regular
   case previous48Filled
   case previous48Regular
+  case previousFrame20Filled
+  case previousFrame20Regular
+  case previousFrame24Filled
+  case previousFrame24Regular
   case print16Filled
   case print16Regular
   case print20Filled
@@ -9804,12 +10149,26 @@ import _StringProcessing
   case rectangleLandscape32Regular
   case rectangleLandscape48Filled
   case rectangleLandscape48Regular
+  case rectangleLandscapeHintCopy16Filled
+  case rectangleLandscapeHintCopy16Regular
+  case rectangleLandscapeHintCopy20Filled
+  case rectangleLandscapeHintCopy20Regular
+  case rectangleLandscapeHintCopy24Filled
+  case rectangleLandscapeHintCopy24Regular
   case rectanglePortraitLocationTarget20Filled
   case rectanglePortraitLocationTarget20Regular
   case recycle20Filled
   case recycle20Regular
   case recycle32Filled
   case recycle32Regular
+  case remixAdd16Filled
+  case remixAdd16Regular
+  case remixAdd20Filled
+  case remixAdd20Regular
+  case remixAdd24Filled
+  case remixAdd24Regular
+  case remixAdd32Filled
+  case remixAdd32Regular
   case remote16Filled
   case remote16Regular
   case remote20Filled
@@ -10120,6 +10479,12 @@ import _StringProcessing
   case screenshot24Regular
   case script16Filled
   case script16Regular
+  case script20Filled
+  case script20Regular
+  case script24Filled
+  case script24Regular
+  case script32Filled
+  case script32Regular
   case search12Filled
   case search12Regular
   case search16Filled
@@ -10220,6 +10585,8 @@ import _StringProcessing
   case server20Regular
   case server24Filled
   case server24Regular
+  case serverLink24Filled
+  case serverLink24Regular
   case serverMultiple20Filled
   case serverMultiple20Regular
   case serverPlay20Filled
@@ -10566,6 +10933,8 @@ import _StringProcessing
   case signature24Regular
   case signature28Filled
   case signature28Regular
+  case signature32Filled
+  case signature32Regular
   case sim16Filled
   case sim16Regular
   case sim20Filled
@@ -10866,6 +11235,8 @@ import _StringProcessing
   case speakerMute24Regular
   case speakerMute28Filled
   case speakerMute28Regular
+  case speakerMute32Filled
+  case speakerMute32Regular
   case speakerMute48Filled
   case speakerMute48Regular
   case speakerOff16Filled
@@ -11236,6 +11607,8 @@ import _StringProcessing
   case stream24Regular
   case stream32Filled
   case stream32Regular
+  case stream48Filled
+  case stream48Regular
   case streamInput20Filled
   case streamInput20Regular
   case streamInputOutput20Filled
@@ -11366,6 +11739,8 @@ import _StringProcessing
   case tabDesktop20Regular
   case tabDesktop24Filled
   case tabDesktop24Regular
+  case tabDesktop28Filled
+  case tabDesktop28Regular
   case tabDesktopArrowClockwise16Filled
   case tabDesktopArrowClockwise16Regular
   case tabDesktopArrowClockwise20Filled
@@ -11388,6 +11763,14 @@ import _StringProcessing
   case tabDesktopImage20Regular
   case tabDesktopImage24Filled
   case tabDesktopImage24Regular
+  case tabDesktopLink16Filled
+  case tabDesktopLink16Regular
+  case tabDesktopLink20Filled
+  case tabDesktopLink20Regular
+  case tabDesktopLink24Filled
+  case tabDesktopLink24Regular
+  case tabDesktopLink28Filled
+  case tabDesktopLink28Regular
   case tabDesktopMultiple20Filled
   case tabDesktopMultiple20Regular
   case tabDesktopMultipleBottom20Filled
@@ -11436,6 +11819,10 @@ import _StringProcessing
   case tableAdd24Regular
   case tableAdd28Filled
   case tableAdd28Regular
+  case tableArrowUp20Filled
+  case tableArrowUp20Regular
+  case tableArrowUp24Filled
+  case tableArrowUp24Regular
   case tableBottomRow16Filled
   case tableBottomRow16Regular
   case tableBottomRow20Filled
@@ -11772,6 +12159,8 @@ import _StringProcessing
   case tablet48Regular
   case tabletLaptop20Filled
   case tabletLaptop20Regular
+  case tabletLaptop24Filled
+  case tabletLaptop24Regular
   case tabletSpeaker20Filled
   case tabletSpeaker20Regular
   case tabletSpeaker24Filled
@@ -12084,6 +12473,8 @@ import _StringProcessing
   case textBulletList20Regular
   case textBulletList24Filled
   case textBulletList24Regular
+  case textBulletList27024Filled
+  case textBulletList27024Regular
   case textBulletList9020Filled
   case textBulletList9020Regular
   case textBulletList9024Filled
@@ -12106,6 +12497,8 @@ import _StringProcessing
   case textBulletListSquare24Regular
   case textBulletListSquare32Filled
   case textBulletListSquare32Regular
+  case textBulletListSquare48Filled
+  case textBulletListSquare48Regular
   case textBulletListSquareClock20Filled
   case textBulletListSquareClock20Regular
   case textBulletListSquareEdit20Filled
@@ -12122,6 +12515,8 @@ import _StringProcessing
   case textBulletListSquareSettings20Regular
   case textBulletListSquareShield20Filled
   case textBulletListSquareShield20Regular
+  case textBulletListSquareShield48Filled
+  case textBulletListSquareShield48Regular
   case textBulletListSquareSparkle16Filled
   case textBulletListSquareSparkle16Regular
   case textBulletListSquareSparkle20Filled
@@ -12221,6 +12616,10 @@ import _StringProcessing
   case textColumnTwoRight20Regular
   case textColumnTwoRight24Filled
   case textColumnTwoRight24Regular
+  case textColumnWide20Filled
+  case textColumnWide20Regular
+  case textColumnWide24Filled
+  case textColumnWide24Regular
   case textContinuous20Filled
   case textContinuous20Regular
   case textContinuous24Filled
@@ -12599,10 +12998,30 @@ import _StringProcessing
   case textboxAlignBottom20Regular
   case textboxAlignBottom24Filled
   case textboxAlignBottom24Regular
+  case textboxAlignBottomCenter16Filled
+  case textboxAlignBottomCenter16Regular
+  case textboxAlignBottomCenter20Filled
+  case textboxAlignBottomCenter20Regular
+  case textboxAlignBottomCenter24Filled
+  case textboxAlignBottomCenter24Regular
+  case textboxAlignBottomLeft16Filled
+  case textboxAlignBottomLeft16Regular
+  case textboxAlignBottomLeft20Filled
+  case textboxAlignBottomLeft20Regular
+  case textboxAlignBottomLeft24Filled
+  case textboxAlignBottomLeft24Regular
+  case textboxAlignBottomRight16Filled
+  case textboxAlignBottomRight16Regular
+  case textboxAlignBottomRight20Filled
+  case textboxAlignBottomRight20Regular
+  case textboxAlignBottomRight24Filled
+  case textboxAlignBottomRight24Regular
   case textboxAlignBottomRotate9020Filled
   case textboxAlignBottomRotate9020Regular
   case textboxAlignBottomRotate9024Filled
   case textboxAlignBottomRotate9024Regular
+  case textboxAlignCenter16Filled
+  case textboxAlignCenter16Regular
   case textboxAlignCenter20Filled
   case textboxAlignCenter20Regular
   case textboxAlignCenter24Filled
@@ -12613,6 +13032,18 @@ import _StringProcessing
   case textboxAlignMiddle20Regular
   case textboxAlignMiddle24Filled
   case textboxAlignMiddle24Regular
+  case textboxAlignMiddleLeft16Filled
+  case textboxAlignMiddleLeft16Regular
+  case textboxAlignMiddleLeft20Filled
+  case textboxAlignMiddleLeft20Regular
+  case textboxAlignMiddleLeft24Filled
+  case textboxAlignMiddleLeft24Regular
+  case textboxAlignMiddleRight16Filled
+  case textboxAlignMiddleRight16Regular
+  case textboxAlignMiddleRight20Filled
+  case textboxAlignMiddleRight20Regular
+  case textboxAlignMiddleRight24Filled
+  case textboxAlignMiddleRight24Regular
   case textboxAlignMiddleRotate9020Filled
   case textboxAlignMiddleRotate9020Regular
   case textboxAlignMiddleRotate9024Filled
@@ -12621,6 +13052,24 @@ import _StringProcessing
   case textboxAlignTop20Regular
   case textboxAlignTop24Filled
   case textboxAlignTop24Regular
+  case textboxAlignTopCenter16Filled
+  case textboxAlignTopCenter16Regular
+  case textboxAlignTopCenter20Filled
+  case textboxAlignTopCenter20Regular
+  case textboxAlignTopCenter24Filled
+  case textboxAlignTopCenter24Regular
+  case textboxAlignTopLeft16Filled
+  case textboxAlignTopLeft16Regular
+  case textboxAlignTopLeft20Filled
+  case textboxAlignTopLeft20Regular
+  case textboxAlignTopLeft24Filled
+  case textboxAlignTopLeft24Regular
+  case textboxAlignTopRight16Filled
+  case textboxAlignTopRight16Regular
+  case textboxAlignTopRight20Filled
+  case textboxAlignTopRight20Regular
+  case textboxAlignTopRight24Filled
+  case textboxAlignTopRight24Regular
   case textboxAlignTopRotate9020Filled
   case textboxAlignTopRotate9020Regular
   case textboxAlignTopRotate9024Filled
@@ -12657,6 +13106,12 @@ import _StringProcessing
   case thumbLike28Regular
   case thumbLike48Filled
   case thumbLike48Regular
+  case thumbLikeDislike16Filled
+  case thumbLikeDislike16Regular
+  case thumbLikeDislike20Filled
+  case thumbLikeDislike20Regular
+  case thumbLikeDislike24Filled
+  case thumbLikeDislike24Regular
   case ticketDiagonal16Filled
   case ticketDiagonal16Regular
   case ticketDiagonal20Filled
@@ -12809,6 +13264,8 @@ import _StringProcessing
   case triangleDown16Regular
   case triangleDown20Filled
   case triangleDown20Regular
+  case triangleDown24Filled
+  case triangleDown24Regular
   case triangleDown32Filled
   case triangleDown32Regular
   case triangleDown48Filled
@@ -13161,6 +13618,10 @@ import _StringProcessing
   case videoPersonSparkle28Regular
   case videoPersonSparkle48Filled
   case videoPersonSparkle48Regular
+  case videoPersonSparkleOff20Filled
+  case videoPersonSparkleOff20Regular
+  case videoPersonSparkleOff24Filled
+  case videoPersonSparkleOff24Regular
   case videoPersonStar20Filled
   case videoPersonStar20Regular
   case videoPersonStar24Filled
@@ -13227,6 +13688,12 @@ import _StringProcessing
   case voicemailArrowForward20Regular
   case voicemailArrowSubtract20Filled
   case voicemailArrowSubtract20Regular
+  case voicemailShield20Filled
+  case voicemailShield20Regular
+  case voicemailShield24Filled
+  case voicemailShield24Regular
+  case voicemailShield32Filled
+  case voicemailShield32Regular
   case voicemailSubtract16Filled
   case voicemailSubtract16Regular
   case voicemailSubtract20Filled
@@ -13285,6 +13752,8 @@ import _StringProcessing
   case warning24Regular
   case warning28Filled
   case warning28Regular
+  case warning32Filled
+  case warning32Regular
   case warningShield20Filled
   case warningShield20Regular
   case washer20Filled
@@ -13561,6 +14030,8 @@ import _StringProcessing
   case windowDatabase20Regular
   case windowDatabase24Filled
   case windowDatabase24Regular
+  case windowDatabase32Filled
+  case windowDatabase32Regular
   case windowDevEdit16Filled
   case windowDevEdit16Regular
   case windowDevEdit20Filled
