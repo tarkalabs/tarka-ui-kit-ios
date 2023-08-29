@@ -36,6 +36,13 @@ public struct TUIEmailSubjectField: View {
       )
     }
     .frame(maxWidth: .infinity)
+    .accessibilityIdentifier(Accessibility.root)
+  }
+}
+
+extension TUIEmailSubjectField {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIEmailSubjectField"
   }
 }
 

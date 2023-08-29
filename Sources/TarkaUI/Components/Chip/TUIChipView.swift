@@ -55,8 +55,8 @@ public struct TUIChipView: View {
     }
     .overlayViewInTopTrailing(
       isBadgeEnabled, count: badgeCount, badgeSize: size == .size32 ? .m : .l)
-    .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder private var detailView: some View {
@@ -184,6 +184,8 @@ public struct TUIChipView: View {
     TUIIconButton(icon: icon) { action() }
       .iconColor(isSelected ? .onSecondary : .onSurface)
       .size(size == .size32 ? .size32 : .size40)
+      .accessibilityElement(children: .contain)
+      .accessibilityIdentifier(Accessibility.button)
   }
 }
 
@@ -310,9 +312,10 @@ public extension TUIChipView {
   enum Accessibility: String, TUIAccessibility {
     case root = "TUIChipView"
     case title = "Title"
-    case leftImage = "leftImage"
-    case leftIcon = "leftIcon"
-    case rightIcon = "rightIcon"
+    case leftImage = "LeftImage"
+    case leftIcon = "LeftIcon"
+    case rightIcon = "RightIcon"
+    case button = "Button"
   }
   
   enum Size {

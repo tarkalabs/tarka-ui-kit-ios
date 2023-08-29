@@ -53,6 +53,8 @@ public struct TUIEmailField: View {
         orientation: .horizontal(hPadding: .zero, vPadding: .zero)
       )
     }
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder
@@ -62,6 +64,7 @@ public struct TUIEmailField: View {
       .foregroundColor(.outline)
       .padding(.top, 15)
       .padding(.leading, 24)
+      .accessibilityIdentifier(Accessibility.label)
   }
   
   @ViewBuilder
@@ -83,6 +86,8 @@ public struct TUIEmailField: View {
           .backgroundColor(.surfaceVariant)
           .borderColor(.surfaceVariant)
           .frame(maxWidth: emailGridWidth)
+          .accessibilityElement(children: .contain)
+          .accessibilityIdentifier(Accessibility.chip)
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
@@ -98,6 +103,8 @@ public struct TUIEmailField: View {
       // Use the preference key to set the width as state
       emailGridWidth = value
     }
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.chipView)
   }
   
   @ViewBuilder
@@ -108,6 +115,17 @@ public struct TUIEmailField: View {
     )
     .size(.size48)
     .padding(.trailing, 8)
+    .accessibilityIdentifier(Accessibility.addButton)
+  }
+}
+
+extension TUIEmailField {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIEmailField"
+    case label = "Label"
+    case addButton = "AddButton"
+    case chipView = "ChipView"
+    case chip = "Chip"
   }
 }
 
