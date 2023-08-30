@@ -69,6 +69,8 @@ public struct TUIEmailField: View {
   
   @ViewBuilder
   private var emailField: some View {
+    // `JustifiableFlowLayout` is used here, so that the items can flow in one direction in a grid
+    // with equal spacing and height, and wrap to the next line when needed
     JustifiableFlowLayout(minSpacing: Spacing.halfHorizontal) {
       ForEach(emails, id: \.self) { email in
         TUIChipView(email)
