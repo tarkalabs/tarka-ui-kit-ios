@@ -67,7 +67,7 @@ public extension TUIContentUnavailableView {
   }
 }
 
-struct SwiftUIView_Previews: PreviewProvider {
+struct TUIContentUnavailableView_Previews: PreviewProvider {
   static var previews: some View {
     TUIContentUnavailableView("Hello Welcome to swiftUI",
                               icon: .person48Filled)
