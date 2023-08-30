@@ -61,8 +61,8 @@ public struct TUIAttachmentView: View {
     image
       .resizable()
       .scaledToFit()
-      .frame(width: imageSize.width, height: Spacing.custom(40))
       .clipShape(RoundedRectangle(cornerRadius: Spacing.halfHorizontal))
+      .frame(width: imageSize.width, height: Spacing.custom(40))
       .accessibilityIdentifier(Accessibility.image)
   }
   
