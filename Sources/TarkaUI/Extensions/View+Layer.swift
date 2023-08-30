@@ -9,6 +9,10 @@ import SwiftUI
 
 public extension View {
   
+  func setRadiusToCorners(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+    clipShape(RoundedCorner(radius: radius, corners: corners))
+  }
+  
   @ViewBuilder
   /// Sets rounded corner with border
   /// - Parameters:

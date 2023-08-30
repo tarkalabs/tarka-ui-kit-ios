@@ -22,9 +22,10 @@ import SwiftUI
 ///   - title: The title to display in the menu item.
 ///   - style: The configuration to use to display the menu item. The default value is `.onlyLabel`.
 ///
-public struct TUIMenuItemProperties {
+public struct TUIMenuItemProperties: Identifiable {
   public var title: any StringProtocol
   public var style: Style
+  public var id: String { UUID().uuidString }
   
   public enum Style {
     /// Displays only the title.
