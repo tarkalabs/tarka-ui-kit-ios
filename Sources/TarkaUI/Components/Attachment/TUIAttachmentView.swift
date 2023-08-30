@@ -14,7 +14,7 @@ public struct TUIAttachmentView: View {
   private var title: String
   private var image: Image
   private var deleteAction: () -> Void
-  private var isDownloadEnabled: Bool = false
+  private var showDownloadButton: Bool = false
   private var downloadAction: (() -> Void)?
   private var iconColor: Color = .secondaryTUI
   
@@ -34,12 +34,15 @@ public struct TUIAttachmentView: View {
         imageView
         mainView
       }
-      if isDownloadEnabled {
+      .accessibilityElement(children: .contain)
+      if showDownloadButton {
         iconView(.arrowDown24Regular) { downloadAction?() }
       }
       iconView(.delete24Regular, action: deleteAction)
     }
     .frame(height: Spacing.custom(40))
+    .accessibilityIdentifier(Accessibility.root)
+    .accessibilityElement(children: .contain)
   }
   
   private var mainView: some View {
@@ -51,19 +54,23 @@ public struct TUIAttachmentView: View {
         detailView(desc)
       }
     }
+    .accessibilityElement(children: .contain)
   }
   
   private var imageView: some View {
     image
       .resizable()
+      .scaledToFit()
       .frame(width: imageSize.width, height: Spacing.custom(40))
       .clipShape(RoundedRectangle(cornerRadius: Spacing.halfHorizontal))
+      .accessibilityIdentifier(Accessibility.image)
   }
   
   private func iconView(_ icon: FluentIcon, action: @escaping () -> Void) -> some View {
     TUIIconButton(icon: icon, action: action)
       .size(.size40)
       .iconColor(iconColor)
+      .accessibilityElement(children: .contain)
   }
   
   private func titleView(_ title: String) -> some View {
@@ -72,6 +79,7 @@ public struct TUIAttachmentView: View {
       .foregroundStyle(Color.onSurface)
       .frame(maxWidth: .infinity, alignment: .leading)
       .frame(height: Spacing.custom(18))
+      .accessibilityIdentifier(Accessibility.title)
   }
   
   private func detailView(_ title: String) -> some View {
@@ -80,8 +88,8 @@ public struct TUIAttachmentView: View {
       .foregroundStyle(Color.inputTextDim)
       .frame(maxWidth: .infinity, alignment: .leading)
       .frame(height: Spacing.custom(14))
+      .accessibilityIdentifier(Accessibility.description)
   }
-  
 }
 
 public extension TUIAttachmentView {
@@ -111,7 +119,7 @@ public extension TUIAttachmentView {
   
   func download(_ show: Bool, action: @escaping () -> Void) -> Self {
     var newView = self
-    newView.isDownloadEnabled = show
+    newView.showDownloadButton = show
     newView.downloadAction = action
     return newView
   }
@@ -120,6 +128,14 @@ public extension TUIAttachmentView {
     var newView = self
     newView.iconColor = iconColor
     return newView
+  }
+  
+    
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIAttachmentView"
+    case title = "Title"
+    case description = "Description"
+    case image = "Image"
   }
 }
 
