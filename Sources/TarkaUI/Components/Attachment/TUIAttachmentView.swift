@@ -36,7 +36,7 @@ public struct TUIAttachmentView: View {
       }
       .accessibilityElement(children: .contain)
       if showDownloadButton {
-        iconView(.arrowDown24Regular) { downloadAction?() }
+        iconView(.arrowDownload24Regular) { downloadAction?() }
       }
       iconView(.delete24Regular, action: deleteAction)
     }
