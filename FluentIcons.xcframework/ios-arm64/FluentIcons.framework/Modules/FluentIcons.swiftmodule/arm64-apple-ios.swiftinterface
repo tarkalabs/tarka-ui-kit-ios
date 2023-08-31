@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
 // swift-compiler-version: Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)
-// swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name FluentIcons
+// swift-module-flags: -target arm64-apple-ios16.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name FluentIcons
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 @_exported import FluentIcons
 import Foundation
@@ -2430,6 +2430,8 @@ import _StringProcessing
   case callDismiss20Regular
   case callDismiss24Filled
   case callDismiss24Regular
+  case callEnd12Filled
+  case callEnd12Regular
   case callEnd16Filled
   case callEnd16Regular
   case callEnd20Filled
@@ -2438,6 +2440,10 @@ import _StringProcessing
   case callEnd24Regular
   case callEnd28Filled
   case callEnd28Regular
+  case callEnd32Filled
+  case callEnd32Regular
+  case callEnd48Filled
+  case callEnd48Regular
   case callExclamation20Filled
   case callExclamation20Regular
   case callForward16Filled
@@ -3981,12 +3987,22 @@ import _StringProcessing
   case contentView28Regular
   case contentView32Filled
   case contentView32Regular
+  case contentViewGallery16Filled
+  case contentViewGallery16Regular
   case contentViewGallery20Filled
   case contentViewGallery20Regular
   case contentViewGallery24Filled
   case contentViewGallery24Regular
   case contentViewGallery28Filled
   case contentViewGallery28Regular
+  case contentViewGalleryLightning16Filled
+  case contentViewGalleryLightning16Regular
+  case contentViewGalleryLightning20Filled
+  case contentViewGalleryLightning20Regular
+  case contentViewGalleryLightning24Filled
+  case contentViewGalleryLightning24Regular
+  case contentViewGalleryLightning28Filled
+  case contentViewGalleryLightning28Regular
   case contractDownLeft16Filled
   case contractDownLeft16Regular
   case contractDownLeft20Filled
@@ -6479,6 +6495,14 @@ import _StringProcessing
   case globeAdd20Regular
   case globeAdd24Filled
   case globeAdd24Regular
+  case globeArrowForward16Filled
+  case globeArrowForward16Regular
+  case globeArrowForward20Filled
+  case globeArrowForward20Regular
+  case globeArrowForward24Filled
+  case globeArrowForward24Regular
+  case globeArrowForward32Filled
+  case globeArrowForward32Regular
   case globeClock16Filled
   case globeClock16Regular
   case globeClock20Filled
@@ -6657,6 +6681,14 @@ import _StringProcessing
   case hardDrive16Regular
   case hardDrive20Filled
   case hardDrive20Regular
+  case hardDrive24Filled
+  case hardDrive24Regular
+  case hardDrive32Filled
+  case hardDrive32Regular
+  case hardDriveCall24Filled
+  case hardDriveCall24Regular
+  case hardDriveCall32Filled
+  case hardDriveCall32Regular
   case hatGraduation12Filled
   case hatGraduation12Regular
   case hatGraduation16Filled
@@ -7834,6 +7866,12 @@ import _StringProcessing
   case mailReadMultiple28Regular
   case mailReadMultiple32Filled
   case mailReadMultiple32Regular
+  case mailRewind16Filled
+  case mailRewind16Regular
+  case mailRewind20Filled
+  case mailRewind20Regular
+  case mailRewind24Filled
+  case mailRewind24Regular
   case mailSettings16Filled
   case mailSettings16Regular
   case mailSettings20Filled
@@ -8792,12 +8830,28 @@ import _StringProcessing
   case panelRightCursor24Regular
   case panelRightExpand20Filled
   case panelRightExpand20Regular
+  case panelRightGallery16Filled
+  case panelRightGallery16Regular
+  case panelRightGallery20Filled
+  case panelRightGallery20Regular
+  case panelRightGallery24Filled
+  case panelRightGallery24Regular
+  case panelRightGallery28Filled
+  case panelRightGallery28Regular
   case panelSeparateWindow20Filled
   case panelSeparateWindow20Regular
   case panelTopContract20Filled
   case panelTopContract20Regular
   case panelTopExpand20Filled
   case panelTopExpand20Regular
+  case panelTopGallery16Filled
+  case panelTopGallery16Regular
+  case panelTopGallery20Filled
+  case panelTopGallery20Regular
+  case panelTopGallery24Filled
+  case panelTopGallery24Regular
+  case panelTopGallery28Filled
+  case panelTopGallery28Regular
   case password16Filled
   case password16Regular
   case password20Filled
@@ -10155,6 +10209,16 @@ import _StringProcessing
   case rectangleLandscapeHintCopy20Regular
   case rectangleLandscapeHintCopy24Filled
   case rectangleLandscapeHintCopy24Regular
+  case rectangleLandscapeSparkle16Filled
+  case rectangleLandscapeSparkle16Regular
+  case rectangleLandscapeSparkle20Filled
+  case rectangleLandscapeSparkle20Regular
+  case rectangleLandscapeSparkle24Filled
+  case rectangleLandscapeSparkle24Regular
+  case rectangleLandscapeSparkle28Filled
+  case rectangleLandscapeSparkle28Regular
+  case rectangleLandscapeSparkle32Filled
+  case rectangleLandscapeSparkle32Regular
   case rectanglePortraitLocationTarget20Filled
   case rectanglePortraitLocationTarget20Regular
   case recycle20Filled
@@ -10417,6 +10481,16 @@ import _StringProcessing
   case scanObject20Regular
   case scanObject24Filled
   case scanObject24Regular
+  case scanPerson16Filled
+  case scanPerson16Regular
+  case scanPerson20Filled
+  case scanPerson20Regular
+  case scanPerson24Filled
+  case scanPerson24Regular
+  case scanPerson28Filled
+  case scanPerson28Regular
+  case scanPerson48Filled
+  case scanPerson48Regular
   case scanQrCode24Filled
   case scanQrCode24Regular
   case scanTable20Filled
@@ -13688,6 +13762,8 @@ import _StringProcessing
   case voicemailArrowForward20Regular
   case voicemailArrowSubtract20Filled
   case voicemailArrowSubtract20Regular
+  case voicemailShield16Filled
+  case voicemailShield16Regular
   case voicemailShield20Filled
   case voicemailShield20Regular
   case voicemailShield24Filled
