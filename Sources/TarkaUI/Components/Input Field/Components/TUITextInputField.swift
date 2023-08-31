@@ -22,12 +22,10 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   public var keyboardType: UIKeyboardType = .default
 
   /// Binds the bool that used to handle the row interaction and text field interaction switch when user interacts
-  @Binding private var isDoneClicked: Bool
   
   @State private var isFocused: Bool = false
   
   @Binding private var inputItem: TUIInputFieldItem
-  
   
   /// Creates a `TUITextInputField` view
   /// - Parameters:
@@ -35,29 +33,32 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   ///   - isDoneClicked: A bindable bool value that used to handle text field focus when done clicked in toolbar
   ///   
   public init(
-    inputItem: Binding<TUIInputFieldItem>,
-    isDoneClicked: Binding<Bool>) {
+    inputItem: Binding<TUIInputFieldItem>) {
       
       self._inputItem = inputItem
-      self._isDoneClicked = isDoneClicked
     }
   
   public var body: some View {
     mainBody
-      .onChange(of: isDoneClicked, perform: { value in
-        if value {
-          isFocused = false
-        }
-      })
-      .onChange(of: $isFocused.wrappedValue, perform: { value in
+      .onChange(of: isFocused, perform: { value in
         if !value {
-          isDoneClicked = false
           // revert the style when content is empty
           if self.inputItem.value.isEmpty {
             self.inputItem.style = existingStyle
           }
         }
       })
+  }
+  
+  public func dismissTextFocus(_ dismissTextFocus: Bool) -> Self {
+    let newView = self
+    if dismissTextFocus {
+      newView.isFocused = false
+      if newView.inputItem.value.isEmpty {
+        newView.inputItem.style = existingStyle
+      }
+    }
+    return newView
   }
   
   @ViewBuilder
@@ -107,7 +108,7 @@ struct TUITextInputField_Previews: PreviewProvider {
     @State var item = TUIInputFieldItem(style: .onlyTitle, title: "Enter Memo")
     
     TUITextInputField(
-      inputItem: $item, isDoneClicked: Binding.constant(false))
+      inputItem: $item)
     .state(.alert("Input values are sensitive"))
     .endItem(withStyle: .icon(.info24Regular))
   }

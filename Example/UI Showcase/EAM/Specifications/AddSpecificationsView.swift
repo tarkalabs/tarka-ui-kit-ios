@@ -7,23 +7,22 @@
 
 import SwiftUI
 import TarkaUI
-
+import Combine
 
 struct AddSpecificationsView: View {
   
   @ObservedObject var vm: SpecificationViewModel
   
-  @State var isDoneClicked: Bool = false
-
-  @State private var isActive = false
-
+  @State var dismissTextFocus: Bool = false
+  
   @StateObject var searchBarVM: TUISearchBarViewModel = .init(
-    searchItem: .init(placeholder: "Search", text: "")) { _ in }
-
+    searchItem: .init(placeholder: "Search", text: ""),
+    isShown: true) { _ in }
+  
   private var navTitleItem: TUIAppTopBar.TitleBarItem {
     
     let syncButton = TUIIconButton(icon: .arrowCounterclockwise24Filled) {
-      isDoneClicked = !isDoneClicked
+      
     }
     return .init(
       title: "Detail View",
@@ -31,40 +30,49 @@ struct AddSpecificationsView: View {
       rightButtons: .one(
         syncButton))
   }
-
+  var cancelSet: Set<AnyCancellable> = []
+  
   init() {
     
     self.vm = SpecificationViewModel()
   }
   
-    var body: some View {
+  var body: some View {
+    
+    ScrollView {
       
-      ScrollView {
+      VStack(spacing: Spacing.custom(24)) {
         
-        VStack(spacing: Spacing.custom(24)) {
-          
-          contentView
-            .padding(.horizontal, TarkaUI.Spacing.custom(24))
-            .padding(.top, TarkaUI.Spacing.doubleVertical)
-          
-          TUIDivider(orientation: .horizontal(hPadding: .zero, vPadding: .zero))
-            .color(.surfaceVariantHover)
-          
-          headerView
-            .padding(.horizontal, TarkaUI.Spacing.custom(24))
-
-        }
+        contentView
+          .padding(.horizontal, TarkaUI.Spacing.custom(24))
+          .padding(.top, TarkaUI.Spacing.doubleVertical)
         
-        Spacer()
+        TUIDivider(orientation: .horizontal(hPadding: .zero, vPadding: .zero))
+          .color(.surfaceVariantHover)
+        
+        headerView
+          .padding(.horizontal, TarkaUI.Spacing.custom(24))
+        
       }
-      .customNavigationBar(titleBarItem: navTitleItem)
-      .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked, onClicked: {
-//        if searchBarVM.isEditing {
-//          searchBarVM.isEditing = false
-//        }
-      })
       
+      Spacer()
     }
+    .customNavigationBar(titleBarItem: navTitleItem)
+    .addDoneButtonInToolbar(onClicked: {
+      dismissTextFocus = true
+      searchBarVM.isEditing = false
+    })
+    .onReceive(searchBarVM.$isEditing, perform: { isEditing in
+      if isEditing {
+        dismissTextFocus = true
+      }
+    })
+    .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardDidHideNotification)) { _ in
+      // revert this variable to false
+      self.dismissTextFocus = false
+    }
+  }
+  
   
   @ViewBuilder
   var contentView: some View {
@@ -75,13 +83,13 @@ struct AddSpecificationsView: View {
         "Classification",
         style: .textDescription(
           vm.addSpecItem.classification))
-        .iconButtons {
-          TUIIconButton(icon: .dismiss16Filled) { }
-            .iconColor(.outline)
-        }
-        .wrapperIcon {
-          TUIWrapperIcon(icon: .chevronRight20Filled)
-        }
+      .iconButtons {
+        TUIIconButton(icon: .dismiss16Filled) { }
+          .iconColor(.outline)
+      }
+      .wrapperIcon {
+        TUIWrapperIcon(icon: .chevronRight20Filled)
+      }
       
       TUITextRow("Description", style: .textDescription(vm.addSpecItem.description))
       
@@ -101,8 +109,9 @@ struct AddSpecificationsView: View {
       TUITextRow("Classification specification",
                  style: .onlyTitle)
       
-//      TUISearchBar(searchBarVM: searchBarVM)
-        
+      TUISearchBar(searchBarVM: searchBarVM)
+        .addCancelButtonAtTrailing()
+      
       ForEach(vm.addSpecItem.sections, id: \.id) { section in
         view(forSection: section)
       }
@@ -133,26 +142,25 @@ struct AddSpecificationsView: View {
         TUIWrapperIcon(icon: .chevronRight20Filled)
       }
     
-    ForEach(spec.specAttributes, id: \.id) { attr in
+    ForEach(spec.$specAttributes, id: \.id) { attr in
       view(forSpecAttribute: attr)
     }
   }
   
-  @State var inputFieldItem = TUIInputFieldItem(style: .onlyTitle, title: "Test")
-  
   @ViewBuilder
-  func view(forSpecAttribute attr: SpecAttributeItem) -> some View {
+  func view(forSpecAttribute attr: Binding<SpecAttributeItem>) -> some View {
     
     TUITextInputField(
-      inputItem: $inputFieldItem, isDoneClicked: $isDoneClicked)
+      inputItem: attr.inputFieldItem)
+    .dismissTextFocus(dismissTextFocus)
     .allowedCharacters(CharacterSet(charactersIn: "1234567890."))
     .setKeyboardType(.decimalPad)
   }
-
+  
 }
 
 struct AddSpecificationsView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddSpecificationsView()
-    }
+  static var previews: some View {
+    AddSpecificationsView()
+  }
 }

@@ -39,7 +39,9 @@ public struct TUISearchBar: View {
             .padding(.trailing, 24)
         }
 
-      if let trailingButton {
+      if let trailingButton,
+          searchBarVM.isShown, searchBarVM.isEditing,
+         !searchBarVM.searchItem.text.isEmpty { 
         trailingButton
           .accessibilityIdentifier(Accessibility.trailingButton)
       }
@@ -96,11 +98,23 @@ public extension TUISearchBar {
   
   func trailingButton(@ViewBuilder _ button: () -> TUIIconButton?) -> Self {
     var newView = self
-    let trailingButton = button()
-    newView.trailingButton = trailingButton?.action {
-      searchBarVM.searchItem.text = ""
-    }
+    newView.trailingButton = button()
     return newView
+  }
+  
+  @ViewBuilder
+  func addCancelButtonAtTrailing() -> Self {
+    self
+      .trailingButton {
+          TUIIconButton(icon: .dismiss24Regular) {
+            searchBarVM.isEditing = false
+          }
+          .action {
+            searchBarVM.searchItem.text = ""
+          }
+          .style(.ghost)
+          .size(.size40)
+      }
   }
 }
 
