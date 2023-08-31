@@ -46,4 +46,16 @@ public extension TUIChipView {
     newView.size = size
     return newView
   }
+  
+  func backgroundColor(_ color: Color) -> Self {
+    var newView = self
+    newView.backgroundColor = color
+    return newView
+  }
+  
+  func borderColor(_ color: Color) -> Self {
+    var newView = self
+    newView.borderColor = color
+    return newView
+  }
 }
