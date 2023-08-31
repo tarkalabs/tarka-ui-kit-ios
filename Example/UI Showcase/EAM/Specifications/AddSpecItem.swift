@@ -39,7 +39,7 @@ struct AddSpecItem {
 struct SpecificationItem {
   var value: String
   var section: String
-  var specAttributes: [SpecAttributeItem]
+  @Binding var specAttributes: [SpecAttributeItem]
 }
 
 class SpecAttributeItem: ObservableObject, Identifiable {
@@ -48,7 +48,7 @@ class SpecAttributeItem: ObservableObject, Identifiable {
     return UUID().uuidString
   }
 
-  @State var inputFieldItem: TUIInputFieldItem
+  var inputFieldItem: TUIInputFieldItem
   
   init(attributeName: String) {
     self.inputFieldItem = TUIInputFieldItem(style: .onlyTitle, title: attributeName)
@@ -68,11 +68,11 @@ class SpecificationViewModel: ObservableObject {
       return [spec1, spec2]
     }
     
-    var attrs: [SpecAttributeItem] {
+    var attrs: Binding<[SpecAttributeItem]> {
       let attr1 = SpecAttributeItem(attributeName: "Date")
       let attr2 = SpecAttributeItem(attributeName: "Time")
       let attr3 = SpecAttributeItem(attributeName: "Frequency")
-      return [attr1, attr2, attr3]
+      return Binding.constant([attr1, attr2, attr3])
     }
     
     let specsOfSectionA = specsForSection("Section A")
