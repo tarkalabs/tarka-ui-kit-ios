@@ -20,6 +20,12 @@ public struct TUIInputField: TUIInputFieldProtocol {
   @Binding var inputItem: TUIInputFieldItem
   @Binding private var isTextFieldFocused: Bool
   
+  /* Facing some weird issue. When input item value is changed,
+   it is getting updates in `TUIInputTextContentView` but not here.
+   If I declare this variable, just declaration solves the problem
+   */
+  @FocusState private var isFocused: Bool
+
   public var properties: TUIInputFieldOptionalProperties
   
   private var maxCharacters: Int
@@ -87,7 +93,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
       }
     }
   }
-  
+
   @ViewBuilder
   private var fieldBodyHeaderHStack: some View {
     
