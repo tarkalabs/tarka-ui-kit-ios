@@ -62,9 +62,9 @@ class SpecificationViewModel: ObservableObject {
   var allSpecs: [SpecificationItem] = {
     let specsForSection: (String) -> [SpecificationItem] = { section in
       let spec1 = SpecificationItem(
-        value: "FullScale", section: section, specAttributes: attrs)
+        value: "FullScale \(section)", section: section, specAttributes: attrs)
       let spec2 = SpecificationItem(
-        value: "HalfScale", section: section, specAttributes: attrs)
+        value: "HalfScale \(section)", section: section, specAttributes: attrs)
       return [spec1, spec2]
     }
     
@@ -98,15 +98,49 @@ class SpecificationViewModel: ObservableObject {
       description: "Short description goes here", sections: sections)
   }
   
-  func fetchSpecificationForSection(_ section: AddSpecItem.Section) -> [SpecificationItem] {
-    switch section {
-    case .none:
-      return allSpecs.filter({ $0.section.isEmpty })
-    case .all:
-      return allSpecs
-    case .value(let value):
-      return allSpecs.filter({ $0.section == value })
+  func fetchSpecificationForSection(_ section: AddSpecItem.Section, searchText: String? = nil) -> [SpecificationItem] {
+    
+    let searchWords: [String] = [searchText?.lowercased() ?? ""]//searchText?.lowercased().split(separator: " ").map({ String($0) })
+    var filteredSpecs = [SpecificationItem]()
+    
+    let isFiltered: (SpecificationItem) -> Bool = { spec in
+      
+      let searchableValue = spec.value
+      let searchList = searchWords.first(where: {
+        guard !$0.isEmpty else { return true }
+        return searchableValue.lowercased().contains($0.lowercased())
+      })
+      return searchList != nil
     }
+    
+    switch section {
+      
+    case .none:
+      filteredSpecs = allSpecs.filter({
+        
+        let isEmpty = $0.section.isEmpty
+        guard isEmpty else  { return false }
+        guard !searchWords.isEmpty else  { return isEmpty }
+        return isFiltered($0)
+      })
+                                      
+    case .all:
+      filteredSpecs = allSpecs.filter({
+        
+        guard !searchWords.isEmpty else  { return true }
+        return isFiltered($0)
+      })
+      
+    case .value(let value):
+      filteredSpecs = allSpecs.filter({
+        
+        let isSameSection = $0.section == value
+        guard isSameSection else  { return false }
+        guard !searchWords.isEmpty else  { return isSameSection }
+        return isFiltered($0)
+      })
+    }
+    return filteredSpecs
   }
 }
 

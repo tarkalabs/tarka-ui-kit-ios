@@ -121,12 +121,15 @@ struct AddSpecificationsView: View {
   @ViewBuilder
   func view(forSection section: AddSpecItem.Section) -> some View {
     
-    TUITextRow(section.displayString,
-               style: .onlyTitle)
-    let specItems = vm.fetchSpecificationForSection(section)
+    let specItems = vm.fetchSpecificationForSection(section, searchText: searchBarVM.searchItem.text)
     
-    ForEach(specItems, id: \.value) { spec in
-      view(forSpec: spec)
+    if !specItems.isEmpty {
+      TUITextRow(section.displayString,
+                 style: .onlyTitle)
+      ForEach(specItems, id: \.value) { spec in
+        view(forSpec: spec)
+      }
+
     }
   }
   
