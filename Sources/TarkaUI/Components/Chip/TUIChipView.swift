@@ -29,6 +29,8 @@ public struct TUIChipView: View {
   var isSelected: Bool = false
   var size: Size = .size32
   var style: Style = .assist(.onlyTitle)
+  var backgroundColor: Color = .surface
+  var borderColor: Color = .outline
   var action: (() -> Void)?
   var badgeCount: Int?
   
@@ -40,21 +42,21 @@ public struct TUIChipView: View {
     HStack(spacing: spacing) {
       detailView
     }
-    .frame(maxHeight: size.height)
+    .frame(height: size.height)
     .padding(.leading, leading)
     .padding(.trailing, trailing)
     .padding(.vertical, 0)
-    .background(isSelected ? Color.secondaryTUI : .surface)
+    .background(isSelected ? Color.secondaryTUI : backgroundColor)
     .borderView(RoundedRectangle(cornerRadius: Spacing.halfHorizontal),
                 width: isSelected ? 0 : 1,
-                color: isSelected ? .secondaryTUI: .outline)
+                color: isSelected ? .secondaryTUI: borderColor)
     .onTapGesture {
       action?()
     }
     .overlayViewInTopTrailing(
       isBadgeEnabled, count: badgeCount, badgeSize: size == .size32 ? .m : .l)
-    .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder private var detailView: some View {
@@ -177,11 +179,13 @@ public struct TUIChipView: View {
   }
   
   @ViewBuilder
-  private func rightButtonView(_ icon: FluentIcon = .dismiss24Regular,
+  private func rightButtonView(_ icon: FluentIcon = .dismiss16Filled,
                                action: @escaping () -> Void) -> some View {
     TUIIconButton(icon: icon) { action() }
       .iconColor(isSelected ? .onSecondary : .onSurface)
-      .size(size == .size32 ? .size24 : .size32)
+      .size(size == .size32 ? .size32 : .size40)
+      .accessibilityElement(children: .contain)
+      .accessibilityIdentifier(Accessibility.button)
   }
 }
 
@@ -308,9 +312,10 @@ public extension TUIChipView {
   enum Accessibility: String, TUIAccessibility {
     case root = "TUIChipView"
     case title = "Title"
-    case leftImage = "leftImage"
-    case leftIcon = "leftIcon"
-    case rightIcon = "rightIcon"
+    case leftImage = "LeftImage"
+    case leftIcon = "LeftIcon"
+    case rightIcon = "RightIcon"
+    case button = "Button"
   }
   
   enum Size {
@@ -387,15 +392,15 @@ struct TUIChipView_Previews: PreviewProvider {
       
       Section("Input") {
         TUIChipView("Input")
-          .style(.input(.titleWithButton(.dismiss24Regular, action: {})), size: .size32)
+          .style(.input(.titleWithButton(.dismiss16Filled, action: {})), size: .size32)
         
         TUIChipView("Input with Icon")
           .style(.input(.withLeftIcon(.person24Regular,
-                                      rightIcon: .dismiss24Filled, action: {})))
+                                      rightIcon: .dismiss20Filled, action: {})))
         
         TUIChipView("Input with Image")
           .style(.input(.withLeftImage(Image(fluent: .circle32Filled),
-                                       rightIcon: .dismiss24Filled, action: {})))
+                                       rightIcon: .dismiss16Filled, action: {})))
           .size(.size32)
       }
       
@@ -415,10 +420,10 @@ struct TUIChipView_Previews: PreviewProvider {
           .style(filter: .onlyTitle)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(.dismiss24Filled, action: {}), isSelected: true)
+          .style(filter: .withButton(.dismiss16Filled, action: {}), isSelected: true)
         
         TUIChipView("With Button")
-          .style(filter: .withButton(.dismiss24Filled, action: {}),
+          .style(filter: .withButton(.dismiss20Filled, action: {}),
                  isSelected: true, badgeCount: 4)
           .size(.size40)
         
