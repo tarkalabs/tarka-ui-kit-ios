@@ -23,7 +23,7 @@ struct AddSpecItem {
       switch self {
         
       case .none:
-        return "none"
+        return "None"
       case .all:
         return "All"
       case .value(let section):
@@ -33,7 +33,6 @@ struct AddSpecItem {
   }
   var classification: String
   var description: String
-  var sections: [Section]
 }
 
 class SpecAttributeItem: ObservableObject, Identifiable {
@@ -47,13 +46,13 @@ class SpecAttributeItem: ObservableObject, Identifiable {
   }
 
   var name: String
-  var section: String
+  var section: String?
   var fieldType: FieldType
   
   var inputFieldItem: TUIInputFieldItem
   var dateInputFieldItem: TUIDateInputFieldItem
 
-  init(name: String, section: String, fieldType: FieldType) {
+  init(name: String, section: String?, fieldType: FieldType) {
     self.name = name
     self.section = section
     self.fieldType = fieldType
@@ -68,11 +67,13 @@ class SpecificationViewModel: ObservableObject {
   
   @Published var addSpecItem: AddSpecItem
   
+  @Published var chosenSection = AddSpecItem.Section.all
+    
   var allSpecAttributes: Binding<[SpecAttributeItem]> = {
     
-    let specsForSection: (String) -> [SpecAttributeItem] = { section in
+    let specsForSection: (String?) -> [SpecAttributeItem] = { section in
       let attr1 = SpecAttributeItem(
-        name: "FullScale \(section)", section: section, fieldType: .lookup)
+        name: "FullScale \(section ?? "")", section: section, fieldType: .lookup)
       let attr2 = SpecAttributeItem(
         name: "Date", section: section, fieldType: .date)
       let attr3 = SpecAttributeItem(
@@ -84,25 +85,40 @@ class SpecificationViewModel: ObservableObject {
    
     let specsOfSectionA = specsForSection("Section A")
     let specsOfSectionB = specsForSection("Section B")
-    let specsOfSectionC = specsForSection("Section C")
+    let specsOfSectionC = specsForSection(nil)
     return .constant([specsOfSectionA, specsOfSectionB, specsOfSectionC].flatMap { $0 })
   }()
   
+  var hasSections: Bool {
+    return availableSections.count > 1
+  }
+
+  var sectionsBasedOnChosen: [AddSpecItem.Section] {
+    if case .all = chosenSection { return availableSections }
+    return [chosenSection]
+  }
+  
+  var allSections: [AddSpecItem.Section]
+  var availableSections: [AddSpecItem.Section]
+
   init() {
     
-    let sections = allSpecAttributes
+    let fetchedSections = allSpecAttributes
       .compactMap({ $0.wrappedValue.section })
       .removingDuplicates()
       .compactMap({ AddSpecItem.Section.value($0) })
-//    if !sections.isEmpty {
-//      var defaultSections: [AddSpecItem.Section] = [.all, .none]
-//      defaultSections.append(contentsOf: sections)
-//      sections = defaultSections
-//    }
     
+    availableSections = fetchedSections
+    availableSections.append(.none)
+    allSections = availableSections
+
+    if !fetchedSections.isEmpty {
+      allSections.insert(.all, at: 0)
+    }
+
     self.addSpecItem = AddSpecItem(
       classification: "PM / Inspect/Service / Circuit breaker/ Low voltage moulted case",
-      description: "Short description goes here", sections: sections)
+      description: "Short description goes here")
   }
   
   func fetchSpecificationForSection(_ section: AddSpecItem.Section, searchText: String? = nil) -> Binding<[SpecAttributeItem]> {
@@ -123,7 +139,7 @@ class SpecificationViewModel: ObservableObject {
       
     case .none:
       filteredSpecAttrs = allSpecAttributes.wrappedValue.filter({
-        let isEmpty = $0.section.isEmpty
+        let isEmpty = $0.section?.isEmpty ?? true
         guard isEmpty else  { return false }
         guard !searchWords.isEmpty else  { return isEmpty }
         return isFiltered($0)

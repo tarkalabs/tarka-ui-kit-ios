@@ -15,6 +15,8 @@ struct AddSpecificationsView: View {
   
   @State var dismissTextFocus: Bool = false
   
+  @State private var showSectionList: Bool = false
+
   @StateObject var searchBarVM: TUISearchBarViewModel = .init(
     searchItem: .init(placeholder: "Search", text: ""),
     isShown: true) { _ in }
@@ -33,10 +35,27 @@ struct AddSpecificationsView: View {
   var cancelSet: Set<AnyCancellable> = []
   
   init() {
-    
     self.vm = SpecificationViewModel()
   }
   
+  var bottomBlock: TUIMobileButtonBlock {
+    TUIMobileButtonBlock(
+    style: .two(
+      left: TUIButton(title: "Discard") { },
+      right: TUIButton(title: "Add") {
+        for section in vm.availableSections {
+          let attrs = vm.fetchSpecificationForSection(section)
+          let filteredAttrs = attrs.wrappedValue.filter({ !$0.inputFieldItem.value.isEmpty || $0.dateInputFieldItem.date != nil })
+          for attr in filteredAttrs {
+            var value = attr.inputFieldItem.value
+            if value.isEmpty {
+              value = attr.dateInputFieldItem.date?.formatted() ?? "No data"
+            }
+            print("[Spec] Attr title: \(attr.inputFieldItem.title) value: \(value) in section: \(section.displayString)")
+          }
+        }
+      }))
+  }
   var body: some View {
     
     ScrollView {
@@ -52,16 +71,17 @@ struct AddSpecificationsView: View {
         
         headerView
           .padding(.horizontal, TarkaUI.Spacing.custom(24))
-        
       }
       
       Spacer()
     }
+    .actionSheet(isPresented: $showSectionList, content: sectionListSheet)
     .customNavigationBar(titleBarItem: navTitleItem)
     .addDoneButtonInToolbar(onClicked: {
       dismissTextFocus = true
       searchBarVM.isEditing = false
     })
+    .addBottomMobileButtonBlock(bottomBlock)
     .onReceive(searchBarVM.$isEditing, perform: { isEditing in
       if isEditing {
         dismissTextFocus = true
@@ -72,6 +92,28 @@ struct AddSpecificationsView: View {
       self.dismissTextFocus = false
     }
   }
+  
+  func sectionListSheet() -> ActionSheet {
+    
+    var buttons = [ActionSheet.Button]()
+    for section in vm.allSections {
+      let section = ActionSheet.Button.default(Text(section.displayString)) {
+        vm.chosenSection = section
+      }
+      buttons.append(section)
+    }
+    // If the cancel label is omitted, the default "Cancel" text will be shown
+    let cancel = ActionSheet.Button.cancel(Text("Cancel")) { }
+    buttons.append(cancel)
+
+    return ActionSheet(title: Text("Sections"),
+                       buttons: buttons)
+  }
+}
+
+// MARK: - ViewBuilders
+
+extension AddSpecificationsView {
   
   
   @ViewBuilder
@@ -93,11 +135,16 @@ struct AddSpecificationsView: View {
       
       TUITextRow("Description", style: .textDescription(vm.addSpecItem.description))
       
-      TUITextRow("Section", style: .textDescription(vm.addSpecItem.sections.first?.displayString ?? ""))
-        .wrapperIcon {
-          TUIWrapperIcon(icon: .chevronRight20Filled)
+      if vm.hasSections {
+        Button {
+          showSectionList = true
+        } label: {
+          TUITextRow("Section", style: .textDescription(vm.chosenSection.displayString))
+            .wrapperIcon {
+              TUIWrapperIcon(icon: .chevronRight20Filled)
+            }
         }
-      
+      }
     }
   }
   
@@ -112,7 +159,7 @@ struct AddSpecificationsView: View {
       TUISearchBar(searchBarVM: searchBarVM)
         .addCancelButtonAtTrailing()
       
-      ForEach(vm.addSpecItem.sections, id: \.id) { section in
+      ForEach(vm.sectionsBasedOnChosen, id: \.id) { section in
         view(forSection: section)
       }
     }
@@ -125,8 +172,10 @@ struct AddSpecificationsView: View {
     
     if !specAttributes.isEmpty {
       
-      TUITextRow(section.displayString,
-                 style: .onlyTitle)
+      if vm.hasSections {
+        TUITextRow(section.displayString,
+                   style: .onlyTitle)
+      }
       
       ForEach(specAttributes) { specAttr in
         view(forSpecAttribute: specAttr)
