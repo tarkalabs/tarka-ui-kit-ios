@@ -121,45 +121,55 @@ struct AddSpecificationsView: View {
   @ViewBuilder
   func view(forSection section: AddSpecItem.Section) -> some View {
     
-    let specItems = vm.fetchSpecificationForSection(section, searchText: searchBarVM.searchItem.text)
+    let specAttributes = vm.fetchSpecificationForSection(section, searchText: searchBarVM.searchItem.text)
     
-    if !specItems.isEmpty {
+    if !specAttributes.isEmpty {
+      
       TUITextRow(section.displayString,
                  style: .onlyTitle)
-      ForEach(specItems, id: \.value) { spec in
-        view(forSpec: spec)
+      
+      ForEach(specAttributes) { specAttr in
+        view(forSpecAttribute: specAttr)
       }
-
-    }
-  }
-  
-  @ViewBuilder
-  func view(forSpec spec: SpecificationItem) -> some View {
-    
-    TUITextRow("Domain", style: .textDescription(spec.value))
-      .iconButtons {
-        TUIIconButton(icon: .dismiss16Filled) { }
-          .iconColor(.outline)
-      }
-      .wrapperIcon {
-        TUIWrapperIcon(icon: .chevronRight20Filled)
-      }
-    
-    ForEach(spec.$specAttributes, id: \.id) { attr in
-      view(forSpecAttribute: attr)
     }
   }
   
   @ViewBuilder
   func view(forSpecAttribute attr: Binding<SpecAttributeItem>) -> some View {
     
-    TUITextInputField(
-      inputItem: attr.inputFieldItem)
-    .dismissTextFocus(dismissTextFocus)
-    .allowedCharacters(CharacterSet(charactersIn: "1234567890."))
-    .setKeyboardType(.decimalPad)
+    let attibute = attr.wrappedValue
+    let value = attibute.inputFieldItem.value
+    switch attibute.fieldType {
+      
+    case .lookup:
+      
+      let style: TUITextRow.Style = value.isEmpty ? .onlyTitle : .textDescription(value)
+      TUITextRow(attibute.inputFieldItem.title, style: style)
+        .iconButtons {
+          TUIIconButton(icon: .dismiss16Filled) { }
+            .iconColor(.outline)
+        }
+        .wrapperIcon {
+          TUIWrapperIcon(icon: .chevronRight20Filled)
+        }
+    case .date:
+      TUIDateInputField(
+        dateInputItem: attr.dateInputFieldItem)
+      
+    case .numeric:
+      TUITextInputField(
+        inputItem: attr.inputFieldItem)
+      .dismissTextFocus(dismissTextFocus)
+      .allowedCharacters(CharacterSet(charactersIn: "1234567890."))
+      .setKeyboardType(.decimalPad)
+      
+    case .alphaNumeric:
+      TUITextInputField(
+        inputItem: attr.inputFieldItem)
+      .dismissTextFocus(dismissTextFocus)
+      .setKeyboardType(.default)
+    }
   }
-  
 }
 
 struct AddSpecificationsView_Previews: PreviewProvider {
