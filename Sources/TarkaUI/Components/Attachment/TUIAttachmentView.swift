@@ -9,21 +9,22 @@ import SwiftUI
 
 public struct TUIAttachmentView: View {
   
+  private var imageStyle: ImageStyle
   private var imageSize: ImageSize = .size40
   private var style: Style = .onlyTitle
   private var title: String
-  private var image: Image
+  
   private var deleteAction: () -> Void
   private var showDownloadButton: Bool = false
   private var downloadAction: (() -> Void)?
   private var iconColor: Color = .secondaryTUI
   
   public init(_ title: String,
-              image: Image,
+              imageStyle: ImageStyle,
               style: TUIAttachmentView.Style = .onlyTitle,
               deleteAction: @escaping () -> Void) {
     self.title = title
-    self.image = image
+    self.imageStyle = imageStyle
     self.style = style
     self.deleteAction = deleteAction
   }
@@ -57,13 +58,31 @@ public struct TUIAttachmentView: View {
     .accessibilityElement(children: .contain)
   }
   
+  @ViewBuilder
   private var imageView: some View {
-    image
-      .resizable()
-      .scaledToFit()
-      .clipShape(RoundedRectangle(cornerRadius: Spacing.halfHorizontal))
-      .frame(width: imageSize.width, height: Spacing.custom(40))
-      .accessibilityIdentifier(Accessibility.image)
+    switch imageStyle {
+    case .image(let image):
+      image
+        .resizable()
+        .scaledToFit()
+        .clipShape(RoundedRectangle(cornerRadius: Spacing.halfHorizontal))
+        .frame(width: imageSize.width, height: Spacing.custom(40))
+        .accessibilityIdentifier(Accessibility.image)
+    
+    case .icon(let icon):
+      RoundedRectangle(cornerRadius: Spacing.halfHorizontal)
+        .fill(Color.surfaceVariant)
+        .overlay {
+            Image(fluent: icon)
+              .scaledToFit()
+              .frame(width: Spacing.custom(24), height: Spacing.custom(24))
+              .clipped()
+              .foregroundStyle(iconColor)
+        }
+        .frame(width: imageSize.width, height: Spacing.custom(40))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier(Accessibility.image)
+    }
   }
   
   private func iconView(_ icon: FluentIcon, action: @escaping () -> Void) -> some View {
@@ -97,6 +116,10 @@ public extension TUIAttachmentView {
   enum Style {
     case onlyTitle
     case withDescription(String)
+  }
+  
+  enum ImageStyle {
+    case image(Image), icon(FluentIcon)
   }
   
   enum ImageSize {
@@ -141,7 +164,7 @@ public extension TUIAttachmentView {
 
 struct TUIAttachmentView_Previews: PreviewProvider {
   static var previews: some View {
-    TUIAttachmentView("Hello", image: .init(fluent: .document24Regular),
+    TUIAttachmentView("Hello", imageStyle: .icon(.document24Regular),
                       style: .withDescription("Example")) {}
       .download(true, action: {})
       .padding(.horizontal, 20)
