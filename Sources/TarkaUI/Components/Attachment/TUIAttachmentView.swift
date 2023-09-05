@@ -64,9 +64,9 @@ public struct TUIAttachmentView: View {
     case .image(let image):
       image
         .resizable()
-        .scaledToFit()
         .clipShape(RoundedRectangle(cornerRadius: Spacing.halfHorizontal))
         .frame(width: imageSize.width, height: Spacing.custom(40))
+        .scaledToFill()
         .accessibilityIdentifier(Accessibility.image)
     
     case .icon(let icon):
