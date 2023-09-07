@@ -61,4 +61,9 @@ public extension View {
   func adaptiveKeyboard(isKeyboardShown: Binding<Bool>) -> some View {
     modifier(AdaptiveKeyboard(isKeyboardShown: isKeyboardShown))
   }
+  
+  func hideKeyboard() {
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                    to: nil, from: nil, for: nil)
+  }
 }
