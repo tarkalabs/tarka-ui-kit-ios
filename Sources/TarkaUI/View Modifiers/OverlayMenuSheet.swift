@@ -49,11 +49,13 @@ public struct OverlayMenuSheet: ViewModifier {
 
 public extension View {
   
-  /// Adds overlay menu sheet
-  /// - Parameter onClicked: closure that called when done button is clicked
-  /// - Returns: View
-  ///
   @ViewBuilder
+  /// Adds overlay menu sheet
+  /// - Parameters:
+  ///   - isSheetPresented: to show / dismiss
+  ///   - overlayMenuView: Overlay menu view that has to be presented
+  /// - Returns: View
+  /// 
   func addsOverlayMenuSheet(
     isSheetPresented: Binding<Bool>,
     @ViewBuilder overlayMenuView: () -> TUIOverlayMenuView) -> some View {
