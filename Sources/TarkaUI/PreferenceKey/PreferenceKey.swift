@@ -16,3 +16,13 @@ struct HeightKey: PreferenceKey {
     value = nextValue()
   }
 }
+
+/// A named value to store width, produced by a view
+struct WidthKey: PreferenceKey {
+  
+  static var defaultValue = CGFloat.zero
+  
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    value = nextValue()
+  }
+}
