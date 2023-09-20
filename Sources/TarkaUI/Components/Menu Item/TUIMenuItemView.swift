@@ -155,7 +155,7 @@ public struct TUIMenuItemView: View {
       if isSelected {
         return isPressed ? Color.success20 : .success10
       } else {
-        return isPressed ? .surfaceHover : .clear
+        return isPressed ? .surfaceHover.opacity(0.8) : .clear
       }
     }
   }
