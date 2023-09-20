@@ -1,5 +1,5 @@
 //
-//  BottomOverlayMenuSheet.swift
+//  OverlayMenuSheet.swift
 //
 //
 //  Created by Gopinath on 20/09/23.
@@ -10,7 +10,7 @@ import SwiftUI
 
 /// A View Modifier that shows overlay menu as popup on iPad(when not in split screen) and
 /// as bottom sheet on iPhones
-public struct BottomOverlayMenuSheet: ViewModifier {
+public struct OverlayMenuSheet: ViewModifier {
   
   @Binding var isSheetPresented: Bool
   @State private var overlayMenuViewHeight: CGFloat = 0
@@ -49,15 +49,15 @@ public struct BottomOverlayMenuSheet: ViewModifier {
 
 public extension View {
   
-  /// Adds done button in toolbar
+  /// Adds overlay menu sheet
   /// - Parameter onClicked: closure that called when done button is clicked
   /// - Returns: View
   ///
   @ViewBuilder
-  func addBottomOverlayMenu(
+  func addsOverlayMenuSheet(
     isSheetPresented: Binding<Bool>,
     @ViewBuilder overlayMenuView: () -> TUIOverlayMenuView) -> some View {
-      modifier(BottomOverlayMenuSheet(
+      modifier(OverlayMenuSheet(
         isSheetPresented: isSheetPresented,
         overlayMenuView: overlayMenuView))
     }
