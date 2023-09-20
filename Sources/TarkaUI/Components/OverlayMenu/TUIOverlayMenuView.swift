@@ -8,16 +8,17 @@
 import SwiftUI
 
 public struct TUIOverlayMenuView: View {
+  @Environment(\.dismiss) private var dismiss
   
   private var title: String
-  private var action: () -> Void
+  private var action: (() -> Void)?
   private var menuItems: [TUIMenuItemView]
   
-  public init(title: String, @ViewBuilder menuItems: () -> [TUIMenuItemView],
-              action: @escaping () -> Void) {
+  public init(title: String, menuItems: [TUIMenuItemView],
+              action: (() -> Void)? = nil) {
     self.title = title
     self.action = action
-    self.menuItems = menuItems()
+    self.menuItems = menuItems
   }
   
   public var body: some View {
@@ -60,10 +61,12 @@ public struct TUIOverlayMenuView: View {
   
   private var bottomView: some View {
     TUIOverlayFooter {
-      CancelButton(action)
+      CancelButton {}
     }
     .frame(maxWidth: .infinity)
     .background(Color.surface)
+    .onTapGesture(perform: dimissAction)
+    .clipShape(RoundedCorner(radius: 16, corners: [.bottomLeft, .bottomRight]))
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.bottomView)
   }
@@ -76,6 +79,14 @@ public struct TUIOverlayMenuView: View {
     
     init(_ handler: @escaping () -> Void) {
       self.handler = handler
+    }
+  }
+  
+  private func dimissAction() {
+    if let action {
+      action()
+    } else {
+      dismiss()
     }
   }
 }
@@ -93,7 +104,7 @@ public extension TUIOverlayMenuView {
 
 struct TUIOverlayMenuView_Previews: PreviewProvider {
   
-  static func menuItems() -> [TUIMenuItemView] {
+  static var menuItems: [TUIMenuItemView] {
     [.init(item: .init(title: "Hello", style: .onlyLabel), isSelected: true) {},
      .init(item: .init(title: "Welcome", style: .leftIcon(.accessTime20Filled))) {},
      .init(item: .init(title: "To", style: .statusDots(.circle12Filled, .success)), isSelected: true) {},
