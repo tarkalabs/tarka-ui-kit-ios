@@ -36,7 +36,7 @@ public struct OverlayMenuSheet: ViewModifier {
           isPresented: $isSheetPresented,
           content: {
             overlayMenuView
-              .getHeight($overlayMenuViewHeight)
+              .getContentHeight(height: $overlayMenuViewHeight)
               .getWidth($overlayMenuViewWidth)
               .backgroundView(withColor: color) {
                 isSheetPresented = false
