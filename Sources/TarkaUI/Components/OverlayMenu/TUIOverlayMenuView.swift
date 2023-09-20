@@ -9,6 +9,7 @@ import SwiftUI
 
 public struct TUIOverlayMenuView: View {
   @Environment(\.dismiss) private var dismiss
+  @State private var height: CGFloat = 0
   
   private var title: String
   private var action: (() -> Void)?
@@ -46,9 +47,13 @@ public struct TUIOverlayMenuView: View {
   private var menuItemView: some View {
     if !menuItems.isEmpty {
       VStack(spacing: Spacing.custom(24)) {
-        ForEach(menuItems, id: \.item.id) { item in
-          item
+        ScrollView {
+          ForEach(menuItems, id: \.item.id) { item in
+            item
+          }
+          .getHeight($height)
         }
+        .frame(maxHeight: height)
       }
       .padding(Spacing.custom(24))
       .background(Color.surface)
@@ -105,18 +110,21 @@ public extension TUIOverlayMenuView {
 struct TUIOverlayMenuView_Previews: PreviewProvider {
   
   static var menuItems: [TUIMenuItemView] {
-    [.init(item: .init(title: "Hello", style: .onlyLabel), isSelected: true) {},
-     .init(item: .init(title: "Welcome", style: .leftIcon(.accessTime20Filled))) {},
-     .init(item: .init(title: "To", style: .statusDots(.circle12Filled, .success)), isSelected: true) {},
-     .init(item: .init(title: "SwiftUI", style: .withRightIcon(.add24Filled, .dismiss24Filled))) {}
-    ]
+    (0...40).map { index in
+      TUIMenuItemView(
+        item: .init(title: index%2 == 0 ? "Hello" : "Welcome to swift",
+                    style: index%2 == 0 ? .withRightIcon(.add24Filled, .dismiss24Filled):
+            .leftIcon(.circle12Filled)),
+        isSelected: (index%4) == 1,
+        action: {})
+    }
   }
   
   static var previews: some View {
     ZStack {
       Color.gray.opacity(0.3)
-      TUIOverlayMenuView(title: "Title", menuItems: menuItems) {}
+        .ignoresSafeArea()
+      TUIOverlayMenuView(title: "Menu Title", menuItems: menuItems) {}
     }
-    .ignoresSafeArea()
   }
 }
