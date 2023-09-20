@@ -54,8 +54,12 @@ public struct TUIOverlayMenuView: View {
     if !menuItems.isEmpty {
       ScrollView {
         VStack(spacing: Spacing.custom(24)) {
-          ForEach(menuItems, id: \.item.id) { item in
-            item
+          ForEach(menuItems, id: \.item.id) { button in
+            TUIMenuItemView(item: button.item,
+                            isSelected: button.isSelected) {
+              dimissAction()
+              button.action()
+            }
           }
         }
         .getHeight($height)

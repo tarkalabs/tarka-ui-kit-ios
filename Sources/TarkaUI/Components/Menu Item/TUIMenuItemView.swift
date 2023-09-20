@@ -8,10 +8,9 @@
 import SwiftUI
 
 public struct TUIMenuItemView: View {
-  @Environment(\.dismiss) private var dismiss
   public var item: TUIMenuItemProperties
   public var action: () -> Void
-  private var isSelected: Bool
+  public var isSelected: Bool
   
   /// Creates a menu item view.
   ///
@@ -29,10 +28,7 @@ public struct TUIMenuItemView: View {
   
   public var body: some View {
     Button {
-      dismiss()
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-        action()
-      }
+      action()
     } label: {
       HStack(spacing: Spacing.halfHorizontal) {
         detailView
