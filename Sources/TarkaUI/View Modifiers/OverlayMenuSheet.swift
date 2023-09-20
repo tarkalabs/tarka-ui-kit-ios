@@ -56,7 +56,7 @@ public extension View {
   ///   - overlayMenuView: Overlay menu view that has to be presented
   /// - Returns: View
   /// 
-  func addsOverlayMenuSheet(
+  func addOverlayMenuSheet(
     isSheetPresented: Binding<Bool>,
     @ViewBuilder overlayMenuView: () -> TUIOverlayMenuView) -> some View {
       modifier(OverlayMenuSheet(
