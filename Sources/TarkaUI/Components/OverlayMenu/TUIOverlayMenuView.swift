@@ -66,7 +66,7 @@ public struct TUIOverlayMenuView: View {
   
   private var bottomView: some View {
     TUIOverlayFooter {
-      CancelButton {}
+      CancelButton(dimissAction)
     }
     .frame(maxWidth: .infinity)
     .background(Color.surface)
