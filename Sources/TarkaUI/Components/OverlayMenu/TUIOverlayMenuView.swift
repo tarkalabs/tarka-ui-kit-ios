@@ -36,6 +36,7 @@ public struct TUIOverlayMenuView: View {
       bottomView
     }
     .background(Color.surface)
+    .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
     .presentationDetents([.height(height)])
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
@@ -45,7 +46,6 @@ public struct TUIOverlayMenuView: View {
   
   private var headerView: some View {
     TUIOverlayHeaderView(.onlyTitle(title))
-      .setRadiusToCorners(Spacing.baseHorizontal, corners: .allCorners)
       .accessibilityIdentifier(Accessibility.headerView)
       .accessibilityElement(children: .contain)
       .getHeight($headerHeight)
@@ -83,7 +83,6 @@ public struct TUIOverlayMenuView: View {
     }
     .frame(maxWidth: .infinity)
     .onTapGesture(perform: dimissAction)
-    .clipShape(RoundedCorner(radius: 16, corners: [.bottomLeft, .bottomRight]))
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.bottomView)
     .getHeight($bottomViewHeight)

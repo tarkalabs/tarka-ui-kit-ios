@@ -1,6 +1,6 @@
 //
 //  TUIOverlayHeaderView.swift
-//  
+//
 //
 //  Created by MAHESHWARAN on 21/08/23.
 //
@@ -184,15 +184,14 @@ struct TUIOverlayHeaderView_Previews: PreviewProvider {
         TUIOverlayHeaderView(.right("Title", rightIcon: .dismiss24Regular) {})
         
         TUIOverlayHeaderView(.onlyTitle("Title"))
-          .setRadiusToCorners(16, corners: .allCorners)
-        
+          .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
         TUIOverlayHeaderView(.left("Title") {})
         
         TUIOverlayHeaderView(.right("Title", rightIcon: .dismiss24Regular) {})
-          .setRadiusToCorners(16, corners: [.topLeft, .bottomRight])
+          .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
         
         TUIOverlayHeaderView(.right("Title", rightIcon: .dismiss24Regular) {})
-          .setRadiusToCorners(16, corners: .allCorners)
+          .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
       }
       .padding()
     }
