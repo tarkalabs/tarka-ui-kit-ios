@@ -28,7 +28,8 @@ public struct OverlayMenuSheet: ViewModifier {
   
   public func body(content: Content) -> some View {
     
-    let color: Color = contentWidth > overlayMenuViewWidth ? .clear : .surface
+    let viewWidth = keyWindow?.bounds.width ?? contentWidth
+    let color: Color =  viewWidth > overlayMenuViewWidth ? .clear : .surface
     ZStack {
       content
         .getWidth($contentWidth)
