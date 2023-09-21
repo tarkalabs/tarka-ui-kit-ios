@@ -23,42 +23,43 @@ public struct TUITextInputField: TUIInputFieldProtocol {
 
   /// Binds the bool that used to handle the row interaction and text field interaction switch when user interacts
   
+  // Used to hold the field's focused state
   @State private var isFocused: Bool = false
   
+  // Used to receive events when done button clicked
+  @Binding private var dismissTextFocus: Bool
+
   @Binding private var inputItem: TUIInputFieldItem
   
   /// Creates a `TUITextInputField` view
   /// - Parameters:
   ///   - inputItem: TUIInputItem's instance that holds the required values to render `TUIInputField` View
-  ///   - isDoneClicked: A bindable bool value that used to handle text field focus when done clicked in toolbar
   ///   
   public init(
-    inputItem: Binding<TUIInputFieldItem>) {
+    inputItem: Binding<TUIInputFieldItem>,
+    dismissTextFocus: Binding<Bool>? = nil) {
       
       self._inputItem = inputItem
+      self._dismissTextFocus = dismissTextFocus ?? .constant(true)
     }
   
   public var body: some View {
     mainBody
-      .onChange(of: isFocused, perform: { value in
-        if !value {
+      .onChange(of: dismissTextFocus, perform: { value in
+        if value {
+          isFocused = !dismissTextFocus
           // revert the style when content is empty
           if self.inputItem.value.isEmpty {
             self.inputItem.style = existingStyle
           }
         }
       })
-  }
-  
-  public func dismissTextFocus(_ dismissTextFocus: Bool) -> Self {
-    let newView = self
-    if dismissTextFocus {
-      newView.isFocused = false
-      if newView.inputItem.value.isEmpty {
-        newView.inputItem.style = existingStyle
-      }
-    }
-    return newView
+      .onChange(of: isFocused, perform: { value in
+        if !isFocused {
+          // revert the dismissTextFocus to receive updates at `onChange`
+          dismissTextFocus = false
+        }
+      })
   }
   
   @ViewBuilder
@@ -72,7 +73,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
     TUIInputField(
       inputItem: $inputItem,
       properties: properties,
-      isTextFieldFocused: $isFocused,
+      isTextFieldFocused: isFocused,
       maxCharacters: maxCharacters,
       allowedCharacters: allowedCharacters,
       keyboardType: keyboardType) {

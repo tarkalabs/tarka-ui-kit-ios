@@ -39,14 +39,14 @@ struct TUIInputTextContentView: View {
        maxCharacters: Int = 0,
        allowedCharacters: CharacterSet = .init(),
        keyboardType: UIKeyboardType = .default,
-       isTextFieldFocused: Binding<Bool>? = nil) {
+       isTextFieldFocused: Bool? = nil) {
     
     self._inputItem = inputItem
     self.placeholder = placeholder ?? ""
     self.maxCharacters = maxCharacters
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
-   self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
+   self._isTextFieldFocused = Binding<Bool>.constant(isTextFieldFocused ?? false)
   }
   
   var body: some View {
@@ -114,6 +114,9 @@ struct TUIInputTextContentView: View {
       // to inputItem.value
       .onChange(of: inputValue) { newValue in
         inputItem.value = inputValue
+      }
+      .onAppear() {
+        self.inputValue = $inputItem.wrappedValue.value
       }
       .keyboardType(keyboardType)
       .lineSpacing(0)

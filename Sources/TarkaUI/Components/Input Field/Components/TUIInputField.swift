@@ -18,7 +18,7 @@ import SwiftUI
 public struct TUIInputField: TUIInputFieldProtocol {
   
   @Binding var inputItem: TUIInputFieldItem
-  @Binding private var isTextFieldFocused: Bool
+  private var isTextFieldFocused: Bool
   
   /* Facing some weird issue. When input item value is changed,
    it is getting updates in `TUIInputTextContentView` but not here.
@@ -40,7 +40,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
   ///   
   public init(inputItem: Binding<TUIInputFieldItem>,
        properties: TUIInputFieldOptionalProperties? = nil,
-       isTextFieldFocused: Binding<Bool>? = nil,
+       isTextFieldFocused: Bool? = nil,
        maxCharacters: Int = 0,
        allowedCharacters: CharacterSet = .init(),
        keyboardType: UIKeyboardType = .default,
@@ -51,7 +51,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
     self.maxCharacters = maxCharacters
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
-    self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
+    self.isTextFieldFocused = isTextFieldFocused ?? false
     self.action = action
   }
   
@@ -110,7 +110,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
         maxCharacters: maxCharacters,
         allowedCharacters: allowedCharacters,
         keyboardType: keyboardType,
-        isTextFieldFocused: $isTextFieldFocused)
+        isTextFieldFocused: isTextFieldFocused)
       .frame(maxWidth: .infinity, alignment: .leading)
       
       if let endItemStyle  = properties.endItemStyle {
