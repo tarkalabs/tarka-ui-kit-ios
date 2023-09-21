@@ -13,11 +13,11 @@ public struct TUIOverlayMenuView: View {
   private var action: () -> Void
   private var menuItems: [TUIMenuItemView]
   
-  public init(title: String, @ViewBuilder menuItems: () -> [TUIMenuItemView],
+  public init(title: String, menuItems: [TUIMenuItemView],
               action: @escaping () -> Void) {
     self.title = title
     self.action = action
-    self.menuItems = menuItems()
+    self.menuItems = menuItems
   }
   
   public var body: some View {
@@ -26,6 +26,7 @@ public struct TUIOverlayMenuView: View {
       menuItemView
       bottomView
     }
+    .setRadiusToCorners(Spacing.baseHorizontal, corners: .allCorners)
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
@@ -34,7 +35,6 @@ public struct TUIOverlayMenuView: View {
   
   private var headerView: some View {
     TUIOverlayHeaderView(.onlyTitle(title))
-      .customCornerRadius(Spacing.baseHorizontal)
       .accessibilityIdentifier(Accessibility.headerView)
       .accessibilityElement(children: .contain)
   }
@@ -93,13 +93,13 @@ public extension TUIOverlayMenuView {
 
 struct TUIOverlayMenuView_Previews: PreviewProvider {
   
-  static func menuItems() -> [TUIMenuItemView] {
+  static var menuItems: [TUIMenuItemView] = {
     [.init(item: .init(title: "Hello", style: .onlyLabel), isSelected: true) {},
      .init(item: .init(title: "Welcome", style: .leftIcon(.accessTime20Filled))) {},
      .init(item: .init(title: "To", style: .statusDots(.circle12Filled, .success)), isSelected: true) {},
      .init(item: .init(title: "SwiftUI", style: .withRightIcon(.add24Filled, .dismiss24Filled))) {}
     ]
-  }
+  }()
   
   static var previews: some View {
     ZStack {
