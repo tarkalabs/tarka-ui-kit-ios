@@ -9,21 +9,24 @@ import SwiftUI
 
 public struct TUIOverlayMenuView: View {
   @Environment(\.dismiss) private var dismiss
-  @State private var height: CGFloat = 0
-  @Binding var contentHeight: CGFloat
-  @State var headerHeight = CGFloat.zero
-  @State var bottomViewHeight = CGFloat.zero
+  
+  @State private var contentHeight = CGFloat.zero
+  @State private var headerHeight = CGFloat.zero
+  @State private var bottomViewHeight = CGFloat.zero
   
   private var title: String
   private var action: (() -> Void)?
   private var menuItems: [TUIMenuItemView]
+  
+  private var height: CGFloat {
+    contentHeight + headerHeight + bottomViewHeight
+  }
   
   public init(title: String, menuItems: [TUIMenuItemView],
               action: (() -> Void)? = nil) {
     self.title = title
     self.action = action
     self.menuItems = menuItems
-    _contentHeight = .constant(0)
   }
   
   public var body: some View {
@@ -32,6 +35,8 @@ public struct TUIOverlayMenuView: View {
       menuItemView
       bottomView
     }
+    .background(Color.surface)
+    .presentationDetents([.height(height)])
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
@@ -40,7 +45,7 @@ public struct TUIOverlayMenuView: View {
   
   private var headerView: some View {
     TUIOverlayHeaderView(.onlyTitle(title))
-      .customCornerRadius(Spacing.baseHorizontal)
+      .setRadiusToCorners(Spacing.baseHorizontal, corners: .allCorners)
       .accessibilityIdentifier(Accessibility.headerView)
       .accessibilityElement(children: .contain)
       .getHeight($headerHeight)
@@ -50,27 +55,21 @@ public struct TUIOverlayMenuView: View {
   
   @ViewBuilder
   private var menuItemView: some View {
-    let screenRatio = (600/812) * UIScreen.main.bounds.height
     if !menuItems.isEmpty {
       ScrollView {
         VStack(spacing: Spacing.custom(24)) {
           ForEach(menuItems, id: \.item.id) { button in
-            TUIMenuItemView(item: button.item,
-                            isSelected: button.isSelected) {
+            TUIMenuItemView(item: button.item, isSelected: button.isSelected) {
               dimissAction()
               button.action()
             }
           }
         }
-        .getHeight($height)
+        .padding(Spacing.custom(24))
+        .background(Color.surface)
+        .getHeight($contentHeight)
       }
-      .padding(Spacing.custom(24))
-      .background(Color.surface)
-      .frame(maxHeight: min((screenRatio - headerHeight - bottomViewHeight), height+48))
-      .onChange(of: height) { _ in
-        contentHeight = headerHeight + bottomViewHeight +
-        min((screenRatio - headerHeight - bottomViewHeight), height+48)
-      }
+      .frame(maxHeight: contentHeight)
       .accessibilityIdentifier(Accessibility.menuItemView)
       .accessibilityElement(children: .contain)
     }
@@ -83,7 +82,6 @@ public struct TUIOverlayMenuView: View {
       CancelButton(dimissAction)
     }
     .frame(maxWidth: .infinity)
-    .background(Color.surface)
     .onTapGesture(perform: dimissAction)
     .clipShape(RoundedCorner(radius: 16, corners: [.bottomLeft, .bottomRight]))
     .accessibilityElement(children: .contain)
@@ -120,18 +118,12 @@ public extension TUIOverlayMenuView {
     case headerView = "HeaderView"
     case bottomView = "BottomView"
   }
-  
-  func getContentHeight(height: Binding<CGFloat>) -> Self {
-    var newView = self
-    newView._contentHeight = height
-    return newView
-  }
 }
 
 struct TUIOverlayMenuView_Previews: PreviewProvider {
   
   static var menuItems: [TUIMenuItemView] {
-    (0...40).map { index in
+    (0...4).map { index in
       TUIMenuItemView(
         item: .init(title: index%2 == 0 ? "Hello" : "Welcome to swift",
                     style: index%2 == 0 ? .withRightIcon(.add24Filled, .dismiss24Filled):
