@@ -11,9 +11,6 @@ public struct TUIOverlayHeaderView: View {
   
   private var style: Style
   
-  private var radius: CGFloat = 0.0
-  private var corners: UIRectCorner = .allCorners
-  
   public init(_ style: TUIOverlayHeaderView.Style) {
     self.style = style
   }
@@ -71,7 +68,6 @@ public struct TUIOverlayHeaderView: View {
     .frame(height: Spacing.custom(64))
     .frame(maxWidth: .infinity)
     .background(Color.surface)
-    .setRadiusToCorners(radius, corners: corners)
     .accessibilityElement(children: .contain)
   }
   
@@ -93,7 +89,6 @@ public struct TUIOverlayHeaderView: View {
     .frame(height: Spacing.custom(64))
     .frame(maxWidth: .infinity)
     .background(Color.surface)
-    .setRadiusToCorners(radius, corners: corners)
     .accessibilityElement(children: .contain)
   }
   
@@ -116,7 +111,6 @@ public struct TUIOverlayHeaderView: View {
     .frame(height: Spacing.custom(64))
     .frame(maxWidth: .infinity)
     .background(Color.surface)
-    .setRadiusToCorners(radius, corners: corners)
     .accessibilityElement(children: .contain)
   }
   
@@ -172,14 +166,6 @@ public extension TUIOverlayHeaderView {
     case leftIcon = "LeftIcon"
     case rightButton = "RightButton"
   }
-  
-  func customCornerRadius(
-    _ radius: CGFloat, corners: UIRectCorner = [.topLeft, .topRight]) -> Self {
-      var newView = self
-      newView.radius = radius
-      newView.corners = corners
-      return newView
-    }
 }
 
 struct TUIOverlayHeaderView_Previews: PreviewProvider {
@@ -198,16 +184,15 @@ struct TUIOverlayHeaderView_Previews: PreviewProvider {
         TUIOverlayHeaderView(.right("Title", rightIcon: .dismiss24Regular) {})
         
         TUIOverlayHeaderView(.onlyTitle("Title"))
-          .customCornerRadius(16)
+          .setRadiusToCorners(16, corners: .allCorners)
         
         TUIOverlayHeaderView(.left("Title") {})
-          .customCornerRadius(16)
         
         TUIOverlayHeaderView(.right("Title", rightIcon: .dismiss24Regular) {})
-          .customCornerRadius(16, corners: [.topLeft, .bottomRight])
+          .setRadiusToCorners(16, corners: [.topLeft, .bottomRight])
         
         TUIOverlayHeaderView(.right("Title", rightIcon: .dismiss24Regular) {})
-          .customCornerRadius(16, corners: .allCorners)
+          .setRadiusToCorners(16, corners: .allCorners)
       }
       .padding()
     }
