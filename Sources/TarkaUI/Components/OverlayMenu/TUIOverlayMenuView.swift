@@ -60,7 +60,7 @@ public struct TUIOverlayMenuView: View {
         VStack(spacing: Spacing.custom(24)) {
           ForEach(menuItems, id: \.item.id) { button in
             TUIMenuItemView(item: button.item, isSelected: button.isSelected) {
-              dimissAction()
+              dismiss()
               button.action()
             }
           }
@@ -79,10 +79,10 @@ public struct TUIOverlayMenuView: View {
   
   private var bottomView: some View {
     TUIOverlayFooter {
-      CancelButton(dimissAction)
+      CancelButton(dismissAction)
     }
     .frame(maxWidth: .infinity)
-    .onTapGesture(perform: dimissAction)
+    .onTapGesture(perform: dismissAction)
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.bottomView)
     .getHeight($bottomViewHeight)
@@ -99,7 +99,7 @@ public struct TUIOverlayMenuView: View {
     }
   }
   
-  private func dimissAction() {
+  private func dismissAction() {
     if let action {
       action()
     } else {
