@@ -16,10 +16,6 @@ struct TUIInputTextContentView: View {
   
   @Binding var inputItem: TUIInputFieldItem
   
-  /// We need to maintaining the textfield value as a private state variable in order to apply filters such as
-  /// max characters and allowed characters. Applying the filters on the `inputItem` binding directly does not work
-  @State private var inputValue = ""
-
   @Binding private var isTextFieldFocused: Bool
   @FocusState private var isFocused: Bool
   
@@ -27,26 +23,30 @@ struct TUIInputTextContentView: View {
   private var maxCharacters: Int
   private var keyboardType: UIKeyboardType
   private var allowedCharacters: CharacterSet
-
+  private var isTextField: Bool
+  
   /// Creates a `TUIInputTextContentView` View
   /// - Parameters:
   ///   - inputItem: A `TUIInputFieldItem` instance that holds the required values to render `TUIInputTextContentView` View
   ///   - placeholder: A string that to be shown as placeholder for text content field
   ///   - isTextFieldFocused: A bindable bool value that handles text field keyboard focus
-  ///   
+  ///
   init(inputItem: Binding<TUIInputFieldItem>,
        placeholder: String? = nil,
        maxCharacters: Int = 0,
        allowedCharacters: CharacterSet = .init(),
        keyboardType: UIKeyboardType = .default,
-       isTextFieldFocused: Bool? = nil) {
+       isTextFieldFocused: Bool? = nil,
+       isTextField: Bool = false) {
     
     self._inputItem = inputItem
     self.placeholder = placeholder ?? ""
     self.maxCharacters = maxCharacters
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
-   self._isTextFieldFocused = Binding<Bool>.constant(isTextFieldFocused ?? false)
+    self._isTextFieldFocused = Binding<Bool>.constant(isTextFieldFocused ?? false)
+    self.isTextField = isTextField
+//    self.inputValue = inputItem.wrappedValue.value
   }
   
   var body: some View {
@@ -104,37 +104,39 @@ struct TUIInputTextContentView: View {
       EmptyView()
       
     default:
+      textView
+        .font(.body6)
+        .foregroundColor(.inputText)
+        .frame(minHeight: 20, alignment: .leading)
+        .accessibilityIdentifier(Accessibility.value)
+    }
+  }
+  
+  @State var textFieldChanges = false
+  @ViewBuilder
+  var textView: some View {
+    if isTextField {
       TextField(placeholder,
-                text: $inputValue,
+                text: $inputItem.value,
                 axis: .vertical)
-      // Receive the inputValue as a combine publisher first
-      // and apply filtering
-      .onReceive(Just(inputValue), perform: limitText)
-      // After applying filters, if the value changes, then assign it
-      // to inputItem.value
-      .onChange(of: inputValue) { newValue in
-        inputItem.value = inputValue
-      }
-      .onAppear() {
-        self.inputValue = $inputItem.wrappedValue.value
+      .onChange(of: inputItem.value) { newValue in
+        limitText(newValue)
       }
       .keyboardType(keyboardType)
       .lineSpacing(0)
       .focused($isFocused)
       .multilineTextAlignment(.leading)
       .labelsHidden()
-      .font(.body6)
-      .foregroundColor(.inputText)
-      .frame(minHeight: 20, alignment: .leading)
       .disabled(!isTextFieldFocused)
-      .accessibilityIdentifier(Accessibility.value)
+    } else {
+      Text(inputItem.value)
     }
   }
   
   private func limitText(_ newValue: String) {
     var filteredText = newValue
     let count = filteredText.count
-
+    
     if keyboardType == .decimalPad {
       // restrict multiple dots
       let dot: Character = "."
@@ -142,13 +144,13 @@ struct TUIInputTextContentView: View {
       if dotFiltered.count > 1, let firstIndex = newValue.firstIndex(of: dot) {
         filteredText.removeAll(where: { $0 == dot })
         filteredText.insert(dot, at: firstIndex)
-        inputValue = filteredText
+        inputItem.value = filteredText
         return
       }
     }
     if maxCharacters > 0, count > maxCharacters {
       // restrict count
-      inputValue = String(filteredText.prefix(maxCharacters))
+      inputItem.value = String(filteredText.prefix(maxCharacters))
       return
     }
     
@@ -159,8 +161,8 @@ struct TUIInputTextContentView: View {
           !allowedCharacters.contains(s)
         }
       }
-      
-      inputValue = filtered
+
+      inputItem.value = filtered
     }
   }
   

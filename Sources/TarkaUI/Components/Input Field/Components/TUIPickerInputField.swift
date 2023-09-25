@@ -16,6 +16,8 @@ import SwiftUI
 public struct TUIPickerInputField<Content: View>: TUIInputFieldProtocol {
   
   public var properties = TUIInputFieldOptionalProperties()
+  public var rightButtonAction: (() -> Void)?
+
   private var content: Content
   @State private var isSheetPresented = false
   @Binding private var inputItem: TUIInputFieldItem
@@ -35,9 +37,12 @@ public struct TUIPickerInputField<Content: View>: TUIInputFieldProtocol {
   
   public var body: some View {
     
-    TUIInputField(inputItem: $inputItem, properties: properties) {
+    TUIInputField(
+      inputItem: $inputItem,
+      properties: properties,
+      action: {
       self.isSheetPresented = true
-    }
+    }, rightButtonAction: rightButtonAction)
     .sheet(
       isPresented: $isSheetPresented,
       content: {

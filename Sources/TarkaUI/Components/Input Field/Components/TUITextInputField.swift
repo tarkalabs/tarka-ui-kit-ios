@@ -16,7 +16,8 @@ import SwiftUI
 public struct TUITextInputField: TUIInputFieldProtocol {
   
   public var properties = TUIInputFieldOptionalProperties()
-  
+  public var rightButtonAction: (() -> Void)?
+
   public var maxCharacters: Int = 0
   public var allowedCharacters = CharacterSet()
   public var keyboardType: UIKeyboardType = .default
@@ -76,14 +77,16 @@ public struct TUITextInputField: TUIInputFieldProtocol {
       isTextFieldFocused: isFocused,
       maxCharacters: maxCharacters,
       allowedCharacters: allowedCharacters,
-      keyboardType: keyboardType) {
+      keyboardType: keyboardType,
+      isTextField: true,
+      action: {
         
         self.isFocused = true
         // change style
         if self.inputItem.style == .onlyTitle {
           self.inputItem.style = .titleWithValue
         }
-      }
+      }, rightButtonAction: rightButtonAction)
       .accessibilityIdentifier(Accessibility.root)
   }
   
