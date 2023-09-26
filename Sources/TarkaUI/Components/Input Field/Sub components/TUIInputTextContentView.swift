@@ -46,7 +46,6 @@ struct TUIInputTextContentView: View {
     self.keyboardType = keyboardType
     self._isTextFieldFocused = Binding<Bool>.constant(isTextFieldFocused ?? false)
     self.isTextField = isTextField
-//    self.inputValue = inputItem.wrappedValue.value
   }
   
   var body: some View {
