@@ -31,11 +31,11 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   @Binding private var dismissTextFocus: Bool
 
   @Binding private var inputItem: TUIInputFieldItem
-  
+    
   /// Creates a `TUITextInputField` view
   /// - Parameters:
   ///   - inputItem: TUIInputItem's instance that holds the required values to render `TUIInputField` View
-  ///   
+  ///   - dismissTextFocus: Holds the field's focused state
   public init(
     inputItem: Binding<TUIInputFieldItem>,
     dismissTextFocus: Binding<Bool>? = nil) {
