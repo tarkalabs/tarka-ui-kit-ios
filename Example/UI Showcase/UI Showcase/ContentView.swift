@@ -41,7 +41,7 @@ struct ContentView: View {
         
     NavigationStack {
       NavigationLink {
-        AddSpecificationsView()
+        DetailView()
       } label: {
         Text("Hello, Nav View!")
       }
