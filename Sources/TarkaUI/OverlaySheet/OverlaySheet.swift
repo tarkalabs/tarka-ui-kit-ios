@@ -12,8 +12,7 @@ import SwiftUI
 public struct OverlaySheet<V: View>: ViewModifier {
   
   @Binding var isPresented: Bool
-  @State private var overlayWidth = CGFloat.zero
-  @State private var contentWidth = CGFloat.zero
+  @Environment(\.horizontalSizeClass) var sizeClass
   private var contentView: V
   
   public init(isPresented: Binding<Bool>, @ViewBuilder contentView: () -> V) {
@@ -22,15 +21,10 @@ public struct OverlaySheet<V: View>: ViewModifier {
   }
   
   public func body(content: Content) -> some View {
-    let viewWidth = keyWindow?.bounds.width ?? contentWidth
-    let color: Color =  viewWidth > overlayWidth ? .clear : .surface
-    
     content
-      .getWidth($contentWidth)
       .sheet(isPresented: $isPresented) {
         contentView
-          .getWidth($overlayWidth)
-          .backgroundView(withColor: color) {
+          .backgroundView(withColor: sizeClass == .compact ? .surface : .clear) {
             isPresented = false
           }
       }
