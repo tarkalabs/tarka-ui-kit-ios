@@ -91,7 +91,7 @@ struct DetailView: View {
   private var titleBarItem: TUIAppTopBar.TitleBarItem {
     
     let searchButton = TUIIconButton(icon: .search24Regular) {
-      searchBarVM.isActive = true
+      searchBarVM.isShown = true
     }
       .style(.ghost)
       .size(.size48)
@@ -136,7 +136,8 @@ extension DetailView {
         inputFieldViews
       }
     }
-    .addDoneButtonInToolbar(isDoneClicked: $isDoneClicked, onClicked: {
+    .addDoneButtonInToolbar(onClicked: {
+      isDoneClicked = true
       searchBarVM.isEditing = false
     })
     .addBottomMobileButtonBlock(
@@ -170,29 +171,29 @@ extension DetailView {
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
       
       TUITextInputField(
-        inputItem: $memoTextFieldItem, isDoneClicked: $isDoneClicked)
+        inputItem: $memoTextFieldItem)
       .state(.alert("Input values are sensitive"))
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
       .maxCharacters(7)
       .allowedCharacters(CharacterSet(charactersIn: "1234567890."))
       .setKeyboardType(.decimalPad)
-      
+
       TUITextInputField(
-        inputItem: $valueOnlyTextFieldItem, isDoneClicked: $isDoneClicked)
+        inputItem: $valueOnlyTextFieldItem)
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
       .state(.error("Input values are sensitive"))
       .placeholder("Enter Memo Description")
-      
+
       TUITextInputField(
-        inputItem: $memoTextFieldItem, isDoneClicked: $isDoneClicked)
+        inputItem: $memoTextFieldItem)
       .state(.alert("Input values are sensitive"))
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
       .maxCharacters(7)
       .allowedCharacters(CharacterSet(charactersIn: "1234567890."))
       .setKeyboardType(.decimalPad)
-      
+
       TUITextInputField(
-        inputItem: $valueOnlyTextFieldItem, isDoneClicked: $isDoneClicked)
+        inputItem: $valueOnlyTextFieldItem)
       .endItem(withStyle: .icon(.arrowSyncCircle24Regular))
       .state(.error("Input values are sensitive"))
       .placeholder("Enter Memo Description")
