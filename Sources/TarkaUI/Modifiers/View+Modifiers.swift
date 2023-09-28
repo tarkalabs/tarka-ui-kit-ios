@@ -110,4 +110,19 @@ public extension View {
         }
     )
   }
+  
+  /// Calculates and returns width of the view
+  /// - Parameter width: calculated height
+  /// - Returns: self with background added with clear color layer
+  func getWidth(_ width: Binding<CGFloat>) -> some View {
+    background(
+      GeometryReader { proxy in
+        Color.clear
+          .preference(key: WidthKey.self, value: proxy.size.width)
+      }
+        .onPreferenceChange(WidthKey.self) { value in
+          width.wrappedValue = value
+        }
+    )
+  }
 }
