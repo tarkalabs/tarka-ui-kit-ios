@@ -35,22 +35,13 @@ struct ToolBarDoneButton: ViewModifier {
 
 public extension View {
   /// Adds done button in toolbar
-  /// - Parameter isDoneClicked: binding that handles when done button is clicked
-  /// - Returns: View
-  ///
-  @ViewBuilder
-  func addDoneButtonInToolbar(
-    isDoneClicked: Binding<Bool>) -> some View {
-      modifier(ToolBarDoneButton(isDoneClicked: isDoneClicked, onClicked: { }))
-    }
-  
-  /// Adds done button in toolbar
   /// - Parameter onClicked: closure that called when done button is clicked
   /// - Returns: View
   ///
   @ViewBuilder
   func addDoneButtonInToolbar(
+    isDoneClicked: Binding<Bool>,
     onClicked: (() -> Void)? = nil) -> some View {
-      modifier(ToolBarDoneButton(isDoneClicked: .constant(false), onClicked: onClicked))
+      modifier(ToolBarDoneButton(isDoneClicked: isDoneClicked, onClicked: onClicked))
     }
 }

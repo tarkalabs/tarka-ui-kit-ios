@@ -30,23 +30,12 @@ public struct TUISearchBar: View {
       }
       
       SearchBar(searchBarVM: searchBarVM)
-        .isEnabled(backButton == nil) { view in
-          view
-            .padding(.leading, 24)
-        }
-        .isEnabled(trailingButton == nil) { view in
-          view
-            .padding(.trailing, 24)
-        }
-
-      if let trailingButton,
-          searchBarVM.isShown, searchBarVM.isEditing,
-         !searchBarVM.searchItem.text.isEmpty { 
+      
+      if let trailingButton {
         trailingButton
           .accessibilityIdentifier(Accessibility.trailingButton)
       }
     }
-    .frame(minHeight: 48)
     .padding(Spacing.custom(4))
     .background(Color.inputBackground)
     .cornerRadius(75)
@@ -98,23 +87,11 @@ public extension TUISearchBar {
   
   func trailingButton(@ViewBuilder _ button: () -> TUIIconButton?) -> Self {
     var newView = self
-    newView.trailingButton = button()
+    let trailingButton = button()
+    newView.trailingButton = trailingButton?.action {
+      searchBarVM.searchItem.text = ""
+    }
     return newView
-  }
-  
-  @ViewBuilder
-  func addCancelButtonAtTrailing() -> Self {
-    self
-      .trailingButton {
-          TUIIconButton(icon: .dismiss24Regular) {
-            searchBarVM.isEditing = false
-          }
-          .action {
-            searchBarVM.searchItem.text = ""
-          }
-          .style(.ghost)
-          .size(.size40)
-      }
   }
 }
 

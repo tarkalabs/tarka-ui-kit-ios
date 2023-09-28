@@ -24,17 +24,15 @@ public struct TUISearchBarItem {
 public class TUISearchBarViewModel: ObservableObject {
 
   @Published public var searchItem: TUISearchBarItem
-  @Published public var isShown: Bool = false
+  @Published public var isActive: Bool = false
   @Published public var isEditing = false
   var onEditing: (String) -> Void
 
   public init(
     searchItem: TUISearchBarItem,
-    isShown: Bool = false,
     onEditing: @escaping (String) -> Void) {
       
-      self._searchItem = Published(initialValue: searchItem)
-      self._isShown = Published(initialValue: isShown)
+    self._searchItem = Published(initialValue: searchItem)
       self.onEditing = onEditing
-    }
+  }
 }
