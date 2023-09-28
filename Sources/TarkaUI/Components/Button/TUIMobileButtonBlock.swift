@@ -64,29 +64,29 @@ public struct TUIMobileButtonBlock: View {
       case .one(let button):
         button
           .style(.primary)
-          .size(.large)
+          .size(.xl)
           .width(.maximum(fixedWidth))
         
       case .two(let left, let right):
         left
           .style(.outlined)
-          .size(.large)
+          .size(.xl)
           .width(.maximum(.infinity))
           .accessibilityIdentifier(Accessibility.leftButton)
         right
           .style(.primary)
-          .size(.large)
+          .size(.xl)
           .width(.maximum(.infinity))
           .accessibilityIdentifier(Accessibility.rightButton)
         
       case .flexible(let left, let right):
         left
           .style(.outlined)
-          .size(.large)
+          .size(.xl)
           .accessibilityIdentifier(Accessibility.leftButton)
         right
           .style(.primary)
-          .size(.large)
+          .size(.xl)
           .width(.maximum(fixedWidth))
           .accessibilityIdentifier(Accessibility.rightButton)
       }
