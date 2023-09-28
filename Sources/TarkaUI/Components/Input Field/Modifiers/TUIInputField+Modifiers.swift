@@ -13,6 +13,7 @@ import SwiftUI
 public protocol TUIInputFieldProtocol where Self: View {
   
   var properties: TUIInputFieldOptionalProperties { get set }
+  var rightButtonAction: (() -> Void)? { get set }
 }
 
 /// These extension functions act as a modifiers for Input field components that conform to this protocol
@@ -37,9 +38,12 @@ public extension TUIInputFieldProtocol {
   ///   - style: Style that decides whether it is a text or icon
   /// - Returns: A `TUIInputFieldProtocol` conformed SwiftUI View that calls this func.
   ///
-  func endItem(show: Bool = true, withStyle style: TUIInputAdditionalView.Style) -> some TUIInputFieldProtocol {
+  func endItem(show: Bool = true,
+               withStyle style: TUIInputAdditionalView.Style,
+               action: (() -> Void)? = nil) -> some TUIInputFieldProtocol {
     var newView = self
     newView.properties.endItemStyle = show ? style : nil
+    newView.rightButtonAction = action
     return newView
   }
   
