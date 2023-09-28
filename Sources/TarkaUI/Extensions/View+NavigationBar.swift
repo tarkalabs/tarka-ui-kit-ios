@@ -37,7 +37,7 @@ public extension View {
   private func barStyle(titleBarItem: TUIAppTopBar.TitleBarItem,
                         searchBarVM: TUISearchBarViewModel? = nil) -> TUIAppTopBar.BarStyle {
     
-    if let searchBarVM, searchBarVM.isShown {
+    if let searchBarVM, searchBarVM.isActive {
       return .search(searchBarVM)
     } else {
       return .titleBar(titleBarItem)
