@@ -30,7 +30,37 @@ public extension View {
     if #available(iOS 16.4, *) {
       self.presentationBackground(.black.opacity(0.5))
     } else {
-      self.background(BackgroundClearView())
+      self.background(BackgroundColorView(color: .black.opacity(0.5)))
+    }
+  }
+  
+  @ViewBuilder
+  /// Adds background view with color
+  /// - Parameters:
+  ///   - color: background color
+  ///   - isClicked: sends callback when click action happened on this background view
+  /// - Returns: View
+  func backgroundView(
+    withColor color: Color,
+    isClicked: (() -> Void)? = nil) -> some View {
+      
+    if #available(iOS 16.4, *) {
+      self
+        .presentationBackground {
+          color
+            .contentShape(Rectangle())
+            .onTapGesture {
+              isClicked?()
+            }
+        }
+    } else {
+      self.background(
+        BackgroundColorView(color: color)
+          .contentShape(Rectangle())
+          .onTapGesture {
+            isClicked?()
+          }
+      )
     }
   }
   
