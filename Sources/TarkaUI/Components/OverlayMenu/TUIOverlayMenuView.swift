@@ -121,13 +121,13 @@ public extension TUIOverlayMenuView {
 
 struct TUIOverlayMenuView_Previews: PreviewProvider {
   
-  static var menuItems: [TUIMenuItemView] = {
+  static var menuItems: [TUIMenuItemView] {
     [.init(item: .init(title: "Hello", style: .onlyLabel), isSelected: true) {},
      .init(item: .init(title: "Welcome", style: .leftIcon(.accessTime20Filled))) {},
      .init(item: .init(title: "To", style: .statusDots(.circle12Filled, .success)), isSelected: true) {},
      .init(item: .init(title: "SwiftUI", style: .withRightIcon(.add24Filled, .dismiss24Filled))) {}
     ]
-  }()
+  }
   
   static var previews: some View {
     ZStack {

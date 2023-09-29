@@ -142,19 +142,25 @@ public struct TUIAppTopBar: View {
       TUISearchBar(searchBarVM: searchBarVM)
         .backButton {
           TUIIconButton(icon: .chevronLeft24Regular) {
-            searchBarVM.isShown = false
+            searchBarVM.isActive = false
             searchBarVM.isEditing = false
             searchItem.text = ""
           }
           .style(.ghost)
           .size(.size40)
         }
-        .addCancelButtonAtTrailing()
+        .trailingButton {
+          if searchBarVM.isActive, searchBarVM.isEditing,
+             !searchItem.text.isEmpty {
+            TUIIconButton(icon: .dismiss24Regular) {
+              searchBarVM.isEditing = false
+            }
+            .style(.ghost)
+            .size(.size40)
+          }
+        }
         .padding(.horizontal, Spacing.baseHorizontal)
         .padding(.vertical, Spacing.baseVertical)
-        .onAppear {
-          searchBarVM.isEditing = true
-        }
     }
 }
 

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 /// This is SwiftUI View that displays title and text content for the `TUIInputField` view in the vertical stack.
 /// The view can be customized with different styles,
@@ -15,7 +14,6 @@ import Combine
 struct TUIInputTextContentView: View {
   
   @Binding var inputItem: TUIInputFieldItem
-  
   @Binding private var isTextFieldFocused: Bool
   @FocusState private var isFocused: Bool
   
@@ -23,29 +21,26 @@ struct TUIInputTextContentView: View {
   private var maxCharacters: Int
   private var keyboardType: UIKeyboardType
   private var allowedCharacters: CharacterSet
-  private var isTextField: Bool
-  
+
   /// Creates a `TUIInputTextContentView` View
   /// - Parameters:
   ///   - inputItem: A `TUIInputFieldItem` instance that holds the required values to render `TUIInputTextContentView` View
   ///   - placeholder: A string that to be shown as placeholder for text content field
   ///   - isTextFieldFocused: A bindable bool value that handles text field keyboard focus
-  ///
+  ///   
   init(inputItem: Binding<TUIInputFieldItem>,
        placeholder: String? = nil,
        maxCharacters: Int = 0,
        allowedCharacters: CharacterSet = .init(),
        keyboardType: UIKeyboardType = .default,
-       isTextFieldFocused: Bool? = nil,
-       isTextField: Bool = false) {
+       isTextFieldFocused: Binding<Bool>? = nil) {
     
     self._inputItem = inputItem
     self.placeholder = placeholder ?? ""
     self.maxCharacters = maxCharacters
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
-    self._isTextFieldFocused = Binding<Bool>.constant(isTextFieldFocused ?? false)
-    self.isTextField = isTextField
+   self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
   }
   
   var body: some View {
@@ -103,65 +98,53 @@ struct TUIInputTextContentView: View {
       EmptyView()
       
     default:
-      textView
-        .font(.body6)
-        .foregroundColor(.inputText)
-        .frame(minHeight: 20, alignment: .leading)
-        .accessibilityIdentifier(Accessibility.value)
-    }
-  }
-  
-  @State var textFieldChanges = false
-  @ViewBuilder
-  var textView: some View {
-    if isTextField {
       TextField(placeholder,
                 text: $inputItem.value,
                 axis: .vertical)
-      .onChange(of: inputItem.value) { newValue in
-        limitText(newValue)
+      .onChange(of: inputItem.value) { _ in
+        limitText()
       }
       .keyboardType(keyboardType)
       .lineSpacing(0)
       .focused($isFocused)
       .multilineTextAlignment(.leading)
       .labelsHidden()
+      .font(.body6)
+      .foregroundColor(.inputText)
+      .frame(minHeight: 20, alignment: .leading)
       .disabled(!isTextFieldFocused)
-    } else {
-      Text(inputItem.value)
+      .accessibilityIdentifier(Accessibility.value)
     }
   }
   
-  private func limitText(_ newValue: String) {
-    var filteredText = newValue
-    let count = filteredText.count
+  private func limitText() {
     
+    let count = inputItem.value.count
+
     if keyboardType == .decimalPad {
       // restrict multiple dots
       let dot: Character = "."
-      let dotFiltered = filteredText.filter { $0 == dot }
-      if dotFiltered.count > 1, let firstIndex = newValue.firstIndex(of: dot) {
-        filteredText.removeAll(where: { $0 == dot })
-        filteredText.insert(dot, at: firstIndex)
-        inputItem.value = filteredText
+      let filtered = inputItem.value.filter { $0 == dot }
+      if filtered.count > 1, let firstIndex = inputItem.value.firstIndex(of: dot) {
+        inputItem.value.removeAll(where: { $0 == dot })
+        inputItem.value.insert(dot, at: firstIndex)
         return
       }
     }
     if maxCharacters > 0, count > maxCharacters {
       // restrict count
-      inputItem.value = String(filteredText.prefix(maxCharacters))
+      inputItem.value = String(inputItem.value.prefix(maxCharacters))
       return
     }
     
     if !allowedCharacters.isEmpty {
-      // remove restricted characters
-      let filtered = filteredText.filter { (c) -> Bool in
-        return !c.unicodeScalars.allSatisfy { s in
-          !allowedCharacters.contains(s)
-        }
+      // restrict character
+      let filtered = inputItem.value.filter { (c) -> Bool in
+        return !c.unicodeScalars.contains(where: { !allowedCharacters.contains($0)})
       }
-
-      inputItem.value = filtered
+      if filtered != inputItem.value {
+        inputItem.value = filtered
+      }
     }
   }
   
