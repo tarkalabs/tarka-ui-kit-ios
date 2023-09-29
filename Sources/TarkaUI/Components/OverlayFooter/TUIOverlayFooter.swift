@@ -42,7 +42,7 @@ public struct TUIOverlayFooter: View {
       dividerView
       buttonView
     }
-    .frame(height: Spacing.custom(64))
+    .background(Color.surface)
   }
   
   @ViewBuilder
@@ -67,7 +67,7 @@ public struct TUIOverlayFooter: View {
   @ViewBuilder
   private var dividerView: some View {
     TUIDivider(orientation: .horizontal(hPadding: .zero, vPadding: .zero))
-      .color(.surfaceVariant)
+      .color(.surfaceVariantHover)
   }
   
   @ViewBuilder
