@@ -10,7 +10,7 @@ import SwiftUI
 public struct TUIMenuItemView: View {
   public var item: TUIMenuItemProperties
   public var action: () -> Void
-  private var isSelected: Bool
+  public var isSelected: Bool
   
   /// Creates a menu item view.
   ///
@@ -155,7 +155,7 @@ public struct TUIMenuItemView: View {
       if isSelected {
         return isPressed ? Color.success20 : .success10
       } else {
-        return isPressed ? .surfaceHover : .clear
+        return isPressed ? .surfaceHover.opacity(0.8) : .clear
       }
     }
   }
