@@ -18,22 +18,13 @@ import SwiftUI
 public struct TUIInputField: TUIInputFieldProtocol {
   
   @Binding var inputItem: TUIInputFieldItem
-  public var rightButtonAction: (() -> Void)?
-  
-  private var isTextFieldFocused: Bool
-  
-  /* Facing some weird issue. When input item value is changed,
-   it is getting updates in `TUIInputTextContentView` but not here.
-   If I declare this variable, just declaration solves the problem
-   */
-  @FocusState private var isFocused: Bool
+  @Binding private var isTextFieldFocused: Bool
   
   public var properties: TUIInputFieldOptionalProperties
   
   private var maxCharacters: Int
   private var allowedCharacters: CharacterSet
   private var keyboardType: UIKeyboardType
-  private var isTextField: Bool
   private var action: (() -> Void)?
 
   /// Creates a `TUIInputField` View
@@ -42,24 +33,20 @@ public struct TUIInputField: TUIInputFieldProtocol {
   ///   - isTextFieldFocused: A bindable bool value that used to handle text field focus using keyboard
   ///   
   public init(inputItem: Binding<TUIInputFieldItem>,
-              properties: TUIInputFieldOptionalProperties? = nil,
-              isTextFieldFocused: Bool? = nil,
-              maxCharacters: Int = 0,
-              allowedCharacters: CharacterSet = .init(),
-              keyboardType: UIKeyboardType = .default,
-              isTextField: Bool = false,
-              action: (() -> Void)? = nil,
-              rightButtonAction: (() -> Void)? = nil) {
+       properties: TUIInputFieldOptionalProperties? = nil,
+       isTextFieldFocused: Binding<Bool>? = nil,
+       maxCharacters: Int = 0,
+       allowedCharacters: CharacterSet = .init(),
+       keyboardType: UIKeyboardType = .default,
+       action: (() -> Void)? = nil) {
     
     self._inputItem = inputItem
     self.properties = properties ?? TUIInputFieldOptionalProperties()
     self.maxCharacters = maxCharacters
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
-    self.isTextFieldFocused = isTextFieldFocused ?? false
-    self.isTextField = isTextField
+    self._isTextFieldFocused = isTextFieldFocused ?? Binding<Bool>.constant(false)
     self.action = action
-    self.rightButtonAction = rightButtonAction
   }
   
   public var body: some View {
@@ -83,7 +70,14 @@ public struct TUIInputField: TUIInputFieldProtocol {
   private var fieldBody: some View {
     VStack(spacing: 0) {
       
-      fieldBodyHeaderHStack
+      if !self.isTextFieldFocused, let action {
+        Button(action: action) {
+          fieldBodyHeaderHStack
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+      } else {
+        fieldBodyHeaderHStack
+      }
       
       let highlightBar =  properties.state.highlightBarColor ?? properties.highlightBarColor
       
@@ -104,54 +98,24 @@ public struct TUIInputField: TUIInputFieldProtocol {
           style: startItemStyle, hasTitleAndValue: inputItem.hasTitleAndValue)
         .frame(alignment: .leading)
       }
-          
-      textItem
-        .frame(maxWidth: .infinity, alignment: .leading)
-
-      endItem
+      TUIInputTextContentView(
+        inputItem: $inputItem,
+        placeholder: properties.placeholder,
+        maxCharacters: maxCharacters,
+        allowedCharacters: allowedCharacters,
+        keyboardType: keyboardType,
+        isTextFieldFocused: $isTextFieldFocused)
+      .frame(maxWidth: .infinity, alignment: .leading)
+      
+      if let endItemStyle  = properties.endItemStyle {
+        TUIInputAdditionalView(
+          style: endItemStyle, hasTitleAndValue: inputItem.hasTitleAndValue)
         .frame(alignment: .trailing)
+      }
     }
     .padding(.horizontal, Spacing.baseHorizontal)
     .padding(.vertical, fieldBodyHStackVerticalPadding)
     .frame(minHeight: fieldBodyHeight, alignment: .top)
-  }
-  
-  @ViewBuilder
-  var textItem: some View {
-    
-    let textItem = TUIInputTextContentView(
-      inputItem: $inputItem,
-      placeholder: properties.placeholder,
-      maxCharacters: maxCharacters,
-      allowedCharacters: allowedCharacters,
-      keyboardType: keyboardType,
-      isTextFieldFocused: isTextFieldFocused,
-      isTextField: isTextField)
-    
-    if !self.isTextFieldFocused, let action {
-      Button(action: action) {
-        textItem
-      }
-    } else {
-      textItem
-    }
-  }
-
-  @ViewBuilder
-  var endItem: some View {
-    
-    if let endItemStyle  = properties.endItemStyle {
-      let endItem = TUIInputAdditionalView(
-        style: endItemStyle, hasTitleAndValue: inputItem.hasTitleAndValue)
-      
-      if let rightButtonAction = rightButtonAction ?? action {
-        Button(action: rightButtonAction) {
-          endItem
-        }
-      } else {
-        endItem
-      }
-    }
   }
 }
 
@@ -227,34 +191,34 @@ struct TUIInputText_Previews: PreviewProvider {
           TUIInputField(inputItem: .constant(TUIInputFieldItem(
             style: .titleWithValue,
             title: "Label", value: "Input Text")))
-          .startItem(withStyle: .text("$"))
-          .endItem(withStyle: .text("$"))
-          .highlightBar(color: Color.primaryTUI)
-          .helperText {
-            TUIHelperText(
-              style: .hint, message: "Helper / hint message goes here.")
-          }
+            .startItem(withStyle: .text("$"))
+            .endItem(withStyle: .text("$"))
+            .highlightBar(color: Color.primaryTUI)
+            .helperText {
+              TUIHelperText(
+                style: .hint, message: "Helper / hint message goes here.")
+            }
           
           TUIInputField(inputItem: .constant(TUIInputFieldItem(
             style: .titleWithValue,
             title: "Label", value: "Input Text")))
-          .startItem(withStyle: .icon(.info24Regular))
-          .endItem(withStyle: .icon(.info24Regular))
-          .highlightBar(color: Color.primaryTUI)
+            .startItem(withStyle: .icon(.info24Regular))
+            .endItem(withStyle: .icon(.info24Regular))
+            .highlightBar(color: Color.primaryTUI)
           
           TUIInputField(inputItem: .constant(TUIInputFieldItem(
             style: .titleWithValue,
             title: "Label", value: "Input Text")))
-          .startItem(withStyle: .text("$"))
-          .endItem(withStyle: .icon(.info24Regular))
-          .highlightBar(color: Color.primaryTUI)
+            .startItem(withStyle: .text("$"))
+            .endItem(withStyle: .icon(.info24Regular))
+            .highlightBar(color: Color.primaryTUI)
           
           TUIInputField(inputItem: .constant(TUIInputFieldItem(
             style: .titleWithValue,
             title: "Label", value: "Input Text")))
-          .startItem(withStyle: .icon(.info24Regular))
-          .endItem(withStyle: .text("$"))
-          .highlightBar(color: Color.primaryTUI)
+            .startItem(withStyle: .icon(.info24Regular))
+            .endItem(withStyle: .text("$"))
+            .highlightBar(color: Color.primaryTUI)
         }
       }
       
