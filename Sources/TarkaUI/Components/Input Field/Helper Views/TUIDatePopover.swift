@@ -90,7 +90,7 @@ public struct TUIDatePopover: View {
         .accessibilityIdentifier(Accessibility.datePicker)
     }
     .frame(width: 350, height: 500, alignment: .center)
-    .background(.white)
+    .background(Color.surface)
     .cornerRadius(5.0)
     .accessibilityIdentifier(Accessibility.transparentBackground)
   }
