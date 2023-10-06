@@ -16,6 +16,8 @@ import SwiftUI
 public struct TUIInteractiveInputField: TUIInputFieldProtocol {
   
   public var properties = TUIInputFieldOptionalProperties()
+  public var rightButtonAction: (() -> Void)?
+
   @Binding private var inputItem: TUIInputFieldItem
   private var action: () -> Void
   
@@ -35,7 +37,11 @@ public struct TUIInteractiveInputField: TUIInputFieldProtocol {
   
   public var body: some View {
     
-    TUIInputField(inputItem: $inputItem, properties: properties, action: action)
+    TUIInputField(
+      inputItem: $inputItem,
+      properties: properties,
+      action: action,
+      rightButtonAction: rightButtonAction)
       .accessibilityIdentifier(Accessibility.root)
   }
 }
