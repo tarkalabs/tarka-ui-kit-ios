@@ -16,7 +16,8 @@ import SwiftUI
 public struct TUIDateInputField: TUIInputFieldProtocol {
   
   public var properties = TUIInputFieldOptionalProperties()
-  
+  public var rightButtonAction: (() -> Void)?
+
   @State private var isSheetPresented = false
   @State private var isDateSelected = false
   @State private var date = Date()
@@ -55,11 +56,13 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
   
   public var body: some View {
     
-    TUIInputField(inputItem: $inputItem, properties: properties) {
+    TUIInputField(
+      inputItem: $inputItem, properties: properties,
+      action:  {
       self.date = dateInputItem.date ?? dateToSet
       self.isDateSelected = false
       self.isSheetPresented = true
-    }
+    }, rightButtonAction: rightButtonAction)
     .onChange(of: isDateSelected) { newValue in
       
       self.inputItem.style = .titleWithValue
