@@ -12,7 +12,7 @@ struct SearchBar: View {
   
   @ObservedObject var searchBarVM: TUISearchBarViewModel
   @FocusState private var isFocused: Bool
-  @State private var text = "false"
+
 
   var body: some View {
     
@@ -22,11 +22,10 @@ struct SearchBar: View {
         searchBarVM.isEditing = true
       }
       .onChange(of: searchBarVM.isEditing, perform: { value in
-        isFocused = value
+        if value != isFocused {
+          isFocused = value
+        }
       })
-      .onAppear {
-        searchBarVM.isEditing = true
-      }
       .accessibilityIdentifier(Accessibility.root)
   }
 }
