@@ -59,6 +59,7 @@ public struct TUITabBar: View {
   private var backgroundView: some View {
     Capsule()
       .foregroundColor(.secondaryAlt)
+      .padding(-4)
   }
   
   @ViewBuilder
@@ -72,7 +73,7 @@ public struct TUITabBar: View {
       selectionIndicatorView
     }
     .frame(maxWidth: .infinity)
-    .padding(4)
+    .frame(minHeight: 40)
   }
   
   @ViewBuilder
@@ -84,9 +85,9 @@ public struct TUITabBar: View {
     }) {
       Text(title)
         .font(.heading5)
-        .padding(.horizontal, Spacing.baseHorizontal)
-        .padding(.vertical, Spacing.halfVertical)
         .foregroundColor(selectedTab == title ? .onSecondary : .onSurface)
+        .padding(.horizontal, 12)
+        .padding(10)
         .background(GeometryReader { proxy in
           Color.clear
             .preference(key: TabWidthPreferenceKey.self, value: [proxy.size.width])
@@ -129,7 +130,16 @@ private struct TabWidthPreferenceKey: PreferenceKey {
 }
 
 struct TabBar_Previews: PreviewProvider {
+  
+  struct ContainerView: View {
+    @State private var selectedTab = "Usage"
+    
+    var body: some View {
+      TUITabBar(titles: ["Usage", "Request"], selectedTab: $selectedTab)
+    }
+    
+  }
   static var previews: some View {
-    TUITabBar(titles: ["ABC", "DEF"], selectedTab: .constant("ABC"))
+    ContainerView()
   }
 }
