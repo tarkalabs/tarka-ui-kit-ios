@@ -13,6 +13,7 @@ public struct TUIOverlayMenuView: View {
   @State private var contentHeight = CGFloat.zero
   @State private var headerHeight = CGFloat.zero
   @State private var bottomViewHeight = CGFloat.zero
+  @State private var selectedButton:  TUIMenuItemView?
   
   private var title: String
   private var action: (() -> Void)?
@@ -40,6 +41,7 @@ public struct TUIOverlayMenuView: View {
     .presentationDetents([.height(height)])
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
+    .onDisappear(perform: performButtonAction)
   }
   
   // MARK: - Header View
@@ -60,8 +62,8 @@ public struct TUIOverlayMenuView: View {
         VStack(spacing: Spacing.custom(24)) {
           ForEach(menuItems, id: \.item.id) { button in
             TUIMenuItemView(item: button.item, isSelected: button.isSelected) {
+              selectedButton = button
               dismiss()
-              button.action()
             }
           }
         }
@@ -104,6 +106,12 @@ public struct TUIOverlayMenuView: View {
       action()
     } else {
       dismiss()
+    }
+  }
+  
+  private func performButtonAction() {
+    if let selectedButton {
+      selectedButton.action()
     }
   }
 }
