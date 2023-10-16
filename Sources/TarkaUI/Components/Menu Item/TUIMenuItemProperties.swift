@@ -25,7 +25,7 @@ import SwiftUI
 public struct TUIMenuItemProperties: Identifiable {
   public var title: any StringProtocol
   public var style: Style
-  public var id: String { UUID().uuidString }
+  public var id: String
   
   public enum Style {
     /// Displays only the title.
@@ -84,8 +84,10 @@ public struct TUIMenuItemProperties: Identifiable {
     }
   }
   
-  public init(title: any StringProtocol, style: TUIMenuItemProperties.Style) {
+  public init(title: any StringProtocol, style: TUIMenuItemProperties.Style,
+              id: String = UUID().uuidString) {
     self.title = title
     self.style = style
+    self.id = id
   }
 }

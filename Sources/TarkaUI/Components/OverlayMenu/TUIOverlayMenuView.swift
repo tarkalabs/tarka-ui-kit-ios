@@ -8,13 +8,22 @@
 import SwiftUI
 
 public struct TUIOverlayMenuView: View {
+  @Environment(\.dismiss) private var dismiss
+  
+  @State private var contentHeight = CGFloat.zero
+  @State private var headerHeight = CGFloat.zero
+  @State private var bottomViewHeight = CGFloat.zero
   
   private var title: String
-  private var action: () -> Void
+  private var action: (() -> Void)?
   private var menuItems: [TUIMenuItemView]
   
+  private var height: CGFloat {
+    contentHeight + headerHeight + bottomViewHeight
+  }
+  
   public init(title: String, menuItems: [TUIMenuItemView],
-              action: @escaping () -> Void) {
+              action: (() -> Void)? = nil) {
     self.title = title
     self.action = action
     self.menuItems = menuItems
@@ -26,7 +35,9 @@ public struct TUIOverlayMenuView: View {
       menuItemView
       bottomView
     }
-    .setRadiusToCorners(Spacing.baseHorizontal, corners: .allCorners)
+    .background(Color.surface)
+    .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
+    .presentationDetents([.height(height)])
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
@@ -37,6 +48,7 @@ public struct TUIOverlayMenuView: View {
     TUIOverlayHeaderView(.onlyTitle(title))
       .accessibilityIdentifier(Accessibility.headerView)
       .accessibilityElement(children: .contain)
+      .getHeight($headerHeight)
   }
   
   // MARK: - Menu Items View
@@ -44,13 +56,20 @@ public struct TUIOverlayMenuView: View {
   @ViewBuilder
   private var menuItemView: some View {
     if !menuItems.isEmpty {
-      VStack(spacing: Spacing.custom(24)) {
-        ForEach(menuItems, id: \.item.id) { item in
-          item
+      ScrollView {
+        VStack(spacing: Spacing.custom(24)) {
+          ForEach(menuItems, id: \.item.id) { button in
+            TUIMenuItemView(item: button.item, isSelected: button.isSelected) {
+              dismiss()
+              button.action()
+            }
+          }
         }
+        .padding(Spacing.custom(24))
+        .background(Color.surface)
+        .getHeight($contentHeight)
       }
-      .padding(Spacing.custom(24))
-      .background(Color.surface)
+      .frame(maxHeight: contentHeight)
       .accessibilityIdentifier(Accessibility.menuItemView)
       .accessibilityElement(children: .contain)
     }
@@ -60,12 +79,13 @@ public struct TUIOverlayMenuView: View {
   
   private var bottomView: some View {
     TUIOverlayFooter {
-      CancelButton(action)
+      CancelButton(dismissAction)
     }
     .frame(maxWidth: .infinity)
-    .background(Color.surface)
+    .onTapGesture(perform: dismissAction)
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.bottomView)
+    .getHeight($bottomViewHeight)
   }
   
   private struct CancelButton: TUIOverlayFooterAction {
@@ -76,6 +96,14 @@ public struct TUIOverlayMenuView: View {
     
     init(_ handler: @escaping () -> Void) {
       self.handler = handler
+    }
+  }
+  
+  private func dismissAction() {
+    if let action {
+      action()
+    } else {
+      dismiss()
     }
   }
 }
@@ -93,19 +121,19 @@ public extension TUIOverlayMenuView {
 
 struct TUIOverlayMenuView_Previews: PreviewProvider {
   
-  static var menuItems: [TUIMenuItemView] = {
+  static var menuItems: [TUIMenuItemView] {
     [.init(item: .init(title: "Hello", style: .onlyLabel), isSelected: true) {},
      .init(item: .init(title: "Welcome", style: .leftIcon(.accessTime20Filled))) {},
      .init(item: .init(title: "To", style: .statusDots(.circle12Filled, .success)), isSelected: true) {},
      .init(item: .init(title: "SwiftUI", style: .withRightIcon(.add24Filled, .dismiss24Filled))) {}
     ]
-  }()
+  }
   
   static var previews: some View {
     ZStack {
       Color.gray.opacity(0.3)
-      TUIOverlayMenuView(title: "Title", menuItems: menuItems) {}
+        .ignoresSafeArea()
+      TUIOverlayMenuView(title: "Menu Title", menuItems: menuItems) {}
     }
-    .ignoresSafeArea()
   }
 }
