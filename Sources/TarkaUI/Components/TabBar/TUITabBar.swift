@@ -41,7 +41,6 @@ public struct TUITabBar: View {
       backgroundView
       tabsView
     }
-    .padding(.horizontal, Spacing.baseHorizontal)
     .fixedSize() // To fit the size of the content
     .frame(maxWidth: .infinity, alignment: .leading) // To left-align the contents
     .onPreferenceChange(TabWidthPreferenceKey.self) {
@@ -59,7 +58,6 @@ public struct TUITabBar: View {
   private var backgroundView: some View {
     Capsule()
       .foregroundColor(.secondaryAlt)
-      .padding(-4)
   }
   
   @ViewBuilder
@@ -73,7 +71,7 @@ public struct TUITabBar: View {
       selectionIndicatorView
     }
     .frame(maxWidth: .infinity)
-    .frame(minHeight: 40)
+    .padding(Spacing.halfVertical)
   }
   
   @ViewBuilder
@@ -85,9 +83,10 @@ public struct TUITabBar: View {
     }) {
       Text(title)
         .font(.heading5)
+        .padding(.horizontal, Spacing.baseHorizontal)
+        .padding(.vertical, Spacing.halfVertical + 2)
+        .frame(minHeight: 20)
         .foregroundColor(selectedTab == title ? .onSecondary : .onSurface)
-        .padding(.horizontal, 12)
-        .padding(10)
         .background(GeometryReader { proxy in
           Color.clear
             .preference(key: TabWidthPreferenceKey.self, value: [proxy.size.width])
