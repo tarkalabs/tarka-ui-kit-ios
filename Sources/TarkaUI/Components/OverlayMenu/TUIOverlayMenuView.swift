@@ -102,11 +102,8 @@ public struct TUIOverlayMenuView: View {
   }
   
   private func dismissAction() {
-    if let action {
-      action()
-    } else {
-      dismiss()
-    }
+    buttonAction = action
+    dismiss()
   }
 }
 
