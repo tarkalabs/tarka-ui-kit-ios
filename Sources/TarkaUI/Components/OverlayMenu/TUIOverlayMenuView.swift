@@ -41,7 +41,7 @@ public struct TUIOverlayMenuView: View {
     .presentationDetents([.height(height)])
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
-    .onDisappear(perform: buttonAction)
+    .onDisappear(perform: performButtonAction)
   }
   
   // MARK: - Header View
@@ -75,6 +75,11 @@ public struct TUIOverlayMenuView: View {
       .accessibilityIdentifier(Accessibility.menuItemView)
       .accessibilityElement(children: .contain)
     }
+  }
+  
+  private func performButtonAction() {
+    buttonAction?()
+    buttonAction = nil
   }
   
   // MARK: - Bottom View
