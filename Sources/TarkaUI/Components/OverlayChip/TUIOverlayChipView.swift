@@ -89,6 +89,11 @@ public struct TUIOverlayChipView: View {
   private var bottomView: some View {
     TUIMobileButtonBlock(style: .two(
       left: .init(title: "Clear".localized) {
+        menuItems = records.map {
+          var newValue = $0
+          newValue.isSelected = false
+          return newValue
+        }
         dismiss()
       },
       right: .init(title: "Apply".localized) {
