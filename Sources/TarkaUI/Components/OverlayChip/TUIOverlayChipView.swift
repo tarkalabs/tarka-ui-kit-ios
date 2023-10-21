@@ -58,7 +58,7 @@ public struct TUIOverlayChipView: View {
   private var mainView: some View {
     if !records.isEmpty {
       ScrollView {
-        JustifiableFlowLayout {
+        JustifiableFlowLayout(minSpacing: 8) {
           chipDetailView
         }
         .padding(.vertical, Spacing.custom(24))
