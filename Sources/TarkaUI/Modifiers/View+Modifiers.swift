@@ -79,6 +79,7 @@ public extension View {
             }
             .iconButtons(icons: iconButtons)
             .buttonStyle(.borderless)
+            .multilineTextAlignment(.leading)
         })
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier(accessibilityID)
