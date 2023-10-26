@@ -34,7 +34,8 @@ public struct TUICheckBoxRow: View {
   }
   
   public var body: some View {
-    HStack(spacing: Spacing.baseHorizontal) {
+    HStack(alignment: style == .onlyTitle ? .center : .top,
+           spacing: Spacing.baseHorizontal) {
       leftView
       rightView
     }
@@ -49,9 +50,7 @@ public struct TUICheckBoxRow: View {
   
   @ViewBuilder
   private var leftView: some View {
-    Image(fluent: isSelected ? .checkboxChecked24Filled : .checkboxUnchecked24Filled)
-      .frame(width: 24, height: 24)
-      .clipped()
+    Image(fluent: isSelected ? .checkboxChecked24Filled : .checkboxUnchecked24Regular)
       .foregroundColor(isSelected ? .primaryTUI : .outline)
   }
   
@@ -116,7 +115,7 @@ public extension TUICheckBoxRow  {
     case plain, border
   }
   
-  enum Style {
+  enum Style: Equatable {
     /// Displays only the title.
     case onlyTitle
     
