@@ -30,6 +30,7 @@ public struct TUIChipView: View {
   var size: Size = .size32
   var style: Style = .assist(.onlyTitle)
   var backgroundColor: Color = .surface
+  var textColor: Color = .onSurface
   var borderColor: Color = .outline
   var action: (() -> Void)?
   var badgeCount: Int?
@@ -156,7 +157,7 @@ public struct TUIChipView: View {
       .frame(minHeight: size == .size32 ? Spacing.custom(18) : Spacing.custom(20),
              maxHeight: size == .size32 ? Spacing.custom(18) : Spacing.custom(20),
              alignment: .leading)
-      .foregroundColor(isSelected ? .onSecondary : .onSurface)
+      .foregroundColor(isSelected ? .onSecondary : textColor)
       .accessibilityIdentifier(Accessibility.title)
   }
   

@@ -41,6 +41,18 @@ public extension TUIChipView {
     return newView
   }
   
+  func isSelected(_ selected: Bool = false) -> Self {
+    var newView = self
+    newView.isSelected = selected
+    return newView
+  }
+  
+  func textColor(_ color: Color = .onSurface) -> Self {
+    var newView = self
+    newView.textColor = color
+    return newView
+  }
+  
   func size(_ size: Size) -> Self {
     var newView = self
     newView.size = size
