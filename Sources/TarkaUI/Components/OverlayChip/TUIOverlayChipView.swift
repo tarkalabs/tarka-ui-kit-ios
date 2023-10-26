@@ -76,8 +76,8 @@ public struct TUIOverlayChipView: View {
   private var chipDetailView: some View {
     ForEach($records, id: \.id) { button in
       TUIChipView(button.wrappedValue.title)
-        .style(filter: button.wrappedValue.style,
-               isSelected: button.wrappedValue.isSelected)
+        .style(button.wrappedValue.style, size: .size32)
+        .isSelected(button.wrappedValue.isSelected)
         .action {
           button.wrappedValue.isSelected = !button.wrappedValue.isSelected
         }
@@ -115,13 +115,13 @@ public extension TUIOverlayChipView {
   struct RowElement: Identifiable {
     public var id = UUID().uuidString
     public var title: String
-    public var style: TUIChipView.Filter
+    public var style: TUIChipView.Style
     public var isSelected = false
     
     public init(
       id: String = UUID().uuidString,
       title: String,
-      style: TUIChipView.Filter = .onlyTitle,
+      style: TUIChipView.Style = .assist(.onlyTitle),
       isSelected: Bool = false) {
         self.id = id
         self.title = title
