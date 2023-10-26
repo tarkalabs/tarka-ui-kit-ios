@@ -104,7 +104,7 @@ public struct TUITabBar: View {
   private func getOffset() -> CGFloat {
     let selectedIndex = titles.firstIndex(of: selectedTab)!
     var offset: CGFloat = 0
-    for i in 0 ..< selectedIndex {
+    for i in 0 ..< selectedIndex where tabWidths.count >= selectedIndex {
       offset += tabWidths[i]
     }
     
