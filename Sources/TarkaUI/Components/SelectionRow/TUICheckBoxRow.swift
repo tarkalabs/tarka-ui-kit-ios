@@ -27,7 +27,6 @@ public struct TUICheckBoxRow: View {
   private var style: Style = .onlyTitle
   private var isSelected: Bool
   private var borderStyle: BorderStyle = .plain
-  private var backgroundColor: Color = Color.surfaceHover
 
   public init(_ title: any StringProtocol, isSelected: Bool = false) {
     self.title = title
@@ -42,7 +41,7 @@ public struct TUICheckBoxRow: View {
     .frame(maxWidth: .infinity, alignment: .leading)
     .padding(.horizontal, Spacing.halfHorizontal)
     .padding(.vertical, Spacing.baseVertical)
-    .background(backgroundColor)
+    .background(borderStyle == .border ? Color.surfaceHover : Color.surface)
     .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
@@ -145,17 +144,6 @@ public extension TUICheckBoxRow  {
   func borderStyle(_ style: BorderStyle) -> Self {
     var newView = self
     newView.borderStyle = style
-    // Need to ask @Maheshwaran about color change
-    if newView.backgroundColor == Color.surfaceHover ||
-        newView.backgroundColor == Color.surface {
-      newView.backgroundColor = borderStyle == .border ? Color.surfaceHover : Color.surface
-    }
-    return newView
-  }
-  
-  func backgroundColor(_ color: Color) -> Self {
-    var newView = self
-    newView.backgroundColor = color
     return newView
   }
 }
