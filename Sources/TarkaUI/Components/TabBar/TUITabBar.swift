@@ -84,7 +84,7 @@ public struct TUITabBar: View {
       Text(title)
         .font(.heading5)
         .padding(.horizontal, Spacing.baseHorizontal)
-        .padding(.vertical, Spacing.halfVertical + 2)
+        .padding(.vertical, Spacing.custom(6))
         .frame(minHeight: 20)
         .foregroundColor(selectedTab == title ? .onSecondary : .onSurface)
         .background(GeometryReader { proxy in
