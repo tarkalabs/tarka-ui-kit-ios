@@ -14,8 +14,8 @@ import SwiftUI
 public enum TUIInputFieldState {
   
   case none
+  case focused
   case inactive(String)
-  case focused(String)
   case error(String)
   case alert(String)
   case success(String)
@@ -23,10 +23,9 @@ public enum TUIInputFieldState {
   
   private var message: String? {
     switch self {
-    case .none:
+    case .none, .focused:
       return nil
     case .inactive(let message),
-        .focused(let message),
         .error(let message),
         .alert(let message),
         .success(let message),
@@ -38,9 +37,6 @@ public enum TUIInputFieldState {
   var highlightBarColor: Color? {
     switch self {
     case .focused: return .primaryTUI
-    case .error: return .error
-    case .alert: return .warning
-    case .success: return .success
     default: return nil
     }
   }
