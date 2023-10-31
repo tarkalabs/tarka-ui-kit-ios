@@ -20,6 +20,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
   @Binding var inputItem: TUIInputFieldItem
   public var rightButtonAction: (() -> Void)?
   
+  @Binding var isTextFieldEditingOn: Bool
   private var isTextFieldFocused: Bool
   
   /* Facing some weird issue. When input item value is changed,
@@ -29,7 +30,8 @@ public struct TUIInputField: TUIInputFieldProtocol {
   @FocusState private var isFocused: Bool
   
   public var properties: TUIInputFieldOptionalProperties
-  
+  public var currentTextFieldState: TUIInputFieldState
+
   private var maxCharacters: Int
   private var allowedCharacters: CharacterSet
   private var keyboardType: UIKeyboardType
@@ -43,7 +45,9 @@ public struct TUIInputField: TUIInputFieldProtocol {
   ///   
   public init(inputItem: Binding<TUIInputFieldItem>,
               properties: TUIInputFieldOptionalProperties? = nil,
+              currentTextFieldState: TUIInputFieldState = .none,
               isTextFieldFocused: Bool? = nil,
+              isTextFieldEditingOn: Binding<Bool>? = nil,
               maxCharacters: Int = 0,
               allowedCharacters: CharacterSet = .init(),
               keyboardType: UIKeyboardType = .default,
@@ -52,7 +56,9 @@ public struct TUIInputField: TUIInputFieldProtocol {
               rightButtonAction: (() -> Void)? = nil) {
     
     self._inputItem = inputItem
+    self._isTextFieldEditingOn = isTextFieldEditingOn ?? Binding.constant(false)
     self.properties = properties ?? TUIInputFieldOptionalProperties()
+    self.currentTextFieldState = currentTextFieldState
     self.maxCharacters = maxCharacters
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
@@ -70,7 +76,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
         .background(Color.inputBackground)
         .cornerRadius(8)
       
-      let helperText = properties.state.helperText() ?? properties.helperText
+      let helperText = currentTextFieldState.helperText() ?? properties.state.helperText() ?? properties.helperText
       if let helperText {
         helperText
       }
@@ -85,7 +91,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
       
       fieldBodyHeaderHStack
       
-      let highlightBar =  properties.state.highlightBarColor ?? properties.highlightBarColor
+      let highlightBar = currentTextFieldState.highlightBarColor ?? properties.state.highlightBarColor ?? properties.highlightBarColor
       
       if let highlightBar {
         highlightBar.frame(height: 2)
@@ -122,6 +128,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
     let textItem = TUIInputTextContentView(
       inputItem: $inputItem,
       placeholder: properties.placeholder,
+      isTextFieldEditingOn: $isTextFieldEditingOn,
       maxCharacters: maxCharacters,
       allowedCharacters: allowedCharacters,
       keyboardType: keyboardType,

@@ -26,12 +26,14 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   
   // Used to hold the field's focused state
   @State private var isFocused: Bool = false
-  
+  @State var isEditingOn = false
+  @State var currentTextFieldState: TUIInputFieldState = .none
+
   // Used to receive events when done button clicked
   @Binding private var dismissTextFocus: Bool
 
   @Binding private var inputItem: TUIInputFieldItem
-    
+
   /// Creates a `TUITextInputField` view
   /// - Parameters:
   ///   - inputItem: TUIInputItem's instance that holds the required values to render `TUIInputField` View
@@ -48,7 +50,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
     mainBody
       .onChange(of: dismissTextFocus, perform: { value in
         if value {
-          isFocused = !dismissTextFocus
+          isFocused = false
           // revert the style when content is empty
           if self.inputItem.value.isEmpty {
             self.inputItem.style = existingStyle
@@ -60,6 +62,19 @@ public struct TUITextInputField: TUIInputFieldProtocol {
           // revert the dismissTextFocus to receive updates at `onChange`
           dismissTextFocus = false
         }
+        currentTextFieldState = value ? .focused : properties.state
+      })
+      .onChange(of: isEditingOn, perform: { value in
+        // used when switching between text fields
+        if !value {
+          isFocused = false
+          // revert the style when content is empty
+          if self.inputItem.value.isEmpty {
+            self.inputItem.style = existingStyle
+          }
+        }
+        // change status
+        currentTextFieldState = value ? .focused : properties.state
       })
   }
   
@@ -74,7 +89,9 @@ public struct TUITextInputField: TUIInputFieldProtocol {
     TUIInputField(
       inputItem: $inputItem,
       properties: properties,
+      currentTextFieldState: currentTextFieldState,
       isTextFieldFocused: isFocused,
+      isTextFieldEditingOn: $isEditingOn,
       maxCharacters: maxCharacters,
       allowedCharacters: allowedCharacters,
       keyboardType: keyboardType,
