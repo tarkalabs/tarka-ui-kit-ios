@@ -20,7 +20,6 @@ public struct TUIMobileButtonBlock: View {
   }
   
   private var style: Style
-  private var hasSafeArea: Bool = false
   
   public init(style: Style) {
     self.style = style
@@ -47,7 +46,6 @@ public struct TUIMobileButtonBlock: View {
         buttonBlock
       }
       .background(Color.surface50)
-      .frame(minHeight: minHeight)
     }
     .fixedSize(horizontal: false, vertical: true)
     .accessibilityElement(children: .contain)
@@ -92,22 +90,8 @@ public struct TUIMobileButtonBlock: View {
       }
     }
     .padding(.horizontal, Spacing.custom(24))
-    .padding(.bottom, buttonBottomPadding)
+    .padding(.bottom, Spacing.custom(15))
     .frame(maxWidth: .infinity)
-  }
-  
-  private var minHeight: CGFloat {
-    if hasSafeArea {
-      return 80 - Spacing.doubleVertical
-    }
-    return 80
-  }
-  
-  private var buttonBottomPadding: CGFloat {
-    if hasSafeArea {
-      return 0
-    }
-    return Spacing.doubleVertical
   }
 }
 
@@ -148,16 +132,3 @@ struct TUIMobileButtonBlock_Previews: PreviewProvider {
   }
 }
 
-public extension TUIMobileButtonBlock {
-  
-  /// Manually handles bottom padding based on  safe area inset and
-  /// adding extra blur layer for that extra added space
-  /// - Parameter value: bottom value that to be added
-  /// - Returns: Modified View
-  ///
-  func hasSafeArea(_ hasSafeArea: Bool) -> Self {
-    var newView = self
-    newView.hasSafeArea = hasSafeArea
-    return newView
-  }
-}
