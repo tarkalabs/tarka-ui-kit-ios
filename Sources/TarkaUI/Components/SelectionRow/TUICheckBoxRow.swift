@@ -1,6 +1,6 @@
 //
 //  TUICheckBoxRow.swift
-//  
+//
 //
 //  Created by MAHESHWARAN on 23/06/23.
 //
@@ -25,6 +25,9 @@ public struct TUICheckBoxRow: View {
   
   private var title: any StringProtocol
   private var style: Style = .onlyTitle
+  private var titleFont: Font = .heading7
+  private var titleColor: Color = .onSurface
+  
   private var isSelected: Bool
   private var borderStyle: BorderStyle = .plain
   
@@ -34,7 +37,8 @@ public struct TUICheckBoxRow: View {
   }
   
   public var body: some View {
-    HStack(spacing: Spacing.baseHorizontal) {
+    HStack(alignment: style == .onlyTitle ? .center : .top,
+           spacing: Spacing.baseHorizontal) {
       leftView
       rightView
     }
@@ -58,38 +62,25 @@ public struct TUICheckBoxRow: View {
   @ViewBuilder
   private var rightView: some View {
     VStack(alignment: .leading, spacing: Spacing.halfVertical) {
-      Group {
+      switch style {
+      case .onlyTitle:
         titleView
-        detailView(forStyle: style)
+        
+      case .textDescription(let desc):
+        titleView
+        textDescriptionView(desc)
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
   }
   
-  @ViewBuilder
   private var titleView: some View {
-    switch style {
-    case .onlyDescription:
-      EmptyView()
-    default:
-      Text(title)
-        .font(.heading7)
-        .foregroundColor(.onSurface)
-        .frame(minHeight: Spacing.custom(18))
-        .accessibilityIdentifier(Accessibility.title)
-    }
-  }
-  
-  @ViewBuilder
-  private func detailView(forStyle style: TUICheckBoxRow.Style) -> some View {
-    switch style {
-    case .onlyTitle:
-      EmptyView()
-    case .textDescription(let desc):
-      textDescriptionView(desc)
-    case .onlyDescription(let desc):
-      onlyDescriptionView(desc)
-    }
+    
+    Text(title)
+      .font(titleFont)
+      .foregroundColor(titleColor)
+      .frame(minHeight: Spacing.custom(18))
+      .accessibilityIdentifier(Accessibility.title)
   }
   
   @ViewBuilder
@@ -117,12 +108,9 @@ public extension TUICheckBoxRow  {
     case plain, border
   }
   
-  enum Style {
+  enum Style: Equatable {
     /// Displays only the title.
     case onlyTitle
-    
-    /// Displays only the description.
-    case onlyDescription(String)
     
     /// Displays the title and description.
     case textDescription(String)
@@ -145,6 +133,13 @@ public extension TUICheckBoxRow  {
   func borderStyle(_ style: BorderStyle) -> Self {
     var newView = self
     newView.borderStyle = style
+    return newView
+  }
+  
+  func titleStyle(_ font: TUIFont, textColor: Color = .onSurface) -> Self {
+    var newView = self
+    newView.titleFont = Font.using(font)
+    newView.titleColor = textColor
     return newView
   }
 }
