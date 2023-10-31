@@ -39,8 +39,7 @@ public struct TUICheckBoxRow: View {
       rightView
     }
     .frame(maxWidth: .infinity, alignment: .leading)
-    .padding(.horizontal, Spacing.halfHorizontal)
-    .padding(.vertical, Spacing.baseVertical)
+    .padding(Spacing.halfHorizontal)
     .background(borderStyle == .border ? Color.surfaceHover : Color.surface)
     .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
     .accessibilityElement(children: .contain)
@@ -49,10 +48,11 @@ public struct TUICheckBoxRow: View {
   
   @ViewBuilder
   private var leftView: some View {
-    Image(fluent: isSelected ? .checkboxChecked24Filled : .checkboxUnchecked24Filled)
+    let imageName = isSelected ? "checkbox_checked" : "checkbox_unchecked"
+    Image(imageName, bundle: Bundle.module)
+      .scaledToFit()
       .frame(width: 24, height: 24)
       .clipped()
-      .foregroundColor(isSelected ? .primaryTUI : .outline)
   }
   
   @ViewBuilder
@@ -63,6 +63,7 @@ public struct TUICheckBoxRow: View {
         detailView(forStyle: style)
       }
     }
+    .frame(maxWidth: .infinity, alignment: .leading)
   }
   
   @ViewBuilder
@@ -76,7 +77,7 @@ public struct TUICheckBoxRow: View {
         .foregroundColor(.onSurface)
         .frame(minHeight: Spacing.custom(18))
         .accessibilityIdentifier(Accessibility.title)
-    }    
+    }
   }
   
   @ViewBuilder
