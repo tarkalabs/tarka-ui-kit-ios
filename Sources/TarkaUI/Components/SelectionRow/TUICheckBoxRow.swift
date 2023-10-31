@@ -22,7 +22,7 @@ import SwiftUI
 /// - Returns: A closure that returns the content
 
 public struct TUICheckBoxRow: View {
-  
+  @Environment(\.colorScheme) private var colorScheme
   private var title: any StringProtocol
   private var style: Style = .onlyTitle
   private var titleFont: Font = .heading7
@@ -52,7 +52,8 @@ public struct TUICheckBoxRow: View {
   
   @ViewBuilder
   private var leftView: some View {
-    let imageName = isSelected ? "checkbox_checked" : "checkbox_unchecked"
+    let imageName = isSelected ? "checkbox_checked" :
+    colorScheme == .dark ? "checkbox-dark-unchecked" :  "checkbox_unchecked"
     Image(imageName, bundle: Bundle.module)
       .scaledToFit()
       .frame(width: 24, height: 24)
@@ -75,7 +76,6 @@ public struct TUICheckBoxRow: View {
   }
   
   private var titleView: some View {
-    
     Text(title)
       .font(titleFont)
       .foregroundColor(titleColor)
@@ -88,15 +88,6 @@ public struct TUICheckBoxRow: View {
     Text(description)
       .font(.body7)
       .foregroundColor(.inputTextDim)
-      .frame(minHeight: Spacing.custom(18))
-      .accessibilityIdentifier(Accessibility.description)
-  }
-  
-  @ViewBuilder
-  private func onlyDescriptionView(_ description: String) -> some View {
-    Text(description)
-      .font(.body7)
-      .foregroundColor(.onSurface)
       .frame(minHeight: Spacing.custom(18))
       .accessibilityIdentifier(Accessibility.description)
   }
