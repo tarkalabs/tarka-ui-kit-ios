@@ -30,7 +30,7 @@ public struct TUICheckBoxRow: View {
   
   private var isSelected: Bool
   private var borderStyle: BorderStyle = .plain
-  
+
   public init(_ title: any StringProtocol, isSelected: Bool = false) {
     self.title = title
     self.isSelected = isSelected
