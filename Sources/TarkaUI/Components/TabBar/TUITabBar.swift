@@ -41,7 +41,6 @@ public struct TUITabBar: View {
       backgroundView
       tabsView
     }
-    .padding(.horizontal, Spacing.baseHorizontal)
     .fixedSize() // To fit the size of the content
     .frame(maxWidth: .infinity, alignment: .leading) // To left-align the contents
     .onPreferenceChange(TabWidthPreferenceKey.self) {
@@ -72,7 +71,7 @@ public struct TUITabBar: View {
       selectionIndicatorView
     }
     .frame(maxWidth: .infinity)
-    .padding(4)
+    .padding(Spacing.halfVertical)
   }
   
   @ViewBuilder
@@ -85,7 +84,8 @@ public struct TUITabBar: View {
       Text(title)
         .font(.heading5)
         .padding(.horizontal, Spacing.baseHorizontal)
-        .padding(.vertical, Spacing.halfVertical)
+        .padding(.vertical, Spacing.custom(6))
+        .frame(minHeight: 20)
         .foregroundColor(selectedTab == title ? .onSecondary : .onSurface)
         .background(GeometryReader { proxy in
           Color.clear
@@ -104,7 +104,7 @@ public struct TUITabBar: View {
   private func getOffset() -> CGFloat {
     let selectedIndex = titles.firstIndex(of: selectedTab)!
     var offset: CGFloat = 0
-    for i in 0 ..< selectedIndex {
+    for i in 0 ..< selectedIndex where tabWidths.count >= selectedIndex {
       offset += tabWidths[i]
     }
     
@@ -129,7 +129,16 @@ private struct TabWidthPreferenceKey: PreferenceKey {
 }
 
 struct TabBar_Previews: PreviewProvider {
+  
+  struct ContainerView: View {
+    @State private var selectedTab = "Usage"
+    
+    var body: some View {
+      TUITabBar(titles: ["Usage", "Request"], selectedTab: $selectedTab)
+    }
+    
+  }
   static var previews: some View {
-    TUITabBar(titles: ["ABC", "DEF"], selectedTab: .constant("ABC"))
+    ContainerView()
   }
 }
