@@ -18,7 +18,8 @@ struct TUIInputTextContentView: View {
   
   @Binding private var isTextFieldFocused: Bool
   @FocusState private var isFocused: Bool
-  
+  @Binding var isTextFieldEditingOn: Bool
+
   private var placeholder: String
   private var maxCharacters: Int
   private var keyboardType: UIKeyboardType
@@ -33,6 +34,7 @@ struct TUIInputTextContentView: View {
   ///
   init(inputItem: Binding<TUIInputFieldItem>,
        placeholder: String? = nil,
+       isTextFieldEditingOn: Binding<Bool>? = nil,
        maxCharacters: Int = 0,
        allowedCharacters: CharacterSet = .init(),
        keyboardType: UIKeyboardType = .default,
@@ -46,6 +48,7 @@ struct TUIInputTextContentView: View {
     self.keyboardType = keyboardType
     self._isTextFieldFocused = Binding<Bool>.constant(isTextFieldFocused ?? false)
     self.isTextField = isTextField
+    self._isTextFieldEditingOn = isTextFieldEditingOn ?? Binding.constant(false)
   }
   
   var body: some View {
@@ -120,6 +123,9 @@ struct TUIInputTextContentView: View {
                 axis: .vertical)
       .onChange(of: inputItem.value) { newValue in
         limitText(newValue)
+      }
+      .onChange(of: isFocused) { newValue in
+        isTextFieldEditingOn = newValue
       }
       .keyboardType(keyboardType)
       .lineSpacing(0)

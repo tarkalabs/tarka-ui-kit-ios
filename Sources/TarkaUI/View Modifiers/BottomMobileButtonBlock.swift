@@ -9,18 +9,20 @@ import SwiftUI
 
 struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
   
+
   @State var isKeyboardShown: Bool = false
-  
+  @State var additionalViewHeight: CGFloat = 0
+
   var block: TUIMobileButtonBlock
-  var additionalView: T? = nil
-  
+  var additionalView: T
+  var showAdditionalView = false
+
   func body(content: Content) -> some View {
     
     GeometryReader { geometry in
       
       let safeAreaBottomInset = geometry.safeAreaInsets.bottom
-      let minimumExpectedSafeAreaInset = 24.0
-      let block = block.hasSafeArea(safeAreaBottomInset > minimumExpectedSafeAreaInset)
+      let block = block
       
       content.frame(maxHeight: .infinity)
         .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -28,11 +30,21 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
             EmptyView().frame(height: 0)
           } else {
             VStack(spacing: 0) {
-              additionalView
+              if showAdditionalView {
+                ZStack {
+                  BackgroundBlur(radius: 7)
+                  additionalView.getHeight($additionalViewHeight)
+                }
+                .background(Color.surface50)
+                .frame(height: additionalViewHeight)
+              }
               block
+              Color.surface.frame(height: safeAreaBottomInset)
             }
+            .padding(.top, Spacing.halfVertical)
           }
         }
+        .edgesIgnoringSafeArea(.bottom)
         .adaptiveKeyboard(isKeyboardShown: $isKeyboardShown)
     }
   }
@@ -47,11 +59,14 @@ public extension View {
   /// - Returns: View with button block added
   func addBottomMobileButtonBlock(
     _ block: TUIMobileButtonBlock,
-    @ViewBuilder _ additionalView: () -> some View = { EmptyView() }) -> some View {
+    @ViewBuilder _ additionalView: () -> some View = { EmptyView() },
+    showAdditionalView: Bool = false
+  ) -> some View {
       
       let block = BottomMobileButtonBlock(
         block: block,
-        additionalView: additionalView())
+        additionalView: additionalView(), 
+        showAdditionalView: showAdditionalView)
       
       modifier(block)
   }
