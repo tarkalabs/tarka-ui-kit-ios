@@ -136,26 +136,24 @@ public struct TUIAppTopBar: View {
   
   @ViewBuilder
   func searchBar() -> some View {
-      
-      var searchItem = searchBarVM.searchItem
-      
-      TUISearchBar(searchBarVM: searchBarVM)
-        .backButton {
-          TUIIconButton(icon: .chevronLeft24Regular) {
-            searchBarVM.isShown = false
-            searchBarVM.isEditing = false
-            searchItem.text = ""
-          }
-          .style(.ghost)
-          .size(.size40)
+    TUISearchBar(searchBarVM: searchBarVM)
+      .backButton {
+        TUIIconButton(icon: .chevronLeft24Regular) {
+          searchBarVM.isEditing = false
+          searchBarVM.isShown = false
+          searchBarVM.searchItem.text = ""
+          searchBarVM.onEditing("")
         }
-        .addCancelButtonAtTrailing()
-        .padding(.horizontal, Spacing.baseHorizontal)
-        .padding(.vertical, Spacing.baseVertical)
-        .onAppear {
-          searchBarVM.isEditing = true
-        }
-    }
+        .style(.ghost)
+        .size(.size40)
+      }
+      .addCancelButtonAtTrailing()
+      .padding(.horizontal, Spacing.baseHorizontal)
+      .padding(.vertical, Spacing.baseVertical)
+      .onAppear {
+        searchBarVM.isEditing = true
+      }
+  }
 }
 
 extension TUIAppTopBar {
