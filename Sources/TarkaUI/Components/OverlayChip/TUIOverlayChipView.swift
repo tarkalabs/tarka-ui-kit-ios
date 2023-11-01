@@ -79,7 +79,7 @@ public struct TUIOverlayChipView: View {
         .style(button.wrappedValue.style, size: .size32)
         .isSelected(button.wrappedValue.isSelected)
         .action {
-          button.wrappedValue.isSelected = !button.wrappedValue.isSelected
+          button.wrappedValue.isSelected.toggle()
         }
     }
   }
