@@ -49,25 +49,3 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
     }
   }
 }
-
-public extension View {
-  
-  @ViewBuilder
-  /// Adds `TUIMobileButtonBlock` in bottom safe area of the screen.
-  /// This function itself makes the keyboard adaptive. No need to handle that explicitly.
-  /// - Parameter block: `TUIMobileButtonBlock` that has to be added
-  /// - Returns: View with button block added
-  func addBottomMobileButtonBlock(
-    _ block: TUIMobileButtonBlock,
-    @ViewBuilder _ additionalView: () -> some View = { EmptyView() },
-    showAdditionalView: Bool = false
-  ) -> some View {
-      
-      let block = BottomMobileButtonBlock(
-        block: block,
-        additionalView: additionalView(), 
-        showAdditionalView: showAdditionalView)
-      
-      modifier(block)
-  }
-}
