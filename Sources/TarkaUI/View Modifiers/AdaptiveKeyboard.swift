@@ -52,18 +52,3 @@ struct AdaptiveKeyboard: ViewModifier {
         })
   }
 }
-
-public extension View {
-  /// Makes the keyboard adaptive to the textfield
-  /// - Returns: View
-  ///
-  @ViewBuilder
-  func adaptiveKeyboard(isKeyboardShown: Binding<Bool>) -> some View {
-    modifier(AdaptiveKeyboard(isKeyboardShown: isKeyboardShown))
-  }
-  
-  func hideKeyboard() {
-    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
-                                    to: nil, from: nil, for: nil)
-  }
-}
