@@ -23,7 +23,7 @@ public extension TUIButton {
       case .secondary: return .secondaryTUI
       case .outlined: return .surface
       case .ghost: return .surface
-      case .danger: return .surface
+      case .danger: return .error
       }
     }
     
