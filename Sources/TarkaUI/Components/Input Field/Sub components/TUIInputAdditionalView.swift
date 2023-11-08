@@ -46,7 +46,7 @@ public struct TUIInputAdditionalView: View {
       Image(fluent: icon)
         .resizable()
         .scaledToFit()
-        .frame(width: 20, height: 20)
+        .frame(width: 24, height: 24)
         .foregroundColor(.inputText)
         .padding(.horizontal, Spacing.custom(2.0))
         .padding(.top, iconItemTop + extraPadding) // fluent font size mismatch
