@@ -1,6 +1,6 @@
 //
 //  TUICheckBoxRow.swift
-//  
+//
 //
 //  Created by MAHESHWARAN on 23/06/23.
 //
@@ -22,9 +22,12 @@ import SwiftUI
 /// - Returns: A closure that returns the content
 
 public struct TUICheckBoxRow: View {
-  
+  @Environment(\.colorScheme) private var colorScheme
   private var title: any StringProtocol
   private var style: Style = .onlyTitle
+  private var titleFont: Font = .heading7
+  private var titleColor: Color = .onSurface
+  
   private var isSelected: Bool
   private var borderStyle: BorderStyle = .plain
 
@@ -34,13 +37,13 @@ public struct TUICheckBoxRow: View {
   }
   
   public var body: some View {
-    HStack(spacing: Spacing.baseHorizontal) {
+    HStack(alignment: style == .onlyTitle ? .center : .top,
+           spacing: Spacing.baseHorizontal) {
       leftView
       rightView
     }
     .frame(maxWidth: .infinity, alignment: .leading)
-    .padding(.horizontal, Spacing.halfHorizontal)
-    .padding(.vertical, Spacing.baseVertical)
+    .padding(Spacing.halfHorizontal)
     .background(borderStyle == .border ? Color.surfaceHover : Color.surface)
     .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
     .accessibilityElement(children: .contain)
@@ -49,46 +52,35 @@ public struct TUICheckBoxRow: View {
   
   @ViewBuilder
   private var leftView: some View {
-    Image(fluent: isSelected ? .checkboxChecked24Filled : .checkboxUnchecked24Filled)
+    let imageName = isSelected ? "checkbox_checked" :
+    colorScheme == .dark ? "checkbox-dark-unchecked" :  "checkbox_unchecked"
+    Image(imageName, bundle: Bundle.module)
+      .scaledToFit()
       .frame(width: 24, height: 24)
       .clipped()
-      .foregroundColor(isSelected ? .primaryTUI : .outline)
   }
   
   @ViewBuilder
   private var rightView: some View {
     VStack(alignment: .leading, spacing: Spacing.halfVertical) {
-      Group {
+      switch style {
+      case .onlyTitle:
         titleView
-        detailView(forStyle: style)
+        
+      case .textDescription(let desc):
+        titleView
+        textDescriptionView(desc)
       }
     }
+    .frame(maxWidth: .infinity, alignment: .leading)
   }
   
-  @ViewBuilder
   private var titleView: some View {
-    switch style {
-    case .onlyDescription:
-      EmptyView()
-    default:
-      Text(title)
-        .font(.heading7)
-        .foregroundColor(.onSurface)
-        .frame(minHeight: Spacing.custom(18))
-        .accessibilityIdentifier(Accessibility.title)
-    }    
-  }
-  
-  @ViewBuilder
-  private func detailView(forStyle style: TUICheckBoxRow.Style) -> some View {
-    switch style {
-    case .onlyTitle:
-      EmptyView()
-    case .textDescription(let desc):
-      textDescriptionView(desc)
-    case .onlyDescription(let desc):
-      onlyDescriptionView(desc)
-    }
+    Text(title)
+      .font(titleFont)
+      .foregroundColor(titleColor)
+      .frame(minHeight: Spacing.custom(18))
+      .accessibilityIdentifier(Accessibility.title)
   }
   
   @ViewBuilder
@@ -96,15 +88,6 @@ public struct TUICheckBoxRow: View {
     Text(description)
       .font(.body7)
       .foregroundColor(.inputTextDim)
-      .frame(minHeight: Spacing.custom(18))
-      .accessibilityIdentifier(Accessibility.description)
-  }
-  
-  @ViewBuilder
-  private func onlyDescriptionView(_ description: String) -> some View {
-    Text(description)
-      .font(.body7)
-      .foregroundColor(.onSurface)
       .frame(minHeight: Spacing.custom(18))
       .accessibilityIdentifier(Accessibility.description)
   }
@@ -116,12 +99,9 @@ public extension TUICheckBoxRow  {
     case plain, border
   }
   
-  enum Style {
+  enum Style: Equatable {
     /// Displays only the title.
     case onlyTitle
-    
-    /// Displays only the description.
-    case onlyDescription(String)
     
     /// Displays the title and description.
     case textDescription(String)
@@ -144,6 +124,13 @@ public extension TUICheckBoxRow  {
   func borderStyle(_ style: BorderStyle) -> Self {
     var newView = self
     newView.borderStyle = style
+    return newView
+  }
+  
+  func titleStyle(_ font: TUIFont, textColor: Color = .onSurface) -> Self {
+    var newView = self
+    newView.titleFont = Font.using(font)
+    newView.titleColor = textColor
     return newView
   }
 }

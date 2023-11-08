@@ -108,8 +108,6 @@ public extension TUISearchBar {
       .trailingButton {
           TUIIconButton(icon: .dismiss24Regular) {
             searchBarVM.isEditing = false
-          }
-          .action {
             searchBarVM.searchItem.text = ""
           }
           .style(.ghost)
