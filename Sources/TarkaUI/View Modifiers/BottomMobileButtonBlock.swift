@@ -1,6 +1,6 @@
 //
 //  BottomMobileButtonBlock.swift
-//  
+//
 //
 //  Created by Gopinath on 16/08/23.
 //
@@ -9,20 +9,18 @@ import SwiftUI
 
 struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
   
-
   @State var isKeyboardShown: Bool = false
   @State var additionalViewHeight: CGFloat = 0
-
+  
   var block: TUIMobileButtonBlock
   var additionalView: T
   var showAdditionalView = false
-
+  
   func body(content: Content) -> some View {
     
     GeometryReader { geometry in
       
       let safeAreaBottomInset = geometry.safeAreaInsets.bottom
-      let block = block
       
       content.frame(maxHeight: .infinity)
         .safeAreaInset(edge: .bottom, spacing: 0) {
