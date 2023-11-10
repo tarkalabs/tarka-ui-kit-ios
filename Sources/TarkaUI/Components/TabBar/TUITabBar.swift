@@ -82,7 +82,7 @@ public struct TUITabBar: View {
       }
     }) {
       Text(title)
-        .font(.heading5)
+        .font(.body6)
         .padding(.horizontal, Spacing.baseHorizontal)
         .padding(.vertical, Spacing.custom(6))
         .frame(minHeight: 20)
