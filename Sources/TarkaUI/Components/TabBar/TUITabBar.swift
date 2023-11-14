@@ -8,30 +8,36 @@ import SwiftUI
 
 /// A custom TabBar view that displays a list of tabs with a selection indicator.
 ///
-/// The TUITabBar view takes an array of titles and a binding to a selected tab. The selected tab is highlighted with a selection indicator.
+/// The TUITabBar view takes an array of tabs and a binding to a selected tab. The selected tab is highlighted with a selection indicator.
 ///
 /// Example usage:
 ///
-///     TUITabBar(titles: ["Tab 1", "Tab 2", "Tab 3"], selectedTab: $selectedTab)
+///     TUITabBar(tabs: ["Tab 1", "Tab 2", "Tab 3"], selectedTab: $selectedTab)
 ///
 /// - Parameters:
-///   - titles: An array of strings representing the titles of the tabs.
-///   - selectedTab: A binding to a string representing the currently selected tab.
+///   - titles: An array of tabs representing the tabs.
+///   - selectedTab: A binding to a tab representing the currently selected tab.
 ///
+
+public protocol TabProtocol {
+  var title: String { get }
+  var id: String { get }
+}
+
 public struct TUITabBar: View {
-  let titles: [String]
-  @Binding var selectedTab: String
+  private let tabs: [TabProtocol]
+  @Binding var selectedTab: TabProtocol
   @State private var tabWidths: [CGFloat] = []
   @State private var selectedTabWidth: CGFloat
     
-  /// Creates a TUITabBar view with the specified titles and selected tab.
+  /// Creates a TUITabBar view with the specified tabs and selected tab.
   ///
   /// - Parameters:
-  ///   - titles: An array of strings representing the titles of the tabs.
-  ///   - selectedTab: A binding to a string representing the currently selected tab.
+  ///   - tabs: An array of `TabProtocol` representing the tabs.
+  ///   - selectedTab: A binding to a tab representing the currently selected tab.
   ///
-  public init(titles: [String], selectedTab: Binding<String>) {
-    self.titles = titles
+  public init(tabs: [any TabProtocol], selectedTab: Binding<any TabProtocol>) {
+    self.tabs = tabs
     self._selectedTab = selectedTab
     self._selectedTabWidth = State(initialValue: 0)
   }
@@ -49,7 +55,7 @@ public struct TUITabBar: View {
     .onAppear {
       onTabSelection()
     }
-    .onChange(of: selectedTab) { _ in
+    .onChange(of: selectedTab.id) { _ in
       onTabSelection()
     }
   }
@@ -63,8 +69,8 @@ public struct TUITabBar: View {
   @ViewBuilder
   private var tabsView: some View {
     HStack(spacing: 0) {
-      ForEach(titles, id: \.self) { title in
-        tabView(title)
+      ForEach(tabs, id: \.id) { tab in
+        tabView(tab)
       }
     }
     .background(alignment: .leading) {
@@ -75,18 +81,18 @@ public struct TUITabBar: View {
   }
   
   @ViewBuilder
-  private func tabView(_ title: String) -> some View {
-    Button(action: {
+  private func tabView(_ tab: TabProtocol) -> some View {
+    Button {
       withAnimation {
-        selectedTab = title
+        selectedTab = tab
       }
-    }) {
-      Text(title)
+    } label: {
+      Text(tab.title)
         .font(.body6)
         .padding(.horizontal, Spacing.baseHorizontal)
         .padding(.vertical, Spacing.custom(6))
         .frame(minHeight: 20)
-        .foregroundColor(selectedTab == title ? .onSecondary : .onSurface)
+        .foregroundColor(selectedTab.id == tab.id ? .onSecondary : .onSurface)
         .background(GeometryReader { proxy in
           Color.clear
             .preference(key: TabWidthPreferenceKey.self, value: [proxy.size.width])
@@ -102,19 +108,21 @@ public struct TUITabBar: View {
   }
   
   private func getOffset() -> CGFloat {
-    let selectedIndex = titles.firstIndex(of: selectedTab)!
+    guard let selectedIndex = tabs.firstIndex(where: { $0.id == selectedTab.id }) else {
+      return 0
+    }
     var offset: CGFloat = 0
     for i in 0 ..< selectedIndex where tabWidths.count >= selectedIndex {
       offset += tabWidths[i]
     }
-    
     return offset
   }
   
   private func onTabSelection() {
     withAnimation {
-      let selectedIndex = titles.firstIndex(of: selectedTab)!
-      selectedTabWidth = tabWidths[selectedIndex]
+      if let selectedIndex = tabs.firstIndex(where: { $0.id == selectedTab.id }) {
+        selectedTabWidth = tabWidths[selectedIndex]
+      }
     }
   }
 }
@@ -131,12 +139,24 @@ private struct TabWidthPreferenceKey: PreferenceKey {
 struct TabBar_Previews: PreviewProvider {
   
   struct ContainerView: View {
-    @State private var selectedTab = "Usage"
+    @State private var selectedTab: TabProtocol = Tabs.usage
     
     var body: some View {
-      TUITabBar(titles: ["Usage", "Request"], selectedTab: $selectedTab)
+      TUITabBar(tabs: Tabs.allCases, selectedTab: $selectedTab)
     }
     
+    enum Tabs: CaseIterable, TabProtocol {
+      case usage, reqeust
+      
+      var id: String { UUID().uuidString }
+      
+      var title: String {
+        switch self {
+        case .usage: return "Usage"
+        case .reqeust: return "Request"
+        }
+      }
+    }
   }
   static var previews: some View {
     ContainerView()
