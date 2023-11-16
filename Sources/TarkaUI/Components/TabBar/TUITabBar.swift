@@ -12,10 +12,10 @@ import SwiftUI
 ///
 /// Example usage:
 ///
-///     TUITabBar(tabs: ["Tab 1", "Tab 2", "Tab 3"], selectedTab: $selectedTab)
+///     TUITabBar(tabs: [.init("Tab 1"), .init("Tab 2")], selectedTab: $selectedTab)
 ///
 /// - Parameters:
-///   - titles: An array of tabs representing the tabs.
+///   - tabs: An array of `TUITabItem` representing the tabs.
 ///   - selectedTab: A binding to a tab representing the currently selected tab.
 ///
 
@@ -32,7 +32,7 @@ public struct TUITabBar: View {
   @Binding var selectedTab: TUITabItem
   @State private var tabWidths: [CGFloat] = []
   @State private var selectedTabWidth: CGFloat
-    
+  
   /// Creates a TUITabBar view with the specified tabs and selected tab.
   ///
   /// - Parameters:
@@ -44,7 +44,7 @@ public struct TUITabBar: View {
     self._selectedTab = selectedTab
     self._selectedTabWidth = State(initialValue: 0)
   }
-    
+  
   public var body: some View {
     ZStack {
       backgroundView
@@ -62,7 +62,7 @@ public struct TUITabBar: View {
       onTabSelection()
     }
   }
-    
+  
   @ViewBuilder
   private var backgroundView: some View {
     Capsule()
@@ -133,7 +133,7 @@ public struct TUITabBar: View {
 private struct TabWidthPreferenceKey: PreferenceKey {
   typealias Value = [CGFloat]
   static var defaultValue: [CGFloat] = []
-    
+  
   static func reduce(value: inout [CGFloat], nextValue: () -> [CGFloat]) {
     value.append(contentsOf: nextValue())
   }
@@ -144,8 +144,8 @@ struct TabBar_Previews: PreviewProvider {
   struct ContainerView: View {
     
     var body: some View {
-      TUITabBar(tabs: Tabs.allCases.map { TUITabItem(title: $0.title)},
-                selectedTab: .constant(.init(title: "Usage")))
+      TUITabBar(tabs: Tabs.allCases.map { TUITabItem($0.title)},
+                selectedTab: .constant(.init("Usage")))
     }
     
     enum Tabs: CaseIterable {
