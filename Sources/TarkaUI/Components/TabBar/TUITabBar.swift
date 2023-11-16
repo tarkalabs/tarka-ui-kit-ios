@@ -112,6 +112,7 @@ public struct TUITabBar: View {
   
   private func getOffset() -> CGFloat {
     guard let selectedIndex = tabs.firstIndex(where: { $0 == selectedTab }) else {
+      assertionFailure("Selected tab not matching with the tabs")
       return 0
     }
     var offset: CGFloat = 0
@@ -125,6 +126,8 @@ public struct TUITabBar: View {
     withAnimation {
       if let selectedIndex = tabs.firstIndex(where: { $0 == selectedTab }) {
         selectedTabWidth = tabWidths[selectedIndex]
+      } else {
+        assertionFailure("Selected tab not matching with the tabs")
       }
     }
   }
