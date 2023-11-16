@@ -146,19 +146,24 @@ struct TabBar_Previews: PreviewProvider {
   
   struct ContainerView: View {
     
+    @State private var selectedTab = Tabs.usage.tabItem
+    
     var body: some View {
-      TUITabBar(tabs: Tabs.allCases.map { TUITabItem($0.title)},
-                selectedTab: .constant(.init("Usage")))
+      TUITabBar(tabs: Tabs.allTabs, selectedTab: $selectedTab)
     }
     
     enum Tabs: CaseIterable {
       case usage, reqeust
       
-      var title: String {
+      var tabItem: TUITabItem {
         switch self {
-        case .usage: return "Usage"
-        case .reqeust: return "Request"
+        case .usage: return .init("Usage")
+        case .reqeust: return .init("Request")
         }
+      }
+      
+      static var allTabs: [TUITabItem] {
+        Self.allCases.map { $0.tabItem }
       }
     }
   }
