@@ -55,6 +55,8 @@ public struct TUITextInputField: TUIInputFieldProtocol {
           if self.inputItem.value.isEmpty {
             self.inputItem.style = existingStyle
           }
+          // Remove whitespaces and newlines
+          inputItem.value = inputItem.value.trimmingCharacters(in: .whitespacesAndNewlines)
         }
       })
       .onChange(of: isFocused, perform: { value in
