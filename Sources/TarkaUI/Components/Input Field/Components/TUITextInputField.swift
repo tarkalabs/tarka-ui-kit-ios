@@ -69,6 +69,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
         // used when switching between text fields
         if !value {
           isFocused = false
+          removeWhiteSpaces()
           // revert the style when content is empty
           if self.inputItem.value.isEmpty {
             self.inputItem.style = existingStyle
