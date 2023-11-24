@@ -51,6 +51,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
       .onChange(of: dismissTextFocus, perform: { value in
         if value {
           isFocused = false
+          removeWhiteSpaces()
           // revert the style when content is empty
           if self.inputItem.value.isEmpty {
             self.inputItem.style = existingStyle
@@ -68,6 +69,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
         // used when switching between text fields
         if !value {
           isFocused = false
+          removeWhiteSpaces()
           // revert the style when content is empty
           if self.inputItem.value.isEmpty {
             self.inputItem.style = existingStyle
@@ -112,6 +114,11 @@ public struct TUITextInputField: TUIInputFieldProtocol {
       return inputItem.style
     }
     return .onlyTitle
+  }
+  
+  private func removeWhiteSpaces() {
+    // Remove whitespaces and newlines
+    inputItem.value = inputItem.value.trimmingCharacters(in: .whitespacesAndNewlines)
   }
 }
 
