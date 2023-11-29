@@ -1,5 +1,5 @@
 //
-//  TUIOverlayView.swift
+//  TUIOverlayContentView.swift
 //
 //
 //  Created by MAHESHWARAN on 28/11/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct TUIOverlayView<Content: View>: View {
+public struct TUIOverlayContentView<Content: View>: View {
   @Environment(\.dismiss) private var dismiss
   
   @State private var contentHeight = CGFloat.zero
@@ -93,7 +93,7 @@ public struct TUIOverlayView<Content: View>: View {
   }
 }
 
-public extension TUIOverlayView {
+public extension TUIOverlayContentView {
   
   enum BottomButtonStyle {
     case one(String, TUIButtonAction? = nil),
@@ -104,8 +104,8 @@ public extension TUIOverlayView {
   }
   
   enum Accessibility: String, TUIAccessibility {
-    case root = "TUIOverlayView"
-    case contentView = "Menu Item View"
+    case root = "TUIOverlayContentView"
+    case contentView = "ContentView"
     case headerView = "HeaderView"
     case bottomView = "BottomView"
   }
@@ -128,7 +128,7 @@ struct TUIOverlayView_Previews: PreviewProvider {
     ZStack {
       Color.gray.opacity(0.3).ignoresSafeArea()
       
-      TUIOverlayView {
+      TUIOverlayContentView {
         VStack {
           Image(systemName: "star")
             .resizable()
