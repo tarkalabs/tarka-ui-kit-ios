@@ -15,12 +15,20 @@ public struct TUIOverlayMenuView: View {
   @State private var bottomViewHeight = CGFloat.zero
   @State private var buttonAction:  (() -> Void)?
   
+  var padding: CGFloat = 16
+  var verticalGap: CGFloat = 8
+
   private var title: String
   private var action: (() -> Void)?
   private var menuItems: [TUIMenuItemView]
   
   private var height: CGFloat {
     contentHeight + headerHeight + bottomViewHeight
+  }
+  
+  public init(menuItems: [TUIMenuItemView],
+              action: (() -> Void)? = nil) {
+    self.init(title: "", menuItems: menuItems, action: action)
   }
   
   public init(title: String, menuItems: [TUIMenuItemView],
@@ -46,8 +54,13 @@ public struct TUIOverlayMenuView: View {
   
   // MARK: - Header View
   
+  @ViewBuilder
   private var headerView: some View {
-    TUIOverlayHeaderView(.onlyTitle(title))
+    
+    let headerStyle: TUIOverlayHeaderView.Style = title.isEmpty ?
+      .handle : .onlyTitle(title)
+    
+    TUIOverlayHeaderView(headerStyle)
       .accessibilityIdentifier(Accessibility.headerView)
       .accessibilityElement(children: .contain)
       .getHeight($headerHeight)
@@ -59,15 +72,18 @@ public struct TUIOverlayMenuView: View {
   private var menuItemView: some View {
     if !menuItems.isEmpty {
       ScrollView {
-        VStack(spacing: Spacing.custom(24)) {
+        VStack(spacing: verticalGap) {
           ForEach(menuItems, id: \.item.id) { button in
+            let index: Int = menuItems.firstIndex(where: { $0.item == button.item }) ?? 0
             TUIMenuItemView(item: button.item, isSelected: button.isSelected) {
               buttonAction = button.action
               dismiss()
             }
+            .accessibilityIdentifier(
+              Accessibility.menuItemRow(index))
           }
         }
-        .padding(Spacing.custom(24))
+        .padding(padding)
         .background(Color.surface)
         .getHeight($contentHeight)
       }
@@ -112,14 +128,33 @@ public struct TUIOverlayMenuView: View {
   }
 }
 
-public extension TUIOverlayMenuView {
+extension TUIOverlayMenuView {
   
-  enum Accessibility: String, TUIAccessibility {
-    case root = "TUIOverlayMenuView"
-    case title = "Title"
-    case menuItemView = "Menu Item View"
-    case headerView = "HeaderView"
-    case bottomView = "BottomView"
+  enum Accessibility: TUIAccessibility {
+    case root
+    case title
+    case headerView
+    case bottomView
+    case menuItemView
+    case menuItemRow(Int)
+    
+    var identifier: String {
+      
+      switch self {
+      case .root: 
+        return "TUIOverlayMenuView"
+      case .title:
+        return "Title"
+      case .menuItemView:
+        return "Menu Item View"
+      case .headerView:
+        return "HeaderView"
+      case .bottomView:
+        return "BottomView"
+      case .menuItemRow(let row):
+        return "MenuItemRow\(row)"
+      }
+    }
   }
 }
 
