@@ -48,7 +48,6 @@ public struct TUIOverlayView<Content: View>: View {
       .getHeight($headerHeight)
   }
   
-  
   // MARK: - Bottom View
   
   @ViewBuilder
