@@ -20,13 +20,24 @@ public extension View {
   }
   
   @ViewBuilder
-  /// Adds transparent background
+  /// Adds black overlay background
   /// - Returns: View
-  func transparentBackground() -> some View {
+  func blackOverlayBackground() -> some View {
     if #available(iOS 16.4, *) {
       self.presentationBackground(.black.opacity(0.5))
     } else {
       self.background(BackgroundColorView(color: .black.opacity(0.5)))
+    }
+  }
+  
+  @ViewBuilder
+  /// Adds transparent background
+  /// - Returns: View
+  func transparentBackground() -> some View {
+    if #available(iOS 16.4, *) {
+      self.presentationBackground(.clear)
+    } else {
+      self.background(BackgroundColorView(color: .clear))
     }
   }
   
