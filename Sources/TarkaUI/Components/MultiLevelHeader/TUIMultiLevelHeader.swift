@@ -20,7 +20,7 @@ public struct TUIMultiLevelHeader: View {
       contentView
     }
     .padding(.vertical, Spacing.baseVertical)
-    .padding(.horizontal, Spacing.custom(20))
+    .padding(.horizontal, Spacing.custom(12))
     .background(item.isSelectable ? Color.primaryAlt : Color.surface)
     .frame(maxWidth: .infinity)
   }
@@ -31,12 +31,14 @@ public struct TUIMultiLevelHeader: View {
       backButton
       pathTitle
     }
+    .padding(Spacing.baseVertical)
   }
   
   @ViewBuilder
   private var backButton: some View {
     item.backButton
       .iconColor(item.isSelectable ? Color.onPrimaryAlt : Color.onSurface)
+      .size(.size24)
   }
   
   @ViewBuilder
