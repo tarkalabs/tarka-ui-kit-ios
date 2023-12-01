@@ -72,7 +72,7 @@ public struct TUICircularProgressView<Label: View>: View {
   private var backgroundCircleView: some View {
     Circle()
       .stroke(
-        Color.surfaceHover,
+        Color.surfaceVariantHover,
         lineWidth: lineWidth
       )
   }
