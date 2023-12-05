@@ -7,6 +7,28 @@
 
 import SwiftUI
 
+/// `TUIOverlayContentView`a  view that shows overlay view as popup on iPad(when not in split screen)
+/// and as bottom sheet on iPhones
+///
+/// Example usage:
+///
+///        TUIOverlayContentView {
+///         VStack {
+///           Image(systemName: "star")
+///             .resizable()
+///             .frame(width: 100, height: 100)
+///           Text("Hello")
+///           }
+///           .padding(20)
+///         }
+///         .headerStyle(.onlyTitle("Title"))
+///         .footerStyle(.two(left: "Cancel", right: "Done", { }))
+///
+/// - Parameters:
+///   - content: A closure that returns the content to views
+///
+/// - Returns: A view that represents a header, optional Footer and content.
+///
 public struct TUIOverlayContentView<Content: View>: View {
   @Environment(\.dismiss) private var dismiss
   
