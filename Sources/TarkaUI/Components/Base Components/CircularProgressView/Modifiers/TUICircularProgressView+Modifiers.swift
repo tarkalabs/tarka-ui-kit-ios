@@ -7,16 +7,19 @@
 
 import SwiftUI
 
-extension EnvironmentValues {
-  var circularProgressViewStyle: TUICircularProgressViewStyle {
-    get { self[TUICircularProgressViewStyle.self] }
-    set { self[TUICircularProgressViewStyle.self] = newValue }
+public extension TUICircularProgressView {
+  
+  func backgroundCircleColor(_ color: Color? = nil) -> Self {
+    guard let color else { return self }
+    var newView = self
+    newView.backgroundCircleColor = color
+    return newView
   }
-}
 
-public extension View {
-  func circularProgressViewStyle(_ style: TUICircularProgressViewStyle) -> some View {
-    self.environment(\.circularProgressViewStyle, style)
+  func circularProgressViewStyle(_ style: TUICircularProgressViewStyle) -> Self {
+    var newView = self
+    newView.style = style
+    return newView
   }
 }
 

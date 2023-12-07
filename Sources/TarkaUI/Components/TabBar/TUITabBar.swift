@@ -123,12 +123,10 @@ public struct TUITabBar: View {
   }
   
   private func onTabSelection() {
-    withAnimation {
-      if let selectedIndex = tabs.firstIndex(where: { $0 == selectedTab }) {
-        selectedTabWidth = tabWidths[selectedIndex]
-      } else {
-        assertionFailure("Selected tab not matching with the tabs")
-      }
+    if let selectedIndex = tabs.firstIndex(where: { $0 == selectedTab }) {
+      selectedTabWidth = tabWidths[selectedIndex]
+    } else {
+      assertionFailure("Selected tab not matching with the tabs")
     }
   }
 }
