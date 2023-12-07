@@ -40,9 +40,11 @@ public struct TUICircularProgressView<Label: View>: View {
   /// A view to display alongside the progress view.
   public let label: () -> Label
 
-  /// The style of the progress view. The default style is `indeterminate`. 
+  public var backgroundCircleColor = Color.surfaceVariantHover
+
+  /// The style of the progress view. The default style is `indeterminate`.
   /// If the style is `determinate`, the progress view shows a progress bar that fills up as the task progresses. If the style is `indeterminate`, the progress view shows a spinning wheel that indicates that the task is in progress but does not show the progress itself.
-  @Environment(\.circularProgressViewStyle) var style
+  var style: TUICircularProgressViewStyle = .indeterminate
   
   private let lineWidth: CGFloat = 4
   @State private var rotation = 0.0
@@ -72,7 +74,7 @@ public struct TUICircularProgressView<Label: View>: View {
   private var backgroundCircleView: some View {
     Circle()
       .stroke(
-        Color.surfaceVariantHover,
+        backgroundCircleColor,
         lineWidth: lineWidth
       )
   }
