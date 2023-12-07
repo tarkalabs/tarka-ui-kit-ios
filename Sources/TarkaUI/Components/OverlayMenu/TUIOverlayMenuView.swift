@@ -146,7 +146,7 @@ extension TUIOverlayMenuView {
       case .title:
         return "Title"
       case .menuItemView:
-        return "Menu Item View"
+        return "MenuItemView"
       case .headerView:
         return "HeaderView"
       case .bottomView:
