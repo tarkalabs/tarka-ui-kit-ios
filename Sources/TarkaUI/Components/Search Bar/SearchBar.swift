@@ -1,6 +1,6 @@
 //
 //  SearchBar.swift
-//  
+//
 //
 //  Created by Gopinath on 10/08/23.
 //
@@ -12,8 +12,7 @@ struct SearchBar: View {
   
   @ObservedObject var searchBarVM: TUISearchBarViewModel
   @FocusState private var isFocused: Bool
-
-
+  
   var body: some View {
     
     TextField(searchBarVM.searchItem.placeholder, text: $searchBarVM.searchItem.text)
@@ -27,6 +26,13 @@ struct SearchBar: View {
         }
       })
       .accessibilityIdentifier(Accessibility.root)
+      .submitLabel(searchBarVM.needDelaySearch ? .search : .return)
+      .onSubmit(performSearch)
+  }
+  
+  private func performSearch() {
+    guard searchBarVM.needDelaySearch else { return }
+    searchBarVM.onEditing(searchBarVM.searchItem.text)
   }
 }
 
@@ -43,7 +49,7 @@ struct SearchBar_Previews: PreviewProvider {
     
     @StateObject var searchBarVM = TUISearchBarViewModel(
       searchItem: .init(placeholder: "Search", text: "")) { _ in }
-
+    
     SearchBar(searchBarVM: searchBarVM)
   }
 }
