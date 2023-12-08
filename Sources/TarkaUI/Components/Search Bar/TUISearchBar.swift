@@ -50,11 +50,15 @@ public struct TUISearchBar: View {
     .padding(Spacing.custom(4))
     .background(Color.inputBackground)
     .cornerRadius(75)
-    .onChange(of: searchBarVM.searchItem.text, perform: { value in
-      searchBarVM.onEditing(value)
-    })
+    .isEnabled(!searchBarVM.needDelaySearch) {
+      $0.onChange(of: searchBarVM.searchItem.text, perform: performSearch)
+    }
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
+  }
+  
+  private func performSearch(_ value: String) {
+    searchBarVM.onEditing(value)
   }
 }
 
@@ -109,6 +113,9 @@ public extension TUISearchBar {
           TUIIconButton(icon: .dismiss24Regular) {
             searchBarVM.isEditing = false
             searchBarVM.searchItem.text = ""
+            if searchBarVM.needDelaySearch {
+              searchBarVM.onEditing("")
+            }
           }
           .style(.ghost)
           .size(.size40)
