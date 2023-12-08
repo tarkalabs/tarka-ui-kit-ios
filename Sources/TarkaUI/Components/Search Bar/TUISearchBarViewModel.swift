@@ -27,7 +27,7 @@ public class TUISearchBarViewModel: ObservableObject {
   @Published public var isShown: Bool = false
   @Published public var isEditing = false
   
-  public let needDelaySearch: Bool
+  public var needDelaySearch: Bool
   var onEditing: (String) -> Void
 
   public init(
