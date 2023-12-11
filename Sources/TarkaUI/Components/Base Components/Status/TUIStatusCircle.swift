@@ -11,6 +11,10 @@ public struct TUIStatusCircle: View {
   
   public var color: Color
   
+  public init(color: Color) {
+    self.color = color
+  }
+  
   public var body: some View {
     
     let circleSize = Spacing.halfHorizontal
