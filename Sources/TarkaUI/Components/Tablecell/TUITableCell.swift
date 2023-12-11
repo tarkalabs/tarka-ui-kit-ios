@@ -32,12 +32,6 @@ public struct TUITableCell: View {
   }
 }
 
-#Preview {
-    TUITableCell(title: "Label")
-    .borderStyle(.bottom)
-    .isHeader(true)
-}
-
 public extension TUITableCell {
   enum Accessibility: String, TUIAccessibility {
     case root = "TUITableCell"
@@ -54,5 +48,14 @@ public extension TUITableCell {
       case .`none`: return []
       }
     }
+  }
+}
+
+struct TUITableCell_Previews: PreviewProvider {
+  
+  static var previews: some View {
+    TUITableCell(title: "Label")
+      .borderStyle(.bottom)
+      .isHeader(true)
   }
 }

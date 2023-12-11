@@ -20,7 +20,12 @@ public struct TUIOverlayMenuView: View {
 
   private var title: String
   private var action: (() -> Void)?
-  private var menuItems: [TUIMenuItemView]
+  private var menuItems: [MenuItem]
+  
+  struct MenuItem {
+    var view: TUIMenuItemView
+    var index: Int
+  }
   
   private var height: CGFloat {
     contentHeight + headerHeight + bottomViewHeight
@@ -35,7 +40,13 @@ public struct TUIOverlayMenuView: View {
               action: (() -> Void)? = nil) {
     self.title = title
     self.action = action
-    self.menuItems = menuItems
+    
+    var menuItemss = [MenuItem]()
+    for (index, menuView) in menuItems.enumerated() {
+      let menuItem = MenuItem(view: menuView, index: index)
+      menuItemss.append(menuItem)
+    }
+    self.menuItems = menuItemss
   }
   
   public var body: some View {
@@ -73,8 +84,11 @@ public struct TUIOverlayMenuView: View {
     if !menuItems.isEmpty {
       ScrollView {
         VStack(spacing: verticalGap) {
-          ForEach(menuItems, id: \.item.id) { button in
-            let index: Int = menuItems.firstIndex(where: { $0.item == button.item }) ?? 0
+          let menuViews = menuItems.map({ $0.view })
+          
+          ForEach(menuViews.indices, id: \.self) { index in
+            
+            let button = menuViews[index]
             TUIMenuItemView(item: button.item, isSelected: button.isSelected) {
               buttonAction = button.action
               dismiss()
