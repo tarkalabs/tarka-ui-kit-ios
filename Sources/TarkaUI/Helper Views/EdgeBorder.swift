@@ -7,8 +7,13 @@
 
 import SwiftUI
 
+/// Draws a border in specified edges
+/// - Parameters:
+///   - width: size of the border
+///   - edges: Array of `Edge` where are all border have to be drawn
+
 public struct EdgeBorder: Shape {
-  
+
   var width: CGFloat
   var edges: [Edge]
   
