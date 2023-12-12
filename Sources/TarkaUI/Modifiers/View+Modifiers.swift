@@ -72,17 +72,17 @@ public extension View {
   /// This method is used to create navigationTextRow View with title and optional description, used in any swiftUI views
   ///
   @ViewBuilder
-  func navigationTextRow(
+  func navigationTextRow<V: View>(
     _ title: String,
     style: TUITextRow.Style,
-    destinationView: some View,
+    @ViewBuilder destinationView: @escaping () -> V,
     accessibilityID: TUIAccessibility,
     isEnabled: Bool = true,
     @TUIIconButtonBuilder iconButtons: @escaping () -> [TUIIconButton]) -> some View {
       let textRow = TUITextRow(title, style: style)
       
       if isEnabled {
-        NavigationLink(destination: destinationView, label: {
+        NavigationLink(destination: { LazyView(destinationView) }, label: {
           textRow
             .wrapperIcon {
               TUIWrapperIcon(icon: .chevronRight20Filled)
@@ -192,5 +192,12 @@ public extension View {
   func hideKeyboard() {
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
                                     to: nil, from: nil, for: nil)
+  }
+  
+  // MARK: - LazyView
+  
+  func lazyView(_ destinationView: some View) -> (() -> some View) {
+    let view = { destinationView }
+    return view
   }
 }
