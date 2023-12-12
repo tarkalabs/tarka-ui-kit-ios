@@ -193,11 +193,4 @@ public extension View {
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
                                     to: nil, from: nil, for: nil)
   }
-  
-  // MARK: - LazyView
-  
-  func lazyView(_ destinationView: some View) -> (() -> some View) {
-    let view = { destinationView }
-    return view
-  }
 }
