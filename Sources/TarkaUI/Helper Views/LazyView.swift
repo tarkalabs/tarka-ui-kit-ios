@@ -10,7 +10,8 @@ import SwiftUI
 /// LazyView is a SwiftUI
 ///
 /// The `LazyView` is a container view that displays a contents only when a view is visible,
-/// This lazyView will solve the issue where nested views are getting initialized too early.
+/// This lazyView will solve the issue where nested views are initialized too early before rendering.
+/// This will help to initialize the view through closure only when it starts to render.
 ///
 /// Example usage:
 ///
