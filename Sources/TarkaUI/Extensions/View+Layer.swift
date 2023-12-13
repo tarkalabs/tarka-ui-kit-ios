@@ -1,6 +1,6 @@
 //
 //  View+Layer.swift
-//  
+//
 //
 //  Created by Gopinath on 11/08/23.
 //
@@ -18,15 +18,26 @@ public extension View {
   func roundedCornerWithBorder(width: CGFloat, color: Color) -> some View {
     self.borderView(Capsule(), width: width, color: color)
   }
-
+  
+  @ViewBuilder
+  /// Adds black overlay background
+  /// - Returns: View
+  func blackOverlayBackground() -> some View {
+    if #available(iOS 16.4, *) {
+      self.presentationBackground(.black.opacity(0.5))
+    } else {
+      self.background(BackgroundColorView(color: .black.opacity(0.5)))
+    }
+  }
+  
   @ViewBuilder
   /// Adds transparent background
   /// - Returns: View
   func transparentBackground() -> some View {
     if #available(iOS 16.4, *) {
-      self.presentationBackground(.black.opacity(0.5))
+      self.presentationBackground(.clear)
     } else {
-      self.background(BackgroundColorView(color: .black.opacity(0.5)))
+      self.background(BackgroundColorView(color: .clear))
     }
   }
   
@@ -40,25 +51,25 @@ public extension View {
     withColor color: Color,
     isClicked: (() -> Void)? = nil) -> some View {
       
-    if #available(iOS 16.4, *) {
-      self
-        .presentationBackground {
-          color
+      if #available(iOS 16.4, *) {
+        self
+          .presentationBackground {
+            color
+              .contentShape(Rectangle())
+              .onTapGesture {
+                isClicked?()
+              }
+          }
+      } else {
+        self.background(
+          BackgroundColorView(color: color)
             .contentShape(Rectangle())
             .onTapGesture {
               isClicked?()
             }
-        }
-    } else {
-      self.background(
-        BackgroundColorView(color: color)
-          .contentShape(Rectangle())
-          .onTapGesture {
-            isClicked?()
-          }
-      )
+        )
+      }
     }
-  }
   
   /// This method is used to create border View in any swiftUI views
   ///
@@ -75,4 +86,19 @@ public extension View {
       .clipShape(shape)
       .overlay(shape.stroke(color, lineWidth: width))
   }
+  
+  /// Draws border in specified edges
+  /// - Parameters:
+  ///   - width: border width
+  ///   - edges: edges that require to be drawn
+  ///   - color: border color
+  /// - Returns: Border drawn view
+  func border(
+    width: CGFloat, edges: [Edge],
+    color: Color) -> some View {
+      
+      overlay(
+        EdgeBorder(width: width, edges: edges)
+          .foregroundColor(color))
+    }
 }
