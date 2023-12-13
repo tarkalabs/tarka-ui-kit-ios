@@ -29,7 +29,7 @@ public struct TUISearchBar: View {
           .accessibilityIdentifier(Accessibility.backButton)
       }
       
-      SearchBar(searchBarVM: searchBarVM)
+      SearchTextField(searchBarVM: searchBarVM)
         .isEnabled(backButton == nil) { view in
           view
             .padding(.leading, 24)
@@ -50,9 +50,6 @@ public struct TUISearchBar: View {
     .padding(Spacing.custom(4))
     .background(Color.inputBackground)
     .cornerRadius(75)
-    .onChange(of: searchBarVM.searchItem.text, perform: { value in
-      searchBarVM.onEditing(value)
-    })
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
   }
