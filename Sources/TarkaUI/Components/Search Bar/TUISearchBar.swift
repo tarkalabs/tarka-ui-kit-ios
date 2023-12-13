@@ -29,7 +29,7 @@ public struct TUISearchBar: View {
           .accessibilityIdentifier(Accessibility.backButton)
       }
       
-      SearchBar(searchBarVM: searchBarVM)
+      SearchTextField(searchBarVM: searchBarVM)
         .isEnabled(backButton == nil) { view in
           view
             .padding(.leading, 24)
