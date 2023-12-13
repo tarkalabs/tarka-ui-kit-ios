@@ -16,6 +16,7 @@ public enum Spacing {
   public static let quarterVertical: CGFloat = baseVertical / 4
 
   public static let baseHorizontal: CGFloat = 16
+  public static let doubleHorizontal: CGFloat = baseHorizontal * 2
   public static let halfHorizontal: CGFloat = baseHorizontal / 2
   public static let quarterHorizontal: CGFloat = baseHorizontal / 4
 

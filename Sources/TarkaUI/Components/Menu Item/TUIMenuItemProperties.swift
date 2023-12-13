@@ -22,8 +22,12 @@ import SwiftUI
 ///   - title: The title to display in the menu item.
 ///   - style: The configuration to use to display the menu item. The default value is `.onlyLabel`.
 ///
-public struct TUIMenuItemProperties: Identifiable {
-  public var title: any StringProtocol
+public struct TUIMenuItemProperties: Identifiable, Equatable {
+  public static func == (lhs: TUIMenuItemProperties, rhs: TUIMenuItemProperties) -> Bool {
+    lhs.title == rhs.title
+  }
+  
+  public var title: String
   public var style: Style
   public var id: String
   
@@ -84,7 +88,7 @@ public struct TUIMenuItemProperties: Identifiable {
     }
   }
   
-  public init(title: any StringProtocol, style: TUIMenuItemProperties.Style,
+  public init(title: String, style: TUIMenuItemProperties.Style,
               id: String = UUID().uuidString) {
     self.title = title
     self.style = style

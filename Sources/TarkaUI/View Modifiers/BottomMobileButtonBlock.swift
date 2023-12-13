@@ -30,7 +30,7 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
             VStack(spacing: 0) {
               if showAdditionalView {
                 ZStack {
-                  BackgroundBlur(radius: 7)
+                  BackgroundBlur()
                   additionalView.getHeight($additionalViewHeight)
                 }
                 .background(Color.surface50)
