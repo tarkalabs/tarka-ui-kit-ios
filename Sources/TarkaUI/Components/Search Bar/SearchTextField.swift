@@ -28,11 +28,18 @@ struct SearchTextField: View {
       .accessibilityIdentifier(Accessibility.root)
       .submitLabel(searchBarVM.needDelaySearch ? .search : .return)
       .onSubmit(performSearch)
+      .isEnabled(!searchBarVM.needDelaySearch) {
+        $0.onChange(of: searchBarVM.searchItem.text, perform: updateSearchText)
+      }
   }
   
   private func performSearch() {
     guard searchBarVM.needDelaySearch else { return }
     searchBarVM.onEditing(searchBarVM.searchItem.text)
+  }
+  
+  private func updateSearchText(_ value: String) {
+    searchBarVM.onEditing(value)
   }
 }
 
