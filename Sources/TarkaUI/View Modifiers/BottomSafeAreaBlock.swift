@@ -32,7 +32,7 @@ public struct BottomSafeAreaBlock<T>: ViewModifier where T: View {
           VStack(spacing: 0) {
             if showView {
               ZStack {
-                BackgroundBlur(radius: 7)
+                BackgroundBlur()
                 view.getHeight($viewHeight)
               }
               .background(Color.surface50)
