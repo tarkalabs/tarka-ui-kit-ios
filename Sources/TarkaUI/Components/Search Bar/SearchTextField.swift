@@ -1,5 +1,5 @@
 //
-//  SearchBar.swift
+//  SearchTextField.swift
 //
 //
 //  Created by Gopinath on 10/08/23.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct SearchBar: View {
+struct SearchTextField: View {
   
   @ObservedObject var searchBarVM: TUISearchBarViewModel
   @FocusState private var isFocused: Bool
@@ -36,9 +36,9 @@ struct SearchBar: View {
   }
 }
 
-extension SearchBar {
+extension SearchTextField {
   enum Accessibility: String, TUIAccessibility {
-    case root = "SearchBar"
+    case root = "SearchTextField"
   }
 }
 
@@ -50,6 +50,6 @@ struct SearchBar_Previews: PreviewProvider {
     @StateObject var searchBarVM = TUISearchBarViewModel(
       searchItem: .init(placeholder: "Search", text: "")) { _ in }
     
-    SearchBar(searchBarVM: searchBarVM)
+    SearchTextField(searchBarVM: searchBarVM)
   }
 }
