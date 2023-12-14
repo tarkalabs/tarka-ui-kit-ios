@@ -106,6 +106,7 @@ public extension TUISearchBar {
           TUIIconButton(icon: .dismiss24Regular) {
             searchBarVM.isEditing = false
             searchBarVM.searchItem.text = ""
+            searchBarVM.onEditing("")
           }
           .style(.ghost)
           .size(.size40)
