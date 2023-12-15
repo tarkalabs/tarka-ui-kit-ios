@@ -115,7 +115,6 @@ public struct TUICircularProgressView<Label: View>: View {
   @ViewBuilder
   private func labelView(_ proxy: GeometryProxy) -> some View {
     label()
-      .padding(proxy.size.width * 0.2)
       .frame(maxWidth: .infinity, maxHeight: .infinity)
   }
 }

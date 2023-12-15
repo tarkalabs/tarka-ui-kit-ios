@@ -26,13 +26,12 @@ public struct TUIMobileButtonBlock: View {
   }
   
   private let fixedWidth: CGFloat = 342
-  private let blurRadius: CGFloat = 7
   
   public var body: some View {
     
     ZStack {
       
-      BackgroundBlur(radius: blurRadius)
+      BackgroundBlur()
         .frame(maxWidth: .infinity)
         .edgesIgnoringSafeArea(.bottom)
       
