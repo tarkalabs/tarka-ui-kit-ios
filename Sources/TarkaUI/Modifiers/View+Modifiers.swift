@@ -75,14 +75,14 @@ public extension View {
   func navigationTextRow(
     _ title: String,
     style: TUITextRow.Style,
-    destinationView: some View,
+    destinationView: @autoclosure @escaping () -> some View,
     accessibilityID: TUIAccessibility,
     isEnabled: Bool = true,
     @TUIIconButtonBuilder iconButtons: @escaping () -> [TUIIconButton]) -> some View {
       let textRow = TUITextRow(title, style: style)
       
       if isEnabled {
-        NavigationLink(destination: destinationView, label: {
+        NavigationLink(destination: { LazyView(destinationView) }, label: {
           textRow
             .wrapperIcon {
               TUIWrapperIcon(icon: .chevronRight20Filled)
