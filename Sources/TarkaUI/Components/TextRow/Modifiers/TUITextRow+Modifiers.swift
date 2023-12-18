@@ -15,9 +15,14 @@ public extension TUITextRow {
     return newView
   }
   
-  func iconButtons(@TUIIconButtonBuilder icons: @escaping () -> [TUIIconButton]) -> TUITextRow {
+  func iconButtons(@TUIIconButtonBuilder icons: @escaping () -> [TUIIconButton]?) -> TUITextRow {
     var newView = self
-    newView.iconButtons = icons
+    guard let icons = icons(), !icons.isEmpty else {
+      return newView
+    }
+    newView.iconButtons = {
+      icons
+    }
     return newView
   }
 }
