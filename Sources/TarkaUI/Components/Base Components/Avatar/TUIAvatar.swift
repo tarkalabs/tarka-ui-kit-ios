@@ -27,7 +27,7 @@ public struct TUIAvatar: View {
   public var body: some View {
     ZStack {
       Circle()
-        .foregroundColor(Color.tertiary)
+        .foregroundColor(Color.outline)
       
       contentView
     }
