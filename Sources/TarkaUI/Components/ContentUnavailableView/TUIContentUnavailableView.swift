@@ -24,7 +24,6 @@ public struct TUIContentUnavailableView: View {
     }
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
-    .ignoresSafeArea(.container, edges: .bottom)
   }
   
   @ViewBuilder
