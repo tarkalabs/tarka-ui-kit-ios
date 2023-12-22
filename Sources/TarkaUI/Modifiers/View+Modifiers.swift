@@ -78,7 +78,8 @@ public extension View {
     destinationView: @autoclosure @escaping () -> some View,
     accessibilityID: TUIAccessibility,
     isEnabled: Bool = true,
-    @TUIIconButtonBuilder iconButtons: @escaping () -> [TUIIconButton]) -> some View {
+    @TUIIconButtonBuilder
+    iconButtons: @escaping (() -> [TUIIconButton]?) = { nil }) -> some View {
       let textRow = TUITextRow(title, style: style)
       
       if isEnabled {
