@@ -17,7 +17,6 @@ struct ToolBarDoneButton: ViewModifier {
   func body(content: Content) -> some View {
     
     content.frame(maxHeight: .infinity)
-      .adaptiveKeyboard(isKeyboardShown: $isKeyboardShown)
       .toolbar {
         ToolbarItemGroup(placement: .keyboard) {
           Spacer()
