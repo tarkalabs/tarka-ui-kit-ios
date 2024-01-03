@@ -73,7 +73,6 @@ public struct TUIIconButton: View, Identifiable {
       height: buttonSize.height
     )
     .background(backgroundView)
-    .contentShape(Circle()) // So that only the circular portion is tappable
     .clipShape(Circle())
     .overlay(content: borderView)
     .isDisabled(isDisabled)
