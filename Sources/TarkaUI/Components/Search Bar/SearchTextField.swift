@@ -1,6 +1,6 @@
 //
-//  SearchBar.swift
-//  
+//  SearchTextField.swift
+//
 //
 //  Created by Gopinath on 10/08/23.
 //
@@ -8,12 +8,11 @@
 import SwiftUI
 
 
-struct SearchBar: View {
+struct SearchTextField: View {
   
   @ObservedObject var searchBarVM: TUISearchBarViewModel
   @FocusState private var isFocused: Bool
-
-
+  
   var body: some View {
     
     TextField(searchBarVM.searchItem.placeholder, text: $searchBarVM.searchItem.text)
@@ -27,12 +26,26 @@ struct SearchBar: View {
         }
       })
       .accessibilityIdentifier(Accessibility.root)
+      .submitLabel(searchBarVM.needDelaySearch ? .search : .return)
+      .onSubmit(performSearch)
+      .isEnabled(!searchBarVM.needDelaySearch) {
+        $0.onChange(of: searchBarVM.searchItem.text, perform: updateSearchText)
+      }
+  }
+  
+  private func performSearch() {
+    guard searchBarVM.needDelaySearch else { return }
+    searchBarVM.onEditing(searchBarVM.searchItem.text)
+  }
+  
+  private func updateSearchText(_ value: String) {
+    searchBarVM.onEditing(value)
   }
 }
 
-extension SearchBar {
+extension SearchTextField {
   enum Accessibility: String, TUIAccessibility {
-    case root = "SearchBar"
+    case root = "SearchTextField"
   }
 }
 
@@ -43,7 +56,7 @@ struct SearchBar_Previews: PreviewProvider {
     
     @StateObject var searchBarVM = TUISearchBarViewModel(
       searchItem: .init(placeholder: "Search", text: "")) { _ in }
-
-    SearchBar(searchBarVM: searchBarVM)
+    
+    SearchTextField(searchBarVM: searchBarVM)
   }
 }

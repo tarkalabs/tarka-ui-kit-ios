@@ -26,13 +26,16 @@ public class TUISearchBarViewModel: ObservableObject {
   @Published public var searchItem: TUISearchBarItem
   @Published public var isShown: Bool = false
   @Published public var isEditing = false
+  
+  public var needDelaySearch: Bool
   var onEditing: (String) -> Void
 
   public init(
     searchItem: TUISearchBarItem,
     isShown: Bool = false,
+    needDelaySearch: Bool = false,
     onEditing: @escaping (String) -> Void) {
-      
+      self.needDelaySearch = needDelaySearch
       self._searchItem = Published(initialValue: searchItem)
       self._isShown = Published(initialValue: isShown)
       self.onEditing = onEditing
