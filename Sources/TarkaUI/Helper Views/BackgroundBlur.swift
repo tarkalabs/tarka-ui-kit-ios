@@ -11,7 +11,7 @@ private struct BackgroundVisualEffectiveView: UIViewRepresentable {
 
   func makeUIView(context: Context) -> UIVisualEffectView {
     let view = UIVisualEffectView()
-    view.alpha = 0.75
+    view.alpha = 0.9
     let blur = UIBlurEffect(style: .regular)
     view.effect = blur
     return view
@@ -21,12 +21,12 @@ private struct BackgroundVisualEffectiveView: UIViewRepresentable {
 }
 
 /// A transparent View that blurs its background
-struct BackgroundBlur: View {
-    
-    let radius: CGFloat
-    
-    @ViewBuilder
-    var body: some View {
-      BackgroundVisualEffectiveView()
-    }
+public struct BackgroundBlur: View {
+  
+  public init() { }
+  
+  @ViewBuilder
+  public var body: some View {
+    BackgroundVisualEffectiveView()
+  }
 }

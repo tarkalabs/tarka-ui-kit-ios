@@ -17,8 +17,13 @@ public struct TUIIconButtonBuilder {
   }
   
   /// Add support for both single and collections of buttons.
-  public static func buildExpression(_ expression:TUIIconButton) -> [TUIIconButton] {
+  public static func buildExpression(_ expression: TUIIconButton) -> [TUIIconButton] {
     [expression]
+  }
+  
+  /// Add support for both single and collections of buttons.
+  public static func buildExpression(_ expression: TUIIconButton?) -> [TUIIconButton] {
+    []
   }
   
   public static func buildBlock(_ components: [TUIIconButton]...) -> [TUIIconButton] {

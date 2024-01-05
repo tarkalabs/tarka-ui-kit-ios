@@ -82,7 +82,7 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
           minDate: minDate,
           maxDate: maxDate
         )
-        .transparentBackground()
+        .blackOverlayBackground()
         .presentationDetents([.fraction(0.9)])
       })
     .accessibilityIdentifier(Accessibility.root)
