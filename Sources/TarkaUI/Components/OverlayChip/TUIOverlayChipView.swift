@@ -47,7 +47,7 @@ public struct TUIOverlayChipView: View {
   // MARK: - Header View
   
   private var headerView: some View {
-    TUIOverlayHeaderView(.onlyTitle(title))
+    TUIMobileOverlayHeader(.onlyTitle(title))
       .accessibilityElement(children: .contain)
       .getHeight($headerHeight)
   }
