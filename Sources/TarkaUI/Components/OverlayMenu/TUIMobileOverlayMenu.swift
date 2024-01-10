@@ -1,5 +1,5 @@
 //
-//  TUIOverlayMenuView.swift
+//  TUIMobileOverlayMenu.swift
 //  
 //
 //  Created by MAHESHWARAN on 22/08/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct TUIOverlayMenuView: View {
+public struct TUIMobileOverlayMenu: View {
   @Environment(\.dismiss) private var dismiss
   
   @State private var contentHeight = CGFloat.zero
@@ -68,10 +68,10 @@ public struct TUIOverlayMenuView: View {
   @ViewBuilder
   private var headerView: some View {
     
-    let headerStyle: TUIOverlayHeaderView.Style = title.isEmpty ?
+    let headerStyle: TUIMobileOverlayHeader.Style = title.isEmpty ?
       .handle : .onlyTitle(title)
     
-    TUIOverlayHeaderView(headerStyle)
+    TUIMobileOverlayHeader(headerStyle)
       .accessibilityIdentifier(Accessibility.headerView)
       .accessibilityElement(children: .contain)
       .getHeight($headerHeight)
@@ -115,7 +115,7 @@ public struct TUIOverlayMenuView: View {
   // MARK: - Bottom View
   
   private var bottomView: some View {
-    TUIOverlayFooter {
+    TUIMobileOverlayFooter {
       CancelButton(dismissAction)
     }
     .frame(maxWidth: .infinity)
@@ -142,7 +142,7 @@ public struct TUIOverlayMenuView: View {
   }
 }
 
-extension TUIOverlayMenuView {
+extension TUIMobileOverlayMenu {
   
   enum Accessibility: TUIAccessibility {
     case root
@@ -156,7 +156,7 @@ extension TUIOverlayMenuView {
       
       switch self {
       case .root: 
-        return "TUIOverlayMenuView"
+        return "TUIMobileOverlayMenu"
       case .title:
         return "Title"
       case .menuItemView:
@@ -186,7 +186,7 @@ struct TUIOverlayMenuView_Previews: PreviewProvider {
     ZStack {
       Color.gray.opacity(0.3)
         .ignoresSafeArea()
-      TUIOverlayMenuView(title: "Menu Title", menuItems: menuItems) {}
+      TUIMobileOverlayMenu(title: "Menu Title", menuItems: menuItems) {}
     }
   }
 }

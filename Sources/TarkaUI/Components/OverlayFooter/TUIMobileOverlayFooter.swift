@@ -1,5 +1,5 @@
 //
-//  TUIOverlayFooter.swift
+//  TUIMobileOverlayFooter.swift
 //
 //
 //  Created by Arvindh Sukumar on 05/05/23.
@@ -9,11 +9,11 @@ import SwiftUI
 
 /// A view that displays a horizontal list of actions at the bottom of an overlay.
 ///
-/// Use `TUIOverlayFooter` to display a list of actions at the bottom of an overlay. You can add any number of actions to the footer using the `OverlayFooterActionBuilder` closure. Each action is represented by an `TUIOverlayFooterAction` object, which contains an icon and a closure to be executed when the action is tapped.
+/// Use `TUIMobileOverlayFooter` to display a list of actions at the bottom of an overlay. You can add any number of actions to the footer using the `OverlayFooterActionBuilder` closure. Each action is represented by an `TUIOverlayFooterAction` object, which contains an icon and a closure to be executed when the action is tapped.
 ///
 /// Example usage:
 ///
-///     TUIOverlayFooter {
+///     TUIMobileOverlayFooter {
 ///       TUIOverlayFooterAction(icon: .chevronLeft) {
 ///         // Handle action
 ///       }
@@ -25,7 +25,7 @@ import SwiftUI
 ///       }
 ///     }
 ///
-public struct TUIOverlayFooter: View {
+public struct TUIMobileOverlayFooter: View {
   private var actions: [TUIOverlayFooterAction]
   
   /// Creates a footer with the specified actions.
@@ -104,7 +104,7 @@ struct OverlayFooter_Previews: PreviewProvider {
   
   static var previews: some View {
     Group {
-      TUIOverlayFooter {
+      TUIMobileOverlayFooter {
         TestAction.one {
           
         }
@@ -118,7 +118,7 @@ struct OverlayFooter_Previews: PreviewProvider {
         }
       }
       
-      TUIOverlayFooter {
+      TUIMobileOverlayFooter {
         TestAction.one {
           
         }
@@ -129,7 +129,7 @@ struct OverlayFooter_Previews: PreviewProvider {
         
       }
       
-      TUIOverlayFooter {
+      TUIMobileOverlayFooter {
         TestAction.two {
           
         }
