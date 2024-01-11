@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  Image+Extensions.swift
+//
 //
 //  Created by Gopinath on 07/07/23.
 //
@@ -17,3 +17,16 @@ public extension Image {
 }
 
 
+public extension Image {
+  
+  init(icon: Icon) {
+    self.init(icon.rawValue, bundle: .module)
+  }
+}
+
+public enum Icon: String {
+  case checkBoxChecked = "checkbox_checked"
+  case checkBoxUnChecked = "checkbox_unchecked"
+  case toggleSwitchOn = "toggle_switch_on"
+  case toggleSwitchOff = "toggle_switch_off"
+}
