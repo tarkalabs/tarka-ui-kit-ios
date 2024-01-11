@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "checkbox_unchecked.pdf",
+      "filename" : "toogle_switch_off.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "checkbox-dark-unchecked.pdf",
+      "filename" : "toogle_switch_dark_off.pdf",
       "idiom" : "universal"
     }
   ],
