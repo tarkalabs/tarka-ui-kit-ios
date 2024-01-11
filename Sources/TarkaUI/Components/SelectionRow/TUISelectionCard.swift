@@ -1,5 +1,5 @@
 //
-//  TUISelectionRow.swift
+//  TUISelectionCard.swift
 //  
 //
 //  Created by MAHESHWARAN on 21/06/23.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-/// `TUISelectionRow` is a  container view that displays title and description with selection color
+/// `TUISelectionCard` is a  container view that displays title and description with selection color
 ///  This view can be used in any SwiftUI view.
 ///
 /// Example usage:
 ///
-///      TUISelectionRow(isSelected: true, showChevron: true) { }
+///      TUISelectionCard(isSelected: true, showChevron: true) { }
 ///        .style([.textDescription("welcome")])
 ///        .badgeCount(24)
 ///        .badgeColor(.blue)
@@ -24,7 +24,7 @@ import SwiftUI
 ///
 /// - Returns: A closure that returns the content
 
-public struct TUISelectionRow: View {
+public struct TUISelectionCard: View {
   
   private var isSelected: Bool
   private var icon: FluentIcon?
@@ -90,7 +90,7 @@ public struct TUISelectionRow: View {
   @ViewBuilder
   private func titleView(
     for title: any StringProtocol,
-    accessibilityID: TUISelectionRow.Accessibility = .title) -> some View {
+    accessibilityID: TUISelectionCard.Accessibility = .title) -> some View {
       Text(title)
         .font(.body7)
         .foregroundColor(.inputTextDim)
@@ -115,7 +115,7 @@ public struct TUISelectionRow: View {
   @ViewBuilder
   private func textDescriptionView(
     _ description: String,
-    accessibilityID: TUISelectionRow.Accessibility = .description) -> some View {
+    accessibilityID: TUISelectionCard.Accessibility = .description) -> some View {
       Text(description)
         .font(.heading6)
         .foregroundColor(.onSurface)
@@ -142,9 +142,9 @@ public struct TUISelectionRow: View {
   }
 }
 
-public extension TUISelectionRow {
+public extension TUISelectionCard {
   enum Accessibility: String, TUIAccessibility {
-    case root = "TUISelectionRow"
+    case root = "TUISelectionCard"
     case title = "Title"
     case description = "Description"
     case footer = "footer_Description"
@@ -164,7 +164,7 @@ public extension TUISelectionRow {
   
   // MARK: - Modifiers
   
-  func style(_ style: [TUISelectionRow.Style]) -> Self {
+  func style(_ style: [TUISelectionCard.Style]) -> Self {
     var newView = self
     newView.style = style
     return newView
@@ -192,15 +192,15 @@ public extension TUISelectionRow {
 struct TUISelectionRow_Previews: PreviewProvider {
   static var previews: some View {
     VStack {
-      TUISelectionRow()
+      TUISelectionCard()
         .style([.textDescription("Welcome")])
         .icon(.person24Regular)
       
-      TUISelectionRow(isSelected: true)
+      TUISelectionCard(isSelected: true)
         .style([.onlyTitle("Hello"), .textDescription("Welcome")])
         .icon(.person24Regular)
       
-      TUISelectionRow(showChevron: true) {}
+      TUISelectionCard(showChevron: true) {}
         .style([ .onlyTitle("Hello"), .textDescription("welcome"),
                  .textDescription("to"), .footer("SwiftUI")])
         .icon(.person24Regular)
