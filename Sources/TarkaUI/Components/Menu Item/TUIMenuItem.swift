@@ -1,5 +1,5 @@
 //
-//  TUIMenuItemView.swift
+//  TUIMenuItem.swift
 //
 //
 //  Created by Arvindh Sukumar on 27/04/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct TUIMenuItemView: View {
+public struct TUIMenuItem: View {
   public var item: TUIMenuItemProperties
   public var action: () -> Void
   public var isSelected: Bool
@@ -161,10 +161,10 @@ public struct TUIMenuItemView: View {
   }
 }
 
-public extension TUIMenuItemView {
+public extension TUIMenuItem {
   
   enum Accessibility: String, TUIAccessibility {
-    case root = "TUIMenuItemView"
+    case root = "TUIMenuItem"
     case title = "Title"
     case description = "Description"
     case leftIcon = "leftIcon"
@@ -177,30 +177,30 @@ public extension TUIMenuItemView {
 struct MenuItemView_Previews: PreviewProvider {
   static var previews: some View {
     VStack(spacing: 20) {
-      TUIMenuItemView(item: TUIMenuItemProperties(title: "Label", style: .onlyLabel)) { }
+      TUIMenuItem(item: TUIMenuItemProperties(title: "Label", style: .onlyLabel)) { }
       
-      TUIMenuItemView(item: TUIMenuItemProperties(title: "Label is selected", style: .onlyLabel),
+      TUIMenuItem(item: TUIMenuItemProperties(title: "Label is selected", style: .onlyLabel),
                       isSelected: true) { }
       
-      TUIMenuItemView(item: .init(title: "Left Icon", style: .leftIcon(.add24Filled))) { }
+      TUIMenuItem(item: .init(title: "Left Icon", style: .leftIcon(.add24Filled))) { }
       
-      TUIMenuItemView(item: .init(title: "Left Icon is selected", style: .leftIcon(.add24Filled)),
+      TUIMenuItem(item: .init(title: "Left Icon is selected", style: .leftIcon(.add24Filled)),
                       isSelected: true) { }
       
       
-      TUIMenuItemView(item: TUIMenuItemProperties(title: "Label with left and Right Icon",
+      TUIMenuItem(item: TUIMenuItemProperties(title: "Label with left and Right Icon",
                                         style: .withRightIcon(.add24Filled, .chevronRight20Filled))) {}
       
-      TUIMenuItemView(item: TUIMenuItemProperties(title: "Label with left and Right Icon",
+      TUIMenuItem(item: TUIMenuItemProperties(title: "Label with left and Right Icon",
                                         style: .rightIcon(.chevronRight20Filled))) {}
       
-      TUIMenuItemView(item: TUIMenuItemProperties(title: "Status Dots",
+      TUIMenuItem(item: TUIMenuItemProperties(title: "Status Dots",
                                         style: .statusDots(.circle16Filled, .success))) {}
       
-      TUIMenuItemView(item: TUIMenuItemProperties(title: "Status Dots",
+      TUIMenuItem(item: TUIMenuItemProperties(title: "Status Dots",
                                         style: .statusDots(.circle16Filled, .success)), isSelected: true) {}
       
-      TUIMenuItemView(item: TUIMenuItemProperties(title: "Label", style: .withDescription("Description"))) {}
+      TUIMenuItem(item: TUIMenuItemProperties(title: "Label", style: .withDescription("Description"))) {}
     }
     .padding(.horizontal, 10)
     .previewLayout(.sizeThatFits)
