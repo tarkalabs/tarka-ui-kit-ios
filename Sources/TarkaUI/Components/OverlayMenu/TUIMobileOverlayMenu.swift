@@ -23,7 +23,7 @@ public struct TUIMobileOverlayMenu: View {
   private var menuItems: [MenuItem]
   
   struct MenuItem {
-    var view: TUIMenuItemView
+    var view: TUIMenuItem
     var index: Int
   }
   
@@ -31,12 +31,12 @@ public struct TUIMobileOverlayMenu: View {
     contentHeight + headerHeight + bottomViewHeight
   }
   
-  public init(menuItems: [TUIMenuItemView],
+  public init(menuItems: [TUIMenuItem],
               action: (() -> Void)? = nil) {
     self.init(title: "", menuItems: menuItems, action: action)
   }
   
-  public init(title: String, menuItems: [TUIMenuItemView],
+  public init(title: String, menuItems: [TUIMenuItem],
               action: (() -> Void)? = nil) {
     self.title = title
     self.action = action
@@ -89,7 +89,7 @@ public struct TUIMobileOverlayMenu: View {
           ForEach(menuViews.indices, id: \.self) { index in
             
             let button = menuViews[index]
-            TUIMenuItemView(item: button.item, isSelected: button.isSelected) {
+            TUIMenuItem(item: button.item, isSelected: button.isSelected) {
               buttonAction = button.action
               dismiss()
             }
@@ -174,7 +174,7 @@ extension TUIMobileOverlayMenu {
 
 struct TUIOverlayMenuView_Previews: PreviewProvider {
   
-  static var menuItems: [TUIMenuItemView] {
+  static var menuItems: [TUIMenuItem] {
     [.init(item: .init(title: "Hello", style: .onlyLabel), isSelected: true) {},
      .init(item: .init(title: "Welcome", style: .leftIcon(.accessTime20Filled))) {},
      .init(item: .init(title: "To", style: .statusDots(.circle12Filled, .success)), isSelected: true) {},
