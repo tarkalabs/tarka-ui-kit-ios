@@ -29,4 +29,6 @@ public enum Icon: String {
   case checkBoxUnChecked = "checkbox_unchecked"
   case toggleSwitchOn = "toggle_switch_on"
   case toggleSwitchOff = "toggle_switch_off"
+  case toggleSwitchDisabledOff = "toggle_switch_diabled_off"
+  case toggleSwitchDisabledOn = "toggle_switch_diabled_on"
 }

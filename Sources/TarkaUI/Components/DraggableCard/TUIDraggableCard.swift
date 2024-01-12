@@ -57,10 +57,8 @@ public struct TUIDraggableCard: View {
   }
   
   private var toggleSwitchView: some View {
-    Button {
+    TUIToggleSwitch(toggleSelected) {
       toggleAction?()
-    } label: {
-      Image(icon: toggleSelected ? .toggleSwitchOn : .toggleSwitchOff)
     }
   }
   
