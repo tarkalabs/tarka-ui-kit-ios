@@ -53,7 +53,11 @@ public struct TUIDraggableCard: View {
   private var leftIconView: some View {
     TUIIconButton(icon: .reOrderDotsVertical24Regular) {}
       .size(.size48)
-      .onLongPressGesture(perform: action)
+      .contentShape(.dragPreview, contentShape)
+      .onDrag({
+        action()
+        return .init()
+      }, preview: {})
   }
   
   private var toggleSwitchView: some View {
@@ -68,11 +72,16 @@ public struct TUIDraggableCard: View {
       .foregroundStyle(Color.inputText)
       .frame(maxWidth: .infinity, alignment: .leading)
   }
+  
+  /// We are facing some issue while using on drag, so we using contentShape to create some shape
+  private var contentShape: some Shape {
+    RoundedRectangle(cornerRadius: Spacing.baseHorizontal - Spacing.baseVertical)
+  }
 }
 
 public extension TUIDraggableCard {
   
-  func toggleAction(_ isSelected: Bool = false, action: @escaping () -> Void) -> some View {
+  func toggleAction(_ isSelected: Bool = false, action: @escaping () -> Void) -> Self {
     var newView = self
     newView.toggleSelected = isSelected
     newView.toggleAction = action
