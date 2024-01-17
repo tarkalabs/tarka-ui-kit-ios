@@ -18,7 +18,7 @@ public extension TUIMobileOverlayMenu {
     return newView
   }
   
-  /// Sets vertical gap between `TUIMenuItemView`s. Default value is `8`
+  /// Sets vertical gap between `TUIMenuItem`s. Default value is `8`
   /// - Parameter gap: value that to be set as gap among views
   /// - Returns: A modified view
   func verticalGap(_ gap: CGFloat) -> TUIMobileOverlayMenu {
