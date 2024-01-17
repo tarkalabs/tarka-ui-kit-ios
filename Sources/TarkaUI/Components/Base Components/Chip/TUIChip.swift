@@ -1,5 +1,5 @@
 //
-//  TUIChipView.swift
+//  TUIChip.swift
 //  
 //
 //  Created by MAHESHWARAN on 05/07/23.
@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-/// `TUIChipView` is a  container view that displays title, image and button
+/// `TUIChip` is a  container view that displays title, image and button
 ///  This view can be used in any SwiftUI view.
 ///
 /// Example usage:
 ///
-///      TUIChipView("Hello")
+///      TUIChip("Hello")
 ///        .style(.input(.titleWithButton(Symbol.dismiss)), size: .size32)
 ///
-///      TUIChipView("Welcome to SwiftUI")
+///      TUIChip("Welcome to SwiftUI")
 ///        .style(filter: .onlyTitle, isSelected: true, size: .size32)
 ///
 /// - Parameters:
@@ -23,7 +23,7 @@ import SwiftUI
 ///
 /// - Returns: A closure that returns the content
 ///
-public struct TUIChipView: View {
+public struct TUIChip: View {
   
   var title: any StringProtocol
   var isSelected: Bool = false
@@ -192,7 +192,7 @@ public struct TUIChipView: View {
 
 // MARK: - Padding
 
-extension TUIChipView {
+extension TUIChip {
   
   private var spacing: CGFloat {
     switch style {
@@ -308,10 +308,10 @@ extension TUIChipView {
   }
 }
 
-public extension TUIChipView {
+public extension TUIChip {
   
   enum Accessibility: String, TUIAccessibility {
-    case root = "TUIChipView"
+    case root = "TUIChip"
     case title = "Title"
     case leftImage = "LeftImage"
     case leftIcon = "LeftIcon"
@@ -349,7 +349,7 @@ public extension TUIChipView {
   }
 }
 
-public extension TUIChipView {
+public extension TUIChip {
   
   enum Assist {
     case onlyTitle, withIcon(FluentIcon), withImage(Image)
@@ -374,32 +374,32 @@ public extension TUIChipView {
   }
 }
 
-struct TUIChipView_Previews: PreviewProvider {
+struct TUIChip_Previews: PreviewProvider {
   static var previews: some View {
     VStack(alignment: .leading, spacing: 10) {
       
       Section("Assist") {
-        TUIChipView("Hello Welcome to swiftUI")
+        TUIChip("Hello Welcome to swiftUI")
           .style(.assist(.onlyTitle), size: .size32)
         
-        TUIChipView("Hello Welcome to swiftUI")
+        TUIChip("Hello Welcome to swiftUI")
           .style(.assist(.withIcon(.person24Regular)))
         
-        TUIChipView("Hello Welcome to swiftUI")
+        TUIChip("Hello Welcome to swiftUI")
           .style(.assist(.withImage(Image(fluent: .checkmark20Filled))))
       }
       
       Divider()
       
       Section("Input") {
-        TUIChipView("Input")
+        TUIChip("Input")
           .style(.input(.titleWithButton(.dismiss16Filled, action: {})), size: .size32)
         
-        TUIChipView("Input with Icon")
+        TUIChip("Input with Icon")
           .style(.input(.withLeftIcon(.person24Regular,
                                       rightIcon: .dismiss20Filled, action: {})))
         
-        TUIChipView("Input with Image")
+        TUIChip("Input with Image")
           .style(.input(.withLeftImage(Image(fluent: .circle32Filled),
                                        rightIcon: .dismiss16Filled, action: {})))
           .size(.size32)
@@ -408,27 +408,27 @@ struct TUIChipView_Previews: PreviewProvider {
       Divider()
       
       Section("Suggestion") {
-        TUIChipView("Suggestion")
+        TUIChip("Suggestion")
           .style(.suggestion(.onlyTitle), size: .size32)
         
-        TUIChipView("Suggestion with Icon")
+        TUIChip("Suggestion with Icon")
           .style(.suggestion(.withIcon(.person24Regular)))
       }
       
       Divider()
       Section("Filter") {
-        TUIChipView("Filter")
+        TUIChip("Filter")
           .style(filter: .onlyTitle)
         
-        TUIChipView("With Button")
+        TUIChip("With Button")
           .style(filter: .withButton(.dismiss16Filled, action: {}), isSelected: true)
         
-        TUIChipView("With Button")
+        TUIChip("With Button")
           .style(filter: .withButton(.dismiss20Filled, action: {}),
                  isSelected: true, badgeCount: 4)
           .size(.size40)
         
-        TUIChipView("With")
+        TUIChip("With")
           .style(.filterWithIcon(.icon(.caretDown16Filled)))
       }
     }

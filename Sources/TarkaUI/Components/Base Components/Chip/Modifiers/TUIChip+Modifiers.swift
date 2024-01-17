@@ -1,5 +1,5 @@
 //
-//  TUIChipView+Modifiers.swift
+//  TUIChip+Modifiers.swift
 //  
 //
 //  Created by MAHESHWARAN on 13/07/23.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-public extension TUIChipView {
+public extension TUIChip {
   
   /// The style used to display the title with given style options
   /// - Parameters:
   ///   - style: Style can be assist, input, suggestion, Filter
   ///   - size: size32, size40
-  /// - Returns: A closure that returns the TUIChipView
+  /// - Returns: A closure that returns the TUIChip
   func style(_ style: Style, size: Size = .size40) -> Self {
     var newView = self
     newView.style = style
@@ -26,7 +26,7 @@ public extension TUIChipView {
   ///   - filter: Choose the list of options to display view
   ///   - badgeCount: This is used to display the badge view in top trailing only applicable for withButton type
   ///
-  /// - Returns: A closure that returns the TUIChipView
+  /// - Returns: A closure that returns the TUIChip
   func style(filter: Filter, isSelected: Bool = false, badgeCount: Int? = nil) -> Self {
     var newView = self
     newView.style = Style.filter(filter)

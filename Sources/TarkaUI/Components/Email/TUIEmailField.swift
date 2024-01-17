@@ -73,7 +73,7 @@ public struct TUIEmailField: View {
     // with equal spacing and height, and wrap to the next line when needed
     JustifiableFlowLayout(minSpacing: Spacing.halfHorizontal) {
       ForEach(emails, id: \.self) { email in
-        TUIChipView(email)
+        TUIChip(email)
           .style(
             .input(
               .titleWithButton(

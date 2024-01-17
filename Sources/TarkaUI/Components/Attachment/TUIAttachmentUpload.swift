@@ -1,5 +1,5 @@
 //
-//  TUIAttachmentView.swift
+//  TUIAttachmentUpload.swift
 //  
 //
 //  Created by MAHESHWARAN on 24/08/23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct TUIAttachmentView: View {
+public struct TUIAttachmentUpload: View {
   
   private var imageStyle: ImageStyle
   private var imageSize: ImageSize = .size40
@@ -21,7 +21,7 @@ public struct TUIAttachmentView: View {
   
   public init(_ title: String,
               imageStyle: ImageStyle,
-              style: TUIAttachmentView.Style = .onlyTitle,
+              style: TUIAttachmentUpload.Style = .onlyTitle,
               deleteAction: @escaping () -> Void) {
     self.title = title
     self.imageStyle = imageStyle
@@ -111,7 +111,7 @@ public struct TUIAttachmentView: View {
   }
 }
 
-public extension TUIAttachmentView {
+public extension TUIAttachmentUpload {
   
   enum Style {
     case onlyTitle
@@ -155,7 +155,7 @@ public extension TUIAttachmentView {
   
     
   enum Accessibility: String, TUIAccessibility {
-    case root = "TUIAttachmentView"
+    case root = "TUIAttachmentUpload"
     case title = "Title"
     case description = "Description"
     case image = "Image"
@@ -164,7 +164,7 @@ public extension TUIAttachmentView {
 
 struct TUIAttachmentView_Previews: PreviewProvider {
   static var previews: some View {
-    TUIAttachmentView("Hello", imageStyle: .icon(.document24Regular),
+    TUIAttachmentUpload("Hello", imageStyle: .icon(.document24Regular),
                       style: .withDescription("Example")) {}
       .download(true, action: {})
       .padding(.horizontal, 20)
