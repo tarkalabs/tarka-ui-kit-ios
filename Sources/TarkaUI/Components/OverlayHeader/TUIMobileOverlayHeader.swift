@@ -1,5 +1,5 @@
 //
-//  TUIOverlayHeaderView.swift
+//  TUIMobileOverlayHeader.swift
 //
 //
 //  Created by MAHESHWARAN on 21/08/23.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-public struct TUIOverlayHeaderView: View {
+public struct TUIMobileOverlayHeader: View {
   
   private var style: Style
   
-  public init(_ style: TUIOverlayHeaderView.Style) {
+  public init(_ style: TUIMobileOverlayHeader.Style) {
     self.style = style
   }
   
@@ -150,7 +150,7 @@ public struct TUIOverlayHeaderView: View {
   }
 }
 
-public extension TUIOverlayHeaderView {
+public extension TUIMobileOverlayHeader {
   
   enum Style {
     case handle
@@ -160,7 +160,7 @@ public extension TUIOverlayHeaderView {
   }
   
   enum Accessibility: String, TUIAccessibility {
-    case root = "TUIOverlayHeaderView"
+    case root = "TUIMobileOverlayHeader"
     case handle = "Handle"
     case title = "Title"
     case leftIcon = "LeftIcon"
@@ -175,22 +175,22 @@ struct TUIOverlayHeaderView_Previews: PreviewProvider {
       Color.gray.opacity(0.2)
       
       VStack(spacing: 10) {
-        TUIOverlayHeaderView(.handle)
+        TUIMobileOverlayHeader(.handle)
         
-        TUIOverlayHeaderView(.onlyTitle("Title"))
+        TUIMobileOverlayHeader(.onlyTitle("Title"))
         
-        TUIOverlayHeaderView(.left("Title") {})
+        TUIMobileOverlayHeader(.left("Title") {})
         
-        TUIOverlayHeaderView(.right("Title", rightIcon: .dismiss24Regular) {})
+        TUIMobileOverlayHeader(.right("Title", rightIcon: .dismiss24Regular) {})
         
-        TUIOverlayHeaderView(.onlyTitle("Title"))
+        TUIMobileOverlayHeader(.onlyTitle("Title"))
           .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
-        TUIOverlayHeaderView(.left("Title") {})
+        TUIMobileOverlayHeader(.left("Title") {})
         
-        TUIOverlayHeaderView(.right("Title", rightIcon: .dismiss24Regular) {})
+        TUIMobileOverlayHeader(.right("Title", rightIcon: .dismiss24Regular) {})
           .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
         
-        TUIOverlayHeaderView(.right("Title", rightIcon: .dismiss24Regular) {})
+        TUIMobileOverlayHeader(.right("Title", rightIcon: .dismiss24Regular) {})
           .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
       }
       .padding()

@@ -19,6 +19,9 @@ public struct TUIOverlayChipView: View {
   @State private var records: [RowElement] = []
   @Binding var menuItems: [RowElement]
   
+  private var dismissAction: (() -> Void)?
+  private var dismissEnabled: Bool
+  
   private var title: String
   
   private var height: CGFloat {
@@ -29,6 +32,7 @@ public struct TUIOverlayChipView: View {
     self.title = title
     _menuItems = menuItems
     _records = .init(initialValue: menuItems.wrappedValue)
+    dismissEnabled = true
   }
   
   public var body: some View {
@@ -47,7 +51,7 @@ public struct TUIOverlayChipView: View {
   // MARK: - Header View
   
   private var headerView: some View {
-    TUIOverlayHeaderView(.onlyTitle(title))
+    TUIMobileOverlayHeader(.onlyTitle(title))
       .accessibilityElement(children: .contain)
       .getHeight($headerHeight)
   }
@@ -89,18 +93,25 @@ public struct TUIOverlayChipView: View {
   private var bottomView: some View {
     TUIMobileButtonBlock(style: .two(
       left: .init(title: "Clear".localized) {
-        menuItems = records.map {
+        records = records.map {
           var newValue = $0
           newValue.isSelected = false
           return newValue
         }
-        dismiss()
+        clearButtonAction()
       },
       right: .init(title: "Apply".localized) {
         menuItems = records
         dismiss()
       }))
     .getHeight($bottomViewHeight)
+  }
+  
+  private func clearButtonAction() {
+    if dismissEnabled {
+      dismiss()
+    }
+    dismissAction?()
   }
 }
 
@@ -128,6 +139,13 @@ public extension TUIOverlayChipView {
         self.style = style
         self.isSelected = isSelected
       }
+  }
+  
+  func cancelAction(_ dimissEnabled: Bool = false, dismissAction: (() -> Void)? = nil) -> Self {
+    var newView = self
+    newView.dismissEnabled = dimissEnabled
+    newView.dismissAction = dismissAction
+    return newView
   }
 }
 

@@ -41,7 +41,7 @@ public struct TUIOverlayContentView<Content: View>: View {
   }
   
   public var content: Content
-  public var headerViewStyle: TUIOverlayHeaderView.Style = .handle
+  public var headerViewStyle: TUIMobileOverlayHeader.Style = .handle
   public var bottomViewStyle: BottomButtonStyle?
   
   public init(@ViewBuilder _ content: @escaping () -> Content) {
@@ -64,7 +64,7 @@ public struct TUIOverlayContentView<Content: View>: View {
   // MARK: - HeaderView
   
   private var headerView: some View {
-    TUIOverlayHeaderView(headerViewStyle)
+    TUIMobileOverlayHeader(headerViewStyle)
       .accessibilityIdentifier(Accessibility.headerView)
       .accessibilityElement(children: .contain)
       .getHeight($headerHeight)
@@ -132,7 +132,7 @@ public extension TUIOverlayContentView {
     case bottomView = "BottomView"
   }
   
-  func headerStyle(_ style: TUIOverlayHeaderView.Style = .handle) -> Self {
+  func headerStyle(_ style: TUIMobileOverlayHeader.Style = .handle) -> Self {
     var newView = self
     newView.headerViewStyle = style
     return newView
