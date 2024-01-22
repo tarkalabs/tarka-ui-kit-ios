@@ -15,7 +15,8 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
   var block: TUIMobileButtonBlock
   var additionalView: T
   var showAdditionalView = false
-  
+  var isButtonEnabled = true
+
   func body(content: Content) -> some View {
     
     GeometryReader { geometry in
@@ -36,7 +37,9 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
                 .background(Color.surface50)
                 .frame(height: additionalViewHeight)
               }
-              block
+              if isButtonEnabled {
+                block
+              }
               Color.surface.frame(height: safeAreaBottomInset)
             }
             .padding(.top, Spacing.halfVertical)
