@@ -57,7 +57,12 @@ public struct TUIDraggableCard: View {
       .onDrag({
         action()
         return .init()
-      }, preview: {})
+      }, preview: previewItemView)
+  }
+  
+  private func previewItemView() -> some View {
+    Color.clear
+      .frame(width: 1, height: 1)
   }
   
   private var toggleSwitchView: some View {
