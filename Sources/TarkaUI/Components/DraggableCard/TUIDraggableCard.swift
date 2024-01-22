@@ -53,6 +53,7 @@ public struct TUIDraggableCard: View {
   private var leftIconView: some View {
     TUIIconButton(icon: .reOrderDotsVertical24Regular) {}
       .size(.size48)
+      .disabled(true)
       .contentShape(.dragPreview, contentShape)
       .onDrag({
         action()
