@@ -169,14 +169,16 @@ public extension View {
   func addBottomMobileButtonBlock(
     _ block: TUIMobileButtonBlock,
     @ViewBuilder _ additionalView: () -> some View = { EmptyView() },
+    isEnabled: Bool = true,
     showAdditionalView: Bool = false
   ) -> some View {
     
     let block = BottomMobileButtonBlock(
       block: block,
       additionalView: additionalView(),
-      showAdditionalView: showAdditionalView)
-    
+      showAdditionalView: showAdditionalView, 
+      isButtonEnabled: isEnabled)
+
     modifier(block)
   }
   
