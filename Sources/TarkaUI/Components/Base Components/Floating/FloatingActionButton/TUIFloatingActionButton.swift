@@ -7,10 +7,29 @@
 
 import SwiftUI
 
+/// A button that displays an plus icon that performs an action when tapped.
+/// You can also customize the size of the button by specifying a size.
+///
+/// Example usage:
+///
+///     TUIFloatingActionButton(size: .regular) {
+///         action()
+///     }
+///
+/// - Parameters:
+///   - size: To display the button size, by default regular
+///   - action: The action to perform when the user taps the button.
+///
+
 public struct TUIFloatingActionButton: View {
   
   private var style: Style
   
+  
+  /// TUIFloatingActionButton
+  /// - Parameters:
+  ///   - size: To display the button size, by default regular
+  ///   - action: The action to perform when the user taps the button.
   public init(size: Size = .regular, _ action: @escaping () -> Void) {
     self.style = .init(size: size, action: action)
   }
