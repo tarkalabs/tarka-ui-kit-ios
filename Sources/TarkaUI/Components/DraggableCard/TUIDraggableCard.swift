@@ -28,12 +28,12 @@ public struct TUIDraggableCard: View {
   private let title: String
   private var action: () -> Void
   
-  private var toggleSelected: Bool
+  private var isToggleSelected: Bool
   private var toggleAction: (() -> Void)?
   
   public init(_ title: String, action: @escaping () -> Void) {
     self.title = title
-    self.toggleSelected = false
+    self.isToggleSelected = false
     self.action = action
   }
   
@@ -61,13 +61,14 @@ public struct TUIDraggableCard: View {
       }, preview: previewItemView)
   }
   
+  /// We are facing some weird ui issue while onDrag, so we are using clear background to fix the issue
   private func previewItemView() -> some View {
     Color.clear
       .frame(width: 1, height: 1)
   }
   
   private var toggleSwitchView: some View {
-    TUIToggleSwitch(toggleSelected) {
+    TUIToggleSwitch(isToggleSelected) {
       toggleAction?()
     }
   }
@@ -89,7 +90,7 @@ public extension TUIDraggableCard {
   
   func toggleAction(_ isSelected: Bool = false, action: @escaping () -> Void) -> Self {
     var newView = self
-    newView.toggleSelected = isSelected
+    newView.isToggleSelected = isSelected
     newView.toggleAction = action
     return newView
   }
