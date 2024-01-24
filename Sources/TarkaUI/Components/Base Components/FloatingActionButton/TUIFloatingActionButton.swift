@@ -25,7 +25,6 @@ public struct TUIFloatingActionButton: View {
   
   private var style: Style
   
-  
   /// TUIFloatingActionButton
   /// - Parameters:
   ///   - size: To display the button size, by default regular
@@ -64,15 +63,7 @@ extension TUIFloatingActionButton {
       configuration.label
         .frame(width: style.buttonWidth, height: style.buttonHeight)
         .background(style.backgroundColor)
-        .clipShape(Circle())
-        .isEnabled(configuration.isPressed) {
-          $0.overlay(content: borderView)
-        }
-    }
-    
-    func borderView() -> some View {
-      Circle()
-        .stroke(style.borderColor, lineWidth: 1.5)
+        .border(Circle(), width: 1.5, color: style.borderColor, isEnabled: configuration.isPressed)
     }
   }
 }
