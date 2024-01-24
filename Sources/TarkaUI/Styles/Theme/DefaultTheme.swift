@@ -95,6 +95,10 @@ internal struct DefaultTheme: TUITheme {
   var onPrimaryAlt: Color {
     color(withName: "onPrimaryAlt")
   }
+  
+  var onPrimaryAltHover: Color {
+    color(withName: "onPrimaryAltHover")
+  }
     
   var onSecondaryAlt: Color {
     color(withName: "onSecondaryAlt")
