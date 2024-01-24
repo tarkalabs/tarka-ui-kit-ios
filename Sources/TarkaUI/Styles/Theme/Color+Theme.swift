@@ -95,6 +95,10 @@ public extension Color {
   static var onPrimaryAlt: Color {
     TUIThemeManager.shared.theme.onPrimaryAlt
   }
+  
+  static var onPrimaryAltHover: Color {
+    TUIThemeManager.shared.theme.onPrimaryAltHover
+  }
     
   static var onSecondaryAlt: Color {
     TUIThemeManager.shared.theme.onSecondaryAlt

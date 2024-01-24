@@ -30,6 +30,7 @@ public protocol TUITheme {
   var onSurface: Color { get }
   var onBackground: Color { get }
   var onPrimaryAlt: Color { get }
+  var onPrimaryAltHover: Color { get }
   var onSecondaryAlt: Color { get }
   var onTertiaryAlt: Color { get }
   var inputBackground: Color { get }
