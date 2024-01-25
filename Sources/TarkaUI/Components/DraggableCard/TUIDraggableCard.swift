@@ -68,7 +68,7 @@ public struct TUIDraggableCard: View {
   }
   
   private var toggleSwitchView: some View {
-    TUIToggleSwitch(isToggleSelected) {
+    TUIToggleSwitch(isSelected: isToggleSelected) {
       toggleAction?()
     }
   }
@@ -98,8 +98,17 @@ public extension TUIDraggableCard {
 
 struct DraggableCard_Previews: PreviewProvider {
   static var previews: some View {
-    TUIDraggableCard("TUIDraggableCard") { }
-      .toggleAction(true) {}
-      .padding()
+    DraggableCardPreview()
+  }
+  
+  struct DraggableCardPreview: View {
+    
+    @State private var isSelected = false
+    
+    var body: some View {
+      TUIDraggableCard("TUIDraggableCard") { }
+        .toggleAction(isSelected) { isSelected.toggle() }
+        .padding()
+    }
   }
 }
