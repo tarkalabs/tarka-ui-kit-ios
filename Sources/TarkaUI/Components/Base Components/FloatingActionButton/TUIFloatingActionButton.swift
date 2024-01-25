@@ -40,7 +40,7 @@ public struct TUIFloatingActionButton: View {
   }
   
   private func imageView() -> some View {
-    Image(fluent: style.size.icon)
+    Image(fluent: style.icon)
       .scaledToFit()
       .frame(width: style.iconWidth, height: style.iconHeight)
       .foregroundStyle(style.iconColor)
@@ -74,6 +74,7 @@ extension TUIFloatingActionButton {
   
   struct Style {
     var size: Size
+    var icon: FluentIcon = .add24Regular
     var iconColor = Color.onPrimary
     var backgroundColor = Color.primaryTUI
     var borderColor = Color.onSurface
@@ -104,13 +105,6 @@ public extension TUIFloatingActionButton {
   enum Size {
     case small, regular, large
     
-    var icon: FluentIcon {
-      switch self {
-      case .small, .regular: return .add24Regular
-      case .large: return .add28Regular
-      }
-    }
-    
     var buttonSize: CGSize {
       switch self {
       case .small: return .init(width: 40, height: 40)
@@ -131,6 +125,12 @@ public extension TUIFloatingActionButton {
 // MARK: - Modifiers
 
 public extension TUIFloatingActionButton {
+  
+  func icon(_ icon: FluentIcon) -> Self {
+    var newView = self
+    newView.style.icon = icon
+    return newView
+  }
   
   func iconColor(_ color: Color) -> Self {
     var newView = self
