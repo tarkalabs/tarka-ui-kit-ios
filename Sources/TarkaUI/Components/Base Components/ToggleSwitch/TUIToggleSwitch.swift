@@ -29,18 +29,15 @@ public struct TUIToggleSwitch: View {
   }
   
   public var body: some View {
-    Button(action: style.action, label: contentView)
-      .accessibilityElement(children: .contain)
-      .accessibilityIdentifier(Accessibility.root)
-  }
-  
-  private func contentView() -> some View {
     Rectangle()
       .fill(style.backgroundColor)
       .frame(width: style.size.width, height: style.size.height)
       .clipShape(Capsule())
       .overlay(alignment: style.alignment, content: toggleView)
+      .onTapGesture(perform: style.action)
+      .animation(.default, value: style.isSelected)
       .accessibilityElement(children: .contain)
+      .accessibilityIdentifier(Accessibility.root)
   }
   
   private func toggleView() -> some View {
