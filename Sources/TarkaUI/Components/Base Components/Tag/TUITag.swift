@@ -32,13 +32,8 @@ public struct TUITag: View {
   }
   
   public var body: some View {
-    switch style.tagStyle {
-    case .high(foregroundColor: let foreground, background: let background):
-      mainView(for: foreground, background: background)
-      
-    case .low(foregroundColor: let foreground, background: let background):
-      mainView(for: foreground, background: background)
-    }
+    mainView(for: style.color.foregroundColor,
+             background: style.color.background)
   }
   
   @ViewBuilder
@@ -110,6 +105,15 @@ extension TUITag {
     
     var iconSize: CGSize {
       icon.iconSize(size)
+    }
+    
+    var color: (foregroundColor: Color, background: Color) {
+      switch tagStyle {
+      case .high(let foregroundColor, let background):
+        return (foregroundColor, background)
+      case .low(let foregroundColor, let background):
+        return (foregroundColor, background)
+      }
     }
   }
 }
