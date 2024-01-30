@@ -52,9 +52,7 @@ public struct TUICheckBox: View {
   
   @ViewBuilder
   private var leftView: some View {
-    let imageName = isSelected ? "checkbox_checked" :
-    colorScheme == .dark ? "checkbox-dark-unchecked" :  "checkbox_unchecked"
-    Image(imageName, bundle: Bundle.module)
+    Image(icon: isSelected ? .checkBoxChecked : .checkBoxUnChecked)
       .scaledToFit()
       .frame(width: 24, height: 24)
       .clipped()
