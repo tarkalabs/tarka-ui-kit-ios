@@ -27,6 +27,7 @@ Tarka UI Kit is a reusable component library for building iOS and iPadOS apps, b
 - TUIStatusIndicator
 - TUITabBar
 - TUITableCell
+- TUITag
 - TUITextRow
 - TUIToggleSwitch
   
