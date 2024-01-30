@@ -3,6 +3,16 @@
     {
       "filename" : "checkbox_unchecked.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "checkbox-dark-unchecked.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
