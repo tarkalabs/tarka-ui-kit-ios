@@ -91,7 +91,7 @@ public struct TUITabBar: View {
       }
     } label: {
       Text(tab.title)
-        .font(.body6)
+        .font(.button6)
         .padding(.horizontal, Spacing.baseHorizontal)
         .padding(.vertical, Spacing.custom(6))
         .frame(minHeight: 20)
