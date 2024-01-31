@@ -25,26 +25,26 @@ import SwiftUI
 ///
 public struct TUIChip: View {
   
-  var style: Style
+  var inputItem: InputItem
   
   public init(_ title: String) {
-    self.style = .init(title: title)
+    self.inputItem = .init(title: title)
   }
   
   public var body: some View {
     HStack(spacing: spacing) {
       detailView
     }
-    .frame(height: style.size.height)
+    .frame(height: inputItem.size.height)
     .padding(.leading, leading)
     .padding(.trailing, trailing)
     .padding(.vertical, 0)
-    .background(style.backgroundColor)
-    .border(RoundedRectangle(cornerRadius: Spacing.halfHorizontal), width: style.borderWidth, color: style.borderShapeColor)
+    .background(inputItem.backgroundColor)
+    .border(RoundedRectangle(cornerRadius: Spacing.halfHorizontal), width: inputItem.borderWidth, color: inputItem.borderShapeColor)
     .onTapGesture {
-      style.action?()
+      inputItem.action?()
     }
-    .isEnabled(style.isBadgeEnabled) {
+    .isEnabled(inputItem.isBadgeEnabled) {
       $0.overlay(alignment: .topTrailing, content: badgeView)
     }
     .accessibilityElement(children: .contain)
@@ -52,7 +52,7 @@ public struct TUIChip: View {
   }
   
   @ViewBuilder private var detailView: some View {
-    switch style.chipStyle {
+    switch inputItem.style {
     case .assist(let assist): assistView(for: assist)
     case .input(let input): inputView(for: input)
     case .suggestion(let suggestion): suggestionView(for: suggestion)
@@ -114,15 +114,15 @@ public struct TUIChip: View {
   private func filterView(for type: Filter) -> some View {
     switch type {
     case .onlyTitle:
-      if style.isSelected {
-        iconView(style.icon)
+      if inputItem.isSelected {
+        iconView(inputItem.icon)
         titleView
       } else {
         titleView
       }
       
     case .withButton(let icon, let action):
-      if style.isSelected {
+      if inputItem.isSelected {
         titleView
         rightButtonView(icon, action: action)
       } else {
@@ -143,19 +143,19 @@ public struct TUIChip: View {
   
   @ViewBuilder
   private var titleView: some View {
-    Text(style.title)
-      .font(style.size.font)
-      .frame(minHeight: style.size.textSize, alignment: .leading)
-      .foregroundColor(style.textTintColor)
+    Text(inputItem.title)
+      .font(inputItem.size.font)
+      .frame(minHeight: inputItem.size.textSize, alignment: .leading)
+      .foregroundColor(inputItem.textTintColor)
       .accessibilityIdentifier(Accessibility.title)
   }
   
   @ViewBuilder
   private func leftImageView(_ image: Image) -> some View {
     image
-      .frame(maxWidth: style.size.imageSize, maxHeight: style.size.imageSize)
+      .frame(maxWidth: inputItem.size.imageSize, maxHeight: inputItem.size.imageSize)
       .clipShape(Circle())
-      .foregroundColor(style.tintColor)
+      .foregroundColor(inputItem.tintColor)
       .accessibilityIdentifier(Accessibility.leftImage)
   }
   
@@ -164,7 +164,7 @@ public struct TUIChip: View {
                         accessibilityID: Accessibility = .leftIcon) -> some View {
     Image(fluent: icon)
       .frame(maxWidth: iconSize, maxHeight: iconSize)
-      .foregroundColor(style.tintColor)
+      .foregroundColor(inputItem.tintColor)
       .accessibilityIdentifier(accessibilityID)
   }
   
@@ -172,16 +172,16 @@ public struct TUIChip: View {
   private func rightButtonView(_ icon: FluentIcon = .dismiss16Filled,
                                action: @escaping () -> Void) -> some View {
     TUIIconButton(icon: icon) { action() }
-      .iconColor(style.tintColor)
-      .size(style.iconSize)
+      .iconColor(inputItem.tintColor)
+      .size(inputItem.iconSize)
       .accessibilityElement(children: .contain)
       .accessibilityIdentifier(Accessibility.button)
   }
   
   @ViewBuilder
   private func badgeView() -> some View {
-    TUIBadge(count: style.badgeCount, badgeColor: style.badgeColor)
-      .badgeSize(style.badgeSize)
+    TUIBadge(count: inputItem.badgeCount, badgeColor: inputItem.badgeColor)
+      .badgeSize(inputItem.badgeSize)
       .alignmentGuide(.top) { $0[.top] + 8 }
       .alignmentGuide(.trailing) { $0[.trailing] - 8 }
       .accessibilityIdentifier(Accessibility.badge)
@@ -193,7 +193,7 @@ public struct TUIChip: View {
 extension TUIChip {
   
   private var spacing: CGFloat {
-    switch style.chipStyle {
+    switch inputItem.style {
     case .assist(let type):
       switch type {
       case .onlyTitle: return Spacing.quarterHorizontal
@@ -212,10 +212,10 @@ extension TUIChip {
     case .filter(let type):
       switch type {
       case .onlyTitle:
-        if style.size == .size32 {
-          return style.isSelected ? Spacing.custom(6) : Spacing.quarterHorizontal
+        if inputItem.size == .size32 {
+          return inputItem.isSelected ? Spacing.custom(6) : Spacing.quarterHorizontal
         } else {
-          return style.isSelected ? Spacing.halfHorizontal : Spacing.quarterHorizontal
+          return inputItem.isSelected ? Spacing.halfHorizontal : Spacing.quarterHorizontal
         }
         
       case .withButton:
@@ -223,83 +223,83 @@ extension TUIChip {
       }
     case .filterWithIcon(let type):
       switch type {
-      case .icon: return style.size == .size32 ? Spacing.halfHorizontal : Spacing.custom(10)
+      case .icon: return inputItem.size == .size32 ? Spacing.halfHorizontal : Spacing.custom(10)
       }
     }
   }
   
   private var leading: CGFloat {
-    switch style.chipStyle {
+    switch inputItem.style {
     case .assist(let type):
       switch type {
       case .onlyTitle: return Spacing.baseHorizontal
       case .withImage: return Spacing.quarterHorizontal
-      case .withIcon: return style.size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal
+      case .withIcon: return inputItem.size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal
       }
     case .input(let type):
       switch type {
       case .titleWithButton: return Spacing.custom(12)
       case .withLeftImage: return Spacing.quarterHorizontal
-      case .withLeftIcon: return style.size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal
+      case .withLeftIcon: return inputItem.size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal
       }
     case .suggestion(let type):
       switch type {
       case .onlyTitle: return Spacing.baseHorizontal
-      case .withIcon: return style.size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal
+      case .withIcon: return inputItem.size == .size32 ? Spacing.custom(6) : Spacing.halfHorizontal
       }
     case .filter(let type):
       switch type {
       case .onlyTitle:
-        if style.size == .size32 {
-          return style.isSelected ? Spacing.custom(6) : Spacing.custom(20)
+        if inputItem.size == .size32 {
+          return inputItem.isSelected ? Spacing.custom(6) : Spacing.custom(20)
         } else {
-          return style.isSelected ? Spacing.halfHorizontal : Spacing.custom(28)
+          return inputItem.isSelected ? Spacing.halfHorizontal : Spacing.custom(28)
         }
       case .withButton:
-        return style.size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal
+        return inputItem.size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal
       }
     case .filterWithIcon(let type):
       switch type {
-      case .icon: return style.size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal
+      case .icon: return inputItem.size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal
       }
     }
   }
   
   private var trailing: CGFloat {
-    switch style.chipStyle {
+    switch inputItem.style {
     case .assist, .suggestion: return Spacing.baseHorizontal
     case .input: return Spacing.custom(0)
     case .filter(let type):
       switch type {
       case .onlyTitle:
-        if style.size == .size32 {
-          return style.isSelected ? Spacing.custom(12) : Spacing.custom(20)
+        if inputItem.size == .size32 {
+          return inputItem.isSelected ? Spacing.custom(12) : Spacing.custom(20)
         } else {
-          return style.isSelected ? Spacing.baseHorizontal : Spacing.custom(28)
+          return inputItem.isSelected ? Spacing.baseHorizontal : Spacing.custom(28)
         }
       case .withButton:
         return Spacing.custom(0)
       }
     case .filterWithIcon:
-      return style.size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal
+      return inputItem.size == .size32 ? Spacing.custom(12) : Spacing.baseHorizontal
     }
   }
   
   private var iconSize: CGFloat {
-    switch style.chipStyle {
+    switch inputItem.style {
     case .assist, .suggestion, .input, .filter:
-      return style.size == .size32 ? Spacing.custom(20) : Spacing.custom(24)
+      return inputItem.size == .size32 ? Spacing.custom(20) : Spacing.custom(24)
     case .filterWithIcon:
-      return style.size == .size32 ? Spacing.baseHorizontal : Spacing.custom(20)
+      return inputItem.size == .size32 ? Spacing.baseHorizontal : Spacing.custom(20)
     }
   }
 }
 
 extension TUIChip {
   
-  struct Style {
+  struct InputItem {
     var title: String
-    var chipStyle: ChipStyle = .assist(.onlyTitle)
+    var style: Style = .assist(.onlyTitle)
     var size: Size = .size32
     var isSelected: Bool = false
     
@@ -352,7 +352,7 @@ extension TUIChip {
     }
     
     var isBadgeEnabled: Bool {
-      switch chipStyle {
+      switch style {
       case .filter(let type):
         switch type {
         case .onlyTitle: return false
@@ -408,7 +408,7 @@ public extension TUIChip {
     }
   }
   
-  enum ChipStyle {
+  enum Style {
     case assist(Assist), input(Input), suggestion(Suggestion), filter(Filter), filterWithIcon(FilterWithIcon)
   }
 }
