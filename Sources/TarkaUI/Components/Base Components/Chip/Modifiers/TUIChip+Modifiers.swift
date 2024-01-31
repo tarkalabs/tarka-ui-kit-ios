@@ -14,10 +14,10 @@ public extension TUIChip {
   ///   - style: Style can be assist, input, suggestion, Filter
   ///   - size: size32, size40
   /// - Returns: A closure that returns the TUIChip
-  func style(_ style: ChipStyle, size: Size = .size40) -> Self {
+  func style(_ style: Style, size: Size = .size40) -> Self {
     var newView = self
-    newView.style.chipStyle = style
-    newView.style.size = size
+    newView.inputItem.style = style
+    newView.inputItem.size = size
     return newView
   }
   
@@ -29,76 +29,76 @@ public extension TUIChip {
   /// - Returns: A closure that returns the TUIChip
   func style(filter: Filter, isSelected: Bool = false, badgeCount: Int? = nil, badgeColor: Color = .error) -> Self {
     var newView = self
-    newView.style.chipStyle = ChipStyle.filter(filter)
-    newView.style.isSelected = isSelected
-    newView.style.badgeCount = badgeCount
-    newView.style.badgeColor = badgeColor
+    newView.inputItem.style = Style.filter(filter)
+    newView.inputItem.isSelected = isSelected
+    newView.inputItem.badgeCount = badgeCount
+    newView.inputItem.badgeColor = badgeColor
     return newView
   }
   
   func action(_ action: @escaping () -> Void) -> Self {
     var newView = self
-    newView.style.action = action
+    newView.inputItem.action = action
     return newView
   }
   
   func isSelected(_ selected: Bool = false) -> Self {
     var newView = self
-    newView.style.isSelected = selected
+    newView.inputItem.isSelected = selected
     return newView
   }
   
   func textColor(_ color: Color) -> Self {
     var newView = self
-    newView.style.textColor = color
+    newView.inputItem.textColor = color
     return newView
   }
   
   func textSelectionColor(_ color: Color) -> Self {
     var newView = self
-    newView.style.textSelectionColor = color
+    newView.inputItem.textSelectionColor = color
     return newView
   }
   
   func size(_ size: Size) -> Self {
     var newView = self
-    newView.style.size = size
+    newView.inputItem.size = size
     return newView
   }
   
   func backgroundColor(_ color: Color) -> Self {
     var newView = self
-    newView.style.color = color
+    newView.inputItem.color = color
     return newView
   }
   
   func backgroundSelectionColor(_ color: Color) -> Self {
     var newView = self
-    newView.style.selectionColor = color
+    newView.inputItem.selectionColor = color
     return newView
   }
   
   func foregroundColor(_ color: Color) -> Self {
     var newView = self
-    newView.style.foregroundColor = color
+    newView.inputItem.foregroundColor = color
     return newView
   }
   
   func foregroundSelectionColor(_ color: Color) -> Self {
     var newView = self
-    newView.style.foregroundSelectionColor = color
+    newView.inputItem.foregroundSelectionColor = color
     return newView
   }
   
   func borderColor(_ color: Color) -> Self {
     var newView = self
-    newView.style.borderColor = color
+    newView.inputItem.borderColor = color
     return newView
   }
   
   func borderSelectionColor(_ color: Color) -> Self {
     var newView = self
-    newView.style.borderSelectionColor = color
+    newView.inputItem.borderSelectionColor = color
     return newView
   }
 }
