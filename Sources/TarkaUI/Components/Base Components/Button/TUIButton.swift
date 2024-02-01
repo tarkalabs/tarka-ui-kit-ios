@@ -59,7 +59,7 @@ public struct TUIButton: View {
     }
     .frame(minHeight: size.height)
     .background(style.backgroundColor)
-    .roundedCornerWithBorder(width: style.borderWidth, color: .onSurface)
+    .border(Capsule(), width: style.borderWidth, color: .onSurface)
   }
   
   private func image(for icon: FluentIcon) -> some View {

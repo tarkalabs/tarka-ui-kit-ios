@@ -48,9 +48,9 @@ public struct TUIChip: View {
     .padding(.trailing, trailing)
     .padding(.vertical, 0)
     .background(isSelected ? Color.secondaryTUI : backgroundColor)
-    .borderView(RoundedRectangle(cornerRadius: Spacing.halfHorizontal),
-                width: isSelected ? 0 : 1,
-                color: isSelected ? .secondaryTUI: borderColor)
+    .border(RoundedRectangle(cornerRadius: Spacing.halfHorizontal),
+            width: isSelected ? 0 : 1,
+            color: isSelected ? .secondaryTUI: borderColor)
     .onTapGesture {
       action?()
     }
