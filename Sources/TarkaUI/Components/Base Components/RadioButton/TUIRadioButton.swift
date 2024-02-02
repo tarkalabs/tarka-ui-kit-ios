@@ -11,7 +11,7 @@ public struct TUIRadioButton: View {
   
   private var inputItem: InputItem
   
-  init() {
+  public init() {
     self.inputItem = .init()
   }
   
