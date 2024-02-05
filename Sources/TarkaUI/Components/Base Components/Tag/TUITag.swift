@@ -27,7 +27,7 @@ public struct TUITag: View {
   
   private var style: Style
   
-  public init(_ title: String) {
+  public init(_ title: String? = nil) {
     self.style = .init(title: title)
   }
   
@@ -49,6 +49,9 @@ public struct TUITag: View {
       case .right(let icon):
         titleView
         iconView(for: icon)
+      
+      case .icon(let icon):
+        iconView(for: icon)
       }
     }
     .padding(.vertical, style.verticalPadding)
@@ -63,7 +66,7 @@ public struct TUITag: View {
   }
   
   private var titleView: some View {
-    Text(style.title)
+    Text(style.title ?? "")
       .font(style.size.font)
       .accessibilityIdentifier(Accessibility.title)
   }
@@ -82,7 +85,7 @@ extension TUITag {
   
   struct Style {
     
-    var title: String
+    var title: String?
     var tagStyle: TagStyle = .high
     var size: TagSize = .size24
     var icon: IconStyle = .none
@@ -149,7 +152,7 @@ public extension TUITag {
   }
   
   enum IconStyle {
-    case none, left(FluentIcon), right(FluentIcon)
+    case none, left(FluentIcon), right(FluentIcon), icon(FluentIcon)
     
     func iconSize(_ tagSize: TagSize) -> CGSize {
       switch tagSize {
@@ -162,17 +165,17 @@ public extension TUITag {
       switch size {
       case .size24:
         switch self {
-        case .none: return 0
+        case .none, .icon: return 0
         case .left, .right: return 4
         }
       case .size34:
         switch self {
-        case .none: return 0
+        case .none, .icon: return 0
         case .left, .right: return 6
         }
       case .size40:
         switch self {
-        case .none: return 0
+        case .none, .icon: return 0
         case .left, .right: return 8
         }
       }
@@ -191,21 +194,21 @@ public extension TUITag {
       case .size24:
         switch self {
         case .none: return 8
-        case .left: return 4
+        case .left, .icon: return 4
         case .right: return 10
         }
         
       case .size34:
         switch self {
         case .none: return 12
-        case .left: return 6
+        case .left, .icon: return 6
         case .right: return 12
         }
         
       case .size40:
         switch self {
         case .none: return 16
-        case .left: return 10
+        case .left, .icon: return 10
         case .right: return 16
         }
       }
@@ -217,19 +220,19 @@ public extension TUITag {
         switch self {
         case .none: return 8
         case .left: return 10
-        case .right: return 4
+        case .right, .icon: return 4
         }
         
       case .size34:
         switch self {
         case .none, .left: return 12
-        case .right: return 6
+        case .right, .icon: return 6
         }
         
       case .size40:
         switch self {
         case .none, .left: return 16
-        case .right: return 10
+        case .right, .icon: return 10
         }
       }
     }
@@ -303,6 +306,13 @@ struct TUITag_Previews: PreviewProvider {
       TUITag("TUITag")
         .size(.size34)
         .style(.low)
+      
+      TUITag()
+        .iconStyle(.icon(.circle24Regular))
+      
+      TUITag()
+        .style(.low)
+        .iconStyle(.icon(.circle24Regular))
     }
   }
 }
