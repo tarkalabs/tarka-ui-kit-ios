@@ -20,6 +20,8 @@ public struct TUIRadioButton: View {
       .stroke(inputItem.color, lineWidth: 1.5)
       .frame(width: 24, height: 24)
       .overlay(content: backgroundColor)
+      .accessibilityElement(children: .contain)
+      .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder
@@ -118,6 +120,13 @@ public extension TUIRadioButton {
     var newView = self
     newView.inputItem.state = style
     return newView
+  }
+}
+
+public extension TUIRadioButton {
+  
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIRadioButton"
   }
 }
 
