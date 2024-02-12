@@ -85,21 +85,13 @@ public struct TUITabBar: View {
   
   @ViewBuilder
   private func tabView(_ tab: TUITabItem) -> some View {
-    Button {
+    TUITab(
+      tab: tab,
+      isSelected: selectedTab == tab
+    ) { tab in
       withAnimation {
         selectedTab = tab
       }
-    } label: {
-      Text(tab.title)
-        .font(.button6)
-        .padding(.horizontal, Spacing.baseHorizontal)
-        .padding(.vertical, Spacing.custom(6))
-        .frame(minHeight: 20)
-        .foregroundColor(selectedTab == tab ? .onSecondary : .onSurface)
-        .background(GeometryReader { proxy in
-          Color.clear
-            .preference(key: TabWidthPreferenceKey.self, value: [proxy.size.width])
-        })
     }
   }
   
@@ -131,7 +123,7 @@ public struct TUITabBar: View {
   }
 }
 
-private struct TabWidthPreferenceKey: PreferenceKey {
+struct TabWidthPreferenceKey: PreferenceKey {
   typealias Value = [CGFloat]
   static var defaultValue: [CGFloat] = []
   
