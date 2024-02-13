@@ -9,24 +9,12 @@ import SwiftUI
 
 public struct TUIAttachmentUpload: View {
   
-  private var imageStyle: ImageStyle
-  private var imageSize: ImageSize = .size40
-  private var style: Style = .onlyTitle
-  private var title: String
-  
-  private var deleteAction: () -> Void
-  private var showDownloadButton: Bool = false
-  private var downloadAction: (() -> Void)?
-  private var iconColor: Color = .secondaryTUI
+  private var inputItem: InputItem
   
   public init(_ title: String,
               imageStyle: ImageStyle,
-              style: TUIAttachmentUpload.Style = .onlyTitle,
-              deleteAction: @escaping () -> Void) {
-    self.title = title
-    self.imageStyle = imageStyle
-    self.style = style
-    self.deleteAction = deleteAction
+              style: TUIAttachmentUpload.Style = .onlyTitle) {
+    inputItem = .init(title: title, imageStyle: imageStyle, imageSize: .size40, style: style)
   }
   
   public var body: some View {
@@ -36,22 +24,20 @@ public struct TUIAttachmentUpload: View {
         mainView
       }
       .accessibilityElement(children: .contain)
-      if showDownloadButton {
-        iconView(.arrowDownload24Regular) { downloadAction?() }
-      }
-      iconView(.delete24Regular, action: deleteAction)
+      rightView
     }
     .frame(height: Spacing.custom(40))
+    .background(Color.surface, in: RoundedRectangle(cornerRadius: 16))
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
   
   private var mainView: some View {
     VStack(alignment: .leading, spacing: 0) {
-      switch style {
-      case .onlyTitle: titleView(title)
+      switch inputItem.style {
+      case .onlyTitle: titleView(inputItem.title)
       case .withDescription(let desc):
-        titleView(title)
+        titleView(inputItem.title)
         detailView(desc)
       }
     }
@@ -60,12 +46,12 @@ public struct TUIAttachmentUpload: View {
   
   @ViewBuilder
   private var imageView: some View {
-    switch imageStyle {
+    switch inputItem.imageStyle {
     case .image(let image):
       image
         .resizable()
         .clipShape(RoundedRectangle(cornerRadius: Spacing.halfHorizontal))
-        .frame(width: imageSize.width, height: Spacing.custom(40))
+        .frame(width: inputItem.imageSize.width, height: Spacing.custom(40))
         .scaledToFill()
         .accessibilityIdentifier(Accessibility.image)
     
@@ -77,18 +63,30 @@ public struct TUIAttachmentUpload: View {
               .scaledToFit()
               .frame(width: Spacing.custom(24), height: Spacing.custom(24))
               .clipped()
-              .foregroundStyle(iconColor)
+              .foregroundStyle(inputItem.imageColor)
         }
-        .frame(width: imageSize.width, height: Spacing.custom(40))
+        .frame(width: inputItem.imageSize.width, height: Spacing.custom(40))
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier(Accessibility.image)
     }
   }
   
-  private func iconView(_ icon: FluentIcon, action: @escaping () -> Void) -> some View {
+  @ViewBuilder
+  private var rightView: some View {
+    if let downloadIcon = inputItem.downloadIcon, downloadIcon.isEnabled {
+      iconView(downloadIcon.icon, color: downloadIcon.iconColor) {
+        downloadIcon.action()
+      }
+    }
+    if let deleteIcon = inputItem.deleteIcon, deleteIcon.isEnabled {
+      iconView(deleteIcon.icon, color: deleteIcon.iconColor, action: deleteIcon.action)
+    }
+  }
+  
+  private func iconView(_ icon: FluentIcon, color: Color, action: @escaping () -> Void) -> some View {
     TUIIconButton(icon: icon, action: action)
       .size(.size40)
-      .iconColor(iconColor)
+      .iconColor(color)
       .accessibilityElement(children: .contain)
   }
   
@@ -113,6 +111,46 @@ public struct TUIAttachmentUpload: View {
 
 public extension TUIAttachmentUpload {
   
+  struct InputItem {
+    var title: String
+    
+    var imageStyle: ImageStyle
+    var imageSize: ImageSize = .size40
+    var imageColor = Color.secondaryTUI
+    
+    var style: Style = .onlyTitle
+    
+    var color = Color.surface
+    var cornerRadius: CGFloat = 16
+    
+    var deleteIcon: AttachmentIcon?
+    var downloadIcon: AttachmentIcon?
+    
+    init(title: String, imageStyle: ImageStyle, imageSize: ImageSize, style: Style) {
+      self.title = title
+      self.imageStyle = imageStyle
+      self.imageSize = imageSize
+      self.style = style
+    }
+  }
+  
+  struct AttachmentIcon {
+    var icon: FluentIcon
+    var action: () -> Void
+    var iconColor = Color.secondaryTUI
+    var isEnabled = true
+    
+    init(_ icon: FluentIcon,
+         iconColor: Color = Color.secondaryTUI,
+         isEnabled: Bool = true,
+         action: @escaping () -> Void) {
+      self.icon = icon
+      self.action = action
+      self.iconColor = iconColor
+      self.isEnabled = isEnabled
+    }
+  }
+  
   enum Style {
     case onlyTitle
     case withDescription(String)
@@ -136,23 +174,34 @@ public extension TUIAttachmentUpload {
   
   func imageSize(_ imageSize: ImageSize) -> Self {
     var newView = self
-    newView.imageSize = imageSize
+    newView.inputItem.imageSize = imageSize
     return newView
   }
   
-  func download(_ show: Bool, action: @escaping () -> Void) -> Self {
+  func download(_ icon: AttachmentIcon) -> Self {
     var newView = self
-    newView.showDownloadButton = show
-    newView.downloadAction = action
+    newView.inputItem.downloadIcon = icon
     return newView
   }
   
-  func iconColor(_ iconColor: Color) -> Self {
+  func deleteIcon(_ icon: AttachmentIcon) -> Self {
     var newView = self
-    newView.iconColor = iconColor
+    newView.inputItem.deleteIcon = icon
     return newView
   }
   
+  func color(_ color: Color, cornerRadius: CGFloat = 16) -> Self {
+    var newView = self
+    newView.inputItem.color = color
+    newView.inputItem.cornerRadius = cornerRadius
+    return newView
+  }
+  
+  func imageColor(_ color: Color) -> Self {
+    var newView = self
+    newView.inputItem.imageColor = color
+    return newView
+  }
     
   enum Accessibility: String, TUIAccessibility {
     case root = "TUIAttachmentUpload"
@@ -165,8 +214,9 @@ public extension TUIAttachmentUpload {
 struct TUIAttachmentView_Previews: PreviewProvider {
   static var previews: some View {
     TUIAttachmentUpload("Hello", imageStyle: .icon(.document24Regular),
-                      style: .withDescription("Example")) {}
-      .download(true, action: {})
+                      style: .withDescription("Example"))
+    .download(.init(.arrowDownload24Regular, action: {}))
+    .deleteIcon(.init(.delete24Regular, action: {}))
       .padding(.horizontal, 20)
   }
 }
