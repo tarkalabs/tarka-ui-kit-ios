@@ -73,13 +73,20 @@ public struct TUIAttachmentUpload: View {
   
   @ViewBuilder
   private var rightView: some View {
-    if let downloadIcon = inputItem.downloadIcon, downloadIcon.isEnabled {
-      iconView(downloadIcon.icon, color: downloadIcon.iconColor) {
-        downloadIcon.action()
+    switch inputItem.icon {
+    case .none: EmptyView()
+      
+    case .one(let icon):
+      if icon.isEnabled {
+        iconView(icon.icon, color: icon.iconColor, action: icon.action)
       }
-    }
-    if let deleteIcon = inputItem.deleteIcon, deleteIcon.isEnabled {
-      iconView(deleteIcon.icon, color: deleteIcon.iconColor, action: deleteIcon.action)
+    case .two(let first, let second):
+      if first.isEnabled {
+        iconView(first.icon, color: first.iconColor, action: first.action)
+      }
+      if second.isEnabled {
+        iconView(second.icon, color: second.iconColor, action: second.action)
+      }
     }
   }
   
@@ -123,8 +130,7 @@ public extension TUIAttachmentUpload {
     var color = Color.surface
     var cornerRadius: CGFloat = 16
     
-    var deleteIcon: AttachmentIcon?
-    var downloadIcon: AttachmentIcon?
+    var icon = AttachmentIconButton.none
     
     init(title: String, imageStyle: ImageStyle, imageSize: ImageSize, style: Style) {
       self.title = title
@@ -140,10 +146,10 @@ public extension TUIAttachmentUpload {
     var iconColor = Color.secondaryTUI
     var isEnabled = true
     
-    init(_ icon: FluentIcon,
-         iconColor: Color = Color.secondaryTUI,
-         isEnabled: Bool = true,
-         action: @escaping () -> Void) {
+    public init(_ icon: FluentIcon,
+                iconColor: Color = Color.secondaryTUI,
+                isEnabled: Bool = true,
+                action: @escaping () -> Void) {
       self.icon = icon
       self.action = action
       self.iconColor = iconColor
@@ -172,21 +178,19 @@ public extension TUIAttachmentUpload {
     }
   }
   
+  enum AttachmentIconButton {
+    case none, one(AttachmentIcon), two(AttachmentIcon, AttachmentIcon)
+  }
+  
   func imageSize(_ imageSize: ImageSize) -> Self {
     var newView = self
     newView.inputItem.imageSize = imageSize
     return newView
   }
   
-  func download(_ icon: AttachmentIcon) -> Self {
+  func icon(_ icon: AttachmentIconButton) -> Self {
     var newView = self
-    newView.inputItem.downloadIcon = icon
-    return newView
-  }
-  
-  func deleteIcon(_ icon: AttachmentIcon) -> Self {
-    var newView = self
-    newView.inputItem.deleteIcon = icon
+    newView.inputItem.icon = icon
     return newView
   }
   
@@ -215,8 +219,7 @@ struct TUIAttachmentView_Previews: PreviewProvider {
   static var previews: some View {
     TUIAttachmentUpload("Hello", imageStyle: .icon(.document24Regular),
                       style: .withDescription("Example"))
-    .download(.init(.arrowDownload24Regular, action: {}))
-    .deleteIcon(.init(.delete24Regular, action: {}))
+    .icon(.two(.init(.arrowDownload24Regular, action: {}), .init(.delete24Regular, action: {})))
       .padding(.horizontal, 20)
   }
 }
