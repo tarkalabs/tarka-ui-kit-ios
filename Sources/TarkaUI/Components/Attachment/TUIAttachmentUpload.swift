@@ -27,7 +27,6 @@ public struct TUIAttachmentUpload: View {
       rightView
     }
     .frame(height: Spacing.custom(40))
-    .background(Color.surface, in: RoundedRectangle(cornerRadius: 16))
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
@@ -54,16 +53,16 @@ public struct TUIAttachmentUpload: View {
         .frame(width: inputItem.imageSize.width, height: Spacing.custom(40))
         .scaledToFill()
         .accessibilityIdentifier(Accessibility.image)
-    
+      
     case .icon(let icon):
       RoundedRectangle(cornerRadius: Spacing.halfHorizontal)
         .fill(Color.surfaceVariant)
         .overlay {
-            Image(fluent: icon)
-              .scaledToFit()
-              .frame(width: Spacing.custom(24), height: Spacing.custom(24))
-              .clipped()
-              .foregroundStyle(inputItem.imageColor)
+          Image(fluent: icon)
+            .scaledToFit()
+            .frame(width: Spacing.custom(24), height: Spacing.custom(24))
+            .clipped()
+            .foregroundStyle(inputItem.imageColor)
         }
         .frame(width: inputItem.imageSize.width, height: Spacing.custom(40))
         .accessibilityElement(children: .contain)
@@ -77,24 +76,26 @@ public struct TUIAttachmentUpload: View {
     case .none: EmptyView()
       
     case .one(let icon):
-      if icon.isEnabled {
-        iconView(icon.icon, color: icon.iconColor, action: icon.action)
-      }
+      iconView(icon.icon, isEnabled: icon.isEnabled,
+               color: icon.iconColor, action: icon.action)
+      
     case .two(let first, let second):
-      if first.isEnabled {
-        iconView(first.icon, color: first.iconColor, action: first.action)
-      }
-      if second.isEnabled {
-        iconView(second.icon, color: second.iconColor, action: second.action)
-      }
+      iconView(first.icon, isEnabled: first.isEnabled,
+               color: first.iconColor, action: first.action)
+      iconView(second.icon, isEnabled: second.isEnabled,
+               color: second.iconColor, action: second.action)
     }
   }
   
-  private func iconView(_ icon: FluentIcon, color: Color, action: @escaping () -> Void) -> some View {
-    TUIIconButton(icon: icon, action: action)
-      .size(.size40)
-      .iconColor(color)
-      .accessibilityElement(children: .contain)
+  @ViewBuilder
+  private func iconView(_ icon: FluentIcon, isEnabled: Bool,
+                        color: Color, action: @escaping () -> Void) -> some View {
+    if isEnabled {
+      TUIIconButton(icon: icon, action: action)
+        .size(.size40)
+        .iconColor(color)
+        .accessibilityElement(children: .contain)
+    }
   }
   
   private func titleView(_ title: String) -> some View {
@@ -127,9 +128,6 @@ public extension TUIAttachmentUpload {
     
     var style: Style = .onlyTitle
     
-    var color = Color.surface
-    var cornerRadius: CGFloat = 16
-    
     var icon = AttachmentIconButton.none
     
     init(title: String, imageStyle: ImageStyle, imageSize: ImageSize, style: Style) {
@@ -144,7 +142,7 @@ public extension TUIAttachmentUpload {
     var icon: FluentIcon
     var action: () -> Void
     var iconColor = Color.secondaryTUI
-    var isEnabled = true
+    var isEnabled: Bool
     
     public init(_ icon: FluentIcon,
                 iconColor: Color = Color.secondaryTUI,
@@ -194,19 +192,12 @@ public extension TUIAttachmentUpload {
     return newView
   }
   
-  func color(_ color: Color, cornerRadius: CGFloat = 16) -> Self {
-    var newView = self
-    newView.inputItem.color = color
-    newView.inputItem.cornerRadius = cornerRadius
-    return newView
-  }
-  
   func imageColor(_ color: Color) -> Self {
     var newView = self
     newView.inputItem.imageColor = color
     return newView
   }
-    
+  
   enum Accessibility: String, TUIAccessibility {
     case root = "TUIAttachmentUpload"
     case title = "Title"
@@ -218,8 +209,9 @@ public extension TUIAttachmentUpload {
 struct TUIAttachmentView_Previews: PreviewProvider {
   static var previews: some View {
     TUIAttachmentUpload("Hello", imageStyle: .icon(.document24Regular),
-                      style: .withDescription("Example"))
-    .icon(.two(.init(.arrowDownload24Regular, action: {}), .init(.delete24Regular, action: {})))
-      .padding(.horizontal, 20)
+                        style: .withDescription("Example"))
+    .icon(.two(.init(.arrowDownload24Regular, action: {}),
+               .init(.delete24Regular, isEnabled: false, action: {})))
+    .padding(.horizontal, 20)
   }
 }
