@@ -26,6 +26,18 @@ import SwiftUI
 ///     }
 ///
 public struct TUIMobileOverlayFooter: View {
+  
+  public struct CancelButton: TUIOverlayFooterAction {
+    
+    public var id: String { icon.resourceString }
+    public var icon: TarkaUI.FluentIcon { .dismiss24Regular }
+    public var handler: () -> Void
+    
+    public init(_ handler: @escaping () -> Void) {
+      self.handler = handler
+    }
+  }
+  
   private var actions: [TUIOverlayFooterAction]
   
   /// Creates a footer with the specified actions.
@@ -36,13 +48,15 @@ public struct TUIMobileOverlayFooter: View {
   public init(@OverlayFooterActionBuilder actions: @escaping () -> [TUIOverlayFooterAction]) {
     self.actions = actions()
   }
-
+  
   public var body: some View {
+    
     VStack(spacing: 0) {
       dividerView
       buttonView
     }
-    .background(Color.surface)
+    .frame(height: 64)
+    .addBackgroundBlur(withColor:.surface50)
   }
   
   @ViewBuilder
@@ -61,7 +75,7 @@ public struct TUIMobileOverlayFooter: View {
     }
     .padding(.vertical, Spacing.baseVertical)
     .padding(.horizontal, Spacing.custom(24))
-    .background(Color.surface50)
+    .background(Color.clear)
   }
   
   @ViewBuilder
@@ -77,6 +91,7 @@ public struct TUIMobileOverlayFooter: View {
 }
 
 struct OverlayFooter_Previews: PreviewProvider {
+  
   private enum TestAction: TUIOverlayFooterAction {
     var id: String {
       icon.resourceString

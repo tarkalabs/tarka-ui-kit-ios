@@ -120,11 +120,11 @@ struct NavigationRow_Previews: PreviewProvider {
     Group {
       VStack {
         TUINavigationRow(title: "Label") {
-          TUIBadge(count: 4)
+          TUIBadge(style: .number(4))
         }
         TUINavigationRow(title: "Label to test with multiple number of lines to verify its adaptability")
         TUINavigationRow(title: "Label", icon: .reOrder24Regular) {
-          TUIBadge(count: 100)
+          TUIBadge(style: .number(100))
         }
       }
       .detailDisclosure()

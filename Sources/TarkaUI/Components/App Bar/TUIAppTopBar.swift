@@ -127,6 +127,17 @@ public struct TUIAppTopBar: View {
           .accessibilityIdentifier(Accessibility.rightButton2)
         buttonItem3
           .accessibilityIdentifier(Accessibility.rightButton3)
+        
+      case .four(let buttonItem1, let buttonItem2,
+                 let buttonItem3, let buttonItem4):
+        buttonItem1
+          .accessibilityIdentifier(Accessibility.rightButton1)
+        buttonItem2
+          .accessibilityIdentifier(Accessibility.rightButton2)
+        buttonItem3
+          .accessibilityIdentifier(Accessibility.rightButton3)
+        buttonItem4
+          .accessibilityIdentifier(Accessibility.rightButton4)
 
       case .none:
         EmptyView()
@@ -160,11 +171,13 @@ extension TUIAppTopBar {
   enum Accessibility: String, TUIAccessibility {
     case root = "TUIAppTopBar"
     case titleBar = "TitleBar"
-    case leftButton = "leftButton"
-    case title = "title"
+    case leftButton = "LeftButton"
+    case searchButton = "SearchButton"
+    case title = "Title"
     case rightButton1 = "RightButton1"
     case rightButton2 = "RightButton2"
     case rightButton3 = "RightButton3"
+    case rightButton4 = "RightButton4"
   }
 }
 

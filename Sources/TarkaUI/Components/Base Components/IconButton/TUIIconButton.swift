@@ -43,6 +43,7 @@ public struct TUIIconButton: View, Identifiable {
   public var icon: FluentIcon
   
   var iconColor: Color?
+  var backgroundColor: Color?
 
   /// The action to perform when the user taps the button.
   public var action: () -> Void
@@ -89,6 +90,7 @@ public struct TUIIconButton: View, Identifiable {
       )
       .clipped()
       .foregroundColor(iconColor ?? defaultIconColor)
+      .background(backgroundColor ?? defaultBackgroundColor)
   }
   
   @ViewBuilder
@@ -121,7 +123,7 @@ extension TUIIconButton {
     }
   }
   
-  var backgroundColor: Color {
+  var defaultBackgroundColor: Color {
     switch style {
     case .outline, .ghost:
       return .clear
@@ -135,7 +137,7 @@ extension TUIIconButton {
   var borderColor: Color {
     switch style {
     case .ghost, .secondary, .primary:
-      return backgroundColor
+      return backgroundColor ?? defaultBackgroundColor
     case .outline:
       return .outline
     }
