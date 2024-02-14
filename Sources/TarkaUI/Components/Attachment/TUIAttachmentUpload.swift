@@ -9,12 +9,12 @@ import SwiftUI
 
 public struct TUIAttachmentUpload: View {
   
-  private var inputItem: InputItem
+  private var inputStyle: InputStyle
   
   public init(_ title: String,
               imageStyle: ImageStyle,
               style: TUIAttachmentUpload.Style = .onlyTitle) {
-    inputItem = .init(title: title, imageStyle: imageStyle, imageSize: .size40, style: style)
+    inputStyle = .init(title: title, imageStyle: imageStyle, imageSize: .size40, style: style)
   }
   
   public var body: some View {
@@ -33,10 +33,10 @@ public struct TUIAttachmentUpload: View {
   
   private var mainView: some View {
     VStack(alignment: .leading, spacing: 0) {
-      switch inputItem.style {
-      case .onlyTitle: titleView(inputItem.title)
+      switch inputStyle.style {
+      case .onlyTitle: titleView(inputStyle.title)
       case .withDescription(let desc):
-        titleView(inputItem.title)
+        titleView(inputStyle.title)
         detailView(desc)
       }
     }
@@ -45,12 +45,12 @@ public struct TUIAttachmentUpload: View {
   
   @ViewBuilder
   private var imageView: some View {
-    switch inputItem.imageStyle {
+    switch inputStyle.imageStyle {
     case .image(let image):
       image
         .resizable()
         .clipShape(RoundedRectangle(cornerRadius: Spacing.halfHorizontal))
-        .frame(width: inputItem.imageSize.width, height: Spacing.custom(40))
+        .frame(width: inputStyle.imageSize.width, height: Spacing.custom(40))
         .scaledToFill()
         .accessibilityIdentifier(Accessibility.image)
       
@@ -62,9 +62,9 @@ public struct TUIAttachmentUpload: View {
             .scaledToFit()
             .frame(width: Spacing.custom(24), height: Spacing.custom(24))
             .clipped()
-            .foregroundStyle(inputItem.imageColor)
+            .foregroundStyle(inputStyle.imageColor)
         }
-        .frame(width: inputItem.imageSize.width, height: Spacing.custom(40))
+        .frame(width: inputStyle.imageSize.width, height: Spacing.custom(40))
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier(Accessibility.image)
     }
@@ -72,7 +72,7 @@ public struct TUIAttachmentUpload: View {
   
   @ViewBuilder
   private var rightView: some View {
-    switch inputItem.icon {
+    switch inputStyle.icon {
     case .none: EmptyView()
       
     case .one(let icon):
@@ -119,7 +119,7 @@ public struct TUIAttachmentUpload: View {
 
 public extension TUIAttachmentUpload {
   
-  struct InputItem {
+  struct InputStyle {
     var title: String
     
     var imageStyle: ImageStyle
@@ -182,19 +182,19 @@ public extension TUIAttachmentUpload {
   
   func imageSize(_ imageSize: ImageSize) -> Self {
     var newView = self
-    newView.inputItem.imageSize = imageSize
+    newView.inputStyle.imageSize = imageSize
     return newView
   }
   
   func icon(_ icon: AttachmentIconButton) -> Self {
     var newView = self
-    newView.inputItem.icon = icon
+    newView.inputStyle.icon = icon
     return newView
   }
   
   func imageColor(_ color: Color) -> Self {
     var newView = self
-    newView.inputItem.imageColor = color
+    newView.inputStyle.imageColor = color
     return newView
   }
   
