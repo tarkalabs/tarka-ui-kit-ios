@@ -116,24 +116,13 @@ public struct TUIMobileOverlayMenu: View {
   
   private var bottomView: some View {
     TUIMobileOverlayFooter {
-      CancelButton(dismissAction)
+      TUIMobileOverlayFooter.CancelButton(dismissAction)
     }
     .frame(maxWidth: .infinity)
     .onTapGesture(perform: dismissAction)
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.bottomView)
     .getHeight($bottomViewHeight)
-  }
-  
-  private struct CancelButton: TUIOverlayFooterAction {
-    
-    var id: String { icon.resourceString }
-    var icon: TarkaUI.FluentIcon { .dismiss24Regular }
-    var handler: () -> Void
-    
-    init(_ handler: @escaping () -> Void) {
-      self.handler = handler
-    }
   }
   
   private func dismissAction() {
@@ -176,7 +165,7 @@ struct TUIOverlayMenuView_Previews: PreviewProvider {
   
   static var menuItems: [TUIMenuItem] {
     [.init(item: .init(title: "Hello", style: .onlyLabel), isSelected: true) {},
-     .init(item: .init(title: "Welcome", style: .leftIcon(.accessTime20Filled))) {},
+     .init(item: .init(title: "Welcome", style: .leftImage(Image(fluent: .accessTime20Filled)))) {},
      .init(item: .init(title: "To", style: .statusDots(.circle12Filled, .success)), isSelected: true) {},
      .init(item: .init(title: "SwiftUI", style: .withRightIcon(.add24Filled, .dismiss24Filled))) {}
     ]

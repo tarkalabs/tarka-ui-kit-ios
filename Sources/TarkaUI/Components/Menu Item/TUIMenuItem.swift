@@ -53,15 +53,15 @@ public struct TUIMenuItem: View {
       }
       titleView
       
-    case .leftIcon(let icon):
-      leftIconView(icon)
+    case .leftImage(let image):
+      leftImageView(image)
       titleView
       if isSelected {
         checkmarkView
       }
       
     case .withRightIcon(let leftIcon, let rightIcon):
-      leftIconView(leftIcon)
+      leftImageView(Image(fluent: leftIcon))
       titleView
       rightIconView(rightIcon)
       
@@ -116,8 +116,8 @@ public struct TUIMenuItem: View {
       .accessibilityIdentifier(Accessibility.checkmark)
   }
   
-  private func leftIconView(_ icon: FluentIcon) -> some View {
-    Image(fluent: icon)
+  private func leftImageView(_ image: Image) -> some View {
+    image
       .scaledToFill()
       .frame(width: Spacing.custom(24), height: Spacing.custom(24))
       .accessibilityIdentifier(Accessibility.leftIcon)
@@ -182,10 +182,16 @@ struct MenuItemView_Previews: PreviewProvider {
       TUIMenuItem(item: TUIMenuItemProperties(title: "Label is selected", style: .onlyLabel),
                       isSelected: true) { }
       
-      TUIMenuItem(item: .init(title: "Left Icon", style: .leftIcon(.add24Filled))) { }
+      TUIMenuItem(item:
+          .init(
+            title: "Left Icon",
+            style: .leftImage(Image(fluent:.add24Filled)))) { }
       
-      TUIMenuItem(item: .init(title: "Left Icon is selected", style: .leftIcon(.add24Filled)),
-                      isSelected: true) { }
+      TUIMenuItem(
+        item: .init(
+          title: "Left Icon is selected",
+          style: .leftImage(Image(fluent: .add24Filled))),
+        isSelected: true) { }
       
       
       TUIMenuItem(item: TUIMenuItemProperties(title: "Label with left and Right Icon",

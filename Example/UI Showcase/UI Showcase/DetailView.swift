@@ -123,7 +123,7 @@ extension DetailView {
     })
     .addBottomMobileButtonBlock(
       block) {
-      TUIChipView("Last seen \(Date().formatted())")
+        TUIChip("Last seen \(Date().formatted())")
           .style(.input(.titleWithButton(.dismiss20Filled, action: {})))
         .padding(.bottom, 8)
     }

@@ -96,8 +96,8 @@ internal struct DefaultTheme: TUITheme {
     color(withName: "onPrimaryAlt")
   }
   
-  var onPrimaryAltHover: Color {
-    color(withName: "onPrimaryAltHover")
+  var primaryAltHover: Color {
+    color(withName: "primaryAltHover")
   }
     
   var onSecondaryAlt: Color {
@@ -122,6 +122,10 @@ internal struct DefaultTheme: TUITheme {
     
   var disabledBackground: Color {
     color(withName: "disabledBackground")
+  }
+  
+  var disabledBackgroundHover: Color {
+    color(withName: "disabledBackgroundHover")
   }
     
   var disabledContent: Color {

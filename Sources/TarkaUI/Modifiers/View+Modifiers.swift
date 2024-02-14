@@ -176,10 +176,35 @@ public extension View {
     let block = BottomMobileButtonBlock(
       block: block,
       additionalView: additionalView(),
-      showAdditionalView: showAdditionalView, 
+      showAdditionalView: showAdditionalView,
       isButtonEnabled: isEnabled)
-
+    
     modifier(block)
+  }
+  
+  @ViewBuilder
+  /// Adds `BackgroundBlurLayer` in background of the view.
+  /// It uses opacity that defined in the color asset itself to have transparency.
+  /// No modification in the view's opacity.
+  ///
+  /// - Returns: View with background blur added
+  func addBackgroundBlur(withColor color: Color) -> some View {
+    self.background(BackgroundVisualEffectiveView())
+      .background(color)
+  }
+  
+  @ViewBuilder
+  /// Adds `BackgroundBlurLayer` in background of the view.
+  /// It accepts opacity and applies that to the view.
+  /// As the color passed here has Opacity as 100,
+  /// we are modifying the view's opacity to have transparency.
+  ///
+  /// - Returns: View with background blur view added
+  func addBackgroundBlur(
+    withColor color: Color, opacity: Double) -> some View {
+      self.modifier(
+        BackgroundBlurView(
+        color: color, opacity: opacity))
   }
   
   // MARK: - Keyboard

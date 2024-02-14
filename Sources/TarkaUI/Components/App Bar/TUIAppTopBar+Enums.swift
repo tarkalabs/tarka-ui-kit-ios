@@ -29,7 +29,7 @@ public extension TUIAppTopBar {
       
       if case .titleBar(let barItem) = self {
         
-        if case .none = barItem.leftButton ,
+        if case .none = barItem.leftButton,
            case .none = barItem.rightButtons {
           return 60
         }
@@ -94,5 +94,6 @@ public extension TUIAppTopBar {
     case one(TUIIconButton)
     case two(TUIIconButton, TUIIconButton)
     case three(TUIIconButton, TUIIconButton, TUIIconButton)
+    case four(TUIIconButton, TUIIconButton, TUIIconButton, TUIIconButton)
   }
 }
