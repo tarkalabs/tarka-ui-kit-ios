@@ -44,16 +44,14 @@ public struct TUIBadge: View {
     ZStack {
       Capsule()
         .foregroundColor(badgeColor ?? .error)
-        .frame(minWidth: size.width)
-        .frame(height: size.height)
+        .frame(minWidth: size.width, minHeight: size.height)
 
       if case .number(let count) = style,
          let count {
         Text("\(count)")
           .foregroundColor(.onError)
           .font(font)
-          .frame(minWidth: fontSize.width)
-          .frame(height: size.height)
+          .frame(minWidth: textSize.width, minHeight: textSize.height)
           .padding(.horizontal, padding)
       } else if case .icon(let fluentIcon, let iconColor) = style {
         Image(fluent: fluentIcon)
@@ -84,11 +82,11 @@ public extension TUIBadge {
     private var size: CGSize {
       switch self {
       case .size12:
-        return CGSize(width: 20, height: 20)
+        return CGSize(width: 12, height: 12)
       case .size16:
-        return CGSize(width: 24, height: 24) // increaseSize
+        return CGSize(width: 16, height: 16)
       case .size24:
-        return CGSize(width: 32, height: 32) // increaseSize
+        return CGSize(width: 24, height: 24)
       }
     }
     
@@ -128,20 +126,20 @@ public extension TUIBadge {
     case .size12:
       return CGSize(width: 0, height: 0)
     case .size16:
-      return CGSize(width: 20, height: 20) // increaseSize
+      return CGSize(width: 12, height: 12)
     case .size24:
-      return CGSize(width: 24, height: 24) // increaseSize
+      return CGSize(width: 16, height: 16)
     }
   }
   
-  private var fontSize: CGSize {
+  private var textSize: CGSize {
     switch size {
     case .size12:
       return CGSize(width: 0, height: 0)
     case .size16:
-      return CGSize(width: 8, height: 24) // increaseSize
+      return CGSize(width: 8, height: 14)
     case .size24:
-      return CGSize(width: 18, height: 32) // increaseSize
+      return CGSize(width: 10, height: 18)
     }
   }
   
@@ -166,9 +164,9 @@ struct Badge_Previews: PreviewProvider {
       .previewDisplayName("Plain")
       
       HStack {
-        TUIBadge(style: .number(1), size: .size16)
-        TUIBadge(style: .number(10), size: .size16)
-        TUIBadge(style: .number(100), size: .size16)
+        TUIBadge(style: .number(3), size: .size16)
+        TUIBadge(style: .number(37), size: .size16)
+        TUIBadge(style: .number(373), size: .size16)
       }
       .previewDisplayName("Count Medium")
       
