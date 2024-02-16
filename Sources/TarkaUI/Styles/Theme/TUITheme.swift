@@ -48,5 +48,11 @@ public protocol TUITheme {
   var surfaceHover: Color { get }
   var constantDark: Color { get }
   var constantLight: Color { get }
+  var accentBaseF: Color { get }
+  var accentBaseK: Color { get }
+  var accentBaseP: Color { get }
+  var onAccentBaseF: Color { get }
+  var onAccentBaseK: Color { get }
+  var onAccentBaseP: Color { get }
 }
 
