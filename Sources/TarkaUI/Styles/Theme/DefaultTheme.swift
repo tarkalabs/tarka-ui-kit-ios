@@ -168,6 +168,30 @@ internal struct DefaultTheme: TUITheme {
     color(withName: "constantLight")
   }
   
+  var accentBaseF: Color {
+    color(withName: "accentBaseF")
+  }
+  
+  var accentBaseK: Color {
+    color(withName: "accentBaseK")
+  }
+  
+  var accentBaseP: Color {
+    color(withName: "accentBaseP")
+  }
+  
+  var onAccentBaseF: Color {
+    color(withName: "onAccentBaseF")
+  }
+  
+  var onAccentBaseK: Color {
+    color(withName: "onAccentBaseK")
+  }
+  
+  var onAccentBaseP: Color {
+    color(withName: "onAccentBaseP")
+  }
+  
   private func color(withName name: String) -> Color {
     Color(name, bundle: Bundle.module)
   }

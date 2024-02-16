@@ -167,4 +167,28 @@ public extension Color {
   static var constantLight: Color {
     TUIThemeManager.shared.theme.constantLight
   }
+  
+  static var accentBaseF: Color {
+    TUIThemeManager.shared.theme.accentBaseF
+  }
+  
+  static var accentBaseK: Color {
+    TUIThemeManager.shared.theme.accentBaseK
+  }
+  
+  static var accentBaseP: Color {
+    TUIThemeManager.shared.theme.accentBaseP
+  }
+  
+  static var onAccentBaseF: Color {
+    TUIThemeManager.shared.theme.onAccentBaseF
+  }
+  
+  static var onAccentBaseK: Color {
+    TUIThemeManager.shared.theme.onAccentBaseK
+  }
+  
+  static var onAccentBaseP: Color {
+    TUIThemeManager.shared.theme.onAccentBaseP
+  }
 }
