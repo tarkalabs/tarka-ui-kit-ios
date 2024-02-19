@@ -46,6 +46,7 @@ targets: [
 - TUISelectionCard
 - TUISnackBar
 - TUIStatusIndicator
+- TUITab 
 - TUITabBar
 - TUITableCell
 - TUIFloatingActionButton
