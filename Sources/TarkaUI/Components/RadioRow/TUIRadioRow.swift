@@ -1,50 +1,29 @@
 //
-//  TUICheckBox.swift
+//  TUIRadioRow.swift
 //
 //
-//  Created by MAHESHWARAN on 23/06/23.
+//  Created by MAHESHWARAN on 02/02/24.
 //
 
 import SwiftUI
 
-/// `TUICheckBox` is a  container view that displays checkbox with title and description.
-///
-/// Example usage:
-///
-///     TUICheckBox("Hello", isSelected: true)
-///       .style(.textDescription("SwiftUI"))
-///       .borderStyle(.border)
-///
-/// - Parameters:
-///   - title: This used to display the title
-///   - isSelected: This Bool is used to display the checkBox selection,
-///
-/// - Returns: A closure that returns the content
-
-public struct TUICheckBox: View {
-  @Environment(\.colorScheme) private var colorScheme
-  private var title: any StringProtocol
-  private var style: Style = .onlyTitle
-  private var titleFont: Font = .heading7
-  private var titleColor: Color = .onSurface
+public struct TUIRadioRow: View {
   
-  private var isSelected: Bool
-  private var borderStyle: BorderStyle = .plain
+  private var itemItem: InputItem
 
-  public init(_ title: any StringProtocol, isSelected: Bool = false) {
-    self.title = title
-    self.isSelected = isSelected
+  public init(_ title: String, isSelected: Bool = false) {
+    itemItem = .init(title: title, isSelected: isSelected)
   }
   
   public var body: some View {
-    HStack(alignment: style == .onlyTitle ? .center : .top,
+    HStack(alignment: itemItem.style == .onlyTitle ? .center : .top,
            spacing: Spacing.baseHorizontal) {
       leftView
       rightView
     }
     .frame(maxWidth: .infinity, alignment: .leading)
     .padding(Spacing.halfHorizontal)
-    .background(borderStyle == .border ? Color.surfaceHover : Color.surface)
+    .background(itemItem.borderStyle == .border ? Color.surfaceHover : Color.surface)
     .clipShape(RoundedRectangle(cornerRadius: Spacing.baseHorizontal))
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
@@ -52,16 +31,14 @@ public struct TUICheckBox: View {
   
   @ViewBuilder
   private var leftView: some View {
-    Image(icon: isSelected ? .checkBoxChecked : .checkBoxUnChecked)
-      .scaledToFit()
-      .frame(width: 24, height: 24)
-      .clipped()
+    TUIRadioButton()
+      .style(itemItem.isSelected ? .selected : .unSelected)
   }
   
   @ViewBuilder
   private var rightView: some View {
     VStack(alignment: .leading, spacing: Spacing.halfVertical) {
-      switch style {
+      switch itemItem.style {
       case .onlyTitle:
         titleView
         
@@ -74,9 +51,9 @@ public struct TUICheckBox: View {
   }
   
   private var titleView: some View {
-    Text(title)
-      .font(titleFont)
-      .foregroundColor(titleColor)
+    Text(itemItem.title)
+      .font(itemItem.titleFont)
+      .foregroundColor(itemItem.titleColor)
       .frame(minHeight: Spacing.custom(18))
       .accessibilityIdentifier(Accessibility.title)
   }
@@ -91,7 +68,24 @@ public struct TUICheckBox: View {
   }
 }
 
-public extension TUICheckBox  {
+// MARK: - InputItem
+
+extension TUIRadioRow {
+  
+  struct InputItem {
+    var title: String
+    var style: Style = .onlyTitle
+    var titleFont: Font = .heading7
+    var titleColor: Color = .onSurface
+    
+    var isSelected: Bool
+    var borderStyle: BorderStyle = .plain
+  }
+}
+
+// MARK: - Style
+
+public extension TUIRadioRow  {
   
   enum BorderStyle {
     case plain, border
@@ -106,40 +100,42 @@ public extension TUICheckBox  {
   }
   
   enum Accessibility: String, TUIAccessibility {
-    case root = "TUITextRow"
+    case root = "TUIRadioRow"
     case title = "Title"
     case description = "Description"
   }
   
   // MARK: - Modifiers
   
-  func style(_ style: TUICheckBox.Style) -> Self {
+  func style(_ style: TUIRadioRow.Style) -> Self {
     var newView = self
-    newView.style = style
+    newView.itemItem.style = style
     return newView
   }
   
   func borderStyle(_ style: BorderStyle) -> Self {
     var newView = self
-    newView.borderStyle = style
+    newView.itemItem.borderStyle = style
     return newView
   }
   
   func titleStyle(_ font: TUIFont, textColor: Color = .onSurface) -> Self {
     var newView = self
-    newView.titleFont = Font.using(font)
-    newView.titleColor = textColor
+    newView.itemItem.titleFont = Font.using(font)
+    newView.itemItem.titleColor = textColor
     return newView
   }
 }
 
-struct TUICheckBoxRow_Previews: PreviewProvider {
+// MARK: - Preview
+
+struct TUIRadioRow_Previews: PreviewProvider {
   static var previews: some View {
     VStack(spacing: 20) {
-      TUICheckBox("Hello")
+      TUIRadioRow("Hello")
         .borderStyle(.border)
       
-      TUICheckBox("Welcome", isSelected: true)
+      TUIRadioRow("Welcome", isSelected: true)
         .style(.textDescription("SwiftUI"))
         .borderStyle(.plain)
     }
