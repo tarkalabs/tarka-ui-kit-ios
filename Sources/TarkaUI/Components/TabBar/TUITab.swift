@@ -22,7 +22,11 @@ struct TUITab: View {
   
   @ViewBuilder
   private var contentView: some View {
-    HStack {
+    HStack(spacing: 0) {
+      if let icon = tab.icon {
+        iconView(icon)
+      }
+      
       labelView
     }
     .background(GeometryReader { proxy in
@@ -32,19 +36,28 @@ struct TUITab: View {
   }
   
   @ViewBuilder
+  private func iconView(_ icon: FluentIcon) -> some View {
+    Image(fluent: icon)
+      .padding(.leading, Spacing.custom(6))
+      .frame(width: 20, height: 20)
+      .foregroundColor(isSelected ? .onSecondary : .onSurface)
+  }
+  
+  @ViewBuilder
   private var labelView: some View {
     Text(tab.title)
       .font(.button6)
-      .padding(.horizontal, Spacing.baseHorizontal)
+      .padding(.leading, tab.icon == nil ? Spacing.baseHorizontal : Spacing.custom(4))
+      .padding(.trailing, Spacing.baseHorizontal)
       .padding(.vertical, Spacing.custom(6))
       .frame(minHeight: 20)
       .foregroundColor(isSelected ? .onSecondary : .onSurface)
-      
+      .fixedSize(horizontal: true, vertical: false)      
   }
 }
 
 #Preview {
-  TUITab(tab: .init("Tab")) { _ in
+  TUITab(tab: .init("Tab", icon: .circle20Regular)) { _ in
     
   }
 }
