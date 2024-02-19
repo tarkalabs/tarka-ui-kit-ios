@@ -21,9 +21,11 @@ import SwiftUI
 
 public struct TUITabItem: Hashable {
   public let title: String
+  public let icon: FluentIcon?
   
-  public init(_ title: String) {
+  public init(_ title: String, icon: FluentIcon? = nil) {
     self.title = title
+    self.icon = icon
   }
 }
 
