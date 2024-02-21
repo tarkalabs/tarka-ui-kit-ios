@@ -7,14 +7,21 @@
 
 import SwiftUI
 
-struct TUICheckBox: View {
+public struct TUICheckBox: View {
   var isSelected: Bool = false
   
-  var body: some View {
+  public var body: some View {
     Image(icon: isSelected ? .checkBoxChecked : .checkBoxUnChecked)
       .scaledToFit()
       .frame(width: 24, height: 24)
       .clipped()
+      .accessibilityIdentifier(Accessibility.root)
+  }
+}
+
+extension TUICheckBox {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUICheckBox"
   }
 }
 
