@@ -54,6 +54,7 @@ targets: [
 - TUITag
 - TUITextRow
 - TUIToggleSwitch
+- TUIToggleRow
 - TUIRadioButton
 - TUIRadioRow
   
