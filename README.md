@@ -28,6 +28,7 @@ targets: [
 - TUIAvatar
 - TUIBadge
 - TUIButton
+- TUICheckBox
 - TUICheckBoxRow
 - TUIChip
 - TUIDivider

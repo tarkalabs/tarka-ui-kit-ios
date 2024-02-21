@@ -52,10 +52,7 @@ public struct TUICheckBoxRow: View {
   
   @ViewBuilder
   private var leftView: some View {
-    Image(icon: isSelected ? .checkBoxChecked : .checkBoxUnChecked)
-      .scaledToFit()
-      .frame(width: 24, height: 24)
-      .clipped()
+    TUICheckBox(isSelected: isSelected)
   }
   
   @ViewBuilder
