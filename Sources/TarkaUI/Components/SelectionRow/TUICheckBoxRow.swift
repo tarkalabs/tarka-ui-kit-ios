@@ -1,5 +1,5 @@
 //
-//  TUICheckBox.swift
+//  TUICheckBoxRow.swift
 //
 //
 //  Created by MAHESHWARAN on 23/06/23.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-/// `TUICheckBox` is a  container view that displays checkbox with title and description.
+/// `TUICheckBoxRow` is a  container view that displays checkbox with title and description.
 ///
 /// Example usage:
 ///
-///     TUICheckBox("Hello", isSelected: true)
+///     TUICheckBoxRow("Hello", isSelected: true)
 ///       .style(.textDescription("SwiftUI"))
 ///       .borderStyle(.border)
 ///
@@ -21,7 +21,7 @@ import SwiftUI
 ///
 /// - Returns: A closure that returns the content
 
-public struct TUICheckBox: View {
+public struct TUICheckBoxRow: View {
   @Environment(\.colorScheme) private var colorScheme
   private var title: any StringProtocol
   private var style: Style = .onlyTitle
@@ -91,7 +91,7 @@ public struct TUICheckBox: View {
   }
 }
 
-public extension TUICheckBox  {
+public extension TUICheckBoxRow  {
   
   enum BorderStyle {
     case plain, border
@@ -113,7 +113,7 @@ public extension TUICheckBox  {
   
   // MARK: - Modifiers
   
-  func style(_ style: TUICheckBox.Style) -> Self {
+  func style(_ style: TUICheckBoxRow.Style) -> Self {
     var newView = self
     newView.style = style
     return newView
@@ -136,10 +136,10 @@ public extension TUICheckBox  {
 struct TUICheckBoxRow_Previews: PreviewProvider {
   static var previews: some View {
     VStack(spacing: 20) {
-      TUICheckBox("Hello")
+      TUICheckBoxRow("Hello")
         .borderStyle(.border)
       
-      TUICheckBox("Welcome", isSelected: true)
+      TUICheckBoxRow("Welcome", isSelected: true)
         .style(.textDescription("SwiftUI"))
         .borderStyle(.plain)
     }
