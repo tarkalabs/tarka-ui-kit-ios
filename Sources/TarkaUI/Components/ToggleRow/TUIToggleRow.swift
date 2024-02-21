@@ -11,18 +11,26 @@ import SwiftUI
 /// - Parameters:
 /// - contentView: The content view to be displayed
 /// - toggle: The toggle switch to be displayed
-struct TUIToggleRow<Content: View>: View {
+public struct TUIToggleRow<Content: View>: View {
   public var contentView: () -> Content
   public var toggle: () -> TUIToggleSwitch
   
-  var body: some View {
-    HStack {
+  public var body: some View {
+    HStack(spacing: Spacing.baseHorizontal) {
       contentView()
       Spacer()
       toggle()
     }
     .padding(.vertical, Spacing.custom(11))
     .padding(.horizontal, Spacing.halfHorizontal)
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier(Accessibility.root)
+  }
+}
+
+extension TUIToggleRow {
+  enum Accessibility: String, TUIAccessibility {
+    case root = "TUIToggleRow"
   }
 }
 
