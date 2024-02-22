@@ -15,6 +15,14 @@ public struct TUIToggleRow<Content: View>: View {
   public var contentView: () -> Content
   public var toggle: () -> TUIToggleSwitch
   
+  public init(
+    @ViewBuilder contentView: @escaping () -> Content,
+    @ViewBuilder toggle: @escaping () -> TUIToggleSwitch
+  ) {
+    self.contentView = contentView
+    self.toggle = toggle
+  }
+  
   public var body: some View {
     HStack(spacing: Spacing.baseHorizontal) {
       contentView()

@@ -10,6 +10,10 @@ import SwiftUI
 public struct TUICheckBox: View {
   var isSelected: Bool = false
   
+  public init(isSelected: Bool) {
+    self.isSelected = isSelected
+  }
+  
   public var body: some View {
     Image(icon: isSelected ? .checkBoxChecked : .checkBoxUnChecked)
       .scaledToFit()
