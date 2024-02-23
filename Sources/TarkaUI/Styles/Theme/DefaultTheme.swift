@@ -168,6 +168,150 @@ internal struct DefaultTheme: TUITheme {
     color(withName: "constantLight")
   }
   
+  var accentBaseA: Color {
+    color(withName: "accentBaseA")
+  }
+  
+  var accentBaseB: Color {
+    color(withName: "accentBaseB")
+  }
+  
+  var accentBaseC: Color {
+    color(withName: "accentBaseC")
+  }
+  var accentBaseD: Color {
+    color(withName: "accentBaseD")
+  }
+  
+  var accentBaseE: Color {
+    color(withName: "accentBaseE")
+  }
+  
+  var accentBaseF: Color {
+    color(withName: "accentBaseF")
+  }
+  
+  var accentBaseG: Color {
+    color(withName: "accentBaseG")
+  }
+  
+  var accentBaseH: Color {
+    color(withName: "accentBaseH")
+  }
+  
+  var accentBaseI: Color {
+    color(withName: "accentBaseI")
+  }
+  
+  var accentBaseJ: Color {
+    color(withName: "accentBaseJ")
+  }
+  
+  var accentBaseK: Color {
+    color(withName: "accentBaseK")
+  }
+  
+  var accentBaseL: Color {
+    color(withName: "accentBaseL")
+  }
+  
+  var accentBaseM: Color {
+    color(withName: "accentBaseM")
+  }
+  
+  var accentBaseN: Color {
+    color(withName: "accentBaseN")
+  }
+  
+  var accentBaseO: Color {
+    color(withName: "accentBaseO")
+  }
+  
+  var accentBaseP: Color {
+    color(withName: "accentBaseP")
+  }
+  
+  var accentBaseQ: Color {
+    color(withName: "accentBaseQ")
+  }
+  
+  var accentBaseR: Color {
+    color(withName: "accentBaseR")
+  }
+  
+  
+  var onAccentBaseA: Color {
+    color(withName: "onAccentBaseA")
+  }
+  
+  var onAccentBaseB: Color {
+    color(withName: "onAccentBaseB")
+  }
+  
+  var onAccentBaseC: Color {
+    color(withName: "onAccentBaseC")
+  }
+  
+  var onAccentBaseD: Color {
+    color(withName: "onAccentBaseD")
+  }
+  
+  var onAccentBaseE: Color {
+    color(withName: "onAccentBaseE")
+  }
+  
+  var onAccentBaseF: Color {
+    color(withName: "onAccentBaseF")
+  }
+  
+  var onAccentBaseG: Color {
+    color(withName: "onAccentBaseG")
+  }
+  
+  var onAccentBaseH: Color {
+    color(withName: "onAccentBaseH")
+  }
+  
+  var onAccentBaseI: Color {
+    color(withName: "onAccentBaseI")
+  }
+  
+  var onAccentBaseJ: Color {
+    color(withName: "onAccentBaseJ")
+  }
+  
+  var onAccentBaseK: Color {
+    color(withName: "onAccentBaseK")
+  }
+  
+  var onAccentBaseL: Color {
+    color(withName: "onAccentBaseL")
+  }
+  
+  var onAccentBaseM: Color {
+    color(withName: "onAccentBaseM")
+  }
+  
+  var onAccentBaseN: Color {
+    color(withName: "onAccentBaseN")
+  }
+  
+  var onAccentBaseO: Color {
+    color(withName: "onAccentBaseO")
+  }
+  
+  var onAccentBaseP: Color {
+    color(withName: "onAccentBaseP")
+  }
+  
+  var onAccentBaseQ: Color {
+    color(withName: "onAccentBaseQ")
+  }
+  
+  var onAccentBaseR: Color {
+    color(withName: "onAccentBaseR")
+  }
+  
   private func color(withName name: String) -> Color {
     Color(name, bundle: Bundle.module)
   }
