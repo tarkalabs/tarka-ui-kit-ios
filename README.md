@@ -29,6 +29,7 @@ targets: [
 - TUIBadge
 - TUIButton
 - TUICheckBox
+- TUICheckBoxRow
 - TUIChip
 - TUIDivider
 - TUIDraggableCard
@@ -53,6 +54,7 @@ targets: [
 - TUITag
 - TUITextRow
 - TUIToggleSwitch
+- TUIToggleRow
 - TUIRadioButton
 - TUIRadioRow
   
