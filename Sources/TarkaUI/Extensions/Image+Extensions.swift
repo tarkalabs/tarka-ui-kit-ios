@@ -45,6 +45,6 @@ public enum Icon: String, ImageIconProtocol {
 
 extension FluentIcon: ImageIconProtocol {
   
-  public var bundle: Bundle { .module }
+  public var bundle: Bundle { UIImage.fluentIconBundle }
   public var title: String { resourceString }
 }
