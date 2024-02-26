@@ -16,15 +16,35 @@ public extension Image {
   }
 }
 
-
 public extension Image {
   
-  init(icon: Icon) {
-    self.init(icon.rawValue, bundle: .module)
+  init(icon: some ImageIconProtocol) {
+    self.init(icon.title, bundle: icon.bundle)
   }
 }
 
-public enum Icon: String {
+// MARK: - ImageIconProtocol
+
+public protocol ImageIconProtocol {
+  var title: String { get }
+  var bundle: Bundle { get }
+}
+
+// MARK: - Icon
+
+public enum Icon: String, ImageIconProtocol {
+  
+  public var bundle: Bundle { .module }
+  public var title: String { rawValue }
+  
   case checkBoxChecked = "checkbox_checked"
   case checkBoxUnChecked = "checkbox_unchecked"
+}
+
+// MARK: - FluentIcon
+
+extension FluentIcon: ImageIconProtocol {
+  
+  public var bundle: Bundle { .module }
+  public var title: String { resourceString }
 }
