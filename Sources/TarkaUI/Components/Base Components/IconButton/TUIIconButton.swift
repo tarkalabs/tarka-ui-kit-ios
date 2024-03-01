@@ -76,6 +76,7 @@ public struct TUIIconButton: View, Identifiable {
     .clipShape(Circle())
     .overlay(content: borderView)
     .isDisabled(isDisabled)
+    .buttonStyle(.plain)
     .accessibilityIdentifier(Accessibility.root)
   }
   

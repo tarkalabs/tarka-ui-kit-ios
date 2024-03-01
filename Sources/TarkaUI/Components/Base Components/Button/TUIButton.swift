@@ -60,6 +60,7 @@ public struct TUIButton: View {
     .frame(minHeight: size.height)
     .background(style.backgroundColor)
     .border(Capsule(), width: style.borderWidth, color: .onSurface)
+    .buttonStyle(.plain)
   }
   
   private func image(for icon: FluentIcon) -> some View {
