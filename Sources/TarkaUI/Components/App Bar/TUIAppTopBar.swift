@@ -83,7 +83,7 @@ public struct TUIAppTopBar: View {
         .padding(.leading, leftButton.leading)
         .accessibilityIdentifier(Accessibility.title)
 
-      rightButtons(using: barItem.rightButtons)
+      rightButtons(barItem.rightButtons)
     }
     .padding(.horizontal, Spacing.halfHorizontal)
     .accessibilityIdentifier(Accessibility.titleBar)
@@ -104,43 +104,13 @@ public struct TUIAppTopBar: View {
   }
   
   @ViewBuilder
-  func rightButtons(using type: RightButtonType) -> some View {
+  func rightButtons(_ rightButtons: [TUIIconButton]) -> some View {
     
     HStack(spacing: 0) {
       
-      switch type {
-        
-      case .one(let buttonItem):
-        buttonItem
+      ForEach(rightButtons) { button in
+        button
           .accessibilityIdentifier(Accessibility.rightButton1)
-
-      case .two(let buttonItem1, let buttonItem2):
-        buttonItem1
-          .accessibilityIdentifier(Accessibility.rightButton1)
-        buttonItem2
-          .accessibilityIdentifier(Accessibility.rightButton2)
-
-      case .three(let buttonItem1, let buttonItem2, let buttonItem3):
-        buttonItem1
-          .accessibilityIdentifier(Accessibility.rightButton1)
-        buttonItem2
-          .accessibilityIdentifier(Accessibility.rightButton2)
-        buttonItem3
-          .accessibilityIdentifier(Accessibility.rightButton3)
-        
-      case .four(let buttonItem1, let buttonItem2,
-                 let buttonItem3, let buttonItem4):
-        buttonItem1
-          .accessibilityIdentifier(Accessibility.rightButton1)
-        buttonItem2
-          .accessibilityIdentifier(Accessibility.rightButton2)
-        buttonItem3
-          .accessibilityIdentifier(Accessibility.rightButton3)
-        buttonItem4
-          .accessibilityIdentifier(Accessibility.rightButton4)
-
-      case .none:
-        EmptyView()
       }
     }
   }
@@ -208,7 +178,7 @@ struct TUIAppTopBar_Previews: PreviewProvider {
               .init(
                 title: "Title",
                 leftButton: leftButton,
-                rightButtons: .one(rightButton)))
+                rightButtons: [rightButton]))
           )
           
           TUIAppTopBar(
@@ -216,16 +186,16 @@ struct TUIAppTopBar_Previews: PreviewProvider {
               .init(
                 title: "Title",
                 leftButton: leftButton,
-                rightButtons: .two(
-                  rightButton, rightButton)))
+                rightButtons: [
+                  rightButton, rightButton]))
           )
           TUIAppTopBar(
             barStyle: .titleBar(
               .init(
                 title: "Title",
                 leftButton: leftButton,
-                rightButtons: .three(
-                  rightButton, rightButton, rightButton)))
+                rightButtons: [
+                  rightButton, rightButton, rightButton]))
           )
         }
         .padding(.horizontal, 16)

@@ -69,7 +69,6 @@ public struct TUIPopupView<Content: View>: View {
         isPresented = false
       },
       right: .init(title: "Save".localized) {
-        isPresented = false
         onSave()
       }))
   }

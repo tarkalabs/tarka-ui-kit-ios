@@ -100,8 +100,11 @@ public struct TUIOverlayContentView<Content: View>: View {
   }
   
   private func buttonAction(_ action: (() -> Void)? = nil) {
-    dismiss()
-    action?()
+    if let action {
+      action()
+    } else {
+      dismiss()
+    }
   }
   
   // MARK: - Content View
