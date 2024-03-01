@@ -15,7 +15,7 @@ public struct TUICheckBox: View {
   }
   
   public var body: some View {
-    Image(icon: isSelected ? .checkBoxChecked : .checkBoxUnChecked)
+    Image(icon: isSelected ? Icon.checkBoxChecked : .checkBoxUnChecked)
       .scaledToFit()
       .frame(width: 24, height: 24)
       .clipped()
