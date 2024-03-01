@@ -32,7 +32,7 @@ public protocol ImageIconProtocol {
 
 // MARK: - Icon
 
-public enum Icon: String, ImageIconProtocol {
+public enum TUIAssetIcon: String, ImageIconProtocol {
   
   public var bundle: Bundle { .module }
   public var title: String { rawValue }
