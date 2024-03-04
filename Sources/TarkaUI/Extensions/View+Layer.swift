@@ -60,16 +60,4 @@ public extension View {
         )
       }
     }
-  
-  /// Adds view in ZStack with with half transparent view added in its background
-  /// - Parameters:
-  ///   - isPresented: Decides to show / hide
-  ///   - _: ContentView that to be displayed in TUIPopupView
-  /// - Returns: TUIPopupView
-  func addViewWithHalfTransparentBackground(
-    isPresented: Bool,
-    @ViewBuilder _ content: () -> some View) -> some View {
-      self.modifier(
-        BackgroundHalfTransparentView(isPresented: isPresented, contentView: content()))
-    }
 }
