@@ -57,10 +57,7 @@ public struct TUIButton: View {
       .padding(.trailing, size.trailing(for: icon))
       .width(width)
     }
-    .frame(minHeight: size.height)
-    .background(style.backgroundColor)
-    .border(Capsule(), width: style.borderWidth, color: .onSurface)
-    .buttonStyle(.plain)
+    .buttonStyle(TUIButtonStyle(style: style, size: size))
   }
   
   private func image(for icon: FluentIcon) -> some View {
@@ -69,6 +66,18 @@ public struct TUIButton: View {
       .frame(width: size.iconSize, height: size.iconSize)
       .foregroundColor(style.foregroundColor)
       .clipped()
+  }
+  
+  struct TUIButtonStyle: ButtonStyle {
+    let style: Style
+    let size: Size
+    
+    func makeBody(configuration: Configuration) -> some View {
+      configuration.label
+        .frame(minHeight: size.height)
+        .background(style.backgroundColor)
+        .border(Capsule(), width: style.borderWidth, color: .onSurface)
+    }
   }
 }
 
