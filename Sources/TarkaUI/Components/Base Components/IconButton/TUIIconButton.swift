@@ -94,14 +94,8 @@ public struct TUIIconButton: View, Identifiable {
       configuration.label
         .frame(width: buttonSize.width, height: buttonSize.height)
         .background(backgroundColor)
-        .clipShape(Circle())
-        .overlay(content: borderView)
+        .border(Circle(), width: 1.5, color: borderColor)
         .isDisabled(isDisabled)
-    }
-    
-    private func borderView() -> some View {
-      Circle()
-        .stroke(borderColor, style: StrokeStyle(lineWidth: 1.5))
     }
   }
 }
