@@ -63,25 +63,17 @@ public struct TUIIconButton: View, Identifiable {
   }
   
   public var body: some View {
-    Button {
-      action()
-    } label: {
-      iconView
-    }
-    .frame(
-      width: buttonSize.width,
-      height: buttonSize.height
-    )
-    .background(backgroundView)
-    .clipShape(Circle())
-    .overlay(content: borderView)
-    .isDisabled(isDisabled)
-    .buttonStyle(.plain)
-    .accessibilityIdentifier(Accessibility.root)
+    Button(action: action, label: iconView)
+      .buttonStyle(TUIIconButtonStyle(
+        buttonSize: buttonSize,
+        backgroundColor: backgroundColor,
+        borderColor: borderColor,
+        isDisabled: isDisabled))
+      .accessibilityIdentifier(Accessibility.root)
   }
   
   @ViewBuilder
-  private var iconView: some View {
+  private func iconView() -> some View {
     Image(fluent: icon)
       .scaledToFit()
       .frame(
@@ -106,6 +98,27 @@ public struct TUIIconButton: View, Identifiable {
           lineWidth: 1.5
         )
       )
+  }
+  
+  struct TUIIconButtonStyle: ButtonStyle {
+    let buttonSize: CGSize
+    let backgroundColor: Color
+    let borderColor: Color
+    let isDisabled: Bool
+    
+    func makeBody(configuration: Configuration) -> some View {
+      configuration.label
+        .frame(width: buttonSize.width, height: buttonSize.height)
+        .background(backgroundColor)
+        .clipShape(Circle())
+        .overlay(content: borderView)
+        .isDisabled(isDisabled)
+    }
+    
+    private func borderView() -> some View {
+      Circle()
+        .stroke(borderColor, style: StrokeStyle(lineWidth: 1.5))
+    }
   }
 }
 
