@@ -84,22 +84,6 @@ public struct TUIIconButton: View, Identifiable {
       .foregroundColor(iconColor ?? defaultIconColor)
   }
   
-  @ViewBuilder
-  private var backgroundView: some View {
-    backgroundColor
-  }
-  
-  @ViewBuilder
-  private func borderView() -> some View {
-    Circle()
-      .stroke(
-        borderColor,
-        style: StrokeStyle(
-          lineWidth: 1.5
-        )
-      )
-  }
-  
   struct TUIIconButtonStyle: ButtonStyle {
     let buttonSize: CGSize
     let backgroundColor: Color
