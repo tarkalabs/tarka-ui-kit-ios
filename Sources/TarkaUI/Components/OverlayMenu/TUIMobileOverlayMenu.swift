@@ -165,7 +165,8 @@ struct TUIOverlayMenuView_Previews: PreviewProvider {
   
   static var menuItems: [TUIMenuItem] {
     [.init(item: .init(title: "Hello", style: .onlyLabel), isSelected: true) {},
-     .init(item: .init(title: "Welcome", style: .leftImage(Image(fluent: .accessTime20Filled)))) {},
+     .init(item: .init(
+      title: "Welcome", style: .leftImage(FluentIcon.accessTime20Filled))) {},
      .init(item: .init(title: "To", style: .statusDots(.circle12Filled, .success)), isSelected: true) {},
      .init(item: .init(title: "SwiftUI", style: .withRightIcon(.add24Filled, .dismiss24Filled))) {}
     ]

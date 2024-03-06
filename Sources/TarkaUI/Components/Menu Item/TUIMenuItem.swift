@@ -61,7 +61,7 @@ public struct TUIMenuItem: View {
       }
       
     case .withRightIcon(let leftIcon, let rightIcon):
-      leftImageView(Image(fluent: leftIcon))
+      leftImageView(leftIcon)
       titleView
       rightIconView(rightIcon)
       
@@ -116,8 +116,8 @@ public struct TUIMenuItem: View {
       .accessibilityIdentifier(Accessibility.checkmark)
   }
   
-  private func leftImageView(_ image: Image) -> some View {
-    image
+  private func leftImageView(_ image: ImageIconProtocol) -> some View {
+    Image(icon: image)
       .scaledToFill()
       .frame(width: Spacing.custom(24), height: Spacing.custom(24))
       .accessibilityIdentifier(Accessibility.leftIcon)
@@ -185,12 +185,12 @@ struct MenuItemView_Previews: PreviewProvider {
       TUIMenuItem(item:
           .init(
             title: "Left Icon",
-            style: .leftImage(Image(fluent:.add24Filled)))) { }
+            style: .leftImage(FluentIcon.add24Filled))) { }
       
       TUIMenuItem(
         item: .init(
           title: "Left Icon is selected",
-          style: .leftImage(Image(fluent: .add24Filled))),
+          style: .leftImage(FluentIcon.add24Filled)),
         isSelected: true) { }
       
       
