@@ -35,7 +35,7 @@ public struct TUIMenuItemProperties: Identifiable, Equatable {
     /// Displays only the title.
     case onlyLabel
     /// Displays the title and left image.
-    case leftImage(Image)
+    case leftImage(ImageIconProtocol)
     /// Displays the title, left and right symbol.
     case withRightIcon(FluentIcon, FluentIcon)
     /// Displays the title and right symbol.
