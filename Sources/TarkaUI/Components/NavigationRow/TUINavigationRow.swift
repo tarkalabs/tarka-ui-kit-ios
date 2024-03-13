@@ -43,9 +43,9 @@ public struct TUINavigationRow: View {
   public var body: some View {
     
     HStack(spacing: Spacing.baseHorizontal) {
-      leftView()
+      leftView
       Spacer()
-      rightView()
+      rightView
     }
     // set minHeight to match with design component
     .frame(minHeight: Spacing.custom(40))
@@ -57,7 +57,7 @@ public struct TUINavigationRow: View {
   }
   
   @ViewBuilder
-  func leftView() -> some View {
+  private var leftView: some View {
     
     HStack(spacing: TarkaUI.Spacing.baseHorizontal) {
       
@@ -81,7 +81,7 @@ public struct TUINavigationRow: View {
   }
   
   @ViewBuilder
-  func rightView() -> some View {
+  private var rightView: some View {
     HStack(spacing: TarkaUI.Spacing.quarterHorizontal) {
       
       if showErrorBadge {
