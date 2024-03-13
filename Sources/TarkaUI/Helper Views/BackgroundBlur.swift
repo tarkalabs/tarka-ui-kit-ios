@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// A View in which content reflects all behind it
-struct BackgroundVisualEffectiveView: UIViewRepresentable {
+struct BackgroundVisualEffectView: UIViewRepresentable {
 
   func makeUIView(context: Context) -> UIVisualEffectView {
     let view = UIVisualEffectView()
@@ -27,7 +27,7 @@ public struct BackgroundBlur: View {
   
   @ViewBuilder
   public var body: some View {
-    BackgroundVisualEffectiveView()
+    BackgroundVisualEffectView()
   }
 }
 
@@ -51,7 +51,7 @@ public struct BackgroundBlurView: ViewModifier {
       color.opacity(opacity/100)
         .frame(width: width, height: height)
       content
-        .background(BackgroundVisualEffectiveView())
+        .background(BackgroundVisualEffectView())
         .background(Color.clear)
         .getWidth($width)
         .getHeight($height)
