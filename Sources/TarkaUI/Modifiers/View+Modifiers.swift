@@ -189,7 +189,7 @@ public extension View {
   ///
   /// - Returns: View with background blur added
   func addBackgroundBlur(withColor color: Color) -> some View {
-    self.background(BackgroundVisualEffectiveView())
+    self.background(BackgroundVisualEffectView())
       .background(color)
   }
   
