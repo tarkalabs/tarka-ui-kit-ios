@@ -94,7 +94,9 @@ struct TUIButton_Previews: PreviewProvider {
         let isLargeIcon: Bool = size == .large || size == .regular
         let icon: FluentIcon = isLargeIcon ? .add24Regular : .add16Regular
         
-        ForEach(TUIButton.Style.allCases) { style in
+        let buttons = [TUIButton.Style.primary, .secondary, .danger, .outlined, .ghost]
+        
+        ForEach(buttons) { style in
           
           HStack(spacing: 10.0) {
             

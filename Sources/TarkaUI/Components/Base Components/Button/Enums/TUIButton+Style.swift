@@ -9,9 +9,10 @@ import SwiftUI
 
 public extension TUIButton {
   
-  enum Style: Identifiable, CaseIterable {
+  enum Style: Identifiable {
     
-    case primary, secondary, outlined, ghost, danger
+    case primary, secondary, outlined, ghost, danger,
+         custom(_ background: Color, foreground: Color)
     
     public var id: String {
       UUID().uuidString
@@ -24,6 +25,7 @@ public extension TUIButton {
       case .outlined: return .surface
       case .ghost: return .surface
       case .danger: return .error
+      case .custom(let color, _): return color
       }
     }
     
@@ -34,6 +36,7 @@ public extension TUIButton {
       case .outlined: return .onSurface
       case .ghost: return .secondaryTUI
       case .danger: return .onPrimary
+      case .custom(_, let color): return color
       }
     }
     
