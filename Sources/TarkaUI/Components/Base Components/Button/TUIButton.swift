@@ -66,7 +66,7 @@ public struct TUIButton: View {
     Image(fluent: icon)
       .scaledToFit()
       .frame(width: size.iconSize, height: size.iconSize)
-      .foregroundColor(style.foregroundColor)
+      .foregroundColor(foregroundColor ?? style.foregroundColor)
       .clipped()
   }
   
