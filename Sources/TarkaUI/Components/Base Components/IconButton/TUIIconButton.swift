@@ -28,11 +28,6 @@ import SwiftUI
 ///   - action: The action to perform when the user taps the button.
 ///
 public struct TUIIconButton: View, Identifiable {
-  
-  public enum Style {
-    case outline, ghost, secondary, primary,
-         custom(_ background: Color, foreground: Color)
-  }
 
   public enum Size {
     case size20, size24, size32, size40, size48
@@ -67,8 +62,8 @@ public struct TUIIconButton: View, Identifiable {
     Button(action: action, label: iconView)
       .buttonStyle(TUIIconButtonStyle(
         buttonSize: buttonSize,
-        backgroundColor: backgroundColor,
-        borderColor: borderColor,
+        backgroundColor: style.backgroundColor,
+        borderColor: style.borderColor,
         isDisabled: isDisabled))
       .accessibilityIdentifier(Accessibility.root)
   }
@@ -82,7 +77,7 @@ public struct TUIIconButton: View, Identifiable {
         height: iconSize.height
       )
       .clipped()
-      .foregroundColor(iconColor ?? defaultIconColor)
+      .foregroundColor(iconColor ?? style.defaultIconColor)
   }
   
   struct TUIIconButtonStyle: ButtonStyle {
@@ -102,41 +97,6 @@ public struct TUIIconButton: View, Identifiable {
 }
 
 extension TUIIconButton {
-  
-  var defaultIconColor: Color {
-    switch style {
-    case .outline, .ghost:
-      return .onSurface
-    case .secondary:
-      return .onSecondary
-    case .primary:
-      return .onPrimary
-    case .custom(_, foreground: let color):
-      return color
-    }
-  }
-  
-  var backgroundColor: Color {
-    switch style {
-    case .outline, .ghost:
-      return .clear
-    case .secondary:
-      return .secondaryTUI
-    case .primary:
-      return .primaryTUI
-    case .custom(let color, _):
-      return color
-    }
-  }
-  
-  var borderColor: Color {
-    switch style {
-    case .ghost, .secondary, .primary, .custom:
-      return backgroundColor
-    case .outline:
-      return .outline
-    }
-  }
   
   var buttonSize: CGSize {
     switch size {
@@ -164,6 +124,49 @@ extension TUIIconButton {
 }
 
 extension TUIIconButton {
+  
+  public enum Style {
+    case outline, ghost, secondary, primary,
+         custom(_ background: Color, foreground: Color)
+    
+    public var defaultIconColor: Color {
+      switch self {
+      case .outline, .ghost:
+        return .onSurface
+      case .secondary:
+        return .onSecondary
+      case .primary:
+        return .onPrimary
+      case .custom(_, foreground: let color):
+        return color
+      }
+    }
+    
+    public var backgroundColor: Color {
+      switch self {
+      case .outline, .ghost:
+        return .clear
+      case .secondary:
+        return .secondaryTUI
+      case .primary:
+        return .primaryTUI
+      case .custom(let color, _):
+        return color
+      }
+    }
+    
+    public var borderColor: Color {
+      switch self {
+      case .ghost, .secondary, .primary, .custom:
+        return backgroundColor
+      case .outline:
+        return .outline
+      }
+    }
+  }
+}
+
+extension TUIIconButton {
   enum Accessibility: String, TUIAccessibility {
     case root = "TUIButton"
   }
@@ -174,8 +177,7 @@ struct IconButtonView_Previews: PreviewProvider {
     Group {
       TUIIconButton(
         icon: .chevronRight24Filled) { }
-        .iconColor(.white)
-        .style(.secondary)
+        .style(.custom(.accentBaseA, foreground: .onAccentBaseA))
         .size(.size40)
     }
   }
