@@ -62,8 +62,8 @@ public struct TUIIconButton: View, Identifiable {
     Button(action: action, label: iconView)
       .buttonStyle(TUIIconButtonStyle(
         buttonSize: buttonSize,
-        backgroundColor: style.backgroundColor,
-        borderColor: style.borderColor,
+        backgroundColor: style.inputStyle.background,
+        borderColor: style.inputStyle.border,
         isDisabled: isDisabled))
       .accessibilityIdentifier(Accessibility.root)
   }
@@ -77,7 +77,7 @@ public struct TUIIconButton: View, Identifiable {
         height: iconSize.height
       )
       .clipped()
-      .foregroundColor(iconColor ?? style.defaultIconColor)
+      .foregroundColor(iconColor ?? style.inputStyle.foreground)
   }
   
   struct TUIIconButtonStyle: ButtonStyle {
@@ -90,7 +90,7 @@ public struct TUIIconButton: View, Identifiable {
       configuration.label
         .frame(width: buttonSize.width, height: buttonSize.height)
         .background(backgroundColor)
-        .border(Circle(), width: 1.5, color: borderColor)
+        .border(Circle(), width: configuration.isPressed ? 1.5 : 0, color: borderColor)
         .isDisabled(isDisabled)
     }
   }
@@ -125,42 +125,34 @@ extension TUIIconButton {
 
 extension TUIIconButton {
   
+  public struct InputStyle {
+    public var background: Color
+    public var foreground: Color
+    public var border: Color
+    
+    public init(_ background: Color, foreground: Color, border: Color) {
+      self.background = background
+      self.foreground = foreground
+      self.border = border
+    }
+  }
+  
   public enum Style {
     case outline, ghost, secondary, primary,
-         custom(_ background: Color, foreground: Color)
+         custom(InputStyle)
     
-    public var defaultIconColor: Color {
+    public var inputStyle: InputStyle {
       switch self {
-      case .outline, .ghost:
-        return .onSurface
-      case .secondary:
-        return .onSecondary
       case .primary:
-        return .onPrimary
-      case .custom(_, let color):
-        return color
-      }
-    }
-    
-    public var backgroundColor: Color {
-      switch self {
-      case .outline, .ghost:
-        return .clear
+        return .init(.primaryTUI, foreground: .onPrimary, border: .onPrimary)
       case .secondary:
-        return .secondaryTUI
-      case .primary:
-        return .primaryTUI
-      case .custom(let color, _):
-        return color
-      }
-    }
-    
-    public var borderColor: Color {
-      switch self {
-      case .ghost, .secondary, .primary, .custom:
-        return backgroundColor
+        return .init(.secondaryTUI, foreground: .onSecondary, border: .secondaryTUI)
+      case .ghost:
+        return .init(.clear, foreground: .onSurface, border: .clear)
       case .outline:
-        return .outline
+        return .init(.clear, foreground: .onSurface, border: .outline)
+      case .custom(let item):
+        return item
       }
     }
   }
@@ -177,7 +169,7 @@ struct IconButtonView_Previews: PreviewProvider {
     Group {
       TUIIconButton(
         icon: .chevronRight24Filled) { }
-        .style(.custom(.accentBaseA, foreground: .onAccentBaseA))
+        .style(.custom(.init(.accentBaseA, foreground: .onAccentBaseA, border: .onAccentBaseA)))
         .size(.size40)
     }
   }
