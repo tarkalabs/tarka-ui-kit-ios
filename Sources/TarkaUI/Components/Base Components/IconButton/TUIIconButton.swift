@@ -61,9 +61,8 @@ public struct TUIIconButton: View, Identifiable {
   public var body: some View {
     Button(action: action, label: iconView)
       .buttonStyle(TUIIconButtonStyle(
+        style: style,
         buttonSize: buttonSize,
-        backgroundColor: style.inputStyle.background,
-        borderColor: style.inputStyle.border,
         isDisabled: isDisabled))
       .accessibilityIdentifier(Accessibility.root)
   }
@@ -81,16 +80,16 @@ public struct TUIIconButton: View, Identifiable {
   }
   
   struct TUIIconButtonStyle: ButtonStyle {
+    let style: Style
     let buttonSize: CGSize
-    let backgroundColor: Color
-    let borderColor: Color
     let isDisabled: Bool
     
     func makeBody(configuration: Configuration) -> some View {
       configuration.label
         .frame(width: buttonSize.width, height: buttonSize.height)
-        .background(backgroundColor)
-        .border(Circle(), width: configuration.isPressed ? 1.5 : 0, color: borderColor)
+        .background(style.inputStyle.background)
+        .border(Circle(), width: configuration.isPressed ? 1.5 : 0,
+                color: style.borderColor(configuration.isPressed))
         .isDisabled(isDisabled)
     }
   }
@@ -155,6 +154,19 @@ extension TUIIconButton {
         return item
       }
     }
+    
+    func borderColor(_ isPressed: Bool) -> Color {
+      switch self {
+      case .primary:
+        return isPressed ? .onSurface : .onPrimary
+      case .secondary, .ghost:
+        return .clear
+      case .outline:
+        return isPressed ? .onSurface : .outline
+      case .custom(let item):
+        return isPressed ? item.foreground : item.border
+      }
+    }
   }
 }
 
@@ -166,10 +178,15 @@ extension TUIIconButton {
 
 struct IconButtonView_Previews: PreviewProvider {
   static var previews: some View {
-    Group {
+    HStack {
       TUIIconButton(
         icon: .chevronRight24Filled) { }
         .style(.custom(.init(.accentBaseA, foreground: .onAccentBaseA, border: .onAccentBaseA)))
+        .size(.size40)
+      
+      TUIIconButton(
+        icon: .chevronRight24Filled) { }
+        .style(.primary)
         .size(.size40)
     }
   }
