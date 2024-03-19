@@ -40,12 +40,6 @@ public extension TUIIconButton {
     return newView
   }
   
-  func backgroundColor(_ color: Color) -> TUIIconButton {
-    var newView = self
-    newView.color = color
-    return newView
-  }
-  
   /// Makes `TUIIconButton` disabled. Internally, it just calls the view's `isDisabled()` func.
   /// Purpose of this function is to have concrete return type
   ///

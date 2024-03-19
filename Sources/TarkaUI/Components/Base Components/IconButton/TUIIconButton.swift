@@ -39,8 +39,6 @@ public struct TUIIconButton: View, Identifiable {
   public var icon: FluentIcon
   
   var iconColor: Color?
-  
-  var color: Color?
 
   /// The action to perform when the user taps the button.
   public var action: () -> Void
@@ -64,7 +62,7 @@ public struct TUIIconButton: View, Identifiable {
     Button(action: action, label: iconView)
       .buttonStyle(TUIIconButtonStyle(
         buttonSize: buttonSize,
-        backgroundColor: color ?? style.backgroundColor,
+        backgroundColor: style.backgroundColor,
         borderColor: style.borderColor,
         isDisabled: isDisabled))
       .accessibilityIdentifier(Accessibility.root)
@@ -128,7 +126,8 @@ extension TUIIconButton {
 extension TUIIconButton {
   
   public enum Style {
-    case outline, ghost, secondary, primary
+    case outline, ghost, secondary, primary,
+         custom(_ background: Color, foreground: Color)
     
     public var defaultIconColor: Color {
       switch self {
@@ -138,6 +137,8 @@ extension TUIIconButton {
         return .onSecondary
       case .primary:
         return .onPrimary
+      case .custom(_, let color):
+        return color
       }
     }
     
@@ -149,12 +150,14 @@ extension TUIIconButton {
         return .secondaryTUI
       case .primary:
         return .primaryTUI
+      case .custom(let color, _):
+        return color
       }
     }
     
     public var borderColor: Color {
       switch self {
-      case .ghost, .secondary, .primary:
+      case .ghost, .secondary, .primary, .custom:
         return backgroundColor
       case .outline:
         return .outline
@@ -174,9 +177,7 @@ struct IconButtonView_Previews: PreviewProvider {
     Group {
       TUIIconButton(
         icon: .chevronRight24Filled) { }
-        .style(.secondary)
-        .backgroundColor(.accentBaseA)
-        .iconColor(.onAccentBaseA)
+        .style(.custom(.accentBaseA, foreground: .onAccentBaseA))
         .size(.size40)
     }
   }
