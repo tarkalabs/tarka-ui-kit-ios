@@ -30,7 +30,8 @@ import SwiftUI
 public struct TUIIconButton: View, Identifiable {
   
   public enum Style {
-    case outline, ghost, secondary, primary
+    case outline, ghost, secondary, primary,
+         custom(_ background: Color, foreground: Color)
   }
 
   public enum Size {
@@ -110,6 +111,8 @@ extension TUIIconButton {
       return .onSecondary
     case .primary:
       return .onPrimary
+    case .custom(_, foreground: let color):
+      return color
     }
   }
   
@@ -121,12 +124,14 @@ extension TUIIconButton {
       return .secondaryTUI
     case .primary:
       return .primaryTUI
+    case .custom(let color, _):
+      return color
     }
   }
   
   var borderColor: Color {
     switch style {
-    case .ghost, .secondary, .primary:
+    case .ghost, .secondary, .primary, .custom:
       return backgroundColor
     case .outline:
       return .outline
