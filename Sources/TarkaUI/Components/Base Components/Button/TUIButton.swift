@@ -21,6 +21,8 @@ public struct TUIButton: View {
   var icon: Icon?
   var badge: String?
   var width: Width = .fill
+  var foregroundColor: Color?
+  var backgroundColor: Color?
   
   var action: () -> Void
   
@@ -43,7 +45,7 @@ public struct TUIButton: View {
         
         Text(title)
           .font(size.buttonSize)
-          .foregroundColor(style.foregroundColor)
+          .foregroundColor(foregroundColor ?? style.foregroundColor)
           .padding(.vertical, size.titleTopPadding)
           .frame(minHeight: size.titleHeight)
         
@@ -57,7 +59,7 @@ public struct TUIButton: View {
       .padding(.trailing, size.trailing(for: icon))
       .width(width)
     }
-    .buttonStyle(TUIButtonStyle(style: style, size: size))
+    .buttonStyle(TUIButtonStyle(style: style, size: size, color: backgroundColor ?? style.backgroundColor))
   }
   
   private func image(for icon: FluentIcon) -> some View {
@@ -71,11 +73,12 @@ public struct TUIButton: View {
   struct TUIButtonStyle: ButtonStyle {
     let style: Style
     let size: Size
+    let color: Color
     
     func makeBody(configuration: Configuration) -> some View {
       configuration.label
         .frame(minHeight: size.height)
-        .background(style.backgroundColor)
+        .background(color)
         .border(Capsule(), width: style.borderWidth, color: .onSurface)
     }
   }

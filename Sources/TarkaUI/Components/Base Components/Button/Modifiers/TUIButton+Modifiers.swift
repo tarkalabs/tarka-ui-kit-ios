@@ -34,6 +34,18 @@ public extension TUIButton {
     return newView
   }
   
+  func foregroundColor(_ color: Color) -> Self {
+    var newView = self
+    newView.foregroundColor = color
+    return newView
+  }
+  
+  func backgroundColor(_ color: Color) -> Self {
+    var newView = self
+    newView.backgroundColor = color
+    return newView
+  }
+  
   /// Sets badge in the overlay of the view
   func badge(_ value: String? = nil) -> Self {
     var newView = self
