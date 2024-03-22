@@ -142,6 +142,7 @@ public struct TUIAppTopBar: View {
           searchBarVM.isEditing = false
           searchBarVM.isShown = false
           searchBarVM.searchItem.text = ""
+          searchBarVM.searchText = ""
           searchBarVM.onEditing("")
         }
         .style(.ghost)
