@@ -62,7 +62,7 @@ public extension TUIButton {
     var border: Color
     var borderWidth: CGFloat
     
-    public init(background: Color, foreground: Color, border: Color = .clear, borderWidth: CGFloat = 1.5) {
+    public init(background: Color, foreground: Color, border: Color = .clear, borderWidth: CGFloat = 1) {
       self.background = background
       self.foreground = foreground
       self.border = border
