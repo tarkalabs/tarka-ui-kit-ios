@@ -88,7 +88,7 @@ public struct TUIIconButton: View, Identifiable {
       configuration.label
         .frame(width: buttonSize.width, height: buttonSize.height)
         .background(style.inputStyle.background)
-        .border(Circle(), width: configuration.isPressed ? 1.5 : 0,
+        .border(Circle(), width: configuration.isPressed ? ceil(1.5) : 0,
                 color: style.borderColor(configuration.isPressed))
         .isDisabled(isDisabled)
     }
