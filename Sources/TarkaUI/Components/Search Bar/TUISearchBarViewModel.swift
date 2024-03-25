@@ -48,8 +48,8 @@ public class TUISearchBarViewModel: ObservableObject {
     isShown: Bool = false,
     needDelaySearch: Bool = false) {
       self.needDelaySearch = needDelaySearch
-      self._searchItem = Published(initialValue: searchItem)
-      self._isShown = Published(initialValue: isShown)
-      self.onEditing = { _ in }
+      _searchItem = Published(initialValue: searchItem)
+      _isShown = Published(initialValue: isShown)
+      onEditing = { _ in }
     }
 }
