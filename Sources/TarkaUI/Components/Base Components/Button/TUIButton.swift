@@ -111,7 +111,7 @@ struct TUIButton_Previews: PreviewProvider {
               .icon(.right(icon))
             
             TUIButton(title: "Label") { }
-              .style(.custom(.init(.accentBaseA, foreground: .onAccentBaseA, border: .accentBaseA)))
+              .style(.custom(.init(background: .accentBaseA, foreground: .onAccentBaseA, border: .accentBaseA)))
               .size(size)
               .icon(.left(icon))
           }

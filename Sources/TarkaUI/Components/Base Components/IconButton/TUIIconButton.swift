@@ -129,7 +129,7 @@ extension TUIIconButton {
     public var foreground: Color
     public var border: Color
     
-    public init(_ background: Color, foreground: Color, border: Color) {
+    public init(background: Color, foreground: Color, border: Color) {
       self.background = background
       self.foreground = foreground
       self.border = border
@@ -143,13 +143,13 @@ extension TUIIconButton {
     public var inputStyle: InputStyle {
       switch self {
       case .primary:
-        return .init(.primaryTUI, foreground: .onPrimary, border: .onPrimary)
+        return .init(background: .primaryTUI, foreground: .onPrimary, border: .onPrimary)
       case .secondary:
-        return .init(.secondaryTUI, foreground: .onSecondary, border: .secondaryTUI)
+        return .init(background: .secondaryTUI, foreground: .onSecondary, border: .secondaryTUI)
       case .ghost:
-        return .init(.clear, foreground: .onSurface, border: .clear)
+        return .init(background: .clear, foreground: .onSurface, border: .clear)
       case .outline:
-        return .init(.clear, foreground: .onSurface, border: .outline)
+        return .init(background: .clear, foreground: .onSurface, border: .outline)
       case .custom(let item):
         return item
       }
@@ -181,7 +181,7 @@ struct IconButtonView_Previews: PreviewProvider {
     HStack {
       TUIIconButton(
         icon: .chevronRight24Filled) { }
-        .style(.custom(.init(.accentBaseA, foreground: .onAccentBaseA, border: .onAccentBaseA)))
+        .style(.custom(.init(background: .accentBaseA, foreground: .onAccentBaseA, border: .onAccentBaseA)))
         .size(.size40)
       
       TUIIconButton(

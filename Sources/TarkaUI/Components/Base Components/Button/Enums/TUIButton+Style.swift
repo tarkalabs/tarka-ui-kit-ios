@@ -21,15 +21,15 @@ public extension TUIButton {
     public var inputStyle: InputStyle {
       switch self {
       case .primary:
-        return .init(.primaryTUI, foreground: .onPrimary)
+        return .init(background: .primaryTUI, foreground: .onPrimary)
       case .secondary:
-        return .init(.secondaryTUI, foreground: .onSecondary)
+        return .init(background: .secondaryTUI, foreground: .onSecondary)
       case .outlined:
-        return .init(.surface, foreground: .onSurface, border: .onSurface)
+        return .init(background: .surface, foreground: .onSurface, border: .onSurface)
       case .ghost:
-        return .init(.surface, foreground: .onSurface)
+        return .init(background: .surface, foreground: .onSurface)
       case .danger:
-        return .init(.error, foreground: .onPrimary)
+        return .init(background: .error, foreground: .onPrimary)
       case .custom(let item):
         return item
       }
@@ -62,7 +62,7 @@ public extension TUIButton {
     var border: Color
     var borderWidth: CGFloat
     
-    public init(_ background: Color, foreground: Color, border: Color = .clear, borderWidth: CGFloat = 1.5) {
+    public init(background: Color, foreground: Color, border: Color = .clear, borderWidth: CGFloat = 1.5) {
       self.background = background
       self.foreground = foreground
       self.border = border
