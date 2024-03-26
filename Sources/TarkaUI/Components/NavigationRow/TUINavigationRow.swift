@@ -15,25 +15,18 @@ import SwiftUI
 ///
 /// Example usage:
 ///
-///     TUINavigationRow(
-///       title: "Label",
-///       icon: .export24Filled,
-///       accessoryView: {
-///         TUIBadge()
-///       }
-///     )
+///     TUINavigationRow(title: "Label")
 ///
 /// - Parameters:
 ///   - title: The title to display in the navigation row.
-///   - symbol: The symbol to display in the navigation row. The default value is `nil`.
-///   - accessoryView: Extra content to display in the navigation row
 ///
-public struct TUINavigationRow<Content>: View where Content: View {
+public struct TUINavigationRow: View {
   var title: any StringProtocol
-  var icon: FluentIcon?
-  var accessoryView: () -> Content
-  
-  @Environment(\.detailDisclosure) private var showDetailDisclosure
+  var leftIcon: ImageIconProtocol?
+  var isActive = false
+  var rightIcon: ImageIconProtocol?
+  var badgeCount: Int?
+  var showErrorBadge: Bool = false
   
   /// Creates a navigation row with the specified title, symbol and an extra view.
   ///
@@ -43,64 +36,72 @@ public struct TUINavigationRow<Content>: View where Content: View {
   ///   - accessoryView: Extra content to display in the navigation row.
   ///
   public init(
-    title: any StringProtocol,
-    icon: FluentIcon? = nil,
-    @ViewBuilder _ accessoryView: @escaping () -> Content = { EmptyView() }
-  ) {
-    self.title = title
-    self.icon = icon
-    self.accessoryView = accessoryView
-  }
+    title: any StringProtocol) {
+      self.title = title
+    }
   
   public var body: some View {
     
-    HStack(alignment: .center, spacing: Spacing.baseHorizontal) {
-      
+    HStack(spacing: Spacing.baseHorizontal) {
       leftView
-      .padding(.vertical, Spacing.baseVertical)
-      .padding(.horizontal, Spacing.halfHorizontal)
-      .frame(maxWidth: .infinity, alignment: .leading)
-      
+      Spacer()
       rightView
-      .padding(.horizontal, Spacing.halfHorizontal)
     }
     // set minHeight to match with design component
     .frame(minHeight: Spacing.custom(40))
+    .padding(.horizontal, TarkaUI.Spacing.halfHorizontal)
+    .background(isActive ? Color.primaryAlt : Color.clear)
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
+    
   }
   
   @ViewBuilder
   private var leftView: some View {
     
-    HStack(spacing: Spacing.baseHorizontal) {
-      if let icon {
-        Image(fluent: icon)
+    HStack(spacing: TarkaUI.Spacing.baseHorizontal) {
+      
+      if let leftIcon {
+        Image(icon: leftIcon)
+          .resizable()
+          .scaledToFit()
+          .foregroundColor(isActive ? .onSecondaryAlt : .secondaryTUI)
           .frame(width: 24, height: 24)
-          .clipped()
-          .foregroundColor(.secondaryTUI)
-          .accessibilityIdentifier(Accessibility.icon)
+          .accessibilityIdentifier(Accessibility.leftIcon)
       }
+      
       Text(title)
         .font(.heading7)
         .foregroundColor(.onSurface)
-        .padding(.vertical, Spacing.custom(3))
-        .frame(minHeight: Spacing.custom(18))
+        .frame(minHeight: 18)
         .accessibilityIdentifier(Accessibility.label)
-
     }
+    .frame(minHeight: 24)
+    .accessibilityElement(children: .contain)
   }
   
   @ViewBuilder
   private var rightView: some View {
-    
-    HStack(spacing: Spacing.quarterHorizontal) {
-      accessoryView()
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier(Accessibility.accessory)
-
-      if showDetailDisclosure {
-        TUIDetailDisclosure()
+    HStack(spacing: TarkaUI.Spacing.quarterHorizontal) {
+      
+      if showErrorBadge {
+        TUIBadge(
+          style: .icon(.errorCircle12Regular, .onWarning),
+          badgeColor: .warning, size: .size16)
+        .accessibilityIdentifier(Accessibility.errorBadge)
+      }
+      if let badgeCount {
+        TUIBadge(
+          style: .number(badgeCount),
+          badgeColor: .tertiary, size: .size16)
+        .accessibilityIdentifier(Accessibility.countBadge)
+      }
+      if let rightIcon {
+        Image(icon: rightIcon)
+          .resizable()
+          .scaledToFit()
+          .frame(width: 20, height: 20)
+          .foregroundColor(.outline)
       }
     }
   }
@@ -109,9 +110,11 @@ public struct TUINavigationRow<Content>: View where Content: View {
 extension TUINavigationRow {
   enum Accessibility: String, TUIAccessibility {
     case root = "TUINavigationRow"
-    case icon = "Icon"
+    case leftIcon = "LeftIcon"
     case label = "Label"
-    case accessory = "Accessory"
+    case rightIcon = "rightIcon"
+    case countBadge = "CountBadge"
+    case errorBadge = "ErrorBadge"
   }
 }
 
@@ -119,15 +122,47 @@ struct NavigationRow_Previews: PreviewProvider {
   static var previews: some View {
     Group {
       VStack {
-        TUINavigationRow(title: "Label") {
-          TUIBadge(count: 4)
-        }
+        TUINavigationRow(title: "Label")
+          .badgeCount(4)
         TUINavigationRow(title: "Label to test with multiple number of lines to verify its adaptability")
-        TUINavigationRow(title: "Label", icon: .reOrder24Regular) {
-          TUIBadge(count: 100)
-        }
+        TUINavigationRow(title: "Label")
+          .badgeCount(4)
       }
-      .detailDisclosure()
     }
+  }
+}
+
+// MARK: - Modifiers
+
+public extension TUINavigationRow {
+  
+  func isActive(_ isPressed: Bool) -> Self {
+    var newView = self
+    newView.isActive = isPressed
+    return newView
+  }
+  
+  func leftIcon(_ icon: ImageIconProtocol, show: Bool = true) -> Self {
+    var newView = self
+    newView.leftIcon = show ? icon : nil
+    return newView
+  }
+  
+  func rightIcon(_ icon: ImageIconProtocol, show: Bool = true) -> Self {
+    var newView = self
+    newView.rightIcon = show ? icon : nil
+    return newView
+  }
+  
+  func badgeCount(_ count: Int, show: Bool = true) -> Self {
+    var newView = self
+    newView.badgeCount = show ? count : nil
+    return newView
+  }
+  
+  func showErrorBadge(_ show: Bool = true) -> Self {
+    var newView = self
+    newView.showErrorBadge = show
+    return newView
   }
 }

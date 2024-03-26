@@ -40,6 +40,16 @@ public extension TUIIconButton {
     return newView
   }
   
+  /// Sets the `Background color` for an `TUIIconButton`.
+  ///
+  /// - Parameter color: The `Background color` to use.
+  /// - Returns: A modified `TUIIconButton` that has the `Background color` that overrides the default icon color.
+  func backgroundColor(_ color: Color) -> TUIIconButton {
+    var newView = self
+    newView.backgroundColor = color
+    return newView
+  }
+  
   /// Makes `TUIIconButton` disabled. Internally, it just calls the view's `isDisabled()` func.
   /// Purpose of this function is to have concrete return type
   ///
