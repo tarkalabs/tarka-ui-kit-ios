@@ -29,8 +29,8 @@ public extension TUIAppTopBar {
       
       if case .titleBar(let barItem) = self {
         
-        if case .none = barItem.leftButton ,
-           case .none = barItem.rightButtons {
+        if case .none = barItem.leftButton,
+           barItem.rightButtons.isEmpty {
           return 60
         }
       }
@@ -55,12 +55,12 @@ public extension TUIAppTopBar {
     var title: String
     var bottom: BottomContent
     var leftButton: LeftButton
-    var rightButtons: RightButtonType
+    var rightButtons: [TUIIconButton]
     
     public init(title: String,
                 bottom: BottomContent = .none,
                 leftButton: LeftButton,
-                rightButtons: RightButtonType = .none) {
+                rightButtons: [TUIIconButton] = []) {
       
       self.title = title
       self.bottom = bottom
@@ -86,13 +86,5 @@ public extension TUIAppTopBar {
       default: return 0
       }
     }
-  }
-  
-  enum RightButtonType {
-    // left to right order
-    case none
-    case one(TUIIconButton)
-    case two(TUIIconButton, TUIIconButton)
-    case three(TUIIconButton, TUIIconButton, TUIIconButton)
   }
 }

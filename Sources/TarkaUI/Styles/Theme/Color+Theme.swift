@@ -96,8 +96,8 @@ public extension Color {
     TUIThemeManager.shared.theme.onPrimaryAlt
   }
   
-  static var onPrimaryAltHover: Color {
-    TUIThemeManager.shared.theme.onPrimaryAltHover
+  static var primaryAltHover: Color {
+    TUIThemeManager.shared.theme.primaryAltHover
   }
     
   static var onSecondaryAlt: Color {
@@ -122,6 +122,10 @@ public extension Color {
     
   static var disabledBackground: Color {
     TUIThemeManager.shared.theme.disabledBackground
+  }
+  
+  static var disabledBackgroundHover: Color {
+    TUIThemeManager.shared.theme.disabledBackgroundHover
   }
     
   static var disabledContent: Color {

@@ -180,8 +180,10 @@ public struct TUIChip: View {
   
   @ViewBuilder
   private func badgeView() -> some View {
-    TUIBadge(count: inputItem.badgeCount, badgeColor: inputItem.badgeColor)
-      .badgeSize(inputItem.badgeSize)
+    TUIBadge(
+      style: .number(inputItem.badgeCount),
+      badgeColor: inputItem.badgeColor,
+      size: inputItem.badgeSize)
       .alignmentGuide(.top) { $0[.top] + 8 }
       .alignmentGuide(.trailing) { $0[.trailing] - 8 }
       .accessibilityIdentifier(Accessibility.badge)
@@ -347,8 +349,8 @@ extension TUIChip {
       isSelected ? foregroundSelectionColor : foregroundColor
     }
     
-    var badgeSize: BadgeSize {
-      size == .size32 ? .m : .l
+    var badgeSize: TUIBadge.Size {
+      size == .size32 ? .size16 : .size24
     }
     
     var isBadgeEnabled: Bool {

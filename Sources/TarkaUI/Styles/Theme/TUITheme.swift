@@ -30,13 +30,14 @@ public protocol TUITheme {
   var onSurface: Color { get }
   var onBackground: Color { get }
   var onPrimaryAlt: Color { get }
-  var onPrimaryAltHover: Color { get }
+  var primaryAltHover: Color { get }
   var onSecondaryAlt: Color { get }
   var onTertiaryAlt: Color { get }
   var inputBackground: Color { get }
   var inputText: Color { get }
   var inputTextDim: Color { get }
   var disabledBackground: Color { get }
+  var disabledBackgroundHover: Color { get }
   var disabledContent: Color { get }
   var link: Color { get }
   var outline: Color { get }
