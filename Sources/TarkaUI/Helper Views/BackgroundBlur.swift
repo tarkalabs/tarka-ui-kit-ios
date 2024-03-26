@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// A View in which content reflects all behind it
-private struct BackgroundVisualEffectiveView: UIViewRepresentable {
+struct BackgroundVisualEffectView: UIViewRepresentable {
 
   func makeUIView(context: Context) -> UIVisualEffectView {
     let view = UIVisualEffectView()
@@ -27,6 +27,34 @@ public struct BackgroundBlur: View {
   
   @ViewBuilder
   public var body: some View {
-    BackgroundVisualEffectiveView()
+    BackgroundVisualEffectView()
+  }
+}
+
+
+/// A transparent View that blurs its background
+public struct BackgroundBlurView: ViewModifier {
+  
+  var color: Color
+  var opacity: Double
+  
+  @State var width: CGFloat = 0
+  @State var height: CGFloat = 0
+
+  public init(color: Color, opacity: Double) {
+    self.color = color
+    self.opacity = opacity
+  }
+  
+  public func body(content: Content) -> some View {
+    ZStack {
+      color.opacity(opacity/100)
+        .frame(width: width, height: height)
+      content
+        .background(BackgroundVisualEffectView())
+        .background(Color.clear)
+        .getWidth($width)
+        .getHeight($height)
+    }
   }
 }
