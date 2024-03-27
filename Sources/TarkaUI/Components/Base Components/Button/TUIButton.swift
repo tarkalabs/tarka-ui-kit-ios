@@ -43,7 +43,7 @@ public struct TUIButton: View {
         
         Text(title)
           .font(size.buttonSize)
-          .foregroundColor(style.foregroundColor)
+          .foregroundColor(style.inputStyle.foreground)
           .padding(.vertical, size.titleTopPadding)
           .frame(minHeight: size.titleHeight)
         
@@ -64,7 +64,7 @@ public struct TUIButton: View {
     Image(fluent: icon)
       .scaledToFit()
       .frame(width: size.iconSize, height: size.iconSize)
-      .foregroundColor(style.foregroundColor)
+      .foregroundColor(style.inputStyle.foreground)
       .clipped()
   }
   
@@ -75,8 +75,9 @@ public struct TUIButton: View {
     func makeBody(configuration: Configuration) -> some View {
       configuration.label
         .frame(minHeight: size.height)
-        .background(style.backgroundColor)
-        .border(Capsule(), width: style.borderWidth, color: .onSurface)
+        .background(style.inputStyle.background)
+        .border(Capsule(), width: style.borderWidth(configuration.isPressed),
+                color: style.borderColor(configuration.isPressed))
     }
   }
 }
@@ -94,7 +95,9 @@ struct TUIButton_Previews: PreviewProvider {
         let isLargeIcon: Bool = size == .large || size == .regular
         let icon: FluentIcon = isLargeIcon ? .add24Regular : .add16Regular
         
-        ForEach(TUIButton.Style.allCases) { style in
+        let buttons = [TUIButton.Style.primary, .secondary, .danger, .outlined, .ghost]
+        
+        ForEach(buttons) { style in
           
           HStack(spacing: 10.0) {
             
@@ -108,7 +111,7 @@ struct TUIButton_Previews: PreviewProvider {
               .icon(.right(icon))
             
             TUIButton(title: "Label") { }
-              .style(style)
+              .style(.custom(.init(background: .accentBaseA, foreground: .onAccentBaseA, border: .accentBaseA)))
               .size(size)
               .icon(.left(icon))
           }
