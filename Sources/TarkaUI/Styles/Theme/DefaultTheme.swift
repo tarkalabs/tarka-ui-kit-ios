@@ -317,6 +317,13 @@ internal struct DefaultTheme: TUITheme {
   }
   
   private func color(withName name: String) -> Color {
+    Color.with(name: name)
+  }
+}
+
+public extension Color {
+  
+  static func with(name: String) -> Color {
     Color(name, bundle: Bundle.module)
   }
 }
