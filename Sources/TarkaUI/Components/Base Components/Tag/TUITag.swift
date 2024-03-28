@@ -123,7 +123,7 @@ extension TUITag {
 
 public extension TUITag {
   
-  enum TagStyle {
+  enum TagStyle: Hashable {
     case low(foregroundColor: Color, background: Color),
          high(foregroundColor: Color, background: Color)
     
