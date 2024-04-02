@@ -39,7 +39,6 @@ public struct TUIIconButton: View, Identifiable {
   public var icon: FluentIcon
   
   var iconColor: Color?
-  var backgroundColor: Color?
 
   /// The action to perform when the user taps the button.
   public var action: () -> Void
@@ -78,7 +77,7 @@ public struct TUIIconButton: View, Identifiable {
       )
       .clipped()
       .foregroundColor(iconColor ?? style.inputStyle.foreground)
-      .background(backgroundColor ?? style.inputStyle.background)
+      .background(style.inputStyle.background)
   }
   
   struct TUIIconButtonStyle: ButtonStyle {
