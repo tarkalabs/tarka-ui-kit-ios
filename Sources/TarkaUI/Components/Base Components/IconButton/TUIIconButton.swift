@@ -62,9 +62,11 @@ public struct TUIIconButton: View, Identifiable {
   public var body: some View {
     Button(action: action, label: iconView)
       .buttonStyle(TUIIconButtonStyle(
+        backgroundColor: backgroundColor,
         style: style,
         buttonSize: buttonSize,
         isDisabled: isDisabled))
+      .background(backgroundColor ?? style.inputStyle.background)
       .accessibilityIdentifier(Accessibility.root)
   }
   
@@ -82,14 +84,25 @@ public struct TUIIconButton: View, Identifiable {
   }
   
   struct TUIIconButtonStyle: ButtonStyle {
+    let backgroundColor: Color?
     let style: Style
     let buttonSize: CGSize
     let isDisabled: Bool
     
+    init(
+      backgroundColor: Color?,
+      style: Style,
+      buttonSize: CGSize, isDisabled: Bool) {
+      self.backgroundColor = backgroundColor
+      self.style = style
+      self.buttonSize = buttonSize
+      self.isDisabled = isDisabled
+    }
+    
     func makeBody(configuration: Configuration) -> some View {
       configuration.label
         .frame(width: buttonSize.width, height: buttonSize.height)
-        .background(style.inputStyle.background)
+        .background(backgroundColor ?? style.inputStyle.background)
         .border(Circle(), width: configuration.isPressed ? 1 : 0,
                 color: style.borderColor(configuration.isPressed))
         .isDisabled(isDisabled)
