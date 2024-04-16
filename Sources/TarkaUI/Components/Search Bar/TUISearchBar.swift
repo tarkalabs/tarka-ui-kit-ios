@@ -107,6 +107,7 @@ public extension TUISearchBar {
             searchBarVM.isEditing = false
             searchBarVM.searchItem.text = ""
             searchBarVM.onEditing("")
+            searchBarVM.searchText = ""
           }
           .style(.ghost)
           .size(.size40)
