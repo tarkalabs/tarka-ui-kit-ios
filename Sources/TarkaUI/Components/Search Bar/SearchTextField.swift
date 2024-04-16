@@ -36,10 +36,12 @@ struct SearchTextField: View {
   private func performSearch() {
     guard searchBarVM.needDelaySearch else { return }
     searchBarVM.onEditing(searchBarVM.searchItem.text)
+    searchBarVM.searchText = searchBarVM.searchItem.text
   }
   
   private func updateSearchText(_ value: String) {
     searchBarVM.onEditing(value)
+    searchBarVM.searchText = value
   }
 }
 
