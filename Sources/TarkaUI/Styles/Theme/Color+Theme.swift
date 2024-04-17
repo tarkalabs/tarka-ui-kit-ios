@@ -103,6 +103,10 @@ public extension Color {
   static var onSecondaryAlt: Color {
     TUIThemeManager.shared.theme.onSecondaryAlt
   }
+  
+  static var secondaryAltHover: Color {
+    TUIThemeManager.shared.theme.secondaryAltHover
+  }
     
   static var onTertiaryAlt: Color {
     TUIThemeManager.shared.theme.onTertiaryAlt

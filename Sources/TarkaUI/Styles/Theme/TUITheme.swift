@@ -16,6 +16,7 @@ public protocol TUITheme {
   var warning: Color { get }
   var primaryAlt: Color { get }
   var secondaryAlt: Color { get }
+  var secondaryAltHover: Color { get }
   var tertiaryAlt: Color { get }
   var success10: Color { get }
   var success20: Color { get }
