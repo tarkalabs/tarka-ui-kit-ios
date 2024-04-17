@@ -124,6 +124,8 @@ extension TUINavigationRow {
     var badgeCount: Int?
     var showErrorBadge: Bool = false
     
+    var backgroundColor = InputColorStyle()
+    
     init(leftIcon: ImageIconProtocol? = nil,
          rightIcon: ImageIconProtocol? = nil,
          isActive: Bool = false,
@@ -134,6 +136,33 @@ extension TUINavigationRow {
       self.rightIcon = rightIcon
       self.badgeCount = badgeCount
       self.showErrorBadge = showErrorBadge
+    }
+    
+    func activeColor(for isPressed: Bool) -> Color {
+      isPressed ? backgroundColor.isPressedSelectionColor : backgroundColor.selectionColor
+    }
+    
+    func backgroundColor(for isPressed: Bool) -> Color {
+      isPressed ? backgroundColor.isPressedColor : backgroundColor.color
+    }
+  }
+  
+  public struct InputColorStyle {
+    var color: Color
+    var isPressedColor: Color
+    
+    var selectionColor: Color
+    var isPressedSelectionColor: Color
+    
+    public init(color: Color = .surface,
+                isPressedColor: Color = .surfaceHover,
+                selectionColor: Color = .secondaryAlt,
+                isPressedSelectionColor: Color = .secondaryAltHover) {
+      
+      self.color = color
+      self.selectionColor = selectionColor
+      self.isPressedColor = isPressedColor
+      self.isPressedSelectionColor = isPressedSelectionColor
     }
   }
   
@@ -156,9 +185,9 @@ extension TUINavigationRow {
     
     func background(_ isPressed: Bool) -> Color {
       if style.isActive {
-        return isPressed ? Color.secondaryAltHover : .secondaryAlt
+        return style.activeColor(for: isPressed)
       } else {
-        return isPressed ? .surfaceHover : .surface
+        return style.backgroundColor(for: isPressed)
       }
     }
   }
@@ -208,6 +237,12 @@ public extension TUINavigationRow {
   func showErrorBadge(_ show: Bool = true) -> Self {
     var newView = self
     newView.inputStyle.showErrorBadge = show
+    return newView
+  }
+  
+  func color(_ style: InputColorStyle) -> Self {
+    var newView = self
+    newView.inputStyle.backgroundColor = style
     return newView
   }
 }
