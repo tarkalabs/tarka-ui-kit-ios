@@ -39,6 +39,10 @@ internal struct DefaultTheme: TUITheme {
   var secondaryAlt: Color {
     color(withName: "secondaryAlt")
   }
+  
+  var secondaryAltHover: Color {
+    color(withName: "secondaryAltHover")
+  }
     
   var tertiaryAlt: Color {
     color(withName: "tertiaryAlt")
