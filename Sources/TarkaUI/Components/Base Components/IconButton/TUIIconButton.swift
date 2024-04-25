@@ -92,6 +92,7 @@ public struct TUIIconButton: View, Identifiable {
         .border(Circle(), width: configuration.isPressed ? 1 : 0,
                 color: style.borderColor(configuration.isPressed))
         .isDisabled(isDisabled)
+        .contentShape(.circle)
     }
   }
 }
