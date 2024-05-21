@@ -30,6 +30,11 @@ public struct TUIMobileOverlayFooter: View {
   public struct CancelButton: TUIOverlayFooterAction {
     
     public var id: String { icon.resourceString }
+    public var button: TUIOverlayFooterActionButton {
+      .icon(
+        TUIIconButton(icon: icon, action: handler)
+      )
+    }
     public var icon: TarkaUI.FluentIcon { .dismiss24Regular }
     public var handler: () -> Void
     
@@ -86,7 +91,14 @@ public struct TUIMobileOverlayFooter: View {
   
   @ViewBuilder
   private func view(forAction action: TUIOverlayFooterAction) -> some View {
-    TUIIconButton(icon: action.icon, action: action.handler)
+    switch action.button {
+    case .icon(let iconButton):
+      iconButton
+        .size(.size48)
+    case .button(let button):
+      button
+        .size(.large)
+    }
   }
 }
 
@@ -95,6 +107,12 @@ struct OverlayFooter_Previews: PreviewProvider {
   private enum TestAction: TUIOverlayFooterAction {
     var id: String {
       icon.resourceString
+    }
+    
+    var button: TUIOverlayFooterActionButton {
+      .icon(
+        TUIIconButton(icon: icon, action: handler)
+      )
     }
     
     var icon: FluentIcon {
