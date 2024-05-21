@@ -21,7 +21,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
   public var rightButtonAction: (() -> Void)?
   
   @Binding var isTextFieldEditingOn: Bool
-  private var isTextFieldFocused: Bool
+  @Binding var isTextFieldFocused: Bool
   
   /* Facing some weird issue. When input item value is changed,
    it is getting updates in `TUIInputTextContentView` but not here.
@@ -46,7 +46,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
   public init(inputItem: Binding<TUIInputFieldItem>,
               properties: TUIInputFieldOptionalProperties? = nil,
               currentTextFieldState: TUIInputFieldState = .none,
-              isTextFieldFocused: Bool? = nil,
+              isTextFieldFocused: Binding<Bool>? = nil,
               isTextFieldEditingOn: Binding<Bool>? = nil,
               maxCharacters: Int = 0,
               allowedCharacters: CharacterSet = .init(),
@@ -62,7 +62,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
     self.maxCharacters = maxCharacters
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
-    self.isTextFieldFocused = isTextFieldFocused ?? false
+    self._isTextFieldFocused = isTextFieldFocused ?? .constant(false)
     self.isTextField = isTextField
     self.action = action
     self.rightButtonAction = rightButtonAction
@@ -132,7 +132,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
       maxCharacters: maxCharacters,
       allowedCharacters: allowedCharacters,
       keyboardType: keyboardType,
-      isTextFieldFocused: isTextFieldFocused,
+      isTextFieldFocused: $isTextFieldFocused,
       isTextField: isTextField)
     
     if !self.isTextFieldFocused, let action {
