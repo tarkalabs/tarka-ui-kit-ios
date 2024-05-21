@@ -25,7 +25,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   /// Binds the bool that used to handle the row interaction and text field interaction switch when user interacts
   
   // Used to hold the field's focused state
-  @State private var isFocused: Bool = false
+  @Binding var isFocused: Bool
   @State var isEditingOn = false
   @State var currentTextFieldState: TUIInputFieldState = .none
 
@@ -40,10 +40,12 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   ///   - dismissTextFocus: Holds the field's focused state
   public init(
     inputItem: Binding<TUIInputFieldItem>,
-    dismissTextFocus: Binding<Bool>? = nil) {
+    dismissTextFocus: Binding<Bool> = .constant(true),
+    isFocused: Binding<Bool> = .constant(false)) {
       
       self._inputItem = inputItem
-      self._dismissTextFocus = dismissTextFocus ?? .constant(true)
+      self._dismissTextFocus = dismissTextFocus
+      self._isFocused = isFocused
     }
   
   public var body: some View {
@@ -68,7 +70,6 @@ public struct TUITextInputField: TUIInputFieldProtocol {
       .onChange(of: isEditingOn, perform: { value in
         // used when switching between text fields
         if !value {
-          isFocused = false
           removeWhiteSpaces()
           // revert the style when content is empty
           if self.inputItem.value.isEmpty {
@@ -92,7 +93,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
       inputItem: $inputItem,
       properties: properties,
       currentTextFieldState: currentTextFieldState,
-      isTextFieldFocused: isFocused,
+      isTextFieldFocused: $isFocused,
       isTextFieldEditingOn: $isEditingOn,
       maxCharacters: maxCharacters,
       allowedCharacters: allowedCharacters,
