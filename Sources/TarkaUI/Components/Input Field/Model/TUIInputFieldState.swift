@@ -11,7 +11,41 @@ import SwiftUI
 /// This is the enum that defines the state of `TUIInputField` view.
 /// According to this, the `TUIInputField` view displays the corresponding highlight bar and helper text
 /// 
-public enum TUIInputFieldState {
+public enum TUIInputFieldState: Equatable {
+  
+  public static func == (lhs: TUIInputFieldState, rhs: TUIInputFieldState) -> Bool {
+    switch lhs {
+    case .none:
+      if case .none = rhs {
+        return true
+      }
+    case .focused:
+      if case .focused = rhs {
+        return true
+      }
+    case .inactive(let string):
+      if case .inactive = rhs {
+        return true
+      }
+    case .error(let string):
+      if case .error = rhs {
+        return true
+      }
+    case .alert(let string):
+      if case .alert = rhs {
+        return true
+      }
+    case .success(let string):
+      if case .success = rhs {
+        return true
+      }
+    case .disabled(let string):
+      if case .disabled = rhs {
+        return true
+      }
+    }
+    return false
+  }
   
   case none
   case focused
@@ -37,6 +71,7 @@ public enum TUIInputFieldState {
   var highlightBarColor: Color? {
     switch self {
     case .focused: return .primaryTUI
+    case .error: return .error
     default: return nil
     }
   }

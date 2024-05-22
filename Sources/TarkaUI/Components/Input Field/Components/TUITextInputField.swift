@@ -25,9 +25,9 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   /// Binds the bool that used to handle the row interaction and text field interaction switch when user interacts
   
   // Used to hold the field's focused state
-  @Binding var isFocused: Bool
+  @Binding var isObservableFocused: Bool
+  @State var isFocused: Bool = false
   @State var isEditingOn = false
-  @State var currentTextFieldState: TUIInputFieldState = .none
 
   // Used to receive events when done button clicked
   @Binding private var dismissTextFocus: Bool
@@ -41,11 +41,11 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   public init(
     inputItem: Binding<TUIInputFieldItem>,
     dismissTextFocus: Binding<Bool> = .constant(true),
-    isFocused: Binding<Bool> = .constant(false)) {
+    isFocused isObservableFocused: Binding<Bool> = .constant(false)) {
       
       self._inputItem = inputItem
       self._dismissTextFocus = dismissTextFocus
-      self._isFocused = isFocused
+      self._isObservableFocused = isObservableFocused
     }
   
   public var body: some View {
@@ -54,10 +54,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
         if value {
           isFocused = false
           removeWhiteSpaces()
-          // revert the style when content is empty
-          if self.inputItem.value.isEmpty {
-            self.inputItem.style = existingStyle
-          }
+          resetStyle()
         }
       })
       .onChange(of: isFocused, perform: { value in
@@ -65,22 +62,26 @@ public struct TUITextInputField: TUIInputFieldProtocol {
           // revert the dismissTextFocus to receive updates at `onChange`
           dismissTextFocus = false
         }
-        currentTextFieldState = value ? .focused : properties.state
+        isObservableFocused = isFocused
       })
       .onChange(of: isEditingOn, perform: { value in
         // used when switching between text fields
         if !value {
           removeWhiteSpaces()
-          // revert the style when content is empty
-          if self.inputItem.value.isEmpty {
-            self.inputItem.style = existingStyle
-          }
+          resetStyle()
         }
-        // change status
-        currentTextFieldState = value ? .focused : properties.state
       })
+      .onChange(of: inputItem.value) { _ in
+        resetStyle()
+      }
   }
   
+  func resetStyle() {
+    // revert the style when content is empty and lost focus
+    if !isFocused, self.inputItem.value.isEmpty {
+      self.inputItem.style = .onlyTitle
+    }
+  }
   @ViewBuilder
   private var mainBody: some View {
     inputFieldView
@@ -92,7 +93,6 @@ public struct TUITextInputField: TUIInputFieldProtocol {
     TUIInputField(
       inputItem: $inputItem,
       properties: properties,
-      currentTextFieldState: currentTextFieldState,
       isTextFieldFocused: $isFocused,
       isTextFieldEditingOn: $isEditingOn,
       maxCharacters: maxCharacters,
