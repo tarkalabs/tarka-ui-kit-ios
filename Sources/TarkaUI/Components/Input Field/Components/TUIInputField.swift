@@ -30,7 +30,6 @@ public struct TUIInputField: TUIInputFieldProtocol {
   @FocusState private var isFocused: Bool
   
   public var properties: TUIInputFieldOptionalProperties
-  public var currentTextFieldState: TUIInputFieldState
 
   private var maxCharacters: Int
   private var allowedCharacters: CharacterSet
@@ -45,7 +44,6 @@ public struct TUIInputField: TUIInputFieldProtocol {
   ///   
   public init(inputItem: Binding<TUIInputFieldItem>,
               properties: TUIInputFieldOptionalProperties? = nil,
-              currentTextFieldState: TUIInputFieldState = .none,
               isTextFieldFocused: Binding<Bool>? = nil,
               isTextFieldEditingOn: Binding<Bool>? = nil,
               maxCharacters: Int = 0,
@@ -58,7 +56,6 @@ public struct TUIInputField: TUIInputFieldProtocol {
     self._inputItem = inputItem
     self._isTextFieldEditingOn = isTextFieldEditingOn ?? Binding.constant(false)
     self.properties = properties ?? TUIInputFieldOptionalProperties()
-    self.currentTextFieldState = currentTextFieldState
     self.maxCharacters = maxCharacters
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
@@ -66,6 +63,10 @@ public struct TUIInputField: TUIInputFieldProtocol {
     self.isTextField = isTextField
     self.action = action
     self.rightButtonAction = rightButtonAction
+  }
+  
+  var currentTextFieldState: TUIInputFieldState {
+    return (properties.state == .none && isTextFieldFocused) ? .focused : properties.state
   }
   
   public var body: some View {
@@ -76,7 +77,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
         .background(Color.inputBackground)
         .cornerRadius(8)
       
-      let helperText = currentTextFieldState.helperText() ?? properties.state.helperText() ?? properties.helperText
+      let helperText = currentTextFieldState.helperText() ?? properties.helperText
       if let helperText {
         helperText
       }
@@ -91,7 +92,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
       
       fieldBodyHeaderHStack
       
-      let highlightBar = currentTextFieldState.highlightBarColor ?? properties.state.highlightBarColor ?? properties.highlightBarColor
+      let highlightBar = currentTextFieldState.highlightBarColor ?? properties.highlightBarColor
       
       if let highlightBar {
         highlightBar.frame(height: 2)
