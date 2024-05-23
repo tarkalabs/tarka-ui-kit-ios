@@ -74,6 +74,8 @@ public struct TUIAppTopBar: View {
         
       } else if  case .cancel(let action) = leftButton {
         self.leftButton(icon: .dismiss24Regular, action: action)
+      } else if case .custom(let button) = leftButton {
+        button
       }
       
       if let titleView = titleView(forBarItem: barItem) {

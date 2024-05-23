@@ -90,7 +90,7 @@ public extension TUIAppTopBar {
     public var id: String {
       return UUID().uuidString
     }
-    case none, back(TUIButtonAction? = nil), cancel(TUIButtonAction? = nil)
+    case none, back(TUIButtonAction? = nil), cancel(TUIButtonAction? = nil), custom(TUIIconButton)
     
     var leading: CGFloat {
       switch self {
