@@ -121,6 +121,7 @@ struct TUIInputTextContentView: View {
       TextField(placeholder,
                 text: $inputItem.value,
                 axis: .vertical)
+      .textFieldStyle(.plain)
       .onChange(of: inputItem.value) { newValue in
         limitText(newValue)
       }
