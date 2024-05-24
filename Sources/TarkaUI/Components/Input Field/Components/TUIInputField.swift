@@ -73,7 +73,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
     
     VStack(spacing: Spacing.halfVertical) {
       
-      fieldBody
+      fieldBodyWithAction
         .background(Color.inputBackground)
         .cornerRadius(8)
       
@@ -84,6 +84,20 @@ public struct TUIInputField: TUIInputFieldProtocol {
     }
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
+  }
+  
+  @ViewBuilder
+  private var fieldBodyWithAction: some View {
+    
+    if !self.isTextFieldFocused, let action {
+      fieldBody
+        .contentShape(Rectangle())
+        .onTapGesture {
+          action()
+        }
+    } else {
+      fieldBody
+    }
   }
   
   @ViewBuilder
@@ -126,7 +140,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
   @ViewBuilder
   var textItem: some View {
     
-    let textItem = TUIInputTextContentView(
+    TUIInputTextContentView(
       inputItem: $inputItem,
       placeholder: properties.placeholder,
       isTextFieldEditingOn: $isTextFieldEditingOn,
@@ -135,14 +149,6 @@ public struct TUIInputField: TUIInputFieldProtocol {
       keyboardType: keyboardType,
       isTextFieldFocused: $isTextFieldFocused,
       isTextField: isTextField)
-    
-    if !self.isTextFieldFocused, let action {
-      Button(action: action) {
-        textItem
-      }
-    } else {
-      textItem
-    }
   }
 
   @ViewBuilder

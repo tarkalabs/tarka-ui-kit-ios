@@ -100,7 +100,6 @@ public struct TUITextInputField: TUIInputFieldProtocol {
       keyboardType: keyboardType,
       isTextField: true,
       action: {
-        
         self.isFocused = true
         // change style
         if self.inputItem.style == .onlyTitle {
