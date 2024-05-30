@@ -1,6 +1,6 @@
 //
 //  TUIDatePopover.swift
-//  
+//
 //
 //  Created by Gopinath on 05/07/23.
 //
@@ -11,30 +11,32 @@ import SwiftUI
 ///
 public struct TUIDatePopover: View {
   
-  @Binding private var date: Date
+  @Binding private var date: Date?
   @Binding private var isShowing: Bool
   @Binding private var isSelected: Bool
   @State private var storedDate: Date
   var minDate: Date?
   var maxDate: Date?
+  var displayComponents: DatePickerComponents = [.date, .hourAndMinute]
   
   /// Creates a `TUIDatePopover` View
   /// - Parameters:
   ///   - date: A bindable date value that acts as output when selected
   ///   - isShowing: A bindable bool value that used to show or hide this View
   ///   - isSelected: A bindable bool value that used to notify when date is selected
-  public init(date: Binding<Date>,
-       isShowing: Binding<Bool>,
-       isSelected: Binding<Bool>,
-       minDate: Date? = nil,
-       maxDate: Date? = nil) {
+  public init(date: Binding<Date?>,
+              isShowing: Binding<Bool>,
+              isSelected: Binding<Bool>,
+              minDate: Date? = nil,
+              maxDate: Date? = nil) {
     
     self._date = date
     self._isShowing = isShowing
     self._isSelected = isSelected
     self.minDate = minDate
     self.maxDate = maxDate
-    self._storedDate = State<Date>.init(initialValue: date.wrappedValue)
+    let storedDate = date.wrappedValue ?? Date()
+    self._storedDate = State<Date>.init(initialValue: storedDate)
   }
   
   public var body: some View {
@@ -62,16 +64,25 @@ public struct TUIDatePopover: View {
   
   @ViewBuilder
   private var datePickerStack: some View {
-    VStack(spacing: 0) {
+    VStack(spacing: Spacing.baseHorizontal) {
       
-      HStack(spacing: 0) {
+      HStack(spacing: Spacing.baseHorizontal) {
         
         Button("Cancel".localized) {
           isShowing = false
+          self.date = nil
         }
         .frame(alignment: .trailing)
         .accessibilityIdentifier(Accessibility.done)
-
+        
+        Button("Clear".localized) {
+          self.date = nil
+          isSelected = true
+          isShowing = false
+        }
+        .frame(alignment: .trailing)
+        .accessibilityIdentifier(Accessibility.clear)
+        
         Spacer()
         
         Button("Done".localized) {
@@ -83,13 +94,14 @@ public struct TUIDatePopover: View {
         .accessibilityIdentifier(Accessibility.cancel)
       }
       .padding(.horizontal, Spacing.custom(30))
-
+      .padding(.top, Spacing.doubleVertical)
+      
       datePicker
         .datePickerStyle(.graphical)
         .padding(.all, Spacing.custom(20))
         .accessibilityIdentifier(Accessibility.datePicker)
     }
-    .frame(width: 350, height: 500, alignment: .center)
+    .frame(width: 350, alignment: .center)
     .background(Color.surface)
     .cornerRadius(5.0)
     .accessibilityIdentifier(Accessibility.transparentBackground)
@@ -102,27 +114,27 @@ public struct TUIDatePopover: View {
         "",
         selection: $storedDate,
         in: minDate...maxDate,
-        displayedComponents: [.date, .hourAndMinute]
+        displayedComponents: displayComponents
       )
     } else if let minDate {
       DatePicker(
         "",
         selection: $storedDate,
         in: minDate...,
-        displayedComponents: [.date, .hourAndMinute]
+        displayedComponents: displayComponents
       )
     } else if let maxDate {
       DatePicker(
         "",
         selection: $storedDate,
         in: ...maxDate,
-        displayedComponents: [.date, .hourAndMinute]
+        displayedComponents: displayComponents
       )
     } else {
       DatePicker(
         "",
         selection: $storedDate,
-        displayedComponents: [.date, .hourAndMinute]
+        displayedComponents: displayComponents
       )
     }
   }
@@ -134,9 +146,20 @@ extension TUIDatePopover {
     case transparentBackground = "TransparentBackground"
     case datePicker = "DatePicker"
     case done = "Done"
+    case clear = "Clear"
     case cancel = "Cancel"
   }
 }
+
+extension TUIDatePopover {
+  
+  public func displayComponents(_ displayComponents: DatePickerComponents) -> Self {
+    var newView = self
+    newView.displayComponents = displayComponents
+    return newView
+  }
+}
+
 
 struct DatePopover_Previews: PreviewProvider {
   static var previews: some View {

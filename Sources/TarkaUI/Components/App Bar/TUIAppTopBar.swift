@@ -74,19 +74,33 @@ public struct TUIAppTopBar: View {
         
       } else if  case .cancel(let action) = leftButton {
         self.leftButton(icon: .dismiss24Regular, action: action)
+      } else if case .custom(let button) = leftButton {
+        button
       }
       
-      Text(barItem.title)
-        .foregroundColor(.onSurface)
-        .font(.heading5)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.leading, leftButton.leading)
-        .accessibilityIdentifier(Accessibility.title)
+      if let titleView = titleView(forBarItem: barItem) {
+      titleView
+          .lineLimit(2)
+          .foregroundColor(.onSurface)
+          .font(.heading5)
+          .frame(maxWidth: .infinity, alignment: .leading)
+          .padding(.leading, leftButton.leading)
+          .accessibilityIdentifier(Accessibility.title)
+      }
 
       rightButtons(barItem.rightButtons)
     }
     .padding(.horizontal, Spacing.halfHorizontal)
     .accessibilityIdentifier(Accessibility.titleBar)
+  }
+  
+  func titleView(forBarItem barItem: TitleBarItem) -> Text? {
+    if let title = barItem.title {
+      return Text(title)
+    } else if let attributedTitle = barItem.attributedTitle {
+      return Text(attributedTitle)
+    }
+    return nil
   }
   
   @ViewBuilder

@@ -52,7 +52,8 @@ public extension TUIAppTopBar {
   
   struct TitleBarItem {
     
-    var title: String
+    var title: String?
+    var attributedTitle: AttributedString?
     var bottom: BottomContent
     var leftButton: LeftButton
     var rightButtons: [TUIIconButton]
@@ -63,6 +64,17 @@ public extension TUIAppTopBar {
                 rightButtons: [TUIIconButton] = []) {
       
       self.title = title
+      self.bottom = bottom
+      self.leftButton = leftButton
+      self.rightButtons = rightButtons
+    }
+    
+    public init(attributedTitle: AttributedString,
+                bottom: BottomContent = .none,
+                leftButton: LeftButton,
+                rightButtons: [TUIIconButton] = []) {
+      
+      self.attributedTitle = attributedTitle
       self.bottom = bottom
       self.leftButton = leftButton
       self.rightButtons = rightButtons
@@ -78,7 +90,7 @@ public extension TUIAppTopBar {
     public var id: String {
       return UUID().uuidString
     }
-    case none, back(TUIButtonAction? = nil), cancel(TUIButtonAction? = nil)
+    case none, back(TUIButtonAction? = nil), cancel(TUIButtonAction? = nil), custom(TUIIconButton)
     
     var leading: CGFloat {
       switch self {
