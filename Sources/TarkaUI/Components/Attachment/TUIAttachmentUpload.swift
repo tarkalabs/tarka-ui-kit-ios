@@ -32,7 +32,7 @@ public struct TUIAttachmentUpload: View {
   }
   
   private var mainView: some View {
-    VStack(alignment: .leading, spacing: 0) {
+    VStack(alignment: .leading, spacing: Spacing.halfVertical) {
       switch inputStyle.style {
       case .onlyTitle: titleView(inputStyle.title)
       case .withDescription(let desc):
@@ -46,8 +46,26 @@ public struct TUIAttachmentUpload: View {
   @ViewBuilder
   private var imageView: some View {
     switch inputStyle.imageStyle {
-    case .image(let image):
-      image
+      
+    case .asyncImage(let url, let placeholder):
+      AsyncImage(url: url) { phase in
+        switch phase {
+        case .success(let image):
+          image
+            .resizable()
+            .scaledToFit()
+        case .failure, .empty:
+          Image(fluent: placeholder)
+        @unknown default:
+          ProgressView()
+        }
+      }
+        .clipShape(RoundedRectangle(cornerRadius: Spacing.halfHorizontal))
+        .frame(width: inputStyle.imageSize.width, height: Spacing.custom(40))
+        .accessibilityIdentifier(Accessibility.image)
+      
+    case .image(let imageName):
+      Image(imageName)
         .resizable()
         .clipShape(RoundedRectangle(cornerRadius: Spacing.halfHorizontal))
         .frame(width: inputStyle.imageSize.width, height: Spacing.custom(40))
@@ -161,7 +179,7 @@ public extension TUIAttachmentUpload {
   }
   
   enum ImageStyle {
-    case image(Image), icon(FluentIcon)
+    case image(name: String), icon(FluentIcon), asyncImage(URL, placeholder: FluentIcon)
   }
   
   enum ImageSize {
