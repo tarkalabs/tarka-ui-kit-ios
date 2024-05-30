@@ -91,7 +91,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
     
     if !self.isTextFieldFocused, let action {
       fieldBody
-        .contentShape(Rectangle())
+        .contentShape(.rect)
         .onTapGesture {
           action()
         }

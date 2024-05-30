@@ -24,8 +24,9 @@ public struct TUITextInputField: TUIInputFieldProtocol {
 
   /// Binds the bool that used to handle the row interaction and text field interaction switch when user interacts
   
-  // Used to hold the field's focused state
+  // Used to observe the field's focused state from the caller
   @Binding var isObservableFocused: Bool
+  // Used to hold the field's focused state internally
   @State var isFocused: Bool = false
   @State var isEditingOn = false
 
