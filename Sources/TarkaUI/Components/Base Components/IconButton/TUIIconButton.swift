@@ -46,6 +46,7 @@ public struct TUIIconButton: View, Identifiable {
   var style: Style = .ghost
   var size: Size = .size40
   var isDisabled: Bool = false
+  var menu: [TUIContextMenuSection] = []
   
   /// Creates a button that displays an icon.
   ///
@@ -59,6 +60,15 @@ public struct TUIIconButton: View, Identifiable {
   }
   
   public var body: some View {
+    if !menu.isEmpty {
+      Menu(content: sectionView, label: buttonView)
+    } else {
+      buttonView()
+    }
+  }
+  
+  @ViewBuilder
+  private func buttonView() -> some View {
     Button(action: action, label: iconView)
       .buttonStyle(TUIIconButtonStyle(
         style: style,
@@ -78,6 +88,35 @@ public struct TUIIconButton: View, Identifiable {
       .clipped()
       .foregroundColor(iconColor ?? style.inputStyle.foreground)
       .background(style.inputStyle.background)
+  }
+  
+  private func sectionView() -> some View {
+    ForEach(menu.indices, id: \.self) { index in
+      Section {
+        menuView(menu[index])
+      } header: {
+        if let title = menu[index].title {
+          Text(title)
+        }
+      }
+      .accessibilityIdentifier(Accessibility.menuSection(index))
+    }
+  }
+  
+  private func menuView(_ row: TUIContextMenuSection) -> some View {
+    ForEach(row.menuItems.indices, id: \.self) { index in
+      Button(role: row.menuItems[index].role, action: row.menuItems[index].action) {
+        Label(
+          title: {
+            Text(row.menuItems[index].title)
+          },
+          icon: { 
+            row.menuItems[index].icon
+          }
+        )
+      }
+      .accessibilityIdentifier(Accessibility.menuItem(index))
+    }
   }
   
   struct TUIIconButtonStyle: ButtonStyle {
@@ -173,8 +212,17 @@ extension TUIIconButton {
 }
 
 extension TUIIconButton {
-  enum Accessibility: String, TUIAccessibility {
-    case root = "TUIButton"
+  enum Accessibility: TUIAccessibility {
+    case root
+    case menuSection(Int), menuItem(Int)
+    
+    var identifier: String {
+      switch self {
+      case .root: return "TUIIconButton"
+      case .menuSection(let value): return "MenuSection \(value)"
+      case .menuItem(let value): return "MenuItem \(value)"
+      }
+    }
   }
 }
 

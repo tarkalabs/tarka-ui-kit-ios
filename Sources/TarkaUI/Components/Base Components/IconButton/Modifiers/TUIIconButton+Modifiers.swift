@@ -50,4 +50,10 @@ public extension TUIIconButton {
     newView.isDisabled = isDisabled
     return newView
   }
+  
+  func menu(_ menu: [TUIContextMenuSection]) -> TUIIconButton {
+    var newView = self
+    newView.menu = menu
+    return newView
+  }
 }
