@@ -165,7 +165,7 @@ extension TUIIconButton {
 
 extension TUIIconButton {
   
-  public struct InputStyle {
+  public struct InputStyle: Hashable {
     public var background: Color
     public var foreground: Color
     public var border: Color
@@ -177,7 +177,21 @@ extension TUIIconButton {
     }
   }
   
-  public enum Style {
+  public enum Style: Hashable {
+    public static func == (lhs: TUIIconButton.Style, rhs: TUIIconButton.Style) -> Bool {
+      switch (lhs, rhs) {
+      case (.outline, .outline),
+           (.ghost, .ghost),
+           (.secondary, .secondary),
+           (.primary, .primary):
+        return true
+      case (.custom(let lhsItem), .custom(let rhsItem)):
+        return lhsItem == rhsItem
+      default:
+        return false
+      }
+    }
+    
     case outline, ghost, secondary, primary,
          custom(InputStyle)
     
