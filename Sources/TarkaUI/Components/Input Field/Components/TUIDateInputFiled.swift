@@ -20,7 +20,7 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
 
   @State private var isSheetPresented = false
   @State private var isDateSelected = false
-  @State private var date = Date()
+  @State private var date: Date?
   @State private var inputItem: TUIInputFieldItem
   @Binding private var dateInputItem: TUIDateInputFieldItem
   
@@ -64,10 +64,10 @@ public struct TUIDateInputField: TUIInputFieldProtocol {
       self.isSheetPresented = true
     }, rightButtonAction: rightButtonAction)
     .onChange(of: isDateSelected) { newValue in
-      
-      self.inputItem.style = .titleWithValue
-      let dateString = date.formatted(dateInputItem.format)
+      guard newValue else { return }
+      let dateString = date?.formatted(dateInputItem.format) ?? ""
       self.inputItem.value = dateString
+      self.inputItem.style = dateString.isEmpty ? .onlyTitle : .titleWithValue
       self.dateInputItem.date = date
     }
     // without a below line of code, date can not receive updates. Weird one. For now, we go with this hack.

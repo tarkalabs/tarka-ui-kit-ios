@@ -104,7 +104,6 @@ public extension TUISearchBar {
     self
       .trailingButton {
           TUIIconButton(icon: .dismiss24Regular) {
-            searchBarVM.isEditing = false
             searchBarVM.searchItem.text = ""
             searchBarVM.onEditing("")
             searchBarVM.searchText = ""
