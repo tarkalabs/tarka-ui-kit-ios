@@ -22,6 +22,9 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   public var allowedCharacters = CharacterSet()
   public var keyboardType: UIKeyboardType = .default
 
+  // Used to configure the secure field
+  private var isSecureField: Bool
+
   /// Binds the bool that used to handle the row interaction and text field interaction switch when user interacts
   
   // Used to observe the field's focused state from the caller
@@ -42,11 +45,13 @@ public struct TUITextInputField: TUIInputFieldProtocol {
   public init(
     inputItem: Binding<TUIInputFieldItem>,
     dismissTextFocus: Binding<Bool> = .constant(true),
-    isFocused isObservableFocused: Binding<Bool> = .constant(false)) {
-      
+    isFocused isObservableFocused: Binding<Bool> = .constant(false),
+    isSecureField: Bool = false) {
+
       self._inputItem = inputItem
       self._dismissTextFocus = dismissTextFocus
       self._isObservableFocused = isObservableFocused
+      self.isSecureField = isSecureField
     }
   
   public var body: some View {
@@ -100,6 +105,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
       allowedCharacters: allowedCharacters,
       keyboardType: keyboardType,
       isTextField: true,
+      isSecureField: isSecureField,
       action: {
         self.isFocused = true
         // change style
