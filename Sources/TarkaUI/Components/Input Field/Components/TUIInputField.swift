@@ -35,6 +35,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
   private var allowedCharacters: CharacterSet
   private var keyboardType: UIKeyboardType
   private var isTextField: Bool
+  private var isSecureField: Bool
   private var action: (() -> Void)?
 
   /// Creates a `TUIInputField` View
@@ -50,9 +51,10 @@ public struct TUIInputField: TUIInputFieldProtocol {
               allowedCharacters: CharacterSet = .init(),
               keyboardType: UIKeyboardType = .default,
               isTextField: Bool = false,
+              isSecureField: Bool = false,
               action: (() -> Void)? = nil,
               rightButtonAction: (() -> Void)? = nil) {
-    
+
     self._inputItem = inputItem
     self._isTextFieldEditingOn = isTextFieldEditingOn ?? Binding.constant(false)
     self.properties = properties ?? TUIInputFieldOptionalProperties()
@@ -63,6 +65,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
     self.isTextField = isTextField
     self.action = action
     self.rightButtonAction = rightButtonAction
+    self.isSecureField = isSecureField
   }
   
   var currentTextFieldState: TUIInputFieldState {
@@ -148,7 +151,8 @@ public struct TUIInputField: TUIInputFieldProtocol {
       allowedCharacters: allowedCharacters,
       keyboardType: keyboardType,
       isTextFieldFocused: $isTextFieldFocused,
-      isTextField: isTextField)
+      isTextField: isTextField,
+      isSecureField: isSecureField)
   }
 
   @ViewBuilder
