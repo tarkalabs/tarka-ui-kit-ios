@@ -12,9 +12,9 @@ public struct TUIEmailSubjectField: View {
 
   private var title: String
 
-  public init(text: Binding<String>, title: String?) {
+  public init(text: Binding<String>, title: String = "Subject") {
     self._text = text
-    self.title = title ?? "Subject".localized
+    self.title = title.localized
   }
   
   public var body: some View {
