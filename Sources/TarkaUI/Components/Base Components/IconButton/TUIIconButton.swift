@@ -69,7 +69,7 @@ public struct TUIIconButton: View, Identifiable {
   
   @ViewBuilder
   private func buttonView() -> some View {
-    Button(action: action, label: iconView)
+    Button(action: buttonAction, label: iconView)
       .buttonStyle(TUIIconButtonStyle(
         style: style,
         buttonSize: buttonSize,
@@ -132,6 +132,12 @@ public struct TUIIconButton: View, Identifiable {
                 color: style.borderColor(configuration.isPressed))
         .isDisabled(isDisabled)
         .contentShape(.circle)
+    }
+  }
+  
+  private func buttonAction() {
+    if !isDisabled {
+      action()
     }
   }
 }
