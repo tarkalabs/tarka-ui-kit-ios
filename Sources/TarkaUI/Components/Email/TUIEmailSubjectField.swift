@@ -9,9 +9,12 @@ import SwiftUI
 
 public struct TUIEmailSubjectField: View {
   @Binding public var text: String
-  
-  public init(text: Binding<String>) {
+
+  private var title: String
+
+  public init(text: Binding<String>, title: String = "Subject") {
     self._text = text
+    self.title = title.localized
   }
   
   public var body: some View {
@@ -19,7 +22,7 @@ public struct TUIEmailSubjectField: View {
       TextField(
         "",
         text: $text,
-        prompt: Text("Subject".localized)
+        prompt: Text(title)
           .font(.body7)
           .foregroundColor(.outline)
       )
@@ -48,6 +51,6 @@ extension TUIEmailSubjectField {
 
 struct TUIEmailSubjectField_Previews: PreviewProvider {
   static var previews: some View {
-    TUIEmailSubjectField(text: .constant("Subject"))
+    TUIEmailSubjectField(text: .constant("Subject"), title: "Subject")
   }
 }
