@@ -40,7 +40,7 @@ public struct TUIChip: View {
     .padding(.trailing, trailing)
     .padding(.vertical, 0)
     .background(inputItem.backgroundColor)
-    .border(RoundedRectangle(cornerRadius: Spacing.halfHorizontal), width: inputItem.borderWidth, color: inputItem.borderShapeColor)
+    .border(RoundedRectangle(cornerRadius: inputItem.cornerRadius), width: inputItem.borderWidth, color: inputItem.borderShapeColor)
     .onTapGesture {
       inputItem.action?()
     }
@@ -313,6 +313,8 @@ extension TUIChip {
     
     var textColor = Color.onSurface
     var textSelectionColor = Color.onSecondary
+    
+    var cornerRadius = Spacing.halfHorizontal
     
     var borderColor = Color.outline
     var borderSelectionColor = Color.secondaryTUI

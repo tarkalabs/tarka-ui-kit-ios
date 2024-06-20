@@ -96,6 +96,12 @@ public extension TUIChip {
     return newView
   }
   
+  func cornerRadius(_ radius: CGFloat) -> Self {
+    var newView = self
+    newView.inputItem.cornerRadius = radius
+    return newView
+  }
+  
   func borderSelectionColor(_ color: Color) -> Self {
     var newView = self
     newView.inputItem.borderSelectionColor = color
