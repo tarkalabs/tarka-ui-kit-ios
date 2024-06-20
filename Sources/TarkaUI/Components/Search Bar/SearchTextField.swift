@@ -23,6 +23,7 @@ struct SearchTextField: View {
       .onChange(of: searchBarVM.isEditing, perform: { value in
         if value != isFocused {
           isFocused = value
+          searchBarVM.isFocused = value
         }
       })
       .accessibilityIdentifier(Accessibility.root)
