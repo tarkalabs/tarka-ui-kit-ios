@@ -46,6 +46,7 @@ public struct TUIIconButton: View, Identifiable {
   var style: Style = .ghost
   var size: Size = .size40
   var isDisabled: Bool = false
+  var menu: [TUIContextMenuSection] = []
   
   /// Creates a button that displays an icon.
   ///
@@ -53,12 +54,21 @@ public struct TUIIconButton: View, Identifiable {
   ///   - icon: The icon to display in the button.
   ///   - action: The action to perform when the user taps the button.
   ///
-  public init(icon: FluentIcon, action: @escaping () -> Void) {
+  public init(icon: FluentIcon, action: @escaping () -> Void = {}) {
     self.icon = icon
     self.action = action
   }
   
   public var body: some View {
+    if !menu.isEmpty {
+      Menu(content: sectionView, label: buttonView)
+    } else {
+      buttonView()
+    }
+  }
+  
+  @ViewBuilder
+  private func buttonView() -> some View {
     Button(action: buttonAction, label: iconView)
       .buttonStyle(TUIIconButtonStyle(
         style: style,
@@ -78,6 +88,35 @@ public struct TUIIconButton: View, Identifiable {
       .clipped()
       .foregroundColor(iconColor ?? style.inputStyle.foreground)
       .background(style.inputStyle.background)
+  }
+  
+  private func sectionView() -> some View {
+    ForEach(menu.indices, id: \.self) { index in
+      Section {
+        menuView(menu[index])
+      } header: {
+        if let title = menu[index].title {
+          Text(title)
+        }
+      }
+      .accessibilityIdentifier(Accessibility.menuSection(index))
+    }
+  }
+  
+  private func menuView(_ row: TUIContextMenuSection) -> some View {
+    ForEach(row.menuItems.indices, id: \.self) { index in
+      Button(role: row.menuItems[index].role, action: row.menuItems[index].action) {
+        Label(
+          title: {
+            Text(row.menuItems[index].title)
+          },
+          icon: { 
+            row.menuItems[index].icon
+          }
+        )
+      }
+      .accessibilityIdentifier(Accessibility.menuItem(index))
+    }
   }
   
   struct TUIIconButtonStyle: ButtonStyle {
@@ -132,7 +171,7 @@ extension TUIIconButton {
 
 extension TUIIconButton {
   
-  public struct InputStyle {
+  public struct InputStyle: Hashable {
     public var background: Color
     public var foreground: Color
     public var border: Color
@@ -144,7 +183,21 @@ extension TUIIconButton {
     }
   }
   
-  public enum Style {
+  public enum Style: Hashable {
+    public static func == (lhs: TUIIconButton.Style, rhs: TUIIconButton.Style) -> Bool {
+      switch (lhs, rhs) {
+      case (.outline, .outline),
+           (.ghost, .ghost),
+           (.secondary, .secondary),
+           (.primary, .primary):
+        return true
+      case (.custom(let lhsItem), .custom(let rhsItem)):
+        return lhsItem == rhsItem
+      default:
+        return false
+      }
+    }
+    
     case outline, ghost, secondary, primary,
          custom(InputStyle)
     
@@ -179,8 +232,17 @@ extension TUIIconButton {
 }
 
 extension TUIIconButton {
-  enum Accessibility: String, TUIAccessibility {
-    case root = "TUIButton"
+  enum Accessibility: TUIAccessibility {
+    case root
+    case menuSection(Int), menuItem(Int)
+    
+    var identifier: String {
+      switch self {
+      case .root: return "TUIIconButton"
+      case .menuSection(let value): return "MenuSection \(value)"
+      case .menuItem(let value): return "MenuItem \(value)"
+      }
+    }
   }
 }
 

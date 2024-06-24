@@ -17,6 +17,7 @@ public struct TUIMobileButtonBlock: View {
     case one(TUIButton)
     case two(left: TUIButton, right: TUIButton)
     case flexible(left: TUIButton, right: TUIButton)
+    case custom(left: TUIButton, right: TUIButton)
   }
   
   private var style: Style
@@ -86,6 +87,16 @@ public struct TUIMobileButtonBlock: View {
           .size(.xl)
           .width(.maximum(fixedWidth))
           .accessibilityIdentifier(Accessibility.rightButton)
+      case .custom(let left, let right):
+        left
+          .size(.xl)
+          .width(.maximum(fixedWidth))
+          .accessibilityIdentifier(Accessibility.leftButton)
+        right
+          .size(.xl)
+          .width(.maximum(fixedWidth))
+          .accessibilityIdentifier(Accessibility.rightButton)
+
       }
     }
     .padding(.horizontal, Spacing.custom(24))
