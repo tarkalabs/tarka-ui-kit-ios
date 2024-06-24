@@ -54,7 +54,7 @@ public struct TUIIconButton: View, Identifiable {
   ///   - icon: The icon to display in the button.
   ///   - action: The action to perform when the user taps the button.
   ///
-  public init(icon: FluentIcon, action: @escaping () -> Void) {
+  public init(icon: FluentIcon, action: @escaping () -> Void = {}) {
     self.icon = icon
     self.action = action
   }
