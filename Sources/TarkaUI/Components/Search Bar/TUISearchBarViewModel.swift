@@ -26,6 +26,7 @@ public class TUISearchBarViewModel: ObservableObject {
   @Published public var searchItem: TUISearchBarItem
   @Published public var isShown: Bool = false
   @Published public var isEditing = false
+  @Published public var isFocused = true
   
   @Published public var searchText = ""
   
