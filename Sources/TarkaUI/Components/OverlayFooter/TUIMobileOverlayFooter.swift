@@ -61,7 +61,7 @@ public struct TUIMobileOverlayFooter: View {
       buttonView
     }
     .frame(height: 64)
-    .addBackgroundBlur(withColor:.surface50)
+    .background(Color.surface)
   }
   
   @ViewBuilder
@@ -80,7 +80,6 @@ public struct TUIMobileOverlayFooter: View {
     }
     .padding(.vertical, Spacing.baseVertical)
     .padding(.horizontal, Spacing.custom(24))
-    .background(Color.clear)
   }
   
   @ViewBuilder
