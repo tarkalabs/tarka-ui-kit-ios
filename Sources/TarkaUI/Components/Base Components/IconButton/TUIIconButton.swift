@@ -33,7 +33,7 @@ public struct TUIIconButton: View, Identifiable {
     case size20, size24, size32, size40, size48
   }
   
-  public let id = UUID()
+  public let id = UUID().uuidString
   /// The icon to display in the button.
   /// 
   public var icon: FluentIcon
