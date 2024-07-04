@@ -27,8 +27,8 @@ public struct TUIMobileOverlayHeader: View {
     case .handle:
       handleView
       
-    case .onlyTitle(let title):
-      onlyTitleView(title)
+    case .onlyTitle(let title, let alignment):
+      onlyTitleView(title, alignment: alignment)
       
     case .left(let title, let action):
       leftView(title, action: action)
@@ -58,14 +58,14 @@ public struct TUIMobileOverlayHeader: View {
   
   // MARK: - Only Title View
   
-  private func onlyTitleView(_ title: String) -> some View {
+  private func onlyTitleView(_ title: String, alignment: Alignment) -> some View {
     VStack(spacing: 0) {
       handle
         .padding(.vertical, Spacing.baseVertical)
       
       titleView(title)
         .padding(.bottom, Spacing.custom(21))
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: alignment)
       
       borderView
     }
@@ -189,7 +189,7 @@ public extension TUIMobileOverlayHeader {
   
   enum Style {
     case handle
-    case onlyTitle(String)
+    case onlyTitle(String, alignment: Alignment = .center)
     case left(String, action: () -> Void)
     case right(String, rightIcon: FluentIcon, action: () -> Void)
     case rightWithMenu(String, rightIcon: FluentIcon, menu: [TUIContextMenuSection])
