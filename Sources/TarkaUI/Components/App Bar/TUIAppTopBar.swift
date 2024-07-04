@@ -123,8 +123,10 @@ public struct TUIAppTopBar: View {
     HStack(spacing: 0) {
       
       ForEach(rightButtons) { button in
+        let index = rightButtons.firstIndex { $0.id == button.id } ?? 0
         button
-          .accessibilityIdentifier(Accessibility.rightButton1)
+          .size(.size48)
+          .accessibilityIdentifier(Accessibility.rightButton(index))
       }
     }
   }
@@ -141,7 +143,7 @@ public struct TUIAppTopBar: View {
           searchBarVM.onEditing("")
         }
         .style(.ghost)
-        .size(.size40)
+        .size(.size48)
       }
       .addCancelButtonAtTrailing()
       .padding(.horizontal, Spacing.baseHorizontal)
@@ -153,16 +155,27 @@ public struct TUIAppTopBar: View {
 }
 
 extension TUIAppTopBar {
-  enum Accessibility: String, TUIAccessibility {
-    case root = "TUIAppTopBar"
-    case titleBar = "TitleBar"
-    case leftButton = "LeftButton"
-    case searchButton = "SearchButton"
-    case title = "Title"
-    case rightButton1 = "RightButton1"
-    case rightButton2 = "RightButton2"
-    case rightButton3 = "RightButton3"
-    case rightButton4 = "RightButton4"
+  enum Accessibility: TUIAccessibility {
+    case root
+    case titleBar
+    case leftButton
+    case title
+    case rightButton(Int)
+    
+    var identifier: String {
+      switch self {
+      case .root:
+        return "TUIAppTopBar"
+      case .titleBar:
+        return "TitleBar"
+      case .leftButton:
+        return "LeftButton"
+      case .title:
+        return "Title"
+      case .rightButton(let index):
+        return "RightButton - \(index)"
+      }
+    }
   }
 }
 
