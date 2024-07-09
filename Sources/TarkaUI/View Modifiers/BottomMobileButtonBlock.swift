@@ -21,9 +21,9 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
   @State var additionalViewHeight: CGFloat = 0
   @State var canShowDoneButton = false
   @Binding var isDoneClicked: Bool
-
+  
   var onClicked: (() -> Void)?
-
+  
   var block: TUIMobileButtonBlock
   var additionalView: T
   var showAdditionalView = false
@@ -45,7 +45,7 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
       self.showAdditionalView = showAdditionalView
       self.isButtonEnabled = isButtonEnabled
     }
-
+  
   func body(content: Content) -> some View {
     
     GeometryReader { geometry in
@@ -62,12 +62,12 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
                 HStack {
                   Spacer()
                   Button("Done".localized) {
-                      showToolBar = false
-                      isDoneClicked = true
-                      onClicked?()
-                    }
+                    showToolBar = false
+                    isDoneClicked = true
+                    onClicked?()
+                  }
                   .padding(.vertical, 10)
-                    .padding(.trailing, 20)
+                  .padding(.trailing, 20)
                 }
                 .background(Color.onSecondary)
               }
@@ -97,6 +97,8 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
         .adaptiveKeyboard(isKeyboardShown: $isKeyboardShown)
         .onChange(of: isKeyboardShown) { newValue in
           if newValue {
+            // Default animation to show toolbar makes conflict with keyboard display animation.
+            // Hence we show toolbar in some delay to let keyboard to complete its animation
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
               showToolBar = true
             }
