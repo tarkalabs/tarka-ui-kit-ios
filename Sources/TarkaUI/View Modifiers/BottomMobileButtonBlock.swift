@@ -73,7 +73,7 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
               }
               .frame(maxWidth: .infinity)
             } else {
-              EmptyView().frame(height: 0)
+              EmptyView()
             }
           } else {
             VStack(spacing: 0) {
