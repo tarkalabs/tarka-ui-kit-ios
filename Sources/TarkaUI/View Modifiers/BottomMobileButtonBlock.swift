@@ -10,12 +10,34 @@ import SwiftUI
 struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
   
   @State var isKeyboardShown: Bool = false
+  @State var showToolBar: Bool = false
   @State var additionalViewHeight: CGFloat = 0
-  
+  @State var canShowDoneButton = false
+  @Binding var isDoneClicked: Bool
+
+  var onClicked: (() -> Void)?
+
   var block: TUIMobileButtonBlock
   var additionalView: T
   var showAdditionalView = false
   var isButtonEnabled = true
+  
+  init(
+    _ block: TUIMobileButtonBlock,
+    additionalView: T,
+    showAdditionalView: Bool = false,
+    isButtonEnabled: Bool,
+    isDoneClicked: Binding<Bool>?,
+    onClicked: (() -> Void)? = nil) {
+      
+      self._isDoneClicked = isDoneClicked ?? .constant(false)
+      self.onClicked = onClicked
+      self.canShowDoneButton = (isDoneClicked != nil) || (onClicked != nil)
+      self.block = block
+      self.additionalView = additionalView
+      self.showAdditionalView = showAdditionalView
+      self.isButtonEnabled = isButtonEnabled
+    }
 
   func body(content: Content) -> some View {
     
@@ -26,7 +48,26 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
       content.frame(maxHeight: .infinity)
         .safeAreaInset(edge: .bottom, spacing: 0) {
           if isKeyboardShown {
-            EmptyView().frame(height: 0)
+            if showToolBar, canShowDoneButton {
+              VStack(spacing: 0) {
+                TUIDivider(orientation: .horizontal(hPadding: .zero, vPadding: .zero))
+                  .frame(height: 1)
+                HStack {
+                  Spacer()
+                  Button("Done".localized) {
+                      showToolBar = false
+                      isDoneClicked = true
+                      onClicked?()
+                    }
+                  .padding(.vertical, 10)
+                    .padding(.trailing, 20)
+                }
+                .background(Color.onSecondary)
+              }
+              .frame(maxWidth: .infinity)
+            } else {
+              EmptyView().frame(height: 0)
+            }
           } else {
             VStack(spacing: 0) {
               if showAdditionalView {
@@ -47,6 +88,15 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
         }
         .edgesIgnoringSafeArea(.bottom)
         .adaptiveKeyboard(isKeyboardShown: $isKeyboardShown)
+        .onChange(of: isKeyboardShown) { newValue in
+          if newValue {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+              showToolBar = true
+            }
+          } else {
+            showToolBar = false
+          }
+        }
     }
   }
 }
