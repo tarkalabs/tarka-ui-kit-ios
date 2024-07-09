@@ -15,7 +15,8 @@ struct SearchTextField: View {
   
   var body: some View {
     
-    TextField(searchBarVM.searchItem.placeholder, text: $searchBarVM.searchItem.text)
+    TextField("", text: $searchBarVM.searchItem.text,
+              prompt: Text(searchBarVM.searchItem.placeholder).foregroundColor(.inputTextDim))
       .focused($isFocused)
       .onTapGesture {
         searchBarVM.isEditing = true
