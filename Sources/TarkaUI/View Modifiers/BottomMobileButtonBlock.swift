@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+
+
+// FIXME: - As we face issue in showing done button in toolbar in iOS 17.0 version,
+// we pick the approach to show custom tool bar in safe area. It seems like a SwiftUI issue.
+// Hence we need to regularly check the latest updates of SwiftUI for this issue fix
+// and update this approach accordingly.
+
 struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
   
   @State var isKeyboardShown: Bool = false
