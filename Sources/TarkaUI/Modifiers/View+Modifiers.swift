@@ -170,14 +170,18 @@ public extension View {
     _ block: TUIMobileButtonBlock,
     @ViewBuilder _ additionalView: () -> some View = { EmptyView() },
     isEnabled: Bool = true,
+    isDoneClicked: Binding<Bool>? = nil,
+    onClicked: (() -> Void)? = nil,
     showAdditionalView: Bool = false
   ) -> some View {
     
     let block = BottomMobileButtonBlock(
-      block: block,
+      block,
       additionalView: additionalView(),
       showAdditionalView: showAdditionalView,
-      isButtonEnabled: isEnabled)
+      isButtonEnabled: isEnabled,
+      isDoneClicked: isDoneClicked,
+      onClicked: onClicked)
     
     modifier(block)
   }
