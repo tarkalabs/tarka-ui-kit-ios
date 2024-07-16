@@ -10,9 +10,14 @@ import SwiftUI
 public struct TUIContentUnavailableView: View {
   
   var title: any StringProtocol
-  var icon: FluentIcon
+  var icon: any ImageIconProtocol
   
   public init(_ title: any StringProtocol, icon: FluentIcon) {
+    self.title = title
+    self.icon = icon
+  }
+  
+  public init(_ title: any StringProtocol, icon: any ImageIconProtocol) {
     self.title = title
     self.icon = icon
   }
@@ -49,7 +54,7 @@ public struct TUIContentUnavailableView: View {
   
   @ViewBuilder
   private var iconView: some View {
-    Image(fluent: icon)
+    Image(icon: icon)
       .foregroundStyle(Color.outline)
       .frame(minWidth: Spacing.baseHorizontal, minHeight: Spacing.doubleVertical)
       .accessibilityIdentifier(Accessibility.icon)
