@@ -71,6 +71,9 @@ struct BottomMobileButtonBlock<T>: ViewModifier where T: View {
                 }
                 .background(Color.onSecondary)
               }
+              // As toolbar is hiding textfield in the bottom by default,
+              // we give extra padding for its visibility
+              .padding(.top, 20)
               .frame(maxWidth: .infinity)
             } else {
               EmptyView()
