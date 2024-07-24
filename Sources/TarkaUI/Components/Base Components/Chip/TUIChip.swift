@@ -41,6 +41,7 @@ public struct TUIChip: View {
     .padding(.vertical, 0)
     .background(inputItem.backgroundColor)
     .border(RoundedRectangle(cornerRadius: inputItem.cornerRadius), width: inputItem.borderWidth, color: inputItem.borderShapeColor)
+    .contentShape(.rect(cornerRadius: inputItem.cornerRadius))
     .onTapGesture {
       inputItem.action?()
     }
