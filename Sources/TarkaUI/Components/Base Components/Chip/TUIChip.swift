@@ -188,6 +188,7 @@ public struct TUIChip: View {
         .frame(height: inputItem.size.height)
         .padding(.leading, leading)
         .padding(.trailing, trailing)
+        .padding(.vertical, 0)
         .background(inputItem.backgroundColor, in: .rect(cornerRadius: inputItem.cornerRadius))
         .border(.rect(cornerRadius: inputItem.cornerRadius), width: inputItem.borderWidth, color: inputItem.borderShapeColor)
         .isEnabled(inputItem.isBadgeEnabled) {
