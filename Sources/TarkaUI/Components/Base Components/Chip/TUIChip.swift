@@ -32,21 +32,12 @@ public struct TUIChip: View {
   }
   
   public var body: some View {
-    HStack(spacing: spacing) {
-      detailView
+    Button(action: { inputItem.action?() }) {
+      HStack(spacing: spacing) {
+        detailView
+      }
     }
-    .frame(height: inputItem.size.height)
-    .padding(.leading, leading)
-    .padding(.trailing, trailing)
-    .background(inputItem.backgroundColor, in: .rect(cornerRadius: inputItem.cornerRadius))
-    .border(.rect(cornerRadius: inputItem.cornerRadius), width: inputItem.borderWidth, color: inputItem.borderShapeColor)
-    .contentShape(.rect(cornerRadius: inputItem.cornerRadius))
-    .onTapGesture {
-      inputItem.action?()
-    }
-    .isEnabled(inputItem.isBadgeEnabled) {
-      $0.overlay(alignment: .topTrailing, content: badgeView)
-    }
+    .buttonStyle(ChipButtonStyle(inputItem, leading: leading, trailing: trailing))
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
   }
@@ -178,15 +169,43 @@ public struct TUIChip: View {
       .accessibilityIdentifier(Accessibility.button)
   }
   
-  @ViewBuilder
-  private func badgeView() -> some View {
-    TUIBadge(
-      style: .number(inputItem.badgeCount),
-      badgeColor: inputItem.badgeColor,
-      size: inputItem.badgeSize)
+  // MARK: - Button Style
+  
+  struct ChipButtonStyle: ButtonStyle {
+    
+    let inputItem: InputItem
+    let leading: CGFloat
+    let trailing: CGFloat
+    
+    init(_ inputItem: InputItem, leading: CGFloat, trailing: CGFloat) {
+      self.inputItem = inputItem
+      self.leading = leading
+      self.trailing = trailing
+    }
+    
+    func makeBody(configuration: Configuration) -> some View {
+      configuration.label
+        .frame(height: inputItem.size.height)
+        .padding(.leading, leading)
+        .padding(.trailing, trailing)
+        .background(inputItem.backgroundColor, in: .rect(cornerRadius: inputItem.cornerRadius))
+        .border(.rect(cornerRadius: inputItem.cornerRadius), width: inputItem.borderWidth, color: inputItem.borderShapeColor)
+        .isEnabled(inputItem.isBadgeEnabled) {
+          $0.overlay(alignment: .topTrailing, content: badgeView)
+        }
+        .contentShape(.rect(cornerRadius: inputItem.cornerRadius))
+    }
+    
+    @ViewBuilder
+    private func badgeView() -> some View {
+      TUIBadge(
+        style: .number(inputItem.badgeCount),
+        badgeColor: inputItem.badgeColor,
+        size: inputItem.badgeSize)
       .alignmentGuide(.top) { $0[.top] + 8 }
       .alignmentGuide(.trailing) { $0[.trailing] - 8 }
       .accessibilityIdentifier(Accessibility.badge)
+    }
   }
 }
 
