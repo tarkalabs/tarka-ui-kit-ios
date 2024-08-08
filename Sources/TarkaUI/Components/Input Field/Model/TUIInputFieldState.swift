@@ -23,23 +23,23 @@ public enum TUIInputFieldState: Equatable {
       if case .focused = rhs {
         return true
       }
-    case .inactive(let string):
+    case .inactive:
       if case .inactive = rhs {
         return true
       }
-    case .error(let string):
+    case .error:
       if case .error = rhs {
         return true
       }
-    case .alert(let string):
+    case .alert:
       if case .alert = rhs {
         return true
       }
-    case .success(let string):
+    case .success:
       if case .success = rhs {
         return true
       }
-    case .disabled(let string):
+    case .disabled:
       if case .disabled = rhs {
         return true
       }
