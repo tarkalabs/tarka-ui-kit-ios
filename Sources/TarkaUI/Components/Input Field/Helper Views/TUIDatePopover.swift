@@ -17,6 +17,7 @@ public struct TUIDatePopover: View {
   @State private var storedDate: Date
   var minDate: Date?
   var maxDate: Date?
+  var showTime = true
   
   /// Creates a `TUIDatePopover` View
   /// - Parameters:
@@ -24,14 +25,16 @@ public struct TUIDatePopover: View {
   ///   - isShowing: A bindable bool value that used to show or hide this View
   ///   - isSelected: A bindable bool value that used to notify when date is selected
   public init(date: Binding<Date>,
-       isShowing: Binding<Bool>,
-       isSelected: Binding<Bool>,
-       minDate: Date? = nil,
-       maxDate: Date? = nil) {
+              isShowing: Binding<Bool>,
+              isSelected: Binding<Bool>,
+              showTime: Bool = true,
+              minDate: Date? = nil,
+              maxDate: Date? = nil) {
     
     self._date = date
     self._isShowing = isShowing
     self._isSelected = isSelected
+    self.showTime = showTime
     self.minDate = minDate
     self.maxDate = maxDate
     self._storedDate = State<Date>.init(initialValue: date.wrappedValue)
@@ -97,32 +100,39 @@ public struct TUIDatePopover: View {
   
   @ViewBuilder
   private var datePicker: some View {
+    var displayedComponents: DatePicker.Components {
+      if showTime {
+        return [.date, .hourAndMinute]
+      }
+      return [.date]
+    }
+    
     if let minDate, let maxDate {
       DatePicker(
         "",
         selection: $storedDate,
         in: minDate...maxDate,
-        displayedComponents: [.date, .hourAndMinute]
+        displayedComponents: displayedComponents
       )
     } else if let minDate {
       DatePicker(
         "",
         selection: $storedDate,
         in: minDate...,
-        displayedComponents: [.date, .hourAndMinute]
+        displayedComponents: displayedComponents
       )
     } else if let maxDate {
       DatePicker(
         "",
         selection: $storedDate,
         in: ...maxDate,
-        displayedComponents: [.date, .hourAndMinute]
+        displayedComponents: displayedComponents
       )
     } else {
       DatePicker(
         "",
         selection: $storedDate,
-        displayedComponents: [.date, .hourAndMinute]
+        displayedComponents: displayedComponents
       )
     }
   }
