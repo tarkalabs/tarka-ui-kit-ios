@@ -189,12 +189,21 @@ public struct TUIChip: View {
         .padding(.leading, leading)
         .padding(.trailing, trailing)
         .padding(.vertical, 0)
-        .background(inputItem.backgroundColor, in: .rect(cornerRadius: inputItem.cornerRadius))
-        .border(.rect(cornerRadius: inputItem.cornerRadius), width: inputItem.borderWidth, color: inputItem.borderShapeColor)
+        .background(backgroundColor(configuration.isPressed), in: .rect(cornerRadius: inputItem.cornerRadius))
+        .border(.rect(cornerRadius: inputItem.cornerRadius),
+                width: borderWidth(configuration.isPressed), color: inputItem.borderShapeColor)
         .isEnabled(inputItem.isBadgeEnabled) {
           $0.overlay(alignment: .topTrailing, content: badgeView)
         }
         .contentShape(.rect(cornerRadius: inputItem.cornerRadius))
+    }
+    
+    func borderWidth(_ isPressed: Bool) -> CGFloat {
+      isPressed ? inputItem.borderWidth + 1 : inputItem.borderWidth
+    }
+    
+    func backgroundColor(_ isPressed: Bool) -> Color {
+      isPressed ? inputItem.backgroundColor.opacity(0.5) : inputItem.backgroundColor
     }
     
     @ViewBuilder
