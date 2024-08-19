@@ -16,8 +16,12 @@ import Foundation
 ///
 public protocol TUIOverlayFooterAction {
   var id: String { get }
-  var icon: FluentIcon { get }
-  var handler: () -> Void { get }
+  var button: TUIOverlayFooterActionButton { get } 
+}
+
+public enum TUIOverlayFooterActionButton {
+  case icon(TUIIconButton)
+  case button(TUIButton)
 }
 
 /// The `OverlayFooterActionBuilder` result builder is used to build an array of `TUIOverlayFooterAction` instances.

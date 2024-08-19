@@ -170,16 +170,45 @@ public extension View {
     _ block: TUIMobileButtonBlock,
     @ViewBuilder _ additionalView: () -> some View = { EmptyView() },
     isEnabled: Bool = true,
+    isDoneClicked: Binding<Bool>? = nil,
+    onClicked: (() -> Void)? = nil,
     showAdditionalView: Bool = false
   ) -> some View {
     
     let block = BottomMobileButtonBlock(
-      block: block,
+      block,
       additionalView: additionalView(),
-      showAdditionalView: showAdditionalView, 
-      isButtonEnabled: isEnabled)
-
+      showAdditionalView: showAdditionalView,
+      isButtonEnabled: isEnabled,
+      isDoneClicked: isDoneClicked,
+      onClicked: onClicked)
+    
     modifier(block)
+  }
+  
+  @ViewBuilder
+  /// Adds `BackgroundBlurLayer` in background of the view.
+  /// It uses opacity that defined in the color asset itself to have transparency.
+  /// No modification in the view's opacity.
+  ///
+  /// - Returns: View with background blur added
+  func addBackgroundBlur(withColor color: Color) -> some View {
+    self.background(BackgroundVisualEffectView())
+      .background(color)
+  }
+  
+  @ViewBuilder
+  /// Adds `BackgroundBlurLayer` in background of the view.
+  /// It accepts opacity and applies that to the view.
+  /// As the color passed here has Opacity as 100,
+  /// we are modifying the view's opacity to have transparency.
+  ///
+  /// - Returns: View with background blur view added
+  func addBackgroundBlur(
+    withColor color: Color, opacity: Double) -> some View {
+      self.modifier(
+        BackgroundBlurView(
+        color: color, opacity: opacity))
   }
   
   // MARK: - Keyboard

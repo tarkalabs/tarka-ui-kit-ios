@@ -14,7 +14,7 @@ public struct TUISearchBarItem {
   public var text: String
 
   public init(placeholder: String,
-              text: String) {
+              text: String = "") {
     
     self.placeholder = placeholder
     self.text = text
@@ -24,8 +24,15 @@ public struct TUISearchBarItem {
 public class TUISearchBarViewModel: ObservableObject {
 
   @Published public var searchItem: TUISearchBarItem
-  @Published public var isShown: Bool = false
+  @Published public var isShown: Bool = false {
+    didSet {
+      isFocused = true
+    }
+  }
   @Published public var isEditing = false
+  @Published public var isFocused = true
+  
+  @Published public var searchText = ""
   
   public var needDelaySearch: Bool
   var onEditing: (String) -> Void
@@ -39,5 +46,15 @@ public class TUISearchBarViewModel: ObservableObject {
       self._searchItem = Published(initialValue: searchItem)
       self._isShown = Published(initialValue: isShown)
       self.onEditing = onEditing
+    }
+  
+  public init(
+    searchItem: TUISearchBarItem,
+    isShown: Bool = false,
+    needDelaySearch: Bool = false) {
+      self.needDelaySearch = needDelaySearch
+      self.searchItem = searchItem
+      self.isShown = isShown
+      onEditing = { _ in }
     }
 }

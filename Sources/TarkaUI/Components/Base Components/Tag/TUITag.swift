@@ -71,8 +71,8 @@ public struct TUITag: View {
       .accessibilityIdentifier(Accessibility.title)
   }
   
-  private func iconView(for icon: FluentIcon) -> some View {
-    Image(fluent: icon)
+  private func iconView(for icon: Image) -> some View {
+    icon
       .resizable()
       .frame(width: style.iconSize.width, height: style.iconSize.height)
       .accessibilityIdentifier(Accessibility.icon)
@@ -123,7 +123,7 @@ extension TUITag {
 
 public extension TUITag {
   
-  enum TagStyle {
+  enum TagStyle: Hashable {
     case low(foregroundColor: Color, background: Color),
          high(foregroundColor: Color, background: Color)
     
@@ -152,7 +152,7 @@ public extension TUITag {
   }
   
   enum IconStyle {
-    case none, left(FluentIcon), right(FluentIcon), icon(FluentIcon)
+    case none, left(Image), right(Image), icon(Image)
     
     func iconSize(_ tagSize: TagSize) -> CGSize {
       switch tagSize {
@@ -286,33 +286,33 @@ struct TUITag_Previews: PreviewProvider {
       TUITag("TUITag")
         .size(.size34)
         .style(.high)
-        .iconStyle(.left(.circle24Regular))
+        .iconStyle(.left(Image(fluent: .circle24Regular)))
       
       TUITag("TUITag")
         .size(.size40)
         .style(.high)
-        .iconStyle(.left(.circle24Regular))
+        .iconStyle(.left(Image(fluent: .circle24Regular)))
       
       TUITag("TUITag")
         .size(.size40)
         .style(.low)
-        .iconStyle(.right(.circle24Regular))
+        .iconStyle(.right(Image(fluent: .circle24Regular)))
       
       TUITag("TUITag")
         .size(.size34)
         .style(.low)
-        .iconStyle(.right(.circle24Regular))
+        .iconStyle(.right(Image(fluent: .circle24Regular)))
       
       TUITag("TUITag")
         .size(.size34)
         .style(.low)
       
       TUITag()
-        .iconStyle(.icon(.circle24Regular))
+        .iconStyle(.icon(Image(fluent: .circle24Regular)))
       
       TUITag()
         .style(.low)
-        .iconStyle(.icon(.circle24Regular))
+        .iconStyle(.icon(Image(fluent: .circle24Regular)))
     }
   }
 }

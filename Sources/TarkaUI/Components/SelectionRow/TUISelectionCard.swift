@@ -127,8 +127,10 @@ public struct TUISelectionCard: View {
   private var rightView: some View {
     HStack(spacing: Spacing.quarterHorizontal) {
       if badgeCount > 0 {
-        TUIBadge(count: badgeCount, badgeColor: badgeColor)
-          .badgeSize(.m)
+        TUIBadge(
+          style: .number(badgeCount),
+          badgeColor: badgeColor,
+          size: .size16)
           .accessibilityIdentifier(Accessibility.badge)
       }
       if showChevron {

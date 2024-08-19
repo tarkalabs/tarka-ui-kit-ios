@@ -15,7 +15,8 @@ struct SearchTextField: View {
   
   var body: some View {
     
-    TextField(searchBarVM.searchItem.placeholder, text: $searchBarVM.searchItem.text)
+    TextField("", text: $searchBarVM.searchItem.text,
+              prompt: Text(searchBarVM.searchItem.placeholder).foregroundColor(.inputTextDim))
       .focused($isFocused)
       .onTapGesture {
         searchBarVM.isEditing = true
@@ -23,6 +24,7 @@ struct SearchTextField: View {
       .onChange(of: searchBarVM.isEditing, perform: { value in
         if value != isFocused {
           isFocused = value
+          searchBarVM.isFocused = value
         }
       })
       .accessibilityIdentifier(Accessibility.root)
@@ -36,10 +38,12 @@ struct SearchTextField: View {
   private func performSearch() {
     guard searchBarVM.needDelaySearch else { return }
     searchBarVM.onEditing(searchBarVM.searchItem.text)
+    searchBarVM.searchText = searchBarVM.searchItem.text
   }
   
   private func updateSearchText(_ value: String) {
     searchBarVM.onEditing(value)
+    searchBarVM.searchText = value
   }
 }
 

@@ -27,14 +27,18 @@ public struct TUIMobileOverlayHeader: View {
     case .handle:
       handleView
       
-    case .onlyTitle(let title):
-      onlyTitleView(title)
+    case .onlyTitle(let title, let alignment):
+      onlyTitleView(title, alignment: alignment)
       
     case .left(let title, let action):
       leftView(title, action: action)
       
     case .right(let title, let icon, let action):
       rightView(title, icon: icon, action: action)
+      
+    case .rightWithMenu(let title, let icon, let menu):
+      rightView(title, icon: icon, menu: menu)
+
     }
   }
   
@@ -54,14 +58,14 @@ public struct TUIMobileOverlayHeader: View {
   
   // MARK: - Only Title View
   
-  private func onlyTitleView(_ title: String) -> some View {
+  private func onlyTitleView(_ title: String, alignment: Alignment) -> some View {
     VStack(spacing: 0) {
       handle
         .padding(.vertical, Spacing.baseVertical)
       
       titleView(title)
         .padding(.bottom, Spacing.custom(21))
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: alignment)
       
       borderView
     }
@@ -114,6 +118,26 @@ public struct TUIMobileOverlayHeader: View {
     .accessibilityElement(children: .contain)
   }
   
+  private func rightView(_ title: String, icon: FluentIcon,
+                         menu: [TUIContextMenuSection]) -> some View {
+    VStack(spacing: 0) {
+      handle
+        .padding(.vertical, Spacing.baseVertical)
+      
+      titleView(title)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .overlay(alignment: .trailing) {
+          buttonView(icon, menu: menu)
+        }
+        .padding(.bottom, Spacing.custom(21))
+      borderView
+    }
+    .frame(height: Spacing.custom(64))
+    .frame(maxWidth: .infinity)
+    .background(Color.surface)
+    .accessibilityElement(children: .contain)
+  }
+  
   // MARK: - Views
   
   private var handle: some View {
@@ -148,15 +172,27 @@ public struct TUIMobileOverlayHeader: View {
     .size(.size40)
     .accessibilityIdentifier(id)
   }
+  
+  private func buttonView(_ icon: FluentIcon,
+                          accessibility id: Accessibility = .rightButton,
+                          menu: [TUIContextMenuSection]) -> some View {
+    TUIIconButton(icon: icon) {
+    }
+    .iconColor(.onSurface)
+    .size(.size40)
+    .menu(menu)
+    .accessibilityIdentifier(id)
+  }
 }
 
 public extension TUIMobileOverlayHeader {
   
   enum Style {
     case handle
-    case onlyTitle(String)
+    case onlyTitle(String, alignment: Alignment = .center)
     case left(String, action: () -> Void)
     case right(String, rightIcon: FluentIcon, action: () -> Void)
+    case rightWithMenu(String, rightIcon: FluentIcon, menu: [TUIContextMenuSection])
   }
   
   enum Accessibility: String, TUIAccessibility {
