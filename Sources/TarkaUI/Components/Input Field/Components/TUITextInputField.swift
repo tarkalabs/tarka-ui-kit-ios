@@ -113,7 +113,8 @@ public struct TUITextInputField: TUIInputFieldProtocol {
           self.inputItem.style = .titleWithValue
         }
       }, rightButtonAction: rightButtonAction)
-      .accessibilityIdentifier(Accessibility.root)
+    .highlightBar(inputItem.isHighlightBarEnabled, color: inputItem.highlightBarColor)
+    .accessibilityIdentifier(Accessibility.root)
   }
   
   private var existingStyle: TUIInputFieldStyle {

@@ -20,6 +20,8 @@ public struct TUIInputFieldItem: Equatable, Hashable {
   public var style: TUIInputFieldStyle
   public var title: String = ""
   public var value: String = ""
+  public var highlightBarColor: Color = .primaryTUI
+  public var isHighlightBarEnabled: Bool = false
   
   /// Creates a `TUIInputFieldItem` object that holds the required values to render `TUIInputField` View
   /// - Parameters:
@@ -28,11 +30,15 @@ public struct TUIInputFieldItem: Equatable, Hashable {
   ///   - value: A string that holds the value ie. content description
   public init(
     style: TUIInputFieldStyle,
-    title: String = "", value: String = "") {
+    title: String = "", value: String = "",
+    highlightBarColor: Color = .primaryTUI,
+    isHighlightBarEnabled: Bool = false) {
       
       self.style = style
       self.title = title
       self.value = value
+      self.highlightBarColor = highlightBarColor
+      self.isHighlightBarEnabled = isHighlightBarEnabled
     }
   
   public var hasTitleAndValue: Bool {
