@@ -114,6 +114,7 @@ public struct TUITextInputField: TUIInputFieldProtocol {
         }
       }, rightButtonAction: rightButtonAction)
     .highlightBar(inputItem.isHighlightBarEnabled, color: inputItem.highlightBarColor)
+    .state(inputItem.stateType)
     .accessibilityIdentifier(Accessibility.root)
   }
   
