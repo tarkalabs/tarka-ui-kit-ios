@@ -11,7 +11,7 @@ import SwiftUI
 /// This is the enum that defines the state of `TUIInputField` view.
 /// According to this, the `TUIInputField` view displays the corresponding highlight bar and helper text
 /// 
-public enum TUIInputFieldState: Equatable, Hashable {
+public enum TUIInputFieldState: Equatable {
   
   public static func == (lhs: TUIInputFieldState, rhs: TUIInputFieldState) -> Bool {
     switch lhs {
