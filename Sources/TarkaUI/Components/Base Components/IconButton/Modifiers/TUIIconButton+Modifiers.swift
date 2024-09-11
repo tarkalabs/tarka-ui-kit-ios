@@ -56,4 +56,10 @@ public extension TUIIconButton {
     newView.menu = menu
     return newView
   }
+  
+  func tip(_ tip: TUITip) -> TUIIconButton {
+    var newView = self
+    newView.tip = tip
+    return newView
+  }
 }

@@ -47,6 +47,7 @@ public struct TUIIconButton: View, Identifiable {
   var size: Size = .size40
   var isDisabled: Bool = false
   var menu: [TUIContextMenuSection] = []
+  var tip: TUITip?
   
   /// Creates a button that displays an icon.
   ///
@@ -74,6 +75,7 @@ public struct TUIIconButton: View, Identifiable {
         style: style,
         buttonSize: buttonSize,
         isDisabled: isDisabled))
+      .popOverTip(tip: tip)
       .accessibilityIdentifier(Accessibility.root)
   }
   
