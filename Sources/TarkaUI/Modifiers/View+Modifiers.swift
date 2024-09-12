@@ -225,19 +225,4 @@ public extension View {
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
                                     to: nil, from: nil, for: nil)
   }
-  
-  // MARK: - PopOver Tip
-  
-  /// Conditionally applies a popover tip to the view based on iOS version
-  /// - Parameters:
-  ///   - tip: A custom tip to display in the popover.
-  ///   - arrowEdge: The edge of the view where the popover arrow should point. Default is `.top`.
-  ///   - action: An optional closure that will be executed when the tip is interacted with.
-  /// - Returns: The original view with the popover tip applied on iOS 17+,
-  ///  or the unmodified view on earlier versions.
-  func popOverTip(tip: TUITip?,
-                  arrowEdge: Edge = .top,
-                  action: (() -> Void)? = nil) -> some View {
-    self.modifier(PopOverTip(tip: tip, arrowEdge: arrowEdge, action: action))
-  }
 }

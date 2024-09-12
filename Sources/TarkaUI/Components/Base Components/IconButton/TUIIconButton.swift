@@ -75,7 +75,7 @@ public struct TUIIconButton: View, Identifiable {
         style: style,
         buttonSize: buttonSize,
         isDisabled: isDisabled))
-      .popOverTip(tip: tip)
+      .popupTip(tip)
       .accessibilityIdentifier(Accessibility.root)
   }
   
