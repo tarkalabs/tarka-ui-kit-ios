@@ -61,11 +61,14 @@ public struct TUIIconButton: View, Identifiable {
   }
   
   public var body: some View {
-    if !menu.isEmpty {
-      Menu(content: sectionView, label: buttonView)
-    } else {
-      buttonView()
+    Group {
+      if !menu.isEmpty {
+        Menu(content: sectionView, label: buttonView)
+      } else {
+        buttonView()
+      }
     }
+    .popupTip(tip)
   }
   
   @ViewBuilder
@@ -75,7 +78,6 @@ public struct TUIIconButton: View, Identifiable {
         style: style,
         buttonSize: buttonSize,
         isDisabled: isDisabled))
-      .popupTip(tip)
       .accessibilityIdentifier(Accessibility.root)
   }
   
