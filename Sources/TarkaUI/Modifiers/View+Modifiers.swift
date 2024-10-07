@@ -159,51 +159,25 @@ public extension View {
       modifier(ToolBarDoneButton(isDoneClicked: .constant(false), onClicked: onClicked))
     }
   
-  // MARK: - Bottom Mobile Button Block
   
-  @ViewBuilder
-  /// Adds `TUIMobileButtonBlock` in bottom safe area of the screen.
-  /// This function itself makes the keyboard adaptive. No need to handle that explicitly.
-  /// - Parameter block: `TUIMobileButtonBlock` that has to be added
-  /// - Returns: View with button block added
-  func addBottomMobileButtonBlock(
-    _ block: TUIMobileButtonBlock,
-    @ViewBuilder _ additionalView: () -> some View = { EmptyView() },
-    isEnabled: Bool = true,
-    isDoneClicked: Binding<Bool>? = nil,
-    onClicked: (() -> Void)? = nil,
-    showAdditionalView: Bool = false
-  ) -> some View {
-    
-    let block = BottomMobileButtonBlock(
-      block,
-      additionalView: additionalView(),
-      showAdditionalView: showAdditionalView,
-      isButtonEnabled: isEnabled,
-      isDoneClicked: isDoneClicked,
-      onClicked: onClicked)
-    
-    modifier(block)
-  }
-  
-  @ViewBuilder
   /// Adds `BackgroundBlurLayer` in background of the view.
   /// It uses opacity that defined in the color asset itself to have transparency.
   /// No modification in the view's opacity.
   ///
   /// - Returns: View with background blur added
+  @ViewBuilder
   func addBackgroundBlur(withColor color: Color) -> some View {
     self.background(BackgroundVisualEffectView())
       .background(color)
   }
   
-  @ViewBuilder
   /// Adds `BackgroundBlurLayer` in background of the view.
   /// It accepts opacity and applies that to the view.
   /// As the color passed here has Opacity as 100,
   /// we are modifying the view's opacity to have transparency.
   ///
   /// - Returns: View with background blur view added
+  @ViewBuilder
   func addBackgroundBlur(
     withColor color: Color, opacity: Double) -> some View {
       self.modifier(
@@ -212,14 +186,6 @@ public extension View {
     }
   
   // MARK: - Keyboard
-  
-  /// Makes the keyboard adaptive to the textfield
-  /// - Returns: View
-  ///
-  @ViewBuilder
-  func adaptiveKeyboard(isKeyboardShown: Binding<Bool>) -> some View {
-    modifier(AdaptiveKeyboard(isKeyboardShown: isKeyboardShown))
-  }
   
   func hideKeyboard() {
     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
