@@ -68,7 +68,7 @@ public struct TUIIconButton: View, Identifiable {
         buttonView()
       }
     }
-    .popupTip(tip)
+    .isEnabled(tip != nil) { $0.popupTip(tip) }
   }
   
   @ViewBuilder

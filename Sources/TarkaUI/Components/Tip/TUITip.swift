@@ -12,7 +12,7 @@ import TipKit
 /// Small helper protocol for a tip that is available below iOS 17
 /// so that we can pass tips around and have members storing tips,
 /// as stored properties can't be marked with `@available`.
-@available(iOS, obsoleted: 17, message: "Can be removed once we only support iOS 17+")
+@available(iOS, obsoleted: 17, message: "It'll be removed once we only support iOS 17+")
 public protocol TUITip {
   
   @available(iOS 17, *)
@@ -61,12 +61,12 @@ struct TipViewModifier: ViewModifier {
 }
 
 public extension View {
-  /// /// A helper for applying the `popupTip` modifier for iOS versions below 17.
+  /// A helper for applying the `popupTip` modifier for iOS versions below 17.
   ///
   /// - Parameters:
   ///   - tip: The optional `TUITip` instance to use.
   ///   - arrowEdge: The edge where the arrow of the tip should point.
-  /// - Returns: A view with the `popupTip` modifier applied for iOS < 17.
+  /// - Returns: A view with the `popupTip` modifier applied from iOS  17.
   ///
   /// Example usage:
   /// ```swift
