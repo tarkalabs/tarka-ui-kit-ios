@@ -182,8 +182,8 @@ public extension View {
     withColor color: Color, opacity: Double) -> some View {
       self.modifier(
         BackgroundBlurView(
-        color: color, opacity: opacity))
-  }
+          color: color, opacity: opacity))
+    }
   
   // MARK: - Keyboard
   
