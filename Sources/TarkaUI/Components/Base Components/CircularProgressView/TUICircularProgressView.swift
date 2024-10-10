@@ -61,12 +61,10 @@ public struct TUICircularProgressView<Label: View>: View {
   }
   
   public var body: some View {
-    GeometryReader { proxy in
-      ZStack {
-        backgroundCircleView
-        progressCircleView
-        labelView(proxy)
-      }
+    ZStack {
+      backgroundCircleView
+      progressCircleView
+      labelView
     }
   }
   
@@ -113,7 +111,7 @@ public struct TUICircularProgressView<Label: View>: View {
   }
   
   @ViewBuilder
-  private func labelView(_ proxy: GeometryProxy) -> some View {
+  private var labelView: some View {
     label()
       .frame(maxWidth: .infinity, maxHeight: .infinity)
   }

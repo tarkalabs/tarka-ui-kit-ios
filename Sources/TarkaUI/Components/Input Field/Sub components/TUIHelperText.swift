@@ -22,7 +22,7 @@ public struct TUIHelperText: View {
   ///   - message: A string that to be displayed as a message
   ///   - showIcon: A bool value that decides whether the icon has to be shown or not
   ///
-  init(style: Style,
+  public init(style: Style,
        message: String,
        showIcon: Bool = true) {
     
