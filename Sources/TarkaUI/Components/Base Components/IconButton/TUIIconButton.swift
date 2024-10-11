@@ -47,6 +47,7 @@ public struct TUIIconButton: View, Identifiable {
   var size: Size = .size40
   var isDisabled: Bool = false
   var menu: [TUIContextMenuSection] = []
+  var tip: TUITip?
   
   /// Creates a button that displays an icon.
   ///
@@ -60,11 +61,14 @@ public struct TUIIconButton: View, Identifiable {
   }
   
   public var body: some View {
-    if !menu.isEmpty {
-      Menu(content: sectionView, label: buttonView)
-    } else {
-      buttonView()
+    Group {
+      if !menu.isEmpty {
+        Menu(content: sectionView, label: buttonView)
+      } else {
+        buttonView()
+      }
     }
+    .isEnabled(tip != nil) { $0.popupTip(tip) }
   }
   
   @ViewBuilder
