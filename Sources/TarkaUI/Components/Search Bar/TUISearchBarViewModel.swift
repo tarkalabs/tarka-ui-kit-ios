@@ -57,4 +57,12 @@ public class TUISearchBarViewModel: ObservableObject {
       self.isShown = isShown
       onEditing = { _ in }
     }
+  
+  public func cancelEditing() {
+    self.isEditing = false
+    self.isShown = false
+    self.searchItem.text = ""
+    self.searchText = ""
+    self.onEditing("")
+  }
 }
