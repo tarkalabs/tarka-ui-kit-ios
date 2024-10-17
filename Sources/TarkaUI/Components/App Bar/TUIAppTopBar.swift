@@ -136,11 +136,7 @@ public struct TUIAppTopBar: View {
     TUISearchBar(searchBarVM: searchBarVM)
       .backButton {
         TUIIconButton(icon: .chevronLeft24Regular) {
-          searchBarVM.isEditing = false
-          searchBarVM.isShown = false
-          searchBarVM.searchItem.text = ""
-          searchBarVM.searchText = ""
-          searchBarVM.onEditing("")
+          searchBarVM.cancelEditing()
         }
         .style(.ghost)
         .size(.size48)
