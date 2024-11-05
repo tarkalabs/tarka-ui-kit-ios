@@ -38,7 +38,8 @@ public struct TUIDatePopover: View {
     self.showTime = showTime
     self.minDate = minDate
     self.maxDate = maxDate
-    self._storedDate = State<Date>.init(initialValue: date.wrappedValue ?? Date())
+    let storedDate = date.wrappedValue ?? Date()
+    self._storedDate = State<Date>.init(initialValue: storedDate)
   }
   
   public var body: some View {
@@ -72,12 +73,13 @@ public struct TUIDatePopover: View {
         
         Button("Cancel".localized) {
           isShowing = false
+          self.date = nil
         }
         .frame(alignment: .trailing)
         .accessibilityIdentifier(Accessibility.done)
         
         Button("Clear".localized) {
-          self.date = storedDate
+          self.date = nil
           isSelected = true
           isShowing = false
         }
