@@ -9,39 +9,64 @@ import SwiftUI
 
 public extension TUIButton {
   
-  enum Style: Identifiable, CaseIterable {
+  enum Style: Identifiable {
     
-    case primary, secondary, outlined, ghost, danger
+    case primary, secondary, outlined, ghost, danger,
+         custom(InputStyle)
     
     public var id: String {
       UUID().uuidString
     }
     
-    var backgroundColor: Color {
+    public var inputStyle: InputStyle {
       switch self {
-      case .primary: return .primaryTUI
-      case .secondary: return .secondaryTUI
-      case .outlined: return .surface
-      case .ghost: return .surface
-      case .danger: return .error
+      case .primary:
+        return .init(background: .primaryTUI, foreground: .onPrimary)
+      case .secondary:
+        return .init(background: .secondaryTUI, foreground: .onSecondary)
+      case .outlined:
+        return .init(background: .surface, foreground: .onSurface, border: .onSurface)
+      case .ghost:
+        return .init(background: .surface, foreground: .onSurface)
+      case .danger:
+        return .init(background: .error, foreground: .onPrimary)
+      case .custom(let item):
+        return item
       }
     }
     
-    var foregroundColor: Color {
+    func borderWidth(_ isPressed: Bool) -> CGFloat {
       switch self {
-      case .primary: return .onPrimary
-      case .secondary: return .onSecondary
-      case .outlined: return .onSurface
-      case .ghost: return .secondaryTUI
-      case .danger: return .onPrimary
+      case .primary, .secondary, .ghost, .danger, .custom:
+        return inputStyle.borderWidth
+      case .outlined:
+        return isPressed ? 2 : inputStyle.borderWidth
       }
     }
     
-    var borderWidth: CGFloat {
+    func borderColor(_ isPressed: Bool) -> Color {
       switch self {
-      case .outlined: return 1.5
-      default: return 0
+      case .primary, .secondary, .ghost, .danger:
+        return isPressed ? .onSurface : .clear
+      case .outlined:
+        return .onSurface
+      case .custom(let item):
+        return isPressed ? item.foreground : item.border
       }
+    }
+  }
+  
+  struct InputStyle {
+    var background: Color
+    var foreground: Color
+    var border: Color
+    var borderWidth: CGFloat
+    
+    public init(background: Color, foreground: Color, border: Color = .clear, borderWidth: CGFloat = 1) {
+      self.background = background
+      self.foreground = foreground
+      self.border = border
+      self.borderWidth = borderWidth
     }
   }
 }

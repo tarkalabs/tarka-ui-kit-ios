@@ -25,10 +25,13 @@ public struct TUITableCell: View {
       .frame(minHeight: Spacing.custom(56))
       .background(Color.clear)
       .frame(maxWidth: .infinity, alignment: .leading)
-      .border(
-        width: 1, edges: borderStyle.edges,
-        color: Color.surfaceVariantHover)
+      .overlay(content: borderView)
       .accessibilityIdentifier(Accessibility.root)
+  }
+  
+  private func borderView() -> some View {
+    EdgeBorder(width: 1, edges: borderStyle.edges)
+      .foregroundColor(.surfaceVariantHover)
   }
 }
 

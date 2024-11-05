@@ -74,19 +74,33 @@ public struct TUIAppTopBar: View {
         
       } else if  case .cancel(let action) = leftButton {
         self.leftButton(icon: .dismiss24Regular, action: action)
+      } else if case .custom(let button) = leftButton {
+        button
       }
       
-      Text(barItem.title)
-        .foregroundColor(.onSurface)
-        .font(.heading5)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.leading, leftButton.leading)
-        .accessibilityIdentifier(Accessibility.title)
+      if let titleView = titleView(forBarItem: barItem) {
+      titleView
+          .lineLimit(2)
+          .foregroundColor(.onSurface)
+          .font(.heading5)
+          .frame(maxWidth: .infinity, alignment: .leading)
+          .padding(.leading, leftButton.leading)
+          .accessibilityIdentifier(Accessibility.title)
+      }
 
-      rightButtons(using: barItem.rightButtons)
+      rightButtons(barItem.rightButtons)
     }
     .padding(.horizontal, Spacing.halfHorizontal)
     .accessibilityIdentifier(Accessibility.titleBar)
+  }
+  
+  func titleView(forBarItem barItem: TitleBarItem) -> Text? {
+    if let title = barItem.title {
+      return Text(title)
+    } else if let attributedTitle = barItem.attributedTitle {
+      return Text(attributedTitle)
+    }
+    return nil
   }
   
   @ViewBuilder
@@ -104,32 +118,15 @@ public struct TUIAppTopBar: View {
   }
   
   @ViewBuilder
-  func rightButtons(using type: RightButtonType) -> some View {
+  func rightButtons(_ rightButtons: [TUIIconButton]) -> some View {
     
     HStack(spacing: 0) {
       
-      switch type {
-        
-      case .one(let buttonItem):
-        buttonItem
-          .accessibilityIdentifier(Accessibility.rightButton1)
-
-      case .two(let buttonItem1, let buttonItem2):
-        buttonItem1
-          .accessibilityIdentifier(Accessibility.rightButton1)
-        buttonItem2
-          .accessibilityIdentifier(Accessibility.rightButton2)
-
-      case .three(let buttonItem1, let buttonItem2, let buttonItem3):
-        buttonItem1
-          .accessibilityIdentifier(Accessibility.rightButton1)
-        buttonItem2
-          .accessibilityIdentifier(Accessibility.rightButton2)
-        buttonItem3
-          .accessibilityIdentifier(Accessibility.rightButton3)
-
-      case .none:
-        EmptyView()
+      ForEach(rightButtons) { button in
+        let index = rightButtons.firstIndex { $0.id == button.id } ?? 0
+        button
+          .size(.size48)
+          .accessibilityIdentifier(Accessibility.rightButton(index))
       }
     }
   }
@@ -139,32 +136,42 @@ public struct TUIAppTopBar: View {
     TUISearchBar(searchBarVM: searchBarVM)
       .backButton {
         TUIIconButton(icon: .chevronLeft24Regular) {
-          searchBarVM.isEditing = false
-          searchBarVM.isShown = false
-          searchBarVM.searchItem.text = ""
-          searchBarVM.onEditing("")
+          searchBarVM.cancelEditing()
         }
         .style(.ghost)
-        .size(.size40)
+        .size(.size48)
       }
       .addCancelButtonAtTrailing()
       .padding(.horizontal, Spacing.baseHorizontal)
       .padding(.vertical, Spacing.baseVertical)
       .onAppear {
-        searchBarVM.isEditing = true
+        searchBarVM.isEditing = searchBarVM.isFocused
       }
   }
 }
 
 extension TUIAppTopBar {
-  enum Accessibility: String, TUIAccessibility {
-    case root = "TUIAppTopBar"
-    case titleBar = "TitleBar"
-    case leftButton = "leftButton"
-    case title = "title"
-    case rightButton1 = "RightButton1"
-    case rightButton2 = "RightButton2"
-    case rightButton3 = "RightButton3"
+  enum Accessibility: TUIAccessibility {
+    case root
+    case titleBar
+    case leftButton
+    case title
+    case rightButton(Int)
+    
+    var identifier: String {
+      switch self {
+      case .root:
+        return "TUIAppTopBar"
+      case .titleBar:
+        return "TitleBar"
+      case .leftButton:
+        return "LeftButton"
+      case .title:
+        return "Title"
+      case .rightButton(let index):
+        return "RightButton - \(index)"
+      }
+    }
   }
 }
 
@@ -195,7 +202,7 @@ struct TUIAppTopBar_Previews: PreviewProvider {
               .init(
                 title: "Title",
                 leftButton: leftButton,
-                rightButtons: .one(rightButton)))
+                rightButtons: [rightButton]))
           )
           
           TUIAppTopBar(
@@ -203,16 +210,16 @@ struct TUIAppTopBar_Previews: PreviewProvider {
               .init(
                 title: "Title",
                 leftButton: leftButton,
-                rightButtons: .two(
-                  rightButton, rightButton)))
+                rightButtons: [
+                  rightButton, rightButton]))
           )
           TUIAppTopBar(
             barStyle: .titleBar(
               .init(
                 title: "Title",
                 leftButton: leftButton,
-                rightButtons: .three(
-                  rightButton, rightButton, rightButton)))
+                rightButtons: [
+                  rightButton, rightButton, rightButton]))
           )
         }
         .padding(.horizontal, 16)

@@ -25,7 +25,8 @@ struct TUIInputTextContentView: View {
   private var keyboardType: UIKeyboardType
   private var allowedCharacters: CharacterSet
   private var isTextField: Bool
-  
+  private var isSecureField: Bool
+
   /// Creates a `TUIInputTextContentView` View
   /// - Parameters:
   ///   - inputItem: A `TUIInputFieldItem` instance that holds the required values to render `TUIInputTextContentView` View
@@ -38,17 +39,19 @@ struct TUIInputTextContentView: View {
        maxCharacters: Int = 0,
        allowedCharacters: CharacterSet = .init(),
        keyboardType: UIKeyboardType = .default,
-       isTextFieldFocused: Bool? = nil,
-       isTextField: Bool = false) {
-    
+       isTextFieldFocused: Binding<Bool> = .constant(false),
+       isTextField: Bool = false,
+       isSecureField: Bool = false) {
+
     self._inputItem = inputItem
     self.placeholder = placeholder ?? ""
     self.maxCharacters = maxCharacters
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
-    self._isTextFieldFocused = Binding<Bool>.constant(isTextFieldFocused ?? false)
+    self._isTextFieldFocused = isTextFieldFocused
     self.isTextField = isTextField
     self._isTextFieldEditingOn = isTextFieldEditingOn ?? Binding.constant(false)
+    self.isSecureField = isSecureField
   }
   
   var body: some View {
@@ -118,9 +121,17 @@ struct TUIInputTextContentView: View {
   @ViewBuilder
   var textView: some View {
     if isTextField {
-      TextField(placeholder,
-                text: $inputItem.value,
-                axis: .vertical)
+      Group {
+        if isSecureField {
+          SecureField(placeholder,
+                      text: $inputItem.value)
+        } else {
+          TextField(placeholder,
+                    text: $inputItem.value,
+                    axis: .vertical)
+          .textFieldStyle(.plain)
+        }
+      }
       .onChange(of: inputItem.value) { newValue in
         limitText(newValue)
       }

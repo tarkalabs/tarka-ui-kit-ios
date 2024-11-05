@@ -100,6 +100,7 @@ public struct TUISnackBar: View {
       .foregroundColor(style.textColor)
       .padding(.trailing, Spacing.baseHorizontal)
       .padding(.vertical, Spacing.verticalMultiple(2))
+      .lineLimit(5)
   }
 }
 

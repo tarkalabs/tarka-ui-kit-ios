@@ -34,8 +34,8 @@ public struct TUIMenuItemProperties: Identifiable, Equatable {
   public enum Style {
     /// Displays only the title.
     case onlyLabel
-    /// Displays the title and left symbol.
-    case leftIcon(FluentIcon)
+    /// Displays the title and left image.
+    case leftImage(ImageIconProtocol)
     /// Displays the title, left and right symbol.
     case withRightIcon(FluentIcon, FluentIcon)
     /// Displays the title and right symbol.
@@ -48,7 +48,7 @@ public struct TUIMenuItemProperties: Identifiable, Equatable {
     func leading(_ isSelected: Bool) -> CGFloat {
       switch self {
       case .onlyLabel: return isSelected ? Spacing.baseHorizontal : Spacing.custom(48)
-      case .leftIcon, .withRightIcon, .statusDots: return Spacing.baseHorizontal
+      case .leftImage, .withRightIcon, .statusDots: return Spacing.baseHorizontal
       case .rightIcon: return Spacing.custom(48)
       case .withDescription: return Spacing.custom(40)
       }
@@ -57,7 +57,7 @@ public struct TUIMenuItemProperties: Identifiable, Equatable {
     func trailing(_ isSelected: Bool) -> CGFloat {
       switch self {
       case .onlyLabel: return isSelected ? Spacing.halfHorizontal : Spacing.custom(48)
-      case .leftIcon, .withRightIcon, .rightIcon, .statusDots: return Spacing.halfHorizontal
+      case .leftImage, .withRightIcon, .rightIcon, .statusDots: return Spacing.halfHorizontal
       case .withDescription: return Spacing.custom(40)
       }
     }
@@ -65,14 +65,14 @@ public struct TUIMenuItemProperties: Identifiable, Equatable {
     func vertical(_ isSelected: Bool) -> CGFloat {
       switch self {
       case .onlyLabel: return isSelected ? Spacing.halfHorizontal : Spacing.custom(10)
-      case .leftIcon, .withRightIcon, .rightIcon, .statusDots: return Spacing.halfHorizontal
+      case .leftImage, .withRightIcon, .rightIcon, .statusDots: return Spacing.halfHorizontal
       case .withDescription: return Spacing.custom(10)
       }
     }
     
     func height(_ isSelected: Bool) -> CGFloat {
       switch self {
-      case .onlyLabel, .leftIcon,
+      case .onlyLabel, .leftImage,
           .withRightIcon: return isSelected ? Spacing.custom(40) : Spacing.custom(38)
       case .rightIcon: return Spacing.custom(36)
       case .statusDots: return isSelected ? Spacing.custom(40) : Spacing.custom(34)
