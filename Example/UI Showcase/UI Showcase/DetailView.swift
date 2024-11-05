@@ -117,12 +117,6 @@ extension DetailView {
       isDoneClicked = true
       searchBarVM.isEditing = false
     })
-    .addBottomMobileButtonBlock(
-      block) {
-        TUIChip("Last seen \(Date().formatted())")
-          .style(.input(.titleWithButton(.dismiss20Filled, action: {})))
-          .padding(.bottom, 8)
-      }
   }
   
   @ViewBuilder
