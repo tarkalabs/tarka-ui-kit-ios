@@ -95,9 +95,17 @@ public extension Color {
   static var onPrimaryAlt: Color {
     TUIThemeManager.shared.theme.onPrimaryAlt
   }
+  
+  static var primaryAltHover: Color {
+    TUIThemeManager.shared.theme.primaryAltHover
+  }
     
   static var onSecondaryAlt: Color {
     TUIThemeManager.shared.theme.onSecondaryAlt
+  }
+  
+  static var secondaryAltHover: Color {
+    TUIThemeManager.shared.theme.secondaryAltHover
   }
     
   static var onTertiaryAlt: Color {
@@ -118,6 +126,10 @@ public extension Color {
     
   static var disabledBackground: Color {
     TUIThemeManager.shared.theme.disabledBackground
+  }
+  
+  static var disabledBackgroundHover: Color {
+    TUIThemeManager.shared.theme.disabledBackgroundHover
   }
     
   static var disabledContent: Color {
@@ -162,5 +174,149 @@ public extension Color {
     
   static var constantLight: Color {
     TUIThemeManager.shared.theme.constantLight
+  }
+  
+  static var accentBaseA: Color {
+    TUIThemeManager.shared.theme.accentBaseA
+  }
+  
+  static var accentBaseB: Color {
+    TUIThemeManager.shared.theme.accentBaseB
+  }
+  
+  static var accentBaseC: Color {
+    TUIThemeManager.shared.theme.accentBaseC
+  }
+  
+  static var accentBaseD: Color {
+    TUIThemeManager.shared.theme.accentBaseD
+  }
+  
+  static var accentBaseE: Color {
+    TUIThemeManager.shared.theme.accentBaseE
+  }
+  
+  static var accentBaseF: Color {
+    TUIThemeManager.shared.theme.accentBaseF
+  }
+  
+  static var accentBaseG: Color {
+    TUIThemeManager.shared.theme.accentBaseG
+  }
+  
+  static var accentBaseH: Color {
+    TUIThemeManager.shared.theme.accentBaseH
+  }
+  
+  static var accentBaseI: Color {
+    TUIThemeManager.shared.theme.accentBaseI
+  }
+  
+  static var accentBaseJ: Color {
+    TUIThemeManager.shared.theme.accentBaseJ
+  }
+  
+  static var accentBaseK: Color {
+    TUIThemeManager.shared.theme.accentBaseK
+  }
+  
+  static var accentBaseL: Color {
+    TUIThemeManager.shared.theme.accentBaseL
+  }
+  
+  static var accentBaseM: Color {
+    TUIThemeManager.shared.theme.accentBaseM
+  }
+  
+  static var accentBaseN: Color {
+    TUIThemeManager.shared.theme.accentBaseN
+  }
+  
+  static var accentBaseO: Color {
+    TUIThemeManager.shared.theme.accentBaseO
+  }
+  
+  static var accentBaseP: Color {
+    TUIThemeManager.shared.theme.accentBaseP
+  }
+  
+  static var accentBaseQ: Color {
+    TUIThemeManager.shared.theme.accentBaseQ
+  }
+  
+  static var accentBaseR: Color {
+    TUIThemeManager.shared.theme.accentBaseR
+  }
+  
+  static var onAccentBaseA: Color {
+    TUIThemeManager.shared.theme.onAccentBaseA
+  }
+  
+  static var onAccentBaseB: Color {
+    TUIThemeManager.shared.theme.onAccentBaseB
+  }
+  
+  static var onAccentBaseC: Color {
+    TUIThemeManager.shared.theme.onAccentBaseC
+  }
+  
+  static var onAccentBaseD: Color {
+    TUIThemeManager.shared.theme.onAccentBaseD
+  }
+  
+  static var onAccentBaseE: Color {
+    TUIThemeManager.shared.theme.onAccentBaseE
+  }
+  
+  static var onAccentBaseF: Color {
+    TUIThemeManager.shared.theme.onAccentBaseF
+  }
+  
+  static var onAccentBaseG: Color {
+    TUIThemeManager.shared.theme.onAccentBaseG
+  }
+  
+  static var onAccentBaseH: Color {
+    TUIThemeManager.shared.theme.onAccentBaseH
+  }
+  
+  static var onAccentBaseI: Color {
+    TUIThemeManager.shared.theme.onAccentBaseI
+  }
+  
+  static var onAccentBaseJ: Color {
+    TUIThemeManager.shared.theme.onAccentBaseJ
+  }
+  
+  static var onAccentBaseK: Color {
+    TUIThemeManager.shared.theme.onAccentBaseK
+  }
+  
+  static var onAccentBaseL: Color {
+    TUIThemeManager.shared.theme.onAccentBaseL
+  }
+  
+  static var onAccentBaseM: Color {
+    TUIThemeManager.shared.theme.onAccentBaseM
+  }
+  
+  static var onAccentBaseN: Color {
+    TUIThemeManager.shared.theme.onAccentBaseN
+  }
+  
+  static var onAccentBaseO: Color {
+    TUIThemeManager.shared.theme.onAccentBaseO
+  }
+  
+  static var onAccentBaseP: Color {
+    TUIThemeManager.shared.theme.onAccentBaseP
+  }
+  
+  static var onAccentBaseQ: Color {
+    TUIThemeManager.shared.theme.onAccentBaseQ
+  }
+  
+  static var onAccentBaseR: Color {
+    TUIThemeManager.shared.theme.onAccentBaseR
   }
 }

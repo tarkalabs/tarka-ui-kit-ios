@@ -47,8 +47,8 @@ public struct TUICircularProgressView<Label: View>: View {
   var style: TUICircularProgressViewStyle = .indeterminate
   
   private let lineWidth: CGFloat = 4
-  @State private var rotation = 0.0
-  
+  @State private var isAnimating: Bool = false
+
   /// Creates a circular progress view with the specified progress and label.
   ///
   /// - Parameters:
@@ -61,12 +61,10 @@ public struct TUICircularProgressView<Label: View>: View {
   }
   
   public var body: some View {
-    GeometryReader { proxy in
-      ZStack {
-        backgroundCircleView
-        progressCircleView
-        labelView(proxy)
-      }
+    ZStack {
+      backgroundCircleView
+      progressCircleView
+      labelView
     }
   }
   
@@ -102,18 +100,18 @@ public struct TUICircularProgressView<Label: View>: View {
             lineWidth: lineWidth
           )
         )
-        .rotationEffect(.degrees(rotation))
+        .rotationEffect(.degrees(isAnimating ? 360 : 0))
+        .animation(.linear(duration: 1)
+          .speed(0.5)
+          .repeatForever(autoreverses: false), value: UUID())
         .onAppear {
-          withAnimation(.linear(duration: 1)
-            .speed(0.5).repeatForever(autoreverses: false)) {
-              rotation = 360.0
-            }
+          isAnimating = true
         }
     }
   }
   
   @ViewBuilder
-  private func labelView(_ proxy: GeometryProxy) -> some View {
+  private var labelView: some View {
     label()
       .frame(maxWidth: .infinity, maxHeight: .infinity)
   }

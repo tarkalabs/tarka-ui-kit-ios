@@ -21,7 +21,7 @@ public struct TUIInputField: TUIInputFieldProtocol {
   public var rightButtonAction: (() -> Void)?
   
   @Binding var isTextFieldEditingOn: Bool
-  private var isTextFieldFocused: Bool
+  @Binding var isTextFieldFocused: Bool
   
   /* Facing some weird issue. When input item value is changed,
    it is getting updates in `TUIInputTextContentView` but not here.
@@ -30,12 +30,12 @@ public struct TUIInputField: TUIInputFieldProtocol {
   @FocusState private var isFocused: Bool
   
   public var properties: TUIInputFieldOptionalProperties
-  public var currentTextFieldState: TUIInputFieldState
 
   private var maxCharacters: Int
   private var allowedCharacters: CharacterSet
   private var keyboardType: UIKeyboardType
   private var isTextField: Bool
+  private var isSecureField: Bool
   private var action: (() -> Void)?
 
   /// Creates a `TUIInputField` View
@@ -45,38 +45,42 @@ public struct TUIInputField: TUIInputFieldProtocol {
   ///   
   public init(inputItem: Binding<TUIInputFieldItem>,
               properties: TUIInputFieldOptionalProperties? = nil,
-              currentTextFieldState: TUIInputFieldState = .none,
-              isTextFieldFocused: Bool? = nil,
+              isTextFieldFocused: Binding<Bool>? = nil,
               isTextFieldEditingOn: Binding<Bool>? = nil,
               maxCharacters: Int = 0,
               allowedCharacters: CharacterSet = .init(),
               keyboardType: UIKeyboardType = .default,
               isTextField: Bool = false,
+              isSecureField: Bool = false,
               action: (() -> Void)? = nil,
               rightButtonAction: (() -> Void)? = nil) {
-    
+
     self._inputItem = inputItem
     self._isTextFieldEditingOn = isTextFieldEditingOn ?? Binding.constant(false)
     self.properties = properties ?? TUIInputFieldOptionalProperties()
-    self.currentTextFieldState = currentTextFieldState
     self.maxCharacters = maxCharacters
     self.allowedCharacters = allowedCharacters
     self.keyboardType = keyboardType
-    self.isTextFieldFocused = isTextFieldFocused ?? false
+    self._isTextFieldFocused = isTextFieldFocused ?? .constant(false)
     self.isTextField = isTextField
     self.action = action
     self.rightButtonAction = rightButtonAction
+    self.isSecureField = isSecureField
+  }
+  
+  var currentTextFieldState: TUIInputFieldState {
+    return (properties.state == .none && isTextFieldFocused) ? .focused : properties.state
   }
   
   public var body: some View {
     
     VStack(spacing: Spacing.halfVertical) {
       
-      fieldBody
+      fieldBodyWithAction
         .background(Color.inputBackground)
         .cornerRadius(8)
       
-      let helperText = currentTextFieldState.helperText() ?? properties.state.helperText() ?? properties.helperText
+      let helperText = currentTextFieldState.helperText() ?? properties.helperText
       if let helperText {
         helperText
       }
@@ -86,12 +90,26 @@ public struct TUIInputField: TUIInputFieldProtocol {
   }
   
   @ViewBuilder
+  private var fieldBodyWithAction: some View {
+    
+    if !self.isTextFieldFocused, let action {
+      fieldBody
+        .contentShape(.rect)
+        .onTapGesture {
+          action()
+        }
+    } else {
+      fieldBody
+    }
+  }
+  
+  @ViewBuilder
   private var fieldBody: some View {
     VStack(spacing: 0) {
       
       fieldBodyHeaderHStack
       
-      let highlightBar = currentTextFieldState.highlightBarColor ?? properties.state.highlightBarColor ?? properties.highlightBarColor
+      let highlightBar = currentTextFieldState.highlightBarColor ?? properties.highlightBarColor
       
       if let highlightBar {
         highlightBar.frame(height: 2)
@@ -125,23 +143,16 @@ public struct TUIInputField: TUIInputFieldProtocol {
   @ViewBuilder
   var textItem: some View {
     
-    let textItem = TUIInputTextContentView(
+    TUIInputTextContentView(
       inputItem: $inputItem,
       placeholder: properties.placeholder,
       isTextFieldEditingOn: $isTextFieldEditingOn,
       maxCharacters: maxCharacters,
       allowedCharacters: allowedCharacters,
       keyboardType: keyboardType,
-      isTextFieldFocused: isTextFieldFocused,
-      isTextField: isTextField)
-    
-    if !self.isTextFieldFocused, let action {
-      Button(action: action) {
-        textItem
-      }
-    } else {
-      textItem
-    }
+      isTextFieldFocused: $isTextFieldFocused,
+      isTextField: isTextField,
+      isSecureField: isSecureField)
   }
 
   @ViewBuilder

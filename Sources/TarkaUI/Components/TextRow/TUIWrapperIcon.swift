@@ -19,12 +19,12 @@ public struct TUIWrapperIcon: View {
   }
   
   public var body: some View {
-    Button {
-      action?()
-    } label: {
-      iconView
-    }
+    iconView
     .frame(width: 24, height: 40)
+    .contentShape(.rect)
+    .onTapGesture {
+      action?()
+    }
     .disabled(disableInteraction)
     .accessibilityIdentifier(Accessibility.wrapperIcon)
   }

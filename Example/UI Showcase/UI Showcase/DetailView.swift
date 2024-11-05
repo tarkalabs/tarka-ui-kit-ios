@@ -59,9 +59,6 @@ struct DetailView: View {
       mainView
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .customNavigationBar(
-      titleBarItem: titleBarItem,
-      searchBarVM: searchBarVM)
   }
   
   @StateObject var searchBarVM = TUISearchBarViewModel(
@@ -87,8 +84,7 @@ struct DetailView: View {
     return .init(
       title: "Detail View",
       leftButton: .back(),
-      rightButtons: .two(
-        searchButton, syncButton))
+      rightButtons: [searchButton, syncButton])
   }
 }
 
@@ -96,21 +92,6 @@ extension DetailView {
   
   @ViewBuilder
   var mainView: some View {
-
-    let block = TUIMobileButtonBlock(
-      style: .two(
-        left: TUIButton(title: "Cancel") {
-          isDoneClicked = true
-        },
-        right: TUIButton(title: "Save") {
-          print("""
-      Final input: Date - \(String(describing: dateFieldItem.date?.formatted(dateFieldItem.format)))
-      First Text - \(memoTextFieldItem.value)
-      Second Text - \(valueOnlyTextFieldItem.value)
-      """)
-          isDoneClicked = true
-        }))
-
     ScrollView {
       VStack(spacing: 10) {
         inputFieldViews
@@ -121,12 +102,6 @@ extension DetailView {
       isDoneClicked = true
       searchBarVM.isEditing = false
     })
-    .addBottomMobileButtonBlock(
-      block) {
-      TUIChip("Last seen \(Date().formatted())")
-          .style(.input(.titleWithButton(.dismiss20Filled, action: {})))
-        .padding(.bottom, 8)
-    }
   }
   
   @ViewBuilder
