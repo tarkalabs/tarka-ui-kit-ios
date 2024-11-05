@@ -25,7 +25,7 @@ public struct TUIDatePopover: View {
   ///   - date: A bindable date value that acts as output when selected
   ///   - isShowing: A bindable bool value that used to show or hide this View
   ///   - isSelected: A bindable bool value that used to notify when date is selected
-  public init(date: Binding<Date>,
+  public init(date: Binding<Date?>,
               isShowing: Binding<Bool>,
               isSelected: Binding<Bool>,
               showTime: Bool = true,
@@ -143,7 +143,6 @@ public struct TUIDatePopover: View {
     } else {
       DatePicker(
         "",
-        selection: $storedDate,
         selection: $storedDate,
         displayedComponents: displayComponents
       )

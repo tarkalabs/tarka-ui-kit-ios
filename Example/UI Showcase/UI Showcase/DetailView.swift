@@ -92,21 +92,6 @@ extension DetailView {
   
   @ViewBuilder
   var mainView: some View {
-    
-    let block = TUIMobileButtonBlock(
-      style: .two(
-        left: TUIButton(title: "Cancel") {
-          isDoneClicked = true
-        },
-        right: TUIButton(title: "Save") {
-          print("""
-      Final input: Date - \(String(describing: dateFieldItem.date?.formatted(dateFieldItem.format)))
-      First Text - \(memoTextFieldItem.value)
-      Second Text - \(valueOnlyTextFieldItem.value)
-      """)
-          isDoneClicked = true
-        }))
-    
     ScrollView {
       VStack(spacing: 10) {
         inputFieldViews
