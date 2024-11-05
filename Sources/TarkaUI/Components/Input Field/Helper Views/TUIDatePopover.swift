@@ -17,6 +17,7 @@ public struct TUIDatePopover: View {
   @State private var storedDate: Date
   var minDate: Date?
   var maxDate: Date?
+  var showTime = true
   var displayComponents: DatePickerComponents = [.date, .hourAndMinute]
   
   /// Creates a `TUIDatePopover` View
@@ -27,12 +28,14 @@ public struct TUIDatePopover: View {
   public init(date: Binding<Date?>,
               isShowing: Binding<Bool>,
               isSelected: Binding<Bool>,
+              showTime: Bool = true,
               minDate: Date? = nil,
               maxDate: Date? = nil) {
     
     self._date = date
     self._isShowing = isShowing
     self._isSelected = isSelected
+    self.showTime = showTime
     self.minDate = minDate
     self.maxDate = maxDate
     let storedDate = date.wrappedValue ?? Date()
@@ -109,32 +112,36 @@ public struct TUIDatePopover: View {
   
   @ViewBuilder
   private var datePicker: some View {
+    var displayedComponents: DatePicker.Components {
+      showTime ? [.date, .hourAndMinute] : [.date]
+    }
+    
     if let minDate, let maxDate {
       DatePicker(
         "",
         selection: $storedDate,
         in: minDate...maxDate,
-        displayedComponents: displayComponents
+        displayedComponents: displayedComponents
       )
     } else if let minDate {
       DatePicker(
         "",
         selection: $storedDate,
         in: minDate...,
-        displayedComponents: displayComponents
+        displayedComponents: displayedComponents
       )
     } else if let maxDate {
       DatePicker(
         "",
         selection: $storedDate,
         in: ...maxDate,
-        displayedComponents: displayComponents
+        displayedComponents: displayedComponents
       )
     } else {
       DatePicker(
         "",
         selection: $storedDate,
-        displayedComponents: displayComponents
+        displayedComponents: displayedComponents
       )
     }
   }
