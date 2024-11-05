@@ -47,7 +47,8 @@ public struct TUICircularProgressView<Label: View>: View {
   var style: TUICircularProgressViewStyle = .indeterminate
   
   private let lineWidth: CGFloat = 4
-  @State private var isAnimating: Bool = false
+  
+  @State private var rotationDegrees = 0.0
   
   /// Creates a circular progress view with the specified progress and label.
   ///
@@ -81,12 +82,17 @@ public struct TUICircularProgressView<Label: View>: View {
       }
     } else {
       circularView
-        .rotationEffect(.degrees(isAnimating ? 360 : 0))
-        .animation(.linear(duration: 1)
-          .speed(0.5)
-          .repeatForever(autoreverses: false), value: UUID())
+        .rotationEffect(.degrees(rotationDegrees))
         .onAppear {
-          isAnimating = true
+          DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            withAnimation(
+              .linear(duration: 1)
+              .speed(0.5)
+              .repeatForever(autoreverses: false)
+            ) {
+              self.rotationDegrees = 360.0
+            }
+          }
         }
     }
   }
