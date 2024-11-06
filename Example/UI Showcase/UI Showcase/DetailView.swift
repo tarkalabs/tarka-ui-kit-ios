@@ -92,7 +92,6 @@ extension DetailView {
   
   @ViewBuilder
   var mainView: some View {
-
     ScrollView {
       VStack(spacing: 10) {
         inputFieldViews
