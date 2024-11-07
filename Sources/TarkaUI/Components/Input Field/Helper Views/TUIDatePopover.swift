@@ -124,27 +124,27 @@ public struct TUIDatePopover: View {
         "",
         selection: $storedDate,
         in: minDate...maxDate,
-        displayedComponents: displayComponents
+        displayedComponents: displayedComponents
       )
     } else if let minDate {
       DatePicker(
         "",
         selection: $storedDate,
         in: minDate...,
-        displayedComponents: displayComponents
+        displayedComponents: displayedComponents
       )
     } else if let maxDate {
       DatePicker(
         "",
         selection: $storedDate,
         in: ...maxDate,
-        displayedComponents: displayComponents
+        displayedComponents: displayedComponents
       )
     } else {
       DatePicker(
         "",
         selection: $storedDate,
-        displayedComponents: displayComponents
+        displayedComponents: displayedComponents
       )
     }
   }
