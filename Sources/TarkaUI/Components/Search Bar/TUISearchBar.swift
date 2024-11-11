@@ -44,7 +44,7 @@ public struct TUISearchBar: View {
          !searchBarVM.searchItem.text.isEmpty { 
         trailingButton
           .accessibilityIdentifier(Accessibility.trailingButton)
-      } else if let trailingButton, searchBarVM.isScanEnabled {
+      } else if let trailingButton, searchBarVM.isSearchButtonEnabled {
         trailingButton
           .accessibilityIdentifier(Accessibility.trailingButton)
       }

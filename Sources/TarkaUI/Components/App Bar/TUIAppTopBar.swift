@@ -148,7 +148,7 @@ public struct TUIAppTopBar: View {
           return $0.addCancelButtonAtTrailing()
         } else {
           if let scanButton {
-            searchBarVM.isScanEnabled = true
+            searchBarVM.isSearchButtonEnabled = true
             return $0.trailingButton { scanButton }
           }
           return $0.addCancelButtonAtTrailing()
