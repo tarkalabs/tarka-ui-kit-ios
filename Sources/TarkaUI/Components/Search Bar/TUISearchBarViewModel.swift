@@ -35,7 +35,7 @@ public class TUISearchBarViewModel: ObservableObject {
   @Published public var searchText = ""
   
   public var needDelaySearch: Bool
-  public var isScanEnabled: Bool = false
+  public var isSearchButtonEnabled: Bool = false
   var onEditing: (String) -> Void
 
   public init(
