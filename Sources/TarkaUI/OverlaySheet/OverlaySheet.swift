@@ -23,11 +23,25 @@ public struct OverlaySheet<V: View>: ViewModifier {
   public func body(content: Content) -> some View {
     content
       .sheet(isPresented: $isPresented) {
-        contentView
-          .backgroundView(withColor: sizeClass == .compact ? .surface : .clear) {
-            isPresented = false
-          }
+        DestinationView(
+          isPresented: $isPresented,
+          contentView: contentView,
+          sizeClass: sizeClass)
       }
+  }
+  
+  struct DestinationView: View {
+    
+    @Binding var isPresented: Bool
+    var contentView: V
+    var sizeClass: UserInterfaceSizeClass?
+    
+    var body: some View {
+      contentView
+        .backgroundView(withColor: sizeClass == .compact ? .surface : .clear) {
+          isPresented = false
+        }
+    }
   }
 }
 
