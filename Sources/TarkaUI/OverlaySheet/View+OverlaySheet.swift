@@ -37,7 +37,7 @@ public extension View {
   @ViewBuilder
   func overlaySheet<V: View>(isPresented: Binding<Bool>,
                              content: @autoclosure @escaping () -> V) -> some View {
-    modifier(OverlaySheet(isPresented: isPresented, contentView: content))
+    modifier(OverlaySheet(isPresented: isPresented, contentView: content()))
   }
 }
 
