@@ -13,11 +13,11 @@ public struct OverlaySheet<V: View>: ViewModifier {
   
   @Binding var isPresented: Bool
   @Environment(\.horizontalSizeClass) var sizeClass
-  private var contentView: V
+  private var contentView: () -> V
   
-  public init(isPresented: Binding<Bool>, @ViewBuilder contentView: () -> V) {
+  public init(isPresented: Binding<Bool>, contentView: @autoclosure @escaping () -> V) {
     _isPresented = isPresented
-    self.contentView = contentView()
+    self.contentView = contentView
   }
   
   public func body(content: Content) -> some View {
@@ -33,11 +33,11 @@ public struct OverlaySheet<V: View>: ViewModifier {
   struct DestinationView: View {
     
     @Binding var isPresented: Bool
-    var contentView: V
+    var contentView: () -> V
     var sizeClass: UserInterfaceSizeClass?
     
     var body: some View {
-      contentView
+      contentView()
         .backgroundView(withColor: sizeClass == .compact ? .surface : .clear) {
           isPresented = false
         }
