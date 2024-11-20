@@ -16,12 +16,14 @@ import SwiftUI
 public struct TUIAppTopBar: View {
   
   var barStyle: BarStyle
+  var trailingButton: TUIIconButton?
   @ObservedObject var searchBarVM: TUISearchBarViewModel
 
   @Environment(\.dismiss) private var dismiss
 
-  public init(barStyle: BarStyle) {
+  public init(barStyle: BarStyle, trailingButton: TUIIconButton? = nil) {
     self.barStyle = barStyle
+    self.trailingButton = trailingButton
     if case .search(let searchBarItem) = barStyle {
       self.searchBarVM = searchBarItem
     } else {
@@ -141,12 +143,19 @@ public struct TUIAppTopBar: View {
         .style(.ghost)
         .size(.size48)
       }
-      .addCancelButtonAtTrailing()
+      .isEnabled(true, content: {
+        if searchBarVM.isEditing && searchBarVM.isShown && !searchBarVM.searchItem.text.isEmpty {
+          return $0.addCancelButtonAtTrailing()
+        } else {
+          if let trailingButton {
+            searchBarVM.isSearchButtonEnabled = true
+            return $0.trailingButton { trailingButton }
+          }
+          return $0.addCancelButtonAtTrailing()
+        }
+      })
       .padding(.horizontal, Spacing.baseHorizontal)
       .padding(.vertical, Spacing.baseVertical)
-      .onAppear {
-        searchBarVM.isEditing = searchBarVM.isFocused
-      }
   }
 }
 

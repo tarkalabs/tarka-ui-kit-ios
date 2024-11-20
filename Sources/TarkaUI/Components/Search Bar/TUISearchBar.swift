@@ -38,10 +38,15 @@ public struct TUISearchBar: View {
           view
             .padding(.trailing, 24)
         }
-
+      
       if let trailingButton,
-          searchBarVM.isShown, searchBarVM.isEditing,
-         !searchBarVM.searchItem.text.isEmpty { 
+         searchBarVM.isShown, searchBarVM.isEditing,
+         !searchBarVM.searchItem.text.isEmpty {
+        trailingButton
+          .accessibilityIdentifier(Accessibility.trailingButton)
+      } else if let trailingButton,
+                searchBarVM.isSearchButtonEnabled,
+                searchBarVM.searchItem.text.isEmpty {
         trailingButton
           .accessibilityIdentifier(Accessibility.trailingButton)
       }

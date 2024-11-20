@@ -39,16 +39,17 @@ public struct TUICircularProgressView<Label: View>: View {
   
   /// A view to display alongside the progress view.
   public let label: () -> Label
-
+  
   public var backgroundCircleColor = Color.surfaceVariantHover
-
+  
   /// The style of the progress view. The default style is `indeterminate`.
   /// If the style is `determinate`, the progress view shows a progress bar that fills up as the task progresses. If the style is `indeterminate`, the progress view shows a spinning wheel that indicates that the task is in progress but does not show the progress itself.
   var style: TUICircularProgressViewStyle = .indeterminate
   
   private let lineWidth: CGFloat = 4
-  @State private var isAnimating: Bool = false
-
+  
+  @State private var rotationDegrees = 0.0
+  
   /// Creates a circular progress view with the specified progress and label.
   ///
   /// - Parameters:
@@ -62,9 +63,45 @@ public struct TUICircularProgressView<Label: View>: View {
   
   public var body: some View {
     ZStack {
-      backgroundCircleView
-      progressCircleView
       labelView
+      progressCircleView
+    }
+  }
+  
+  @ViewBuilder
+  var progressCircleView: some View {
+    if style == .determinate {
+      if progress >= 1.0 {
+        circularView
+      } else {
+        circularView
+          .rotationEffect(.degrees(-90))
+        // Rotate by -90 degrees. Otherwise, the progression starts on
+        // the right side of the circle instead of at the top
+          .animation(.easeIn, value: progress)
+      }
+    } else {
+      circularView
+        .rotationEffect(.degrees(rotationDegrees))
+        .onAppear {
+          DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            withAnimation(
+              .linear(duration: 1)
+              .speed(0.5)
+              .repeatForever(autoreverses: false)
+            ) {
+              self.rotationDegrees = 360.0
+            }
+          }
+        }
+    }
+  }
+  
+  @ViewBuilder
+  private var circularView: some View {
+    ZStack {
+      backgroundCircleView
+      progressBorderView
     }
   }
   
@@ -78,36 +115,15 @@ public struct TUICircularProgressView<Label: View>: View {
   }
   
   @ViewBuilder
-  private var progressCircleView: some View {
-    switch style {
-    case .determinate:
-      Circle()
-        .trim(from: 0, to: progress)
-        .stroke(
-          Color.primaryTUI,
-          style: StrokeStyle(
-            lineWidth: lineWidth
-          )
+  private var progressBorderView: some View {
+    Circle()
+      .trim(from: 0, to: style == .determinate ? progress : 0.25)
+      .stroke(
+        Color.primaryTUI,
+        style: StrokeStyle(
+          lineWidth: lineWidth
         )
-        .rotationEffect(.degrees(-90)) // Rotate by 90 degrees, otherwise the progress starts at the right side instead of at the top of the circle
-        .animation(.easeOut, value: progress)
-    case .indeterminate:
-      Circle()
-        .trim(from: 0, to: 0.25)
-        .stroke(
-          Color.primaryTUI,
-          style: StrokeStyle(
-            lineWidth: lineWidth
-          )
-        )
-        .rotationEffect(.degrees(isAnimating ? 360 : 0))
-        .animation(.linear(duration: 1)
-          .speed(0.5)
-          .repeatForever(autoreverses: false), value: UUID())
-        .onAppear {
-          isAnimating = true
-        }
-    }
+      )
   }
   
   @ViewBuilder
