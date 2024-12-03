@@ -35,8 +35,9 @@ public extension View {
   /// - Returns: View
   ///
   @ViewBuilder
-  func overlaySheet<V: View>(isPresented: Binding<Bool>, @ViewBuilder content: () -> V) -> some View {
-    modifier(OverlaySheet(isPresented: isPresented, contentView: content))
+  func overlaySheet<V: View>(isPresented: Binding<Bool>,
+                             content: @autoclosure @escaping () -> V) -> some View {
+    modifier(OverlaySheet(isPresented: isPresented, contentView: content()))
   }
 }
 
