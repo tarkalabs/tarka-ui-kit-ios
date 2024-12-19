@@ -24,6 +24,7 @@ struct ToolBarDoneButton: ViewModifier {
             isDoneClicked = true
             onClicked?()
           }
+          .foregroundStyle(Color.primaryTUI)
         }
       }
   }
