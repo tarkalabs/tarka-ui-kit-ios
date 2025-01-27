@@ -40,7 +40,13 @@ public struct TUISearchBar: View {
         }
       
       if let trailingButton,
+         searchBarVM.isShown, searchBarVM.isEditing,
          !searchBarVM.searchItem.text.isEmpty {
+        trailingButton
+          .accessibilityIdentifier(Accessibility.trailingButton)
+      } else if let trailingButton,
+                searchBarVM.isSearchButtonEnabled,
+                searchBarVM.searchItem.text.isEmpty {
         trailingButton
           .accessibilityIdentifier(Accessibility.trailingButton)
       }
