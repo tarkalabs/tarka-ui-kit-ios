@@ -42,11 +42,13 @@ public struct TUISearchBar: View {
       if let trailingButton,
          searchBarVM.isShown, searchBarVM.isEditing,
          !searchBarVM.searchItem.text.isEmpty {
+        /// Configured a text clear button to appear when the search text is not empty.
         trailingButton
           .accessibilityIdentifier(Accessibility.trailingButton)
       } else if let trailingButton,
                 searchBarVM.isSearchButtonEnabled,
                 searchBarVM.searchItem.text.isEmpty {
+        /// Configured a trailing button (e.g., 'Scan') to appear when the search text is empty, replacing the text clear button.
         trailingButton
           .accessibilityIdentifier(Accessibility.trailingButton)
       }
