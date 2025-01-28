@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "justifiableflowlayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lorin-vr/JustifiableFlowLayout",
+      "state" : {
+        "revision" : "ac7709f15ca49e4154556d793108287bf2701b09",
+        "version" : "1.0.2"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "2ef543ee21d63734e1c004ad6c870255e8716c50",
+        "version" : "7.12.0"
+      }
+    }
+  ],
+  "version" : 2
+}

@@ -17,8 +17,12 @@ let package = Package(
     // .package(url: /* package url */, from: "1.0.0"),
     // `JustifiableFlowLayout` is used in components like `TUIEmailField`, so that the items can flow in one direction in a grid
     // with equal spacing and height, and wrap to the next line when needed
-    .package(url: "https://github.com/lorin-vr/JustifiableFlowLayout", from: "1.0.0"),
-    .package(url: "https://github.com/onevcat/Kingfisher.git", from: "7.0.0")
+    .package(
+      url: "https://github.com/lorin-vr/JustifiableFlowLayout",
+      .upToNextMinor(from: "1.0.0")),
+    .package(
+      url: "https://github.com/onevcat/Kingfisher.git",
+      .upToNextMinor(from: "7.12.0"))
   ],
   targets: [
     // Targets are the basic building blocks of a package. A target can define a module or a test suite.
