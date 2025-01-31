@@ -143,17 +143,7 @@ public struct TUIAppTopBar: View {
         .style(.ghost)
         .size(.size48)
       }
-      .isEnabled(true, content: {
-        if searchBarVM.isEditing && searchBarVM.isShown && !searchBarVM.searchItem.text.isEmpty {
-          return $0.addCancelButtonAtTrailing()
-        } else {
-          if let trailingButton {
-            searchBarVM.isSearchButtonEnabled = true
-            return $0.trailingButton { trailingButton }
-          }
-          return $0.addCancelButtonAtTrailing()
-        }
-      })
+      .trailingButton { trailingButton }
       .padding(.horizontal, Spacing.baseHorizontal)
       .padding(.vertical, Spacing.baseVertical)
   }
