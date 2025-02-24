@@ -38,13 +38,8 @@ public struct TUISearchBar: View {
           view
             .padding(.trailing, 24)
         }
-
-      if let trailingButton,
-          searchBarVM.isShown, searchBarVM.isEditing,
-         !searchBarVM.searchItem.text.isEmpty { 
-        trailingButton
-          .accessibilityIdentifier(Accessibility.trailingButton)
-      }
+      
+      rightIconButton
     }
     .frame(minHeight: 48)
     .padding(Spacing.custom(4))
@@ -52,6 +47,31 @@ public struct TUISearchBar: View {
     .cornerRadius(75)
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier(Accessibility.root)
+  }
+  
+  @ViewBuilder
+  private var rightIconButton: some View {
+    if searchBarVM.isShown, searchBarVM.isEditing,
+       !searchBarVM.searchItem.text.isEmpty {
+      /// Clear button will be displayed when the search text is not empty.
+      cancelButton
+        .accessibilityIdentifier(Accessibility.trailingButton)
+    } else if let trailingButton,
+              searchBarVM.searchItem.text.isEmpty {
+      /// When search text is empty replace the clear button with configured trailing button (e.g., 'Scan').
+      trailingButton
+        .accessibilityIdentifier(Accessibility.trailingButton)
+    }
+  }
+  
+  private var cancelButton: TUIIconButton {
+    TUIIconButton(icon: .dismiss24Regular) {
+      searchBarVM.searchItem.text = ""
+      searchBarVM.onEditing("")
+      searchBarVM.searchText = ""
+    }
+    .style(.ghost)
+    .size(.size40)
   }
 }
 

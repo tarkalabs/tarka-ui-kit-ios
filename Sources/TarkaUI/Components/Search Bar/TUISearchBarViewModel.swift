@@ -35,6 +35,7 @@ public class TUISearchBarViewModel: ObservableObject {
   @Published public var searchText = ""
   
   public var needDelaySearch: Bool
+  
   var onEditing: (String) -> Void
 
   public init(

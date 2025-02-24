@@ -63,7 +63,11 @@ extension TUIFloatingActionButton {
       configuration.label
         .frame(width: style.buttonWidth, height: style.buttonHeight)
         .background(style.backgroundColor)
-        .border(Circle(), width: 1.5, color: style.borderColor, isEnabled: configuration.isPressed)
+        .clipShape(.circle)
+        .overlay(
+          Circle()
+          .stroke(style.borderColor, lineWidth: configuration.isPressed ? 1.5 : 0)
+        )
     }
   }
 }

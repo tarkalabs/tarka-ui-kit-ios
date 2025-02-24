@@ -83,7 +83,7 @@ public extension View {
       let textRow = TUITextRow(title, style: style)
       
       if isEnabled {
-        NavigationLink(destination: { LazyView(destinationView) }, label: {
+        NavigationLink(destination: destinationView, label: {
           textRow
             .wrapperIcon {
               TUIWrapperIcon(icon: .chevronRight20Filled)
