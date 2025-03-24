@@ -138,6 +138,7 @@ public struct TUIChip: View {
       .font(inputItem.size.font)
       .frame(minHeight: inputItem.size.textSize, alignment: .leading)
       .foregroundColor(inputItem.textTintColor)
+      .fixedSize(horizontal: true, vertical: false)
       .accessibilityIdentifier(Accessibility.title)
   }
   
