@@ -27,6 +27,7 @@ public struct TUIContentUnavailableView: View {
       Color.background
       contentView
     }
+    .background(Color.background)
     .accessibilityIdentifier(Accessibility.root)
     .accessibilityElement(children: .contain)
   }
