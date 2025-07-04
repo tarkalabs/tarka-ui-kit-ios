@@ -138,6 +138,7 @@ public struct TUIChip: View {
       .font(inputItem.size.font)
       .frame(minHeight: inputItem.size.textSize, alignment: .leading)
       .foregroundColor(inputItem.textTintColor)
+      .fixedSize(horizontal: true, vertical: false)
       .accessibilityIdentifier(Accessibility.title)
   }
   
@@ -151,9 +152,9 @@ public struct TUIChip: View {
   }
   
   @ViewBuilder
-  private func iconView(_ icon: FluentIcon,
+  private func iconView(_ icon: ImageIconProtocol,
                         accessibilityID: Accessibility = .leftIcon) -> some View {
-    Image(fluent: icon)
+    Image(icon: icon)
       .frame(maxWidth: iconSize, maxHeight: iconSize)
       .foregroundColor(inputItem.tintColor)
       .accessibilityIdentifier(accessibilityID)
@@ -449,17 +450,17 @@ public extension TUIChip {
 public extension TUIChip {
   
   enum Assist {
-    case onlyTitle, withIcon(FluentIcon), withImage(Image)
+    case onlyTitle, withIcon(ImageIconProtocol), withImage(Image)
   }
   
   enum Input {
     case titleWithButton(FluentIcon, action: () -> Void),
-         withLeftIcon(FluentIcon, rightIcon: FluentIcon, action: () -> Void),
+         withLeftIcon(ImageIconProtocol, rightIcon: FluentIcon, action: () -> Void),
          withLeftImage(Image, rightIcon: FluentIcon, action: () -> Void)
   }
   
   enum Suggestion {
-    case onlyTitle, withIcon(FluentIcon)
+    case onlyTitle, withIcon(ImageIconProtocol)
   }
   
   enum Filter {
@@ -480,10 +481,10 @@ struct TUIChip_Previews: PreviewProvider {
           .style(.assist(.onlyTitle), size: .size32)
         
         TUIChip("Hello Welcome to swiftUI")
-          .style(.assist(.withIcon(.person24Regular)))
+          .style(.assist(.withIcon(FluentIcon.person24Regular)))
         
         TUIChip("Hello Welcome to swiftUI")
-          .style(.assist(.withImage(Image(fluent: .checkmark20Filled))))
+          .style(.assist(.withImage(Image(fluent: FluentIcon.checkmark20Filled))))
       }
       
       Divider()
@@ -493,11 +494,11 @@ struct TUIChip_Previews: PreviewProvider {
           .style(.input(.titleWithButton(.dismiss16Filled, action: {})), size: .size32)
         
         TUIChip("Input with Icon")
-          .style(.input(.withLeftIcon(.person24Regular,
+          .style(.input(.withLeftIcon(FluentIcon.person24Regular,
                                       rightIcon: .dismiss20Filled, action: {})))
         
         TUIChip("Input with Image")
-          .style(.input(.withLeftImage(Image(fluent: .circle32Filled),
+          .style(.input(.withLeftImage(Image(fluent: FluentIcon.circle32Filled),
                                        rightIcon: .dismiss16Filled, action: {})))
           .size(.size32)
       }
@@ -509,7 +510,7 @@ struct TUIChip_Previews: PreviewProvider {
           .style(.suggestion(.onlyTitle), size: .size32)
         
         TUIChip("Suggestion with Icon")
-          .style(.suggestion(.withIcon(.person24Regular)))
+          .style(.suggestion(.withIcon(FluentIcon.person24Regular)))
       }
       
       Divider()
