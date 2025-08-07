@@ -45,14 +45,15 @@ struct TUITab: View {
   
   @ViewBuilder
   private var labelView: some View {
-    Text(tab.title)
+    let title = tab.count > 0 ? "\(tab.title) (\(tab.count))" : tab.title
+    Text(title)
       .font(.button6)
       .padding(.leading, tab.icon == nil ? Spacing.baseHorizontal : Spacing.custom(4))
       .padding(.trailing, Spacing.baseHorizontal)
       .padding(.vertical, Spacing.custom(6))
       .frame(minHeight: 20)
       .foregroundColor(isSelected ? .onSecondary : .onSurface)
-      .fixedSize(horizontal: true, vertical: false)      
+      .fixedSize(horizontal: true, vertical: false)
   }
 }
 

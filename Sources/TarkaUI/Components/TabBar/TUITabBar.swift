@@ -20,18 +20,18 @@ import SwiftUI
 ///
 
 public struct TUITabItem: Hashable {
-  public var id: String
+  public var count: Int
   public let title: String
   public let icon: FluentIcon?
   
-  public init(_ title: String, icon: FluentIcon? = nil) {
-    self.id = title
+  public init(_ title: String, count: Int = 0, icon: FluentIcon? = nil) {
+    self.count = count
     self.title = title
     self.icon = icon
   }
   
   public static func == (lhs: TUITabItem, rhs: TUITabItem) -> Bool {
-    lhs.id == rhs.id && lhs.icon == rhs.icon
+    lhs.title == rhs.title && lhs.icon == rhs.icon
   }
 }
 
