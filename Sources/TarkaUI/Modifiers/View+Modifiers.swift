@@ -35,36 +35,36 @@ public extension View {
     }
   }
   
-  /// Calculates and returns height of the view
-  /// - Parameter height: calculated height
-  /// - Returns: self with background added with clear color layer
+  /// Observes the rendered size of a view and updates the provided binding.
   ///
-  func getHeight(_ height: Binding<CGFloat>) -> some View {
-    background(
-      GeometryReader { proxy in
-        Color.clear
-          .preference(key: HeightKey.self, value: proxy.size.height)
-      }
-        .onPreferenceChange(HeightKey.self) { value in
-          height.wrappedValue = value
-        }
-    )
+  /// Example:
+  /// ```swift
+  /// @State private var height: CGFloat = .zero
+  ///
+  /// Text("Hello")
+  ///     .getHeight(for: $height)
+  /// ```
+  ///
+  /// - Parameter size: A binding to receive the current view size.
+  /// - Returns: A modified view that updates the size binding.
+  func getHeight(_ newValue: Binding<CGFloat>) -> some View {
+    onGeometryChange(for: CGFloat.self) { $0.size.height } action: { newValue.wrappedValue = $0 }
   }
   
-  /// Calculates and returns width of the view
-  /// - Parameter width: calculated width
-  /// - Returns: self with background added with clear color layer
+  /// Observes the rendered size of a view and updates the provided binding.
   ///
-  func getWidth(_ width: Binding<CGFloat>) -> some View {
-    background(
-      GeometryReader { proxy in
-        Color.clear
-          .preference(key: WidthKey.self, value: proxy.size.width)
-      }
-        .onPreferenceChange(WidthKey.self) { value in
-          width.wrappedValue = value
-        }
-    )
+  /// Example:
+  /// ```swift
+  /// @State private var width: CGFloat = .zero
+  ///
+  /// Text("Hello")
+  ///     .getWidth(for: $width)
+  /// ```
+  ///
+  /// - Parameter size: A binding to receive the current view size.
+  /// - Returns: A modified view that updates the size binding.
+  func getWidth(_ newValue: Binding<CGFloat>) -> some View {
+    onGeometryChange(for: CGFloat.self) { $0.size.width } action: { newValue.wrappedValue = $0 }
   }
   
   // MARK: - TextRow with Navigation
@@ -121,7 +121,7 @@ public extension View {
   /// - Returns: A closure that returns the content
   ///
   @ViewBuilder
-  func isEnabled<Content: View>(_ show: Bool, content: (Self) -> Content) -> some View {
+  func isEnabled<Content: View>(_ show: Bool, @ViewBuilder content: (Self) -> Content) -> some View {
     if show {
       content(self)
     } else {
