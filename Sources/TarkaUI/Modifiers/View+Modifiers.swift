@@ -121,7 +121,7 @@ public extension View {
   /// - Returns: A closure that returns the content
   ///
   @ViewBuilder
-  func isEnabled<Content: View>(_ show: Bool, @ViewBuilder content: (Self) -> Content) -> some View {
+  func isEnabled<Content: View>(_ show: Bool = true, @ViewBuilder content: (Self) -> Content) -> some View {
     if show {
       content(self)
     } else {
