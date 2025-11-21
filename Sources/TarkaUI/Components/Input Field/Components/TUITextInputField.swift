@@ -79,7 +79,8 @@ public struct TUITextInputField: TUIInputFieldProtocol {
           resetStyle()
         }
       })
-      .onChange(of: inputItem.value) { _ in
+      .onChange(of: inputItem.value) { newValue in
+        guard inputItem.value != newValue else { return }
         resetStyle()
       }
   }
