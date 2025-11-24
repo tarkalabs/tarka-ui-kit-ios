@@ -20,12 +20,37 @@ import SwiftUI
 ///
 
 public struct TUITabItem: Hashable {
+  public let count: Int
   public let title: String
   public let icon: FluentIcon?
   
-  public init(_ title: String, icon: FluentIcon? = nil) {
+  public init(_ title: String, count: Int = 0, icon: FluentIcon? = nil) {
+    self.count = count
     self.title = title
     self.icon = icon
+  }
+  
+  public static func == (lhs: TUITabItem, rhs: TUITabItem) -> Bool {
+    lhs.title == rhs.title && lhs.icon == rhs.icon && lhs.count == rhs.count
+  }
+  
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(title)
+    hasher.combine(icon)
+    hasher.combine(count)
+  }
+  
+  /// **Logical Tab Identification**
+  /// Used to maintain consistent tab selection behavior, independent of count changes.
+  ///
+  /// - Ensures tab selection remains stable even when the tab count updates.
+  /// - Without this, a count update can cause the `selectedTab` to become non-matching
+  ///   with tabs in the array, leading to potential crashes in `getOffset()` or `onTabSelection()`.
+  /// - The `isSameTab()` method provides stable identification by comparing only the tab’s
+  ///   title and icon, rather than dynamic properties like count.
+  /// - This allows the same logical tab to stay selected regardless of count changes.
+  public func isSameTab(as other: TUITabItem) -> Bool {
+    return title == other.title && icon == other.icon
   }
 }
 
@@ -89,7 +114,7 @@ public struct TUITabBar: View {
   private func tabView(_ tab: TUITabItem) -> some View {
     TUITab(
       tab: tab,
-      isSelected: selectedTab == tab
+      isSelected: selectedTab.isSameTab(as: tab)
     ) { tab in
       withAnimation {
         selectedTab = tab
@@ -105,7 +130,7 @@ public struct TUITabBar: View {
   }
   
   private func getOffset() -> CGFloat {
-    guard let selectedIndex = tabs.firstIndex(where: { $0 == selectedTab }) else {
+    guard let selectedIndex = tabs.firstIndex(where: { $0.isSameTab(as: selectedTab) }) else {
       assertionFailure("Selected tab not matching with the tabs")
       return 0
     }
@@ -117,7 +142,7 @@ public struct TUITabBar: View {
   }
   
   private func onTabSelection() {
-    if let selectedIndex = tabs.firstIndex(where: { $0 == selectedTab }) {
+    if let selectedIndex = tabs.firstIndex(where: { $0.isSameTab(as: selectedTab) }) {
       selectedTabWidth = tabWidths[selectedIndex]
     } else {
       assertionFailure("Selected tab not matching with the tabs")

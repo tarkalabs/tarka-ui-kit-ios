@@ -9,11 +9,6 @@ import SwiftUI
 
 public typealias TUIButtonAction = () -> Void
 
-let keyWindow = UIApplication.shared.connectedScenes
-  .compactMap({$0 as? UIWindowScene})
-  .first?.windows
-  .filter({$0.isKeyWindow}).first
-
 public extension TUIAppTopBar {
   
   /// Defines the navigation bar style
@@ -24,30 +19,6 @@ public extension TUIAppTopBar {
     
     /// Shows search bar with back and cancel buttons
     case search(TUISearchBarViewModel)
-    
-    var minHeight: CGFloat {
-      
-      if case .titleBar(let barItem) = self {
-        
-        if case .none = barItem.leftButton,
-           barItem.rightButtons.isEmpty {
-          return 60
-        }
-      }
-      return 64 + topPadding
-    }
-
-    var topPadding: CGFloat {
-      
-      // It is to give extra padding for dynamic island supported devices
-      // as it has more top inset than others that causes padding issue
-      let expectedSafeArea: CGFloat = 50
-      guard let topInsets = keyWindow?.safeAreaInsets.top,
-            topInsets > expectedSafeArea else {
-        return 0
-      }
-      return topInsets - expectedSafeArea
-    }
   }
   
   struct TitleBarItem {

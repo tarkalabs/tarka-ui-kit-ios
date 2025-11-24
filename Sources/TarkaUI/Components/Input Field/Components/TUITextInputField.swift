@@ -46,12 +46,14 @@ public struct TUITextInputField: TUIInputFieldProtocol {
     inputItem: Binding<TUIInputFieldItem>,
     dismissTextFocus: Binding<Bool> = .constant(true),
     isFocused isObservableFocused: Binding<Bool> = .constant(false),
-    isSecureField: Bool = false) {
+    isSecureField: Bool = false,
+    placeholder: String? = nil) {
 
       self._inputItem = inputItem
       self._dismissTextFocus = dismissTextFocus
       self._isObservableFocused = isObservableFocused
       self.isSecureField = isSecureField
+      self.properties.placeholder = placeholder
     }
   
   public var body: some View {
