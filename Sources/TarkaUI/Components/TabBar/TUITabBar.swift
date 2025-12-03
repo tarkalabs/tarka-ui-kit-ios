@@ -20,37 +20,24 @@ import SwiftUI
 ///
 
 public struct TUITabItem: Hashable {
-  public let count: Int
+  public var count: Int
   public let title: String
   public let icon: FluentIcon?
+  public let id: String
   
   public init(_ title: String, count: Int = 0, icon: FluentIcon? = nil) {
     self.count = count
     self.title = title
     self.icon = icon
+    self.id = title
   }
   
   public static func == (lhs: TUITabItem, rhs: TUITabItem) -> Bool {
-    lhs.title == rhs.title && lhs.icon == rhs.icon && lhs.count == rhs.count
+    lhs.id == rhs.id
   }
   
   public func hash(into hasher: inout Hasher) {
-    hasher.combine(title)
-    hasher.combine(icon)
-    hasher.combine(count)
-  }
-  
-  /// **Logical Tab Identification**
-  /// Used to maintain consistent tab selection behavior, independent of count changes.
-  ///
-  /// - Ensures tab selection remains stable even when the tab count updates.
-  /// - Without this, a count update can cause the `selectedTab` to become non-matching
-  ///   with tabs in the array, leading to potential crashes in `getOffset()` or `onTabSelection()`.
-  /// - The `isSameTab()` method provides stable identification by comparing only the tab’s
-  ///   title and icon, rather than dynamic properties like count.
-  /// - This allows the same logical tab to stay selected regardless of count changes.
-  public func isSameTab(as other: TUITabItem) -> Bool {
-    return title == other.title && icon == other.icon
+    hasher.combine(id)
   }
 }
 
@@ -110,7 +97,7 @@ public struct TUITabBar: View {
   private func tabView(_ tab: TUITabItem) -> some View {
     TUITab(
       tab: tab,
-      isSelected: selectedTab.isSameTab(as: tab)
+      isSelected: selectedTab.id == tab.id
     ) { tab in
       withAnimation(.smooth) {
         selectedItem = tab
