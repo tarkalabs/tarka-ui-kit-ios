@@ -23,21 +23,19 @@ public struct TUITabItem: Hashable {
   public var count: Int
   public let title: String
   public let icon: FluentIcon?
-  public let id: String
   
   public init(_ title: String, count: Int = 0, icon: FluentIcon? = nil) {
     self.count = count
     self.title = title
     self.icon = icon
-    self.id = title
   }
   
   public static func == (lhs: TUITabItem, rhs: TUITabItem) -> Bool {
-    lhs.id == rhs.id
+    lhs.title == rhs.title
   }
   
   public func hash(into hasher: inout Hasher) {
-    hasher.combine(id)
+    hasher.combine(title)
   }
 }
 
@@ -45,8 +43,8 @@ public struct TUITabBar: View {
   private let tabs: [TUITabItem]
   @Binding var selectedTab: TUITabItem
   
-  @Namespace private var selectedID
-  @State private var selectedItem: TUITabItem?
+  // Namespace for matched-geometry animation of the selection pill
+  @Namespace private var selectionNamespace
   
   /// Creates a TUITabBar view with the specified tabs and selected tab.
   ///
@@ -57,22 +55,11 @@ public struct TUITabBar: View {
   public init(tabs: [TUITabItem], selectedTab: Binding<TUITabItem>) {
     self.tabs = tabs
     _selectedTab = selectedTab
-    _selectedItem = .init(initialValue: selectedTab.wrappedValue)
   }
   
   public var body: some View {
-    ZStack {
-      backgroundView
-      tabsView
-    }
-    .fixedSize() // To fit the size of the content
-    .frame(maxWidth: .infinity, alignment: .leading) // To left-align the contents
-  }
-  
-  @ViewBuilder
-  private var backgroundView: some View {
-    Capsule()
-      .foregroundColor(.secondaryAlt)
+    tabsView
+      .fixedSize() // To fit the size of the content
   }
   
   @ViewBuilder
@@ -80,30 +67,30 @@ public struct TUITabBar: View {
     HStack(spacing: 0) {
       ForEach(tabs, id: \.self) { tab in
         tabView(tab)
-          .matchedGeometryEffect(id: tab, in: selectedID)
       }
     }
     .padding(Spacing.halfVertical)
-    .background {
-      if let selectedItem {
-        Capsule()
-          .fill(Color.secondaryTUI)
-          .matchedGeometryEffect(id: selectedItem, in: selectedID, isSource: false)
-      }
-    }
+    .background(Color.secondaryAlt, in: .capsule)
   }
   
   @ViewBuilder
   private func tabView(_ tab: TUITabItem) -> some View {
-    TUITab(
-      tab: tab,
-      isSelected: selectedTab.id == tab.id
-    ) { tab in
-      withAnimation(.smooth) {
-        selectedItem = tab
-        selectedTab = tab
+    ZStack {
+      if selectedTab == tab {
+        Capsule()
+          .fill(Color.secondaryTUI)
+          .matchedGeometryEffect(id: "selection-pill", in: selectionNamespace)
+      }
+      TUITab(
+        tab: tab,
+        isSelected: selectedTab == tab
+      ) { tab in
+        withAnimation(.smooth) {
+          selectedTab = tab
+        }
       }
     }
+    .clipShape(.capsule)
   }
 }
 
