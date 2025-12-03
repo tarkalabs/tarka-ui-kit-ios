@@ -57,8 +57,7 @@ public struct TUITabItem: Hashable {
 public struct TUITabBar: View {
   private let tabs: [TUITabItem]
   @Binding var selectedTab: TUITabItem
-  @State private var tabWidths: [CGFloat] = []
-  @State private var selectedTabWidth: CGFloat
+  
   @Namespace private var selectedID
   @State private var selectedItem: TUITabItem?
   
@@ -70,8 +69,7 @@ public struct TUITabBar: View {
   ///
   public init(tabs: [TUITabItem], selectedTab: Binding<TUITabItem>) {
     self.tabs = tabs
-    self._selectedTab = selectedTab
-    self._selectedTabWidth = State(initialValue: 0)
+    _selectedTab = selectedTab
     _selectedItem = .init(initialValue: selectedTab.wrappedValue)
   }
   
