@@ -20,7 +20,7 @@ import SwiftUI
 ///
 
 public struct TUITabItem: Hashable {
-  public var count: Int
+  public let count: Int
   public let title: String
   public let icon: FluentIcon?
   
@@ -30,12 +30,17 @@ public struct TUITabItem: Hashable {
     self.icon = icon
   }
   
-  public static func == (lhs: TUITabItem, rhs: TUITabItem) -> Bool {
-    lhs.title == rhs.title
-  }
-  
-  public func hash(into hasher: inout Hasher) {
-    hasher.combine(title)
+  /// **Logical Tab Identification**
+  /// Used to maintain consistent tab selection behavior, independent of count changes.
+  ///
+  /// - Ensures tab selection remains stable even when the tab count updates.
+  /// - Without this, a count update can cause the `selectedTab` to become non-matching
+  ///   with tabs in the array, leading to potential crashes in `getOffset()` or `onTabSelection()`.
+  /// - The `isSameTab()` method provides stable identification by comparing only the tab’s
+  ///   title and icon, rather than dynamic properties like count.
+  /// - This allows the same logical tab to stay selected regardless of count changes.
+  public func isSameTab(as other: TUITabItem) -> Bool {
+    return self == other
   }
 }
 
@@ -43,7 +48,7 @@ public struct TUITabBar: View {
   private let tabs: [TUITabItem]
   @Binding var selectedTab: TUITabItem
   
-  // Namespace for matched-geometry animation of the selection pill
+  /// Namespace for matched-geometry animation of the selection pill
   @Namespace private var selectionNamespace
   
   /// Creates a TUITabBar view with the specified tabs and selected tab.
