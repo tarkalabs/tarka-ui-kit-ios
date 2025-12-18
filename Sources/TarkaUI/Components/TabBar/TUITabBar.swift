@@ -40,7 +40,7 @@ public struct TUITabItem: Hashable {
   ///   title and icon, rather than dynamic properties like count.
   /// - This allows the same logical tab to stay selected regardless of count changes.
   public func isSameTab(as other: TUITabItem) -> Bool {
-    return self == other
+    return title == other.title && icon == other.icon
   }
 }
 
