@@ -30,16 +30,6 @@ public struct TUITabItem: Hashable {
     self.icon = icon
   }
   
-  public static func == (lhs: TUITabItem, rhs: TUITabItem) -> Bool {
-    lhs.title == rhs.title && lhs.icon == rhs.icon && lhs.count == rhs.count
-  }
-  
-  public func hash(into hasher: inout Hasher) {
-    hasher.combine(title)
-    hasher.combine(icon)
-    hasher.combine(count)
-  }
-  
   /// **Logical Tab Identification**
   /// Used to maintain consistent tab selection behavior, independent of count changes.
   ///
@@ -57,8 +47,9 @@ public struct TUITabItem: Hashable {
 public struct TUITabBar: View {
   private let tabs: [TUITabItem]
   @Binding var selectedTab: TUITabItem
-  @State private var tabWidths: [CGFloat] = []
-  @State private var selectedTabWidth: CGFloat
+  
+  /// Namespace for matched-geometry animation of the selection pill
+  @Namespace private var selectionNamespace
   
   /// Creates a TUITabBar view with the specified tabs and selected tab.
   ///
@@ -68,32 +59,12 @@ public struct TUITabBar: View {
   ///
   public init(tabs: [TUITabItem], selectedTab: Binding<TUITabItem>) {
     self.tabs = tabs
-    self._selectedTab = selectedTab
-    self._selectedTabWidth = State(initialValue: 0)
+    _selectedTab = selectedTab
   }
   
   public var body: some View {
-    ZStack {
-      backgroundView
-      tabsView
-    }
-    .fixedSize() // To fit the size of the content
-    .frame(maxWidth: .infinity, alignment: .leading) // To left-align the contents
-    .onPreferenceChange(TabWidthPreferenceKey.self) {
-      tabWidths = $0
-    }
-    .onAppear {
-      onTabSelection()
-    }
-    .onChange(of: selectedTab) { _ in
-      onTabSelection()
-    }
-  }
-  
-  @ViewBuilder
-  private var backgroundView: some View {
-    Capsule()
-      .foregroundColor(.secondaryAlt)
+    tabsView
+      .fixedSize() // To fit the size of the content
   }
   
   @ViewBuilder
@@ -103,61 +74,32 @@ public struct TUITabBar: View {
         tabView(tab)
       }
     }
-    .background(alignment: .leading) {
-      selectionIndicatorView
-    }
-    .frame(maxWidth: .infinity)
     .padding(Spacing.halfVertical)
+    .background(Color.secondaryAlt, in: .capsule)
   }
   
   @ViewBuilder
   private func tabView(_ tab: TUITabItem) -> some View {
-    TUITab(
-      tab: tab,
-      isSelected: selectedTab.isSameTab(as: tab)
-    ) { tab in
-      withAnimation {
-        selectedTab = tab
+    ZStack {
+      if selectedTab == tab {
+        Capsule()
+          .fill(Color.secondaryTUI)
+          .matchedGeometryEffect(id: "selection-pill", in: selectionNamespace)
+      }
+      TUITab(
+        tab: tab,
+        isSelected: selectedTab == tab
+      ) { tab in
+        withAnimation(.smooth) {
+          selectedTab = tab
+        }
       }
     }
-  }
-  
-  private var selectionIndicatorView: some View {
-    Capsule()
-      .frame(width: selectedTabWidth)
-      .foregroundColor(.secondaryTUI)
-      .offset(x: getOffset(), y: 0)
-  }
-  
-  private func getOffset() -> CGFloat {
-    guard let selectedIndex = tabs.firstIndex(where: { $0.isSameTab(as: selectedTab) }) else {
-      assertionFailure("Selected tab not matching with the tabs")
-      return 0
-    }
-    var offset: CGFloat = 0
-    for i in 0 ..< selectedIndex where tabWidths.count >= selectedIndex {
-      offset += tabWidths[i]
-    }
-    return offset
-  }
-  
-  private func onTabSelection() {
-    if let selectedIndex = tabs.firstIndex(where: { $0.isSameTab(as: selectedTab) }) {
-      selectedTabWidth = tabWidths[selectedIndex]
-    } else {
-      assertionFailure("Selected tab not matching with the tabs")
-    }
+    .clipShape(.capsule)
   }
 }
 
-struct TabWidthPreferenceKey: PreferenceKey {
-  typealias Value = [CGFloat]
-  static var defaultValue: [CGFloat] = []
-  
-  static func reduce(value: inout [CGFloat], nextValue: () -> [CGFloat]) {
-    value.append(contentsOf: nextValue())
-  }
-}
+// MARK: - Preview
 
 struct TabBar_Previews: PreviewProvider {
   
@@ -170,12 +112,13 @@ struct TabBar_Previews: PreviewProvider {
     }
     
     enum Tabs: CaseIterable {
-      case usage, reqeust
+      case usage, request, usageDescription
       
       var tabItem: TUITabItem {
         switch self {
         case .usage: return .init("Usage")
-        case .reqeust: return .init("Request")
+        case .request: return .init("Request")
+        case .usageDescription: return .init("Usage Description")
         }
       }
       

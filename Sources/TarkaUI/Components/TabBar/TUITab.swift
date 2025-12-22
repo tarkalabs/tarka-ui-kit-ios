@@ -29,10 +29,6 @@ struct TUITab: View {
       
       labelView
     }
-    .background(GeometryReader { proxy in
-      Color.clear
-        .preference(key: TabWidthPreferenceKey.self, value: [proxy.size.width])
-    })
   }
   
   @ViewBuilder
