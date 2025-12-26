@@ -7,10 +7,15 @@
 
 import SwiftUI
 
+public final class ToolbarState: ObservableObject {
+  @Published public var isEnabled = false
+  public init() { }
+}
+
 struct ToolBarDoneButton: ViewModifier {
-  
+  @EnvironmentObject private var toolbarState: ToolbarState
+
   @Binding var isDoneClicked: Bool
-  @State var isKeyboardShown: Bool = false
   
   var onClicked: (() -> Void)? = nil
   
@@ -25,8 +30,15 @@ struct ToolBarDoneButton: ViewModifier {
             onClicked?()
           }
           .foregroundStyle(Color.primaryTUI)
+          .onAppear {
+              toolbarState.isEnabled = true
+          }
+          .onDisappear {
+            toolbarState.isEnabled = false
+          }
         }
       }
+      .scrollDismissesKeyboard(.immediately)
   }
 }
 
