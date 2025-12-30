@@ -27,6 +27,7 @@ struct ToolBarDoneButton: ViewModifier {
           .foregroundStyle(Color.primaryTUI)
         }
       }
+      .scrollDismissesKeyboard(.immediately)
   }
 }
 
