@@ -184,11 +184,12 @@ public extension View {
         BackgroundBlurView(
         color: color, opacity: opacity))
   }
-  
-  // MARK: - Keyboard
-  
-  func hideKeyboard() {
-    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
-                                    to: nil, from: nil, for: nil)
-  }
+}
+
+// MARK: - Keyboard
+
+public func hideKeyboard() {
+  UIApplication.shared.sendAction(
+    #selector(UIResponder.resignFirstResponder),
+    to: nil, from: nil, for: nil)
 }
