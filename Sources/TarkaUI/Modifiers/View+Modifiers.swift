@@ -137,29 +137,6 @@ public extension View {
     modifier(DisabledView(isDisabled: isDisabled))
   }
   
-  // MARK: - Toolbar Done Button
-  
-  /// Adds done button in toolbar
-  /// - Parameter isDoneClicked: binding that handles when done button is clicked
-  /// - Returns: View
-  ///
-  @ViewBuilder
-  func addDoneButtonInToolbar(
-    isDoneClicked: Binding<Bool>) -> some View {
-      modifier(ToolBarDoneButton(isDoneClicked: isDoneClicked, onClicked: { }))
-    }
-  
-  /// Adds done button in toolbar
-  /// - Parameter onClicked: closure that called when done button is clicked
-  /// - Returns: View
-  ///
-  @ViewBuilder
-  func addDoneButtonInToolbar(
-    onClicked: (() -> Void)? = nil) -> some View {
-      modifier(ToolBarDoneButton(isDoneClicked: .constant(false), onClicked: onClicked))
-    }
-  
-  
   /// Adds `BackgroundBlurLayer` in background of the view.
   /// It uses opacity that defined in the color asset itself to have transparency.
   /// No modification in the view's opacity.
