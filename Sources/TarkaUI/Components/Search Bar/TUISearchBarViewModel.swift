@@ -22,7 +22,7 @@ public struct TUISearchBarItem {
 }
 
 public class TUISearchBarViewModel: ObservableObject {
-
+  
   @Published public var searchItem: TUISearchBarItem
   @Published public var isShown: Bool = false {
     didSet {

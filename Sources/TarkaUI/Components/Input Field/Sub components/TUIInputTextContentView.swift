@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import SwiftUIIntrospect
 
 /// This is SwiftUI View that displays title and text content for the `TUIInputField` view in the vertical stack.
 /// The view can be customized with different styles,
@@ -125,10 +126,16 @@ struct TUIInputTextContentView: View {
         if isSecureField {
           SecureField(placeholder,
                       text: $inputItem.value)
+          .introspect(.textField, on: .iOS(.v16, .v17, .v18, .v26)) { textField in
+            textField.addDoneButtonOnKeyboard()
+          }
         } else {
           TextField(placeholder,
                     text: $inputItem.value,
                     axis: .vertical)
+          .introspect(.textField, on: .iOS(.v16, .v17, .v18, .v26)) { textField in
+            textField.addDoneButtonOnKeyboard()
+          }
           .textFieldStyle(.plain)
         }
       }

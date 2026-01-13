@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import SwiftUIIntrospect
 
 struct SearchTextField: View {
   
@@ -17,22 +17,29 @@ struct SearchTextField: View {
     
     TextField("", text: $searchBarVM.searchItem.text,
               prompt: Text(searchBarVM.searchItem.placeholder).foregroundColor(.inputTextDim))
-      .focused($isFocused)
-      .onChange(of: isFocused) {
-        searchBarVM.isEditing = $0
-      }
-      .onChange(of: searchBarVM.isEditing, perform: { value in
-        if value != isFocused {
-          isFocused = value
-          searchBarVM.isFocused = value
+    .introspect(.textField, on: .iOS(.v16, .v17, .v18, .v26)) { textField in
+      textField.addDoneButtonOnKeyboard {
+        if (textField.text?.isEmpty ?? true) == false {
+          performSearch()
         }
-      })
-      .accessibilityIdentifier(Accessibility.root)
-      .submitLabel(searchBarVM.needDelaySearch ? .search : .return)
-      .onSubmit(performSearch)
-      .isEnabled(!searchBarVM.needDelaySearch) {
-        $0.onChange(of: searchBarVM.searchItem.text, perform: updateSearchText)
       }
+    }
+    .focused($isFocused)
+    .onChange(of: isFocused) {
+      searchBarVM.isEditing = $0
+    }
+    .onChange(of: searchBarVM.isEditing, perform: { value in
+      if value != isFocused {
+        isFocused = value
+        searchBarVM.isFocused = value
+      }
+    })
+    .accessibilityIdentifier(Accessibility.root)
+    .submitLabel(searchBarVM.needDelaySearch ? .search : .return)
+    .onSubmit(performSearch)
+    .isEnabled(!searchBarVM.needDelaySearch) {
+      $0.onChange(of: searchBarVM.searchItem.text, perform: updateSearchText)
+    }
   }
   
   private func performSearch() {
