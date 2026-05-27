@@ -17,6 +17,8 @@ public struct TUITextRow: View {
   @ViewBuilder var wrapperIcon: (() -> TUIWrapperIcon?)
   @TUIIconButtonBuilder var iconButtons: (() -> [TUIIconButton])
   
+  public var textColor: Color = .onSurface
+  
   /// Creates a text row with the specified title and style.
   ///
   /// - Parameters:
@@ -65,7 +67,7 @@ public struct TUITextRow: View {
     case .onlyTitle:
       Text(title)
         .font(.heading7)
-        .foregroundColor(.onSurface)
+        .foregroundColor(textColor)
         .frame(minHeight: 18)
         .padding(.vertical, Spacing.custom(11))
         .accessibilityIdentifier(Accessibility.title)
