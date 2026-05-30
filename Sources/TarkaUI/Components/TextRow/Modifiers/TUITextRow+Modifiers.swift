@@ -25,4 +25,10 @@ public extension TUITextRow {
     }
     return newView
   }
+  
+  func textColor(_ color: Color) -> Self {
+    var newView = self
+    newView.textColor = color
+    return newView
+  }
 }
