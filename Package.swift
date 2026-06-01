@@ -1,11 +1,11 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
   name: "TarkaUI",
-  platforms: [.iOS(.v16)],
+  platforms: [.iOS(.v17)],
   products: [
     // Products define the executables and libraries a package produces, and make them visible to other packages.
     .library(
@@ -17,9 +17,9 @@ let package = Package(
     // .package(url: /* package url */, from: "1.0.0"),
     // `JustifiableFlowLayout` is used in components like `TUIEmailField`, so that the items can flow in one direction in a grid
     // with equal spacing and height, and wrap to the next line when needed
-    .package(url: "https://github.com/lorin-vr/JustifiableFlowLayout", exact: "1.0.0"),
-    .package(url: "https://github.com/onevcat/Kingfisher.git", exact: "7.6.2"),
-    .package(url: "https://github.com/siteline/swiftui-introspect", from: "26.0.0")
+    .package(url: "https://github.com/lorin-vr/JustifiableFlowLayout", exact: "1.0.2"),
+    .package(url: "https://github.com/onevcat/Kingfisher.git", exact: "8.9.0"),
+    .package(url: "https://github.com/siteline/swiftui-introspect", from: "26.0.1")
   ],
   targets: [
     // Targets are the basic building blocks of a package. A target can define a module or a test suite.

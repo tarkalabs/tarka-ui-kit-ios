@@ -26,7 +26,9 @@ public struct OverlaySheet<V: View>: ViewModifier {
         DestinationView(
           isPresented: $isPresented,
           contentView: contentView,
-          sizeClass: sizeClass)
+          sizeClass: sizeClass
+        )
+        .transparentBackground()
       }
   }
   

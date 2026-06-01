@@ -26,14 +26,15 @@ struct SearchTextField: View {
       // resign search
       searchBarVM.isEditing = false
       searchBarVM.isFocused = false
-      // perform search
-      if !searchBarVM.searchItem.text.isEmpty {
-        performSearch()
-      }
     }
     .focused($isFocused)
     .onChange(of: isFocused) {
       searchBarVM.isEditing = $0
+      guard !isFocused else { return }
+      // If search on done is enabled,
+      // when focus is removed ie. keyboard hides, perform search
+      guard searchBarVM.needDelaySearch else { return }
+      performSearch()
     }
     .onChange(of: searchBarVM.isEditing, perform: { value in
       if value != isFocused {
@@ -41,16 +42,21 @@ struct SearchTextField: View {
         searchBarVM.isFocused = value
       }
     })
+    .onAppear {
+      guard searchBarVM.searchButtonClicked != nil else { return }
+      isFocused = true
+    }
+    .onDisappear {
+      searchBarVM.searchButtonClicked = nil
+    }
     .accessibilityIdentifier(Accessibility.root)
     .submitLabel(searchBarVM.needDelaySearch ? .search : .return)
-    .onSubmit(performSearch)
     .isEnabled(!searchBarVM.needDelaySearch) {
       $0.onChange(of: searchBarVM.searchItem.text, perform: updateSearchText)
     }
   }
   
   private func performSearch() {
-    guard searchBarVM.needDelaySearch else { return }
     searchBarVM.onEditing(searchBarVM.searchItem.text)
     searchBarVM.searchText = searchBarVM.searchItem.text
   }
