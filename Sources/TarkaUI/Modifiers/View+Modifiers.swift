@@ -76,12 +76,13 @@ public extension View {
     _ title: String,
     style: TUITextRow.Style,
     textColor: Color = .onSurface,
+    isRequired: Bool = false,
     destinationView: @autoclosure @escaping () -> some View,
     accessibilityID: TUIAccessibility,
     isEnabled: Bool = true,
     @TUIIconButtonBuilder
     iconButtons: @escaping (() -> [TUIIconButton]?) = { nil }) -> some View {
-      let textRow = TUITextRow(title, style: style)
+      let textRow = TUITextRow(title, style: style, isRequired: isRequired)
         .textColor(textColor)
       
       if isEnabled {

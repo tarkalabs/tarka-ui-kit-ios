@@ -13,22 +13,26 @@ import SwiftUI
 public struct TUITextRow: View {
   public var title: any StringProtocol
   public var style: Style
-  
+
   @ViewBuilder var wrapperIcon: (() -> TUIWrapperIcon?)
   @TUIIconButtonBuilder var iconButtons: (() -> [TUIIconButton])
-  
+
   public var textColor: Color = .onSurface
-  
+  public var isRequired: Bool = false
+
   /// Creates a text row with the specified title and style.
   ///
   /// - Parameters:
   ///   - title: The title to display in the text row.
   ///   - style: The style to use to display the text row. The default value is `.onlyTitle`.
+  ///   - isRequired: When `true`, appends a red `" *"` suffix to the title.
   ///
   public init(_ title: any StringProtocol,
-              style: TUITextRow.Style) {
+              style: TUITextRow.Style,
+              isRequired: Bool = false) {
     self.title = title
     self.style = style
+    self.isRequired = isRequired
     self.wrapperIcon = { nil }
     self.iconButtons = { [] }
   }
@@ -65,19 +69,25 @@ public struct TUITextRow: View {
   private var titleView: some View {
     switch style {
     case .onlyTitle:
-      Text(title)
-        .font(.heading7)
-        .foregroundColor(textColor)
+      requiredTitle(font: .heading7)
         .frame(minHeight: 18)
         .padding(.vertical, Spacing.custom(11))
         .accessibilityIdentifier(Accessibility.title)
-      
+
     default:
-      Text(title)
-        .font(.body8)
-        .foregroundColor(.inputTextDim)
+      requiredTitle(font: .body8)
         .frame(minHeight: 14)
         .accessibilityIdentifier(Accessibility.title)
+    }
+  }
+
+  @ViewBuilder
+  private func requiredTitle(font: Font) -> some View {
+    if isRequired {
+      (Text(title).foregroundColor(.inputTextDim) + Text(" *").foregroundColor(.inputTextDim))
+        .font(font)
+    } else {
+      Text(title).font(font).foregroundColor(.inputTextDim)
     }
   }
   
